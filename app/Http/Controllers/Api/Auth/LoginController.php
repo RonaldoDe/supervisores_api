@@ -21,12 +21,26 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $this->validate($request, [
+      /*  $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
+        ]);*/
+        $validator=\Validator::make($request->all(),[
+    		'username' => 'required|email',
+    		'password' => 'required|min:6',
+
         ]);
 
-        $params = [
+        if($validator->fails())
+        {
+         
+          //return response()->json(['errors'=>$validator->errors()->all()]);
+          // return response()->json( $datos='nO ' );
+          return response()->json( $errors=$validator->errors()->all(), 401);
+        }
+        else
+        {
+ $params = [
             'grant_type' => 'password',
             'client_id' => $this->client->id,
             'client_secret' => $this->client->secret,
@@ -35,12 +49,18 @@ class LoginController extends Controller
             'scope' => '*'
         ];
 
-      $request->request->add($params);
-
+        $request->request->add($params);
         $proxy = Request::create('oauth/token', 'POST');
 
         return Route::dispatch($proxy);
         //return response()->json( $datos=['datos'] );
+
+        }
+
+
+
+
+       
 
     }
 
@@ -60,7 +80,7 @@ class LoginController extends Controller
 
         $request->request->add($params);
 
-        $proxy = Request::create('oauth/token', 'POST');
+         $proxy = Request::create('oauth/token', 'POST');
 
         return Route::dispatch($proxy);
     }

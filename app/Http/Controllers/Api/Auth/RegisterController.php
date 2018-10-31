@@ -64,10 +64,9 @@ class RegisterController extends Controller
     
             $proxy = Request::create('oauth/token', 'POST');
     
-           // return Route::dispatch($proxy);
+            return Route::dispatch($proxy);
     
-           //RETORNA MENSAJE DE EXITO
-            return response()->json( $datos='https://www.google.com' );
+         
         }
 
        

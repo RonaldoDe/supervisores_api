@@ -21,6 +21,8 @@ Route::middleware('auth:api')->group(function () {
 Route::post('logout', 'Api\Auth\LoginController@logout');
 Route::get('dashboard', 'Api\DashboardWebController@index');
 Route::get('HomeCoordinador', 'Api\Auth\Coordinador\HomeCoordinadorController@index');
+  Route::post('crearUser', 'Api\Auth\Administrador\CrearUsuariosController@register');
+Route::get('MostrarRoles', 'Api\Auth\Administrador\CrearUsuariosController@MostrarRol');
 
 
 });

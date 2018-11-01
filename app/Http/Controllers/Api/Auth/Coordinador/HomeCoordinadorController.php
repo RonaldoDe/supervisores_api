@@ -12,13 +12,15 @@ use Illuminate\Support\Facades\DB;
 
 class HomeCoordinadorController extends Controller
 {
-    
+
     public function index(Request $request)
     {
         /*Author faby freitte*/
-        
-        //se valida que todas las peticiones entrantes al servidor solo funcionen via ajax de lo contrario saldra un error.
-      if(!$request->ajax()){return redirect('/');}
+
+
+    //se valida que todas las peticiones entrantes al servidor solo funcionen via ajax de lo contrario saldra un error.
+
+    //if(!$request->ajax()){return redirect('/');}
 
        //Se recupera los datos del usuario que se ha autenticado
        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
@@ -30,7 +32,7 @@ class HomeCoordinadorController extends Controller
                         ->where('c.correo','=',$user->email)
                         ->first();
 
-                        
+
       // Se recupera los datos de las zonas asociados a la region del coordinador autenticado
     $zonas=DB::table('zona as z')
                 ->join('region as r','r.id_region','=','z.id_region')
@@ -40,14 +42,16 @@ class HomeCoordinadorController extends Controller
                 ->join('coordinadores as c','c.id_cordinador','=','r.id_cordinador')
                 ->join('sucursales as s','s.id_zona','=','z.id_zona')
                 ->where('r.id_cordinador','=',$region->id_cordinador)
-                ->select('z.descripcion_zona','z.id_zona','s.nombre as sucursal','s.id_suscursal','us.nombre as supervisor')         
+                ->select('z.descripcion_zona','z.id_zona','s.nombre as sucursal','s.id_suscursal','us.nombre as supervisor')
                 ->get();
 
 
        //se retorna por ajax la region y zonas como objetos de las consultas realizadas
      return response()->json([$region,$zonas]);
-   
+
 
     }
+
+
 
     }

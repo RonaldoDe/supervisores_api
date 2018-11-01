@@ -12,6 +12,8 @@ class DashboardWebController extends Controller
     public function index(Request $request)
     {
 
+      /*Author Ronaldo Camacho */
+
            //accediendo a los datos del usuario por medio de su ID
           $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
 

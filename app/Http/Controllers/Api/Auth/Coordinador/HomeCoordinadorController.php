@@ -20,7 +20,7 @@ class HomeCoordinadorController extends Controller
         //se valida que todas las peticiones entrantes al servidor solo funcionen via ajax de lo contrario saldra un error.
       if(!$request->ajax()){return redirect('/');}
 
-       //Se recupera el dato del usuario que se ha autenticado
+       //Se recupera los datos del usuario que se ha autenticado
        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
 
        // Se recupera los datos del coordinador para mostrar su region y datos personales
@@ -29,6 +29,8 @@ class HomeCoordinadorController extends Controller
                         ->select('r.nombre as region','r.nombre','c.apellido','c.nombre','r.id_cordinador')
                         ->where('c.correo','=',$user->email)
                         ->first();
+
+                        
       // Se recupera los datos de las zonas asociados a la region del coordinador autenticado
     $zonas=DB::table('zona as z')
                 ->join('region as r','r.id_region','=','z.id_region')

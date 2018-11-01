@@ -32,7 +32,7 @@ class DashboardWebController extends Controller
           {
             return response()->json( $ruta="ruta/coordinadores", 200);
           }
-          //%1 en la igualacion del rol es el id del usuario tipo supervisor que no puede acceder a la vista web
+          //%1 en la igualacion del rol es el id del usuario tipo supervisor que no puede acceder a la vista web  x
           else if($usuarios_roles->id_rol==1)
           {
               return response()->json(["error"=>"Error",200]);

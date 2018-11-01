@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
-<<<<<<< HEAD
--- Tiempo de generación: 30-10-2018 a las 21:41:08
-=======
--- Tiempo de generación: 01-11-2018 a las 14:53:51
->>>>>>> ronaldo
+-- Tiempo de generación: 01-11-2018 a las 15:30:02
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.2.10
 
@@ -55,8 +51,6 @@ CREATE TABLE `coordinadores` (
   `direcc` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-<<<<<<< HEAD
-=======
 --
 -- Volcado de datos para la tabla `coordinadores`
 --
@@ -64,7 +58,6 @@ CREATE TABLE `coordinadores` (
 INSERT INTO `coordinadores` (`id_cordinador`, `nombre`, `apellido`, `cedula`, `correo`, `password`, `telefono`, `direcc`) VALUES
 (1, 'faby', 'freyte', 1140830054, 'ffreytte@gmail.com', '123456', 4536485, 0);
 
->>>>>>> ronaldo
 -- --------------------------------------------------------
 
 --
@@ -121,8 +114,6 @@ CREATE TABLE `oauth_access_tokens` (
   `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-<<<<<<< HEAD
-=======
 --
 -- Volcado de datos para la tabla `oauth_access_tokens`
 --
@@ -248,7 +239,6 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('fc7093d3ec6c0c3875bafc4e0afd0f86dc43f83ad663ae2707b4d4af40de5588a70a41e06f2e6579', 4, 1, NULL, '[\"*\"]', 0, '2018-10-31 19:08:48', '2018-10-31 19:08:48', '2018-11-01 14:08:48'),
 ('fced3d5b6d483e619772aee1fc38c37cde93c53b572cf0487d3da7a06cda7770508b0473341a2d94', 5, 1, NULL, '[\"*\"]', 0, '2018-11-01 02:19:27', '2018-11-01 02:19:27', '2018-11-01 21:19:26');
 
->>>>>>> ronaldo
 -- --------------------------------------------------------
 
 --
@@ -288,12 +278,8 @@ CREATE TABLE `oauth_clients` (
 --
 
 INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `redirect`, `personal_access_client`, `password_client`, `revoked`, `created_at`, `updated_at`) VALUES
-<<<<<<< HEAD
-(1, NULL, 'cudris', 'HtVlCdYlRJuMWOgEtJtGN2NMIYmnP4u8GeyGz1sU', 'http://localhost', 0, 1, 0, '2018-10-31 01:38:29', '2018-10-31 01:38:29');
-=======
 (1, NULL, 'cudris', 'HtVlCdYlRJuMWOgEtJtGN2NMIYmnP4u8GeyGz1sU', 'http://localhost', 0, 1, 0, '2018-10-31 01:38:29', '2018-10-31 01:38:29'),
 (2, NULL, 'ronaldo', 'igU1utYkSsbypgN2xErxJbONsgsM9na26Rf87olf', 'http://localhost', 0, 1, 0, '2018-10-31 02:31:13', '2018-10-31 02:31:13');
->>>>>>> ronaldo
 
 -- --------------------------------------------------------
 
@@ -321,8 +307,6 @@ CREATE TABLE `oauth_refresh_tokens` (
   `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-<<<<<<< HEAD
-=======
 --
 -- Volcado de datos para la tabla `oauth_refresh_tokens`
 --
@@ -448,7 +432,6 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 ('ff45e445a26f50e8b2d6032a0f29c4d7a60f491678b5b6dca1dc127734d2dfd16a5937507c637866', '34e69dab2ccf33820e4df65f91488f113508e9e66350f5a6ca97939c399f0aa569d9642653d1d36f', 0, '2018-11-30 14:10:09'),
 ('ff4fe3f89aa8a11c05090dbeb40203d98de2d002f81887140439c932454b2d1171a6ddb1d1445f17', 'c34d287fd6c7214af91c83227f1c720546c9ac70d69294ff455eef36df9b6f02e3e08f18747a2b5f', 0, '2018-11-30 18:30:25');
 
->>>>>>> ronaldo
 -- --------------------------------------------------------
 
 --
@@ -511,48 +494,9 @@ CREATE TABLE `region` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `region`
---
-
-<<<<<<< HEAD
-CREATE TABLE `region` (
-  `id_region` int(11) NOT NULL,
-  `id_cordinador` int(11) NOT NULL,
-  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` varchar(124) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `roles`
 --
 
-CREATE TABLE `roles` (
-  `id_roles` int(11) NOT NULL,
-  `nombre_rol` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `sucursales`
---
-
-CREATE TABLE `sucursales` (
-  `id_suscursal` int(11) NOT NULL,
-  `cod_sucursal` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `direccion` decimal(50,0) NOT NULL,
-  `longitud` decimal(50,0) NOT NULL,
-  `latitud` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_tipo_cadena` int(11) NOT NULL,
-  `id_tipo_poblacion` int(11) NOT NULL,
-  `id_zona` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-=======
 CREATE TABLE `roles` (
   `id_roles` int(11) NOT NULL,
   `nombre_rol` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -585,7 +529,6 @@ CREATE TABLE `sucursales` (
   `id_zona` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
->>>>>>> ronaldo
 -- --------------------------------------------------------
 
 --
@@ -608,17 +551,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-<<<<<<< HEAD
-(1, 'jeann', 'asdasd@gmail.com', NULL, '$2y$10$ERNg2qfaJdMKF8NOE3c08Ozl0pObpDPrrGzzwdYBqr3OcWKxsJkWO', NULL, '2018-10-31 01:31:30', '2018-10-31 01:31:30'),
-(2, 'faby', 'is@ggm.com', NULL, '$2y$10$ej0dPMbCvPJDM0lc70GSHeLZ2WhqMhds.eOLI7wluFchG2yvmySvK', NULL, '2018-10-31 01:36:16', '2018-10-31 01:36:16'),
-(3, 'jeannuel', 'jjeasdada@gmail.com', NULL, '$2y$10$YDNrirf559cKUPu0oUum/eOl6OySBANoI5PwXVqviyWv1WuqafzjK', NULL, '2018-10-31 01:38:52', '2018-10-31 01:38:52');
-=======
 (1, 'jeann', 'pruebas@gmail.com', NULL, '$2y$10$tvRBgnPUbkXLMG.DquwlO.JCoeKFNlWTsB6mVOP5tgq1hMckCBWGW', NULL, '2018-10-31 01:31:30', '2018-10-31 01:31:30'),
 (2, 'faby', 'is@ggm.com', NULL, '$2y$10$ej0dPMbCvPJDM0lc70GSHeLZ2WhqMhds.eOLI7wluFchG2yvmySvK', NULL, '2018-10-31 01:36:16', '2018-10-31 01:36:16'),
 (3, 'jeannuel', 'jjeasdada@gmail.com', NULL, '$2y$10$YDNrirf559cKUPu0oUum/eOl6OySBANoI5PwXVqviyWv1WuqafzjK', NULL, '2018-10-31 01:38:52', '2018-10-31 01:38:52'),
 (4, 'Ronaldo', 'ronaldodo@mail.com', NULL, '$2y$10$u4CCshmLkKB8Ij1S5p61ceI9f1RwtteyGAKSaI3J1mOcun4qwG81W', NULL, '2018-10-31 02:29:48', '2018-10-31 02:29:48'),
 (5, 'faby', 'ffreytte@gmail.com', NULL, '$2y$10$tvRBgnPUbkXLMG.DquwlO.JCoeKFNlWTsB6mVOP5tgq1hMckCBWGW', NULL, '2018-10-31 20:48:04', '2018-10-31 20:48:04');
->>>>>>> ronaldo
 
 -- --------------------------------------------------------
 
@@ -636,8 +573,6 @@ CREATE TABLE `usuario` (
   `telefono` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-<<<<<<< HEAD
-=======
 --
 -- Volcado de datos para la tabla `usuario`
 --
@@ -646,7 +581,6 @@ INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `cedula`, `correo`, `
 (1, 'Ronaldo', 'fr', 1148855, 'ronaldodo@mail.com', '123456789', 852963),
 (2, 'jeann', 'nuel', 8522, 'pruebas@gmail.com', 'kjsjfdj', 999);
 
->>>>>>> ronaldo
 -- --------------------------------------------------------
 
 --
@@ -660,8 +594,6 @@ CREATE TABLE `usuarios_roles` (
   `estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-<<<<<<< HEAD
-=======
 --
 -- Volcado de datos para la tabla `usuarios_roles`
 --
@@ -670,7 +602,6 @@ INSERT INTO `usuarios_roles` (`id_usuario_roles`, `id_rol`, `id_usuario`, `estad
 (11, 1, 1, 0),
 (12, 2, 2, 0);
 
->>>>>>> ronaldo
 -- --------------------------------------------------------
 
 --
@@ -837,11 +768,7 @@ ALTER TABLE `asigancion_permiso`
 -- AUTO_INCREMENT de la tabla `coordinadores`
 --
 ALTER TABLE `coordinadores`
-<<<<<<< HEAD
-  MODIFY `id_cordinador` int(11) NOT NULL AUTO_INCREMENT;
-=======
   MODIFY `id_cordinador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
->>>>>>> ronaldo
 
 --
 -- AUTO_INCREMENT de la tabla `cordinadores_permiso`
@@ -886,20 +813,10 @@ ALTER TABLE `region`
   MODIFY `id_region` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `region`
---
-ALTER TABLE `region`
-  MODIFY `id_region` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-<<<<<<< HEAD
-  MODIFY `id_roles` int(11) NOT NULL AUTO_INCREMENT;
-=======
   MODIFY `id_roles` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
->>>>>>> ronaldo
 
 --
 -- AUTO_INCREMENT de la tabla `sucursales`
@@ -911,31 +828,19 @@ ALTER TABLE `sucursales`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-<<<<<<< HEAD
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-=======
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
->>>>>>> ronaldo
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-<<<<<<< HEAD
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
-=======
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
->>>>>>> ronaldo
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios_roles`
 --
 ALTER TABLE `usuarios_roles`
-<<<<<<< HEAD
-  MODIFY `id_usuario_roles` int(11) NOT NULL AUTO_INCREMENT;
-=======
   MODIFY `id_usuario_roles` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
->>>>>>> ronaldo
 
 --
 -- AUTO_INCREMENT de la tabla `zona`

@@ -17,12 +17,25 @@ use Illuminate\Http\Request;
 //Route::post('register', 'Api\Auth\RegisterController@register');
 Route::post('login', 'Api\Auth\LoginController@login');
 //Route::post('refresh', 'Api\Auth\LoginController@refresh');
+
+//ruta protegidad por el middleware y Auth
 Route::middleware('auth:api')->group(function () {
-Route::post('logout', 'Api\Auth\LoginController@logout');
-Route::get('dashboard', 'Api\DashboardWebController@index');
+Route::post('logout', 'Api\Auth\LoginController@logout');//controlador de cerrar cesion
+Route::get('dashboard', 'Api\DashboardWebController@index');//valida el tipo de usuario que se autentifica
 Route::get('HomeCoordinador', 'Api\Auth\Coordinador\HomeCoordinadorController@index');
-  Route::post('crearUser', 'Api\Auth\Administrador\CrearUsuariosController@register');
+Route::post('crearUser', 'Api\Auth\Administrador\CrearUsuariosController@register');
 Route::get('MostrarRoles', 'Api\Auth\Administrador\CrearUsuariosController@MostrarRol');
+Route::post('CrearSupervisoresCord', 'Api\Auth\Coordinador\HomeCoordinadorController@CrearSupervisores');
+Route::get('sucursalesZona/{id}', 'Api\Auth\Coordinador\HomeCoordinadorController@mostrarPuntosVentasIdZona');
+Route::post('crearZonas', 'Api\Auth\Coordinador\ZonasCordinadorController@CrearZonas');
+Route::get('MostrarPrioridad', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@MostrarTablaPrioridad');
+Route::get('MostrarFrecuencia', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@MostrarTablafrecuencia');
+
+
 
 
 });
+
+Route::post('CrearActividadApertura', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadApertura');
+
+

@@ -4,16 +4,16 @@ namespace App\Modelos;
 use Illuminate\Database\Eloquent\Model;
 
 /*Author jhonatan cudris */
-class Coordinadores extends Model{
+class Relevancia extends Model{
 
     //modelo que instancia la tabla cordiandores para crear los usuario de la misma
 
-    protected $table ='coordinadores';
-    protected $primaryKey='id_cordinador';
+    protected $table ='relevancia';
+    protected $primaryKey='id_relevancia';
 
     public $timestamps=false;
 
-    protected $fillable=['nombre','apellido','cedula','correo','password','telefono'];
+    protected $fillable=['id_prioridad','id_frecuencia'];
 
 
 

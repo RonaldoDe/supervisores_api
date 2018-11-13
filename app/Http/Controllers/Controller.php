@@ -56,4 +56,25 @@ class Controller extends BaseController
            }
 
     }
+
+    public function rutearMovil($id)
+    {
+         //Obtener los datos del usuario
+         $user=DB::table('users as u')->where('u.id','=',$id)->first();
+         //Comprobar los datos del user con la tabla usuarios
+         $user_supervisor=DB::table('usuario as u')->where('u.correo','=',$user->email)->first();
+
+         //Verificar si el usuario es tipo supervisor y existe en la tabla usuarios roles 
+         $supervisor=DB::table('usuarios_roles as ur')
+         ->where('ur.id_rol','=', 1)
+         ->where('ur.id_usuario',$user_supervisor->id_usuario)
+         ->get();
+      
+         if(count($supervisor)>0){
+              return 1;
+         }else{
+          return 0;
+
+         }
+      }
 }

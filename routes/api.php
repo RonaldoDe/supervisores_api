@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 
 //Route::post('register', 'Api\Auth\RegisterController@register');
 Route::post('login', 'Api\Auth\LoginController@login');
+//Route::post('loginMovil', 'Api\Auth\Supervisores\LoginSupervisoresController@login');
 //Route::post('refresh', 'Api\Auth\LoginController@refresh');
 
 //ruta protegidad por el middleware y Auth
@@ -32,7 +33,10 @@ Route::get('MostrarPrioridad', 'Api\Auth\Coordinador\Actividades\CrearActividadP
 Route::get('MostrarFrecuencia', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@MostrarTablafrecuencia');
 
 
-
+});
+//rutas moviles
+Route::middleware('auth:api')->group(function(){
+    Route::get('homeSupervisor', 'Api\Auth\Supervisores\HomeSupervisorController@index');//valida el tipo de usuario que se autentifica
 
 });
 

@@ -21,9 +21,6 @@ class HomeCoordinadorController extends Controller
     {
 
 
-
-        if($this->rutear(Auth::id())=="coordinador")
-        {
                   /*Author jhonatan cudris */
 
 
@@ -59,12 +56,7 @@ class HomeCoordinadorController extends Controller
        //se retorna por ajax la region y zonas como objetos de las consultas realizadas
      return response()->json(["region"=>$region,"Zonas"=>$zonas]);
 
-        }
-        else
-        {
-
-            return response()->json("error",401);
-        }
+        
 
 
     }
@@ -74,9 +66,6 @@ class HomeCoordinadorController extends Controller
 //if(!$request->ajax()){return redirect('/');}
         //funcion que crea los usuarios
 
-//validando que el usuario sea un administardor
-        if($this->rutear(Auth::id())=="coordinador")
-        {
             $validator=\Validator::make($request->all(),[
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email',
@@ -144,11 +133,7 @@ class HomeCoordinadorController extends Controller
 
 
              }
-        }
-            else{
 
-                return response()->json("error",401);
-            }
 
 
 

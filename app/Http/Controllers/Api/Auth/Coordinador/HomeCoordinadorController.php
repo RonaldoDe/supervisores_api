@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Modelos\Usuario;
 use App\Modelos\Usuario_roles;
-
+/*Author jhonatan cudris */
 
 class HomeCoordinadorController extends Controller
 {

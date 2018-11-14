@@ -12,6 +12,7 @@ use App\User;
 use App\Modelos\Usuario;
 use App\Modelos\Usuario_roles;
 use App\Modelos\Coordinadores;
+use App\Modelos\Region;
 /*Author jhonatan cudris */
 
 //controlador que hace instancia de la modelo user y usuario para crear los usuarios  del sistema
@@ -78,7 +79,8 @@ class CrearUsuariosController extends Controller
                         'cedula' =>request('cedula'),
                         'correo' =>request('email'),
                         'password'=>request('password'),
-                        'telefono'=>request('telefono')
+                        'telefono'=>request('telefono'),
+                        'asignado'=>0,
                     ]);
 
                 }
@@ -106,7 +108,7 @@ class CrearUsuariosController extends Controller
 
                         'id_rol' =>request('tipo_rol'),
                         'id_usuario' =>$usuario->id_usuario,
-                        'estado'=>'0'
+                        'estado'=>0
                     ]);
 
 
@@ -115,6 +117,8 @@ class CrearUsuariosController extends Controller
 
 //commit para ejecuatar la sentencia que nos debuelba el request
                 DB::commit();
+
+                return response()->json(["succes"=>" Usuario Creado"]);
 
 
             }catch(Exeption $e){
@@ -134,6 +138,48 @@ class CrearUsuariosController extends Controller
                             ->whereNotIn('id_roles',[2])
                             ->select('id_roles','nombre_rol')->get();
                              return response()->json($roles);
+
+        }
+
+
+        //funcion  para crear una region y asignarla a un  cordiandor en especifico
+        public function crearRegion(Request $request){
+
+            $validator=\Validator::make($request->all(),[
+                'id_cordinador' => 'required',
+                'nombre' => 'required|unique:region,nombre',
+
+
+
+            ]);
+
+
+            if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all() );
+        }
+
+        else
+        {
+            $crear_region =Region::create([
+
+                'id_cordinador' =>request('id_cordinador'),
+                'nombre' =>request('nombre'),
+                'descripcion'=>request('descripcion'),
+            ]);
+
+        }
+
+        }
+
+        //funcion que debuelve los cordinadores que no han sido  asignado y tienen un esatdo de 0
+        public function devolverCordinadorNoAsigando(){
+
+        $coordinadores =DB::table('coordinadores')
+        ->where('asignado','=',0)
+        ->select('id_cordinador','cedula',DB::raw("concat(nombre,' ',apellido) as cordinador"))->get();
+
+        return response()->json(["coordinadores"=>$coordinadores]);
 
         }
 

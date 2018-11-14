@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Modelos\PlanTrabajoAsignacion;
-
+/*Author jhonatan cudris */
 class CrearPlanesTrabajoController extends Controller
 {
     //controlador que crea lsolo los planes de trabajo mas no las actividades
@@ -16,7 +16,7 @@ class CrearPlanesTrabajoController extends Controller
     //de la zona
 
     public function crearPlanTrabajo(Request $request)
-    {
+    {//imortante mrar si se debe devolver el id del plan detrabajo enseguida para la signacion de las activdades plan de trabajo
         $validator=\Validator::make($request->all(),[
             'id_sucursal' => 'required',
             'fecha_creacion' => 'required',
@@ -41,6 +41,8 @@ class CrearPlanesTrabajoController extends Controller
 
             ]);
 
+            //retorno del id creado en ese momento para asignarlo alas actividades
+            return response()->json(["id_plan_trabajo"=>$plan_trabajo->id_plan_trabajo]);
         }
 
     }

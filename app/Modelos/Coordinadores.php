@@ -13,7 +13,7 @@ class Coordinadores extends Model{
 
     public $timestamps=false;
 
-    protected $fillable=['nombre','apellido','cedula','correo','password','telefono'];
+    protected $fillable=['nombre','apellido','cedula','correo','password','telefono','asignado'];
 
 
 

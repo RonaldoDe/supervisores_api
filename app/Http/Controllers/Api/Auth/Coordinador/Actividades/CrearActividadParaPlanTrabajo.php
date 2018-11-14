@@ -8,8 +8,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Modelos\Actividades\Apertura;
+use App\Modelos\Actividades\DocumentacionLegal;
 use App\Modelos\Relevancia;
 use Carbon\Carbon;
+/*Author jhonatan cudris */
 
 //controlador que crea el registro de apertura  y recibe os parametros
 //del front para crear una activdad y asiganerle un plan rbajo
@@ -187,7 +189,73 @@ class CrearActividadParaPlanTrabajo extends Controller
     }
 }
 
+//funcion para crear Actividad documnetacion legal del punto de venta  como este actividad se hace cada cierto tiempo
+//le mandamos una frecuencia perznalizada paraq ue le cordinador inserte las fechas a estipuladas a cumplir cierta actividad
+//
+public function crearActividadDocumentacionLegal(Request $request){
 
+    //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
+
+    $validator=\Validator::make($request->all(),[
+        'id_prioridad' => 'required',
+        'id_plan_trabajo'=>'required',
+        'fecha_inicio'=>'required',
+        'fecha_fin'=>'required'
+
+
+
+
+    ]);
+    if($validator->fails())
+    {
+      return response()->json( $errors=$validator->errors()->all() );
+    }
+
+    else
+    {
+        try
+        {
+
+            DB::beginTransaction();
+//se crea el registro de la relevancia dentro de esta tabla para luego insertarla el id de este registro
+//  a modo de transaccion a la tabla documentacion_legal
+            $relevancia =Relevancia::create([
+
+                'id_prioridad' =>request('id_prioridad'),
+                'id_frecuencia' =>2,
+            ]);
+
+//instancia del modelo documentacion legal para crear un registro de esta tabla
+            $documentacion_legal =DocumentacionLegal::create([
+
+                'id_plan_trabajo' =>request('id_plan_trabajo'),
+                'fecha_inicio' =>request('fecha_inicio'),
+                'fecha_fin' =>request('fecha_fin'),
+                'observacion'=>'',
+                'id_relevancia' =>$relevancia->id_relevancia,
+                'estado' =>'Activo',
+
+            ]);
+
+            DB::commit();
+
+            return response()->json(["succes"=>" Actividad documentacion legal creada"]);
+        }
+
+        catch(Exeption $e){
+
+
+            DB::rollBack();
+
+
+    }
+
+
+    }
+
+
+
+}
 
 
 

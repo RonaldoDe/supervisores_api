@@ -100,10 +100,10 @@ catch(Exeption $e){
         ->join('usuario as us','ur.id_usuario','=','us.id_usuario')
         ->where('ur.id_rol','=', 1)
         ->where('ur.estado','=', 0)
-        ->select('ur.id_usuario_roles', 'us.nombre', 'us.apellido')->get();
+        ->select('ur.id_usuario_roles',DB::raw("concat(us.nombre,' ',us.apellido) as supervisores"))->get();
 
+        return response()->json(["supervisores"=>$user]);
 
-        return $user;
 
     }
 

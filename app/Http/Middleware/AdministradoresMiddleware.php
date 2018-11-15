@@ -21,15 +21,31 @@ class AdministradoresMiddleware
          //Obtener los datos del usuario
          $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
          //Comprobar los datos del user con la tabla usuarios
-         $user_supervisor=DB::table('usuario as u')->where('u.correo','=',$user->email)->first();
-         //Verificar si el usuario es tipo administrador y existe en la tabla usuarios roles 
-         $supervisor=DB::table('usuarios_roles as ur')
-         ->where('ur.id_rol','=', 2)
-         ->where('ur.id_usuario',$user_supervisor->id_usuario)
-         ->get();
-         if(count($supervisor)>0){
-             return $next($request);
+         $validacion_user=DB::table('usuario as us')->where('us.correo','=',$user->email)
+         ->first();
+
+
+        // exit;
+
+
+         if($validacion_user!==null){
+            $user_administrador=DB::table('usuarios_roles as ur')
+            ->where('ur.id_usuario','=',$validacion_user->id_usuario)
+            ->where('ur.id_rol','=',2)
+            ->first();
+
+            if(count($user_administrador)>0 ){
+                return $next($request);
+            }
+           else{
+               return response()->json('No tienes permiso',401); //dd('No tienes permiso');
+            }
+         }else{
+            return response()->json('No tienes permiso',401); //dd('No tienes permiso');
          }
-         dd('No tienes permiso');
+
+
+
+
     }
 }

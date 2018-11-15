@@ -20,8 +20,13 @@ class HomeSupervisorController extends Controller
     public function index(Request $request)
     {
 
-        return 'helo';
-
+        //Se recupera los datos del usuario que se ha autenticado
+       $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+       //obtener los datos del usuario supervisor
+       $user_supervisor=DB::table('usuario as u')->where('u.correo','=',$user->email)->first();
+        
+        
+        return response()->json($plan_trabajo);
 
     }
 

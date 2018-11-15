@@ -13,7 +13,7 @@ class Apertura extends Model{
 
     public $timestamps=false;
 
-    protected $fillable=['id_plan_trabajo','fecha_inicio','fecha_fin','fecha_mod','id_relevancia','estado','calificacion','observaciones'];
+    protected $fillable=['id_plan_trabajo','fecha_inicio','fecha_fin','fecha_mod','id_relevancia','estado','calificacion','observaciones','calificacion_pv'];
 
 
 

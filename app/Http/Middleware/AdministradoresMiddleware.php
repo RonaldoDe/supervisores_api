@@ -32,7 +32,7 @@ class AdministradoresMiddleware
             $user_administrador=DB::table('usuarios_roles as ur')
             ->where('ur.id_usuario','=',$validacion_user->id_usuario)
             ->where('ur.id_rol','=',2)
-            ->first();
+            ->get();
 
             if(count($user_administrador)>0 ){
                 return $next($request);

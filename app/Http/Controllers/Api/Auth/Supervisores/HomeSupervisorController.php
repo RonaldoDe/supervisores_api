@@ -25,7 +25,14 @@ class HomeSupervisorController extends Controller
        //obtener los datos del usuario supervisor
        $user_supervisor=DB::table('usuario as u')->where('u.correo','=',$user->email)->first();
         
-        
+       $plan_trabajo = DB::table('sucursales as su')
+       ->select('su.id_suscursal', 'su.cod_sucursal', 'su.latitud', 'su.longitud', 'u.nombre', 'u.apellido', 'ur.id_usuario_roles', 'zo.descripcion_zona', 'zo.id_zona')
+       ->join('zona as zo','su.id_zona','=','zo.id_zona')
+       ->join('usuarios_roles as ur', 'zo.id_usuario_roles','=','ur.id_usuario_roles')
+       ->join('usuario as u','ur.id_usuario','=','u.id_usuario')
+       ->where('ur.id_usuario',$user_supervisor->id_usuario)
+       ->get();
+
         return response()->json($plan_trabajo);
 
     }

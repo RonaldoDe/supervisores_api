@@ -24,28 +24,16 @@ class HomeSupervisorController extends Controller
        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
        //obtener los datos del usuario supervisor
        $user_supervisor=DB::table('usuario as u')->where('u.correo','=',$user->email)->first();
-        
-      /* $datos = DB::table('sucursales as su')
-       ->select('su.id_suscursal', 'su.cod_sucursal', 'su.latitud', 'su.longitud', 'u.nombre', 'u.apellido', 'ur.id_usuario_roles', 'zo.descripcion_zona', 'zo.id_zona')
-       ->join('zona as zo','su.id_zona','=','zo.id_zona')
-       ->join('usuarios_roles as ur', 'zo.id_usuario_roles','=','ur.id_usuario_roles')
-       ->join('usuario as u','ur.id_usuario','=','u.id_usuario')
-       ->where('ur.id_usuario',$user_supervisor->id_usuario)
-       ->get();*/
-
-      
 
        $usuario_rol = DB::table('usuarios_roles as ur')
        ->where('ur.id_usuario',$user_supervisor->id_usuario)
        ->first();
 
-       $consultica=DB::table('plan_trabajo_asignacion as p')
+       $actividades=DB::table('plan_trabajo_asignacion as p')
        ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
        ->where('p.id_supervisor',$usuario_rol->id_usuario_roles)
        ->orderby('ac.id_prioridad','desc')
        ->get();
-       //->get();
-
     //    $array_actividades = array();
     //     foreach($plan_trabajo as $pt){
     //         $actividades = DB::table('actividades as ac')
@@ -59,10 +47,13 @@ class HomeSupervisorController extends Controller
     //         $array_actividades = array_add($array_actividades, 'plan '.$pt->id_plan_trabajo, $actividades);
     //     }
 
-       
-
-
-        return response()->json(["actividades"=>$consultica]);
+        $array_actividades = array();
+        foreach($actividades as $ac){
+            $hoy = DB::table($ac->nombre_actividad)
+            ->get();
+        }
+        
+        return response()->json(["actividades"=>$array_actividades]);
 
     }
 

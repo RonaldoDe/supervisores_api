@@ -14,14 +14,17 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+
+    //requerimiento de datos para crear la finalizacion de la actividad
     public function apertura($request)
     {
+        //validacion de los datos de la actividad
         $validator=\Validator::make($request->all(),[
             'id_apertura' => 'required',
             'id_plan_trabajo' => 'required',
-            'fecha_inicio' => 'required',
-            'fecha_fin' => 'required',
-            'fecha_mod' => 'required',
+            'fecha_inicio' => 'required|date_format:Y-m-d H:i:s',
+            'fecha_fin' => 'required|date_format:Y-m-d H:i:s',
+            'fecha_mod' => 'required|date_format:Y-m-d H:i:s',
             'observaciones' => 'required',
             'id_prioridad' => 'required',
             'estado' => 'required',
@@ -37,6 +40,8 @@ class Controller extends BaseController
 
         else
         {
+
+            //actualizacion de la actividad por el supervisor
             $actividad = Apertura::find(request('id_apertura'));
             if($actividad!= null){
                 $actividad->fecha_mod = request('fecha_mod');
@@ -51,7 +56,7 @@ class Controller extends BaseController
         }
     }
 
-    public function documentacion_permiso($request)
+    public function documentacion_legal($request)
     {
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo' => 'required',
@@ -68,7 +73,7 @@ class Controller extends BaseController
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+            return response()->json( $errors=$validator->errors()->all() );
         }
 
         else

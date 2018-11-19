@@ -25,36 +25,34 @@ class HomeSupervisorController extends Controller
        //obtener los datos del usuario supervisor
        $user_supervisor=DB::table('usuario as u')->where('u.correo','=',$user->email)->first();
 
+        //obtener erl id del rol del usuario
        $usuario_rol = DB::table('usuarios_roles as ur')
        ->where('ur.id_usuario',$user_supervisor->id_usuario)
        ->first();
-
+        //obtener las actividades segun su plan de trabajo 
        $actividades=DB::table('plan_trabajo_asignacion as p')
        ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
        ->where('p.id_supervisor',$usuario_rol->id_usuario_roles)
        ->orderby('ac.id_prioridad','desc')
        ->get();
-    //    $array_actividades = array();
-    //     foreach($plan_trabajo as $pt){
-    //         $actividades = DB::table('actividades as ac')
-    //         ->select('ac.nombre_actividad', 'ac.id as id_actividad', 'ac.id_plan_trabajo', 'su.id_suscursal', 'su.cod_sucursal', 'su.latitud', 'su.longitud', 'zo.descripcion_zona', 'zo.id_zona')
-    //         ->join('plan_trabajo_asignacion as pt', 'ac.id_plan_trabajo','pt.id_plan_trabajo')
-    //         ->join('sucursales as su', 'pt.id_sucursal','su.id_suscursal')
-    //         ->join('zona as zo','su.id_zona','=','zo.id_zona')
-    //         ->where('ac.id_plan_trabajo',$pt->id_plan_trabajo)
-    //         ->get();
 
-    //         $array_actividades = array_add($array_actividades, 'plan '.$pt->id_plan_trabajo, $actividades);
-    //     }
-
-        $array_actividades = array();
+        //array que almacenara las actividades correspondientes al dia actual 
+        $actividades_avilitadas = array();
+        //bucle que itera las actividades y las obtiene segun la fecha
         foreach($actividades as $ac){
-            $hoy = DB::table($ac->nombre_actividad)
+            $fe = DB::table($ac->nombre_actividad. ' as ac')
+            ->orderBy('ac.id_prioridad')
             ->get();
-        }
-        
-        return response()->json(["actividades"=>$array_actividades]);
 
+            foreach($fe as $fecha){
+                if($fecha->fecha_inicio == date('Y-m-d 00:00:00') && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
+                    $actividades_avilitadas = array_add($actividades_avilitadas, ''.$ac->nombre_actividad, $fecha);
+                }
+            }
+
+        }
+            return response()->json($actividades_avilitadas);
+        
     }
 
 }

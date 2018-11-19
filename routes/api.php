@@ -51,6 +51,7 @@ Route::middleware(['auth:api','administrador'])->group(function(){
 //rutas para un Supervisor
 Route::middleware(['auth:api','supervisores'])->group(function(){
     Route::get('homeSupervisor', 'Api\Auth\Supervisores\HomeSupervisorController@index');
+    Route::post('actividad', 'Api\Auth\Supervisores\ActividadesController@index');
 });
 
 

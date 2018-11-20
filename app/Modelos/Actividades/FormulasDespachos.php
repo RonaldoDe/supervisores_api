@@ -4,7 +4,7 @@ namespace App\Modelos\Actividades;
 use Illuminate\Database\Eloquent\Model;
 
 /*Author jhonatan cudris */
-class Kardex extends Model{
+class FormulasDespachos extends Model{
 
     //modelo que instancia la tabla Apertura
 

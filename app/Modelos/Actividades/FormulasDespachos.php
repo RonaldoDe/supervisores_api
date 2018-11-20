@@ -4,12 +4,12 @@ namespace App\Modelos\Actividades;
 use Illuminate\Database\Eloquent\Model;
 
 /*Author jhonatan cudris */
-class Kardex extends Model{
+class FormulasDespachos extends Model{
 
     //modelo que instancia la tabla Apertura
 
-    protected $table ='kardex';
-    protected $primaryKey='id_kardex';
+    protected $table ='formulas_despachos';
+    protected $primaryKey='id_formula';
 
     public $timestamps=false;
 

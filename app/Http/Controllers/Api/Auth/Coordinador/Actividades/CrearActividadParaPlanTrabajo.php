@@ -122,7 +122,7 @@ public function crearActividadDocumentacionLegal(Request $request){
 
                 'id_plan_trabajo' =>request('id_plan_trabajo'),
                 'fecha_inicio' =>request('fecha_inicio'),
-                'fecha_fin' =>request('fecha_fin'),
+                'fecha_fin' =>request('fecha_fin'.'23:59:00'),
                 'observacion'=>'',
                 'id_prioridad' =>request('id_prioridad'),
                 'estado' =>'Activo',
@@ -375,7 +375,7 @@ public function crearActividadDocumentacionLegal(Request $request){
 
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>request('fecha_inicio'),
-                    'fecha_fin' =>request('fecha_fin'),
+                    'fecha_fin' =>request('fecha_fin'.'23:59:00'),
                     'observacion'=>'',
                     'id_prioridad' =>request('id_prioridad'),
                     'estado' =>'Activo',

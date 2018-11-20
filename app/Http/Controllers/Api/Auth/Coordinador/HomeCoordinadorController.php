@@ -160,9 +160,11 @@ class HomeCoordinadorController extends Controller
             ->join('usuario as us','ur.id_usuario','=','us.id_usuario')
             ->where('s.id_zona','=',$id)
 
-            ->select('s.id_suscursal','s.cod_sucursal','s.nombre as sucursal','ur.id_usuario_roles as id_supervisor',
+            ->select('zo.descripcion_zona','s.id_suscursal','s.cod_sucursal','s.nombre as sucursal','ur.id_usuario_roles as id_supervisor',
             DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
             ->get();
+
+
         return response()->json(["sucursal"=>$sucursal]);
     }
 

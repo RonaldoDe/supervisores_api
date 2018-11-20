@@ -34,6 +34,7 @@ class HomeCoordinadorController extends Controller
        //Se recupera los datos del usuario que se ha autenticado
        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
 
+
        // Se recupera los datos del coordinador para mostrar su region y datos personales
        $region=DB::table('region as r')
                         ->join('coordinadores as c','c.id_cordinador','=','r.id_cordinador')
@@ -164,8 +165,8 @@ class HomeCoordinadorController extends Controller
             DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
             ->get();
 
-
-        return response()->json(["sucursal"=>$sucursal]);
+        $zona=DB::table('zona')->where('zona.id_zona','=',$id)->first();
+        return response()->json(["sucursal"=>$sucursal,"zona"=>$zona]);
     }
 
 

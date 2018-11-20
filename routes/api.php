@@ -13,10 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('InsercionTablaActividad', 'Api\Auth\Coordinador\Actividades\InsercionTablaActividad@insertarTablasAactividad');
 
-Route::post('CrearActividadDocumentacionLega', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadDocumentacionLegal');
-Route::post('CrearActividadKarde', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadAKardex');
+
 
 Route::post('login', 'Api\Auth\LoginController@login');
 //Route::post('refresh', 'Api\Auth\LoginController@refresh');
@@ -27,7 +25,7 @@ Route::post('logout', 'Api\Auth\LoginController@logout');//controlador de cerrar
 });
 
 //rutas coordinadores
-Route::middleware(['auth:api','coordinadores'])->group(function(){
+    Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::get('HomeCoordinador', 'Api\Auth\Coordinador\HomeCoordinadorController@index');
     Route::post('CrearPlanTrabajo', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@crearPlanTrabajo');
     Route::post('CrearSupervisoresCord', 'Api\Auth\Coordinador\HomeCoordinadorController@CrearSupervisores');
@@ -45,6 +43,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('CrearActividadRemisiones', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadRemisiones');
     Route::post('CrearActividadKardex', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadAKardex');
     Route::post('CrearActividadCondicionesLocativas', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadCondicionesLocativas');
+    Route::post('InsercionTablaActividad', 'Api\Auth\Coordinador\Actividades\InsercionTablaActividad@insertarTablasAactividad');
 });
 
 //rutas para un Administrador

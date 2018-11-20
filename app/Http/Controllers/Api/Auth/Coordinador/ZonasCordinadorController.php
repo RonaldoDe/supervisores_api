@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Modelos\Zonas;
 use App\Modelos\Usuario_roles;
+use App\Modelos\Sucursales;
 
 
 
@@ -141,5 +142,49 @@ catch(Exeption $e){
 
     }
 
+    //funcion para que un cordinador pueda crar un punto de venta dentro de una zona especifica el cual pertenece
+    //a un supervisor
+    public function crearSucursales (Request $request){
 
+        $validator=\Validator::make($request->all(),[
+            'cod_sucursal' => 'required|unique:sucursales,cod_sucursal',
+            'nombre' => 'required',
+            'direccion' => 'required',
+            'longitud' => 'required',
+            'latitud' => 'required',
+            'tipo_cadena' => 'required',
+            'tipo_poblacion' => 'required',
+            'id_zona' => 'required',
+
+
+
+        ]);
+
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all() );
+        }
+
+        else
+        {
+            $sucursal = Sucursales::create([
+                //se creA LA sucursal de una zona especifica
+                'cod_sucursal' => request('cod_sucursal'),
+                'nombre' => request('nombre'),
+                'direccion' => request('direccion'),
+                'longitud' => request('longitud'),
+                'latitud' => request('latitud'),
+                'id_tipo_cadena' => request('tipo_cadena'),
+                'id_tipo_poblacion' => request('tipo_poblacion'),
+                'id_zona' => request('id_zona')
+
+
+            ]);
+
+
+            return response()->json(["succes"=>"sucursal creada"],201);
+
+        }
+
+    }
 }

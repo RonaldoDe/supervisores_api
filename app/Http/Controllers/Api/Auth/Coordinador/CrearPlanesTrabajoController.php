@@ -38,6 +38,7 @@ class CrearPlanesTrabajoController extends Controller
                 'id_sucursal' =>request('id_sucursal'),
                 'fecha_creacion' =>request('fecha_creacion'),
                 'id_supervisor' =>request('id_supervisor'),
+                'estado'=>0,
 
             ]);
 

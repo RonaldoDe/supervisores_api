@@ -21,6 +21,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
       /*  $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
@@ -84,6 +85,8 @@ class LoginController extends Controller
 
         return Route::dispatch($proxy);
     }
+
+
     public function logout(Request $request)
     {
       $accessToken = Auth::user()->token();
@@ -92,7 +95,7 @@ class LoginController extends Controller
 
       $accessToken->revoke();
 
-      return response()->json([], 204);
+      return response()->json('Sesion cerrada', 204);
 
 
     }

@@ -37,14 +37,14 @@ class HomeSupervisorController extends Controller
        ->where('p.id_supervisor',$usuario_rol->id_usuario_roles)
        ->orderby('ac.id_prioridad','desc')
        ->get();
+       
+       //array que almacenara las actividades correspondientes al dia actual 
+       $actividades_habilitadas = array();
 
-        //array que almacenara las actividades correspondientes al dia actual 
-        $actividades_habilitadas = array();
-
-        //bucle que itera las actividades y las obtiene segun la fecha
-        foreach($actividades as $ac){
+       //bucle que itera las actividades y las obtiene segun la fecha
+       foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
-            ->orderBy('ac.id_prioridad')
+            ->orderBy('ac.id_prioridad', 'desc')
             ->get();
 
             foreach($fe as $fecha){

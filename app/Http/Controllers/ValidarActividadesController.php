@@ -18,7 +18,7 @@ class ValidarActividadesController extends Controller
         //validacion de los datos de la actividad
         $validator=\Validator::make($request->all(),[
             'id_actividad' => 'required',
-            'observaciones' => 'required',
+            'id_plan_trabajo' => 'required',
             'calificacion' => 'required',
             'nombre_tabla' => 'required',
             'calificacion_pv' => 'required',
@@ -54,7 +54,6 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion' => 'required',
-             'observaciones' => 'required',
              'calificacion_pv' => 'required',
      
          ]);
@@ -88,7 +87,6 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion' => 'required',
-             'observaciones' => 'required',
              'calificacion_pv' => 'required',
      
          ]);
@@ -122,7 +120,6 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion' => 'required',
-             'observaciones' => 'required',
              'calificacion_pv' => 'required',
      
          ]);
@@ -160,7 +157,6 @@ class ValidarActividadesController extends Controller
              'valor_faltante' => 'required',
              'valor_sobrante' => 'required',
              'calificacion' => 'required',
-             'observaciones' => 'required',
              'calificacion_pv' => 'required',
      
          ]);
@@ -198,7 +194,6 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion' => 'required',
-             'observaciones' => 'required',
              'calificacion_pv' => 'required',
      
          ]);

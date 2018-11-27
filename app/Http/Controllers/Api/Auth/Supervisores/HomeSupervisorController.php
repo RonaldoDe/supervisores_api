@@ -34,6 +34,7 @@ class HomeSupervisorController extends Controller
         //obtener las actividades segun su plan de trabajo 
        $actividades=DB::table('plan_trabajo_asignacion as p')
        ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
+       ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
        ->where('p.id_supervisor',$usuario_rol->id_usuario_roles)
        ->orderby('ac.id_prioridad','desc')
        ->get();
@@ -50,12 +51,13 @@ class HomeSupervisorController extends Controller
             foreach($fe as $fecha){
                 if($fecha->fecha_inicio == date('Y-m-d 00:00:00') && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
                     $fecha->nombre_tabla = $ac->nombre_tabla;
+                    $fecha->nombre_sucursal = $ac->nombre;
                     $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre_actividad, $fecha);
                 }
             }
             
         }
-            return response()->json($actividades_habilitadas);
+            return response()->json([$actividades_habilitadas, $user_supervisor]);
         
     }
 

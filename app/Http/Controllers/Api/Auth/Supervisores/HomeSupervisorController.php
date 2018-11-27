@@ -52,7 +52,7 @@ class HomeSupervisorController extends Controller
                 if($fecha->fecha_inicio == date('Y-m-d 00:00:00') && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
                     $fecha->nombre_tabla = $ac->nombre_tabla;
                     $fecha->nombre_actividad = $ac->nombre_actividad;
-                    $actividades_habilitadas = array_add($actividades_habilitadas, $ac->$nombre_actividad.' - '.$ac->nombre, $fecha);
+                    $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre_actividad.' - '.$ac->nombre, $fecha);
                 }
             }
             

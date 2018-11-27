@@ -54,7 +54,7 @@ class HomeSupervisorController extends Controller
                     $fecha->nombre_tabla = $ac->nombre_tabla;
                     $fecha->nombre_actividad = $ac->nombre_actividad;
                     $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre_actividad, $fecha);
-                    $sucursales_arr = array_add($sucursales_arr, $ac->nombre_actividad, $actividades_habilitadas);
+                    $sucursales_arr = array_add($sucursales_arr, $ac->nombre, $actividades_habilitadas);
                 }
             }
             

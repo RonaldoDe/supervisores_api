@@ -57,7 +57,7 @@ class HomeSupervisorController extends Controller
                 }
 
             }
-            $sucursales_arr = array_add($sucursales_arr, $ac->nombre, $actividades_habilitadas);
+            $sucursales_arr = array_add($sucursales_arr, $ac->nombre, $actividades_habilitadas->ac->nombre_actividad);
 
             
         }

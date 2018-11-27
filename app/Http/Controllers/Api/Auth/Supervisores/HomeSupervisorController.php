@@ -51,8 +51,8 @@ class HomeSupervisorController extends Controller
             foreach($fe as $fecha){
                 if($fecha->fecha_inicio == date('Y-m-d 00:00:00') && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
                     $fecha->nombre_tabla = $ac->nombre_tabla;
-                    $fecha->nombre_sucursal = $ac->nombre;
-                    $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre_actividad, $fecha);
+                    $fecha->nombre_sucursal = $ac->nombre_ctividad;
+                    $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre, $fecha);
                 }
             }
             

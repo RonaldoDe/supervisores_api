@@ -41,6 +41,7 @@ class HomeSupervisorController extends Controller
        
        //array que almacenara las actividades correspondientes al dia actual 
        $actividades_habilitadas = array();
+       $sucursales_arr = array();
 
        //bucle que itera las actividades y las obtiene segun la fecha
        foreach($actividades as $ac){
@@ -52,12 +53,13 @@ class HomeSupervisorController extends Controller
                 if($fecha->fecha_inicio == date('Y-m-d 00:00:00') && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
                     $fecha->nombre_tabla = $ac->nombre_tabla;
                     $fecha->nombre_actividad = $ac->nombre_actividad;
-                    $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre_actividad.' - '.$ac->nombre, $fecha);
+                    $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre_actividad, $fecha);
+                    $sucursales_arr = array_add($sucursales_arr, $ac->nombre_actividad, $actividades_habilitadas);
                 }
             }
             
         }
-            return response()->json([$actividades_habilitadas,'datos_usuario' => $user_supervisor]);
+            return response()->json(['Actividades' => $sucursales_arr,'datos_usuario' => $user_supervisor]);
         
     }
 

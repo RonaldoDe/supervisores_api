@@ -57,7 +57,7 @@ class HomeSupervisorController extends Controller
             }
             
         }
-            return response()->json([$actividades_habilitadas, $user_supervisor]);
+            return response()->json([$actividades_habilitadas,'datos_usuario' => $user_supervisor]);
         
     }
 

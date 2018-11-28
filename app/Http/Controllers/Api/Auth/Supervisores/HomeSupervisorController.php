@@ -36,7 +36,7 @@ class HomeSupervisorController extends Controller
        ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
        ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
        ->where('p.id_supervisor',$usuario_rol->id_usuario_roles)
-       ->orderby('ac.id_prioridad','desc')
+       ->orderby('ac.id_plan_trabajo','desc')
        ->get();
        
        //array que almacenara las actividades correspondientes al dia actual 
@@ -46,7 +46,6 @@ class HomeSupervisorController extends Controller
        //bucle que itera las actividades y las obtiene segun la fecha
        foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
-            ->orderBy('ac.id_prioridad', 'desc')
             ->get();
 
             foreach($fe as $fecha){
@@ -54,9 +53,7 @@ class HomeSupervisorController extends Controller
                     $fecha->nombre_tabla = $ac->nombre_tabla;
                     $fecha->nombre_sucursal = $ac->nombre;
                     $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre_actividad, $fecha);
-                    if($ac->nombre == $fecha->nombre_sucursal){
-                        $sucursales_arr = array_add($sucursales_arr, $ac->nombre, $actividades_habilitadas);    
-                    }
+                    
                 }
             }
             

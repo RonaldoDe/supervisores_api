@@ -33,15 +33,15 @@ class HomeSupervisorController extends Controller
        ->where('ur.id_usuario',$user_supervisor->id_usuario)
        ->first();
 
-        //obtener las actividades segun su plan de trabajo 
+        //obtener las actividades segun su plan de trabajo
        $actividades=DB::table('plan_trabajo_asignacion as p')
        ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
        ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
        ->where('p.id_supervisor',$usuario_rol->id_usuario_roles)
        ->orderby('ac.id_plan_trabajo','desc')
        ->get();
-       
-       //array que almacenara las actividades correspondientes al dia actual 
+
+       //array que almacenara las actividades correspondientes al dia actual
        $actividades_habilitadas = array();
 
        //bucle que itera las actividades y las obtiene segun la fecha
@@ -54,24 +54,24 @@ class HomeSupervisorController extends Controller
                     $fecha->nombre_tabla = $ac->nombre_tabla;
                     $fecha->nombre_sucursal = $ac->nombre;
                     $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre_actividad, $fecha);
-                    
+
                 }
             }
-            
-            
-            
+
+
+
         }
             if(count($actividades_habilitadas) > 0){
                 foreach($actividades_habilitadas as $key => $row){
                     $aux[$key] = $row->id_prioridad;
-                }   
+                }
                 array_multisort($aux, SORT_DESC, $actividades_habilitadas);
                 return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor]);
             }else{
                 return response()->json(['Actividades' => 'No tienes actividadedes para el dia de hoy','datos_usuario' => $user_supervisor],400);
             }
 
-        
+
     }
 
 }

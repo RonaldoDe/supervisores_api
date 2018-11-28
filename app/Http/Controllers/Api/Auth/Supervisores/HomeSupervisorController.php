@@ -47,6 +47,8 @@ class HomeSupervisorController extends Controller
        foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
             ->get();
+            
+            
 
             foreach($fe as $fecha){
                 if($fecha->fecha_inicio == date('Y-m-d 00:00:00') && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
@@ -58,7 +60,13 @@ class HomeSupervisorController extends Controller
             }
             
             
+            
         }
+            foreach($actividades_habilitadas as $key => $row){
+                $aux[$key] = $row->id_prioridad;
+            }   
+            array_multisort($aux, SORT_DESC, $actividades_habilitadas);
+
             return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor]);
         
     }

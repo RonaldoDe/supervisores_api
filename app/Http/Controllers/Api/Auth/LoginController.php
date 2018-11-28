@@ -41,14 +41,14 @@ class LoginController extends Controller
         }
         else
         {
- $params = [
-            'grant_type' => 'password',
-            'client_id' => $this->client->id,
-            'client_secret' => $this->client->secret,
-            'username' => request('username'),
-            'password' => request('password'),
-            'scope' => '*'
-        ];
+        $params = [
+                    'grant_type' => 'password',
+                    'client_id' => $this->client->id,
+                    'client_secret' => $this->client->secret,
+                    'username' => request('username'),
+                    'password' => request('password'),
+                    'scope' => '*'
+            ];
 
         $request->request->add($params);
         $proxy = Request::create('oauth/token', 'POST');
@@ -91,11 +91,9 @@ class LoginController extends Controller
     {
       $accessToken = Auth::user()->token();
 
-      DB::table('oauth_refresh_tokens')->where('access_token_id', $accessToken->id)->update(['revoked' => true]);
+      DB::table('oauth_access_tokens')->where('user_id', Auth::id())->delete();
 
-      $accessToken->revoke();
-
-      return response()->json('Sesion cerrada', 204);
+      return response()->json(['message' => 'La sesion a sido cerrada con exito'], 200);
 
 
     }

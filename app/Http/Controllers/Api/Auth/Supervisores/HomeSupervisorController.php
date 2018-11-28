@@ -47,6 +47,7 @@ class HomeSupervisorController extends Controller
        //bucle que itera las actividades y las obtiene segun la fecha
        foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
+            ->where('ac.estado','activo')
             ->get();
 
             foreach($fe as $fecha){
@@ -66,7 +67,7 @@ class HomeSupervisorController extends Controller
                     $aux[$key] = $row->id_prioridad;
                 }
                 array_multisort($aux, SORT_DESC, $actividades_habilitadas);
-                return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor]);
+                return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor], 200);
             }else{
                 return response()->json(['Actividades' => 'No tienes actividadedes para el dia de hoy','datos_usuario' => $user_supervisor],400);
             }

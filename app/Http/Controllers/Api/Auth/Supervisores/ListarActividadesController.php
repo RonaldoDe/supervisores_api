@@ -49,7 +49,7 @@ class ListarActividadesController extends Controller
 
          $count++;
         foreach($fe as $fecha){
-            if($fecha->id_plan_trabajo == $ac->id_plan_trabajo){
+            if($fecha->id_plan_trabajo == $ac->id_plan_trabajo && $fecha->fecha_inicio >= date('Y-m-d 00:00:00')){
                 $fecha->nombre_actividad = $ac->nombre_actividad;
                 array_push($lista_actividades_arr, [$ac->nombre =>$fecha]);
                 //  $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre_actividad, $lista_actividades_arr);

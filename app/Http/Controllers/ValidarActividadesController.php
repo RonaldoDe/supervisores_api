@@ -19,7 +19,6 @@ class ValidarActividadesController extends Controller
         $validator=\Validator::make($request->all(),[
             'id_actividad' => 'required',
             'id_plan_trabajo' => 'required',
-            'calificacion' => 'required',
             'nombre_tabla' => 'required',
             'calificacion_pv' => 'required',
     
@@ -38,7 +37,7 @@ class ValidarActividadesController extends Controller
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observaciones = request('observaciones');
                 $actividad->estado = 'completo';
-                $actividad->calificacion = request('calificacion');
+                $actividad->calificacion = 1;
                 $actividad->calificacion_pv = request('calificacion_pv');
                 $actividad->update();
                 return response()->json(['message' => 'Actividad realizada con exito']);
@@ -53,8 +52,9 @@ class ValidarActividadesController extends Controller
          //validacion de los datos de la actividad
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
-             'calificacion' => 'required',
-             'calificacion_pv' => 'required',
+            'nombre_tabla' => 'required',
+            'id_plan_trabajo' => 'required',
+            'calificacion_pv' => 'required',
      
          ]);
          if($validator->fails())
@@ -71,7 +71,7 @@ class ValidarActividadesController extends Controller
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = request('calificacion');
+                 $actividad->calificacion = 1;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
@@ -85,9 +85,10 @@ class ValidarActividadesController extends Controller
      {
          //validacion de los datos de la actividad
          $validator=\Validator::make($request->all(),[
-             'id_actividad' => 'required',
-             'calificacion' => 'required',
-             'calificacion_pv' => 'required',
+            'id_actividad' => 'required',
+            'nombre_tabla' => 'required',
+            'id_plan_trabajo' => 'required',
+            'calificacion_pv' => 'required',
      
          ]);
          if($validator->fails())
@@ -104,7 +105,7 @@ class ValidarActividadesController extends Controller
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = request('calificacion');
+                 $actividad->calificacion = 1;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
@@ -118,9 +119,10 @@ class ValidarActividadesController extends Controller
      {
          //validacion de los datos de la actividad
          $validator=\Validator::make($request->all(),[
-             'id_actividad' => 'required',
-             'calificacion' => 'required',
-             'calificacion_pv' => 'required',
+            'id_actividad' => 'required',
+            'nombre_tabla' => 'required',
+            'id_plan_trabajo' => 'required',
+            'calificacion_pv' => 'required',
      
          ]);
          if($validator->fails())
@@ -137,7 +139,7 @@ class ValidarActividadesController extends Controller
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = request('calificacion');
+                 $actividad->calificacion = 1;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
@@ -156,7 +158,6 @@ class ValidarActividadesController extends Controller
              'valor_consignacion' => 'required',
              'valor_faltante' => 'required',
              'valor_sobrante' => 'required',
-             'calificacion' => 'required',
              'calificacion_pv' => 'required',
      
          ]);
@@ -178,7 +179,7 @@ class ValidarActividadesController extends Controller
                  $actividad->valor_faltante = request('valor_faltante');
                  $actividad->valor_sobrante = request('valor_sobrante');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = request('calificacion');
+                 $actividad->calificacion = 1;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
@@ -193,7 +194,6 @@ class ValidarActividadesController extends Controller
          //validacion de los datos de la actividad
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
-             'calificacion' => 'required',
              'calificacion_pv' => 'required',
      
          ]);
@@ -211,7 +211,7 @@ class ValidarActividadesController extends Controller
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = request('calificacion');
+                 $actividad->calificacion = 1;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);

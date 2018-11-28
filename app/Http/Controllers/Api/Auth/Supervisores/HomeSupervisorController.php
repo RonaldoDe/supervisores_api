@@ -41,14 +41,11 @@ class HomeSupervisorController extends Controller
        
        //array que almacenara las actividades correspondientes al dia actual 
        $actividades_habilitadas = array();
-       $sucursales_arr = array();
 
        //bucle que itera las actividades y las obtiene segun la fecha
        foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
             ->get();
-            
-            
 
             foreach($fe as $fecha){
                 if($fecha->fecha_inicio == date('Y-m-d 00:00:00') && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
@@ -62,12 +59,16 @@ class HomeSupervisorController extends Controller
             
             
         }
-            foreach($actividades_habilitadas as $key => $row){
-                $aux[$key] = $row->id_prioridad;
-            }   
-            array_multisort($aux, SORT_DESC, $actividades_habilitadas);
+            if(count($actividades_habilitadas) > 0){
+                foreach($actividades_habilitadas as $key => $row){
+                    $aux[$key] = $row->id_prioridad;
+                }   
+                array_multisort($aux, SORT_DESC, $actividades_habilitadas);
+                return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor]);
+            }else{
+                return response()->json(['Actividades' => 'No tienes actividadeds para el dia de hoy','datos_usuario' => $user_supervisor],400);
+            }
 
-            return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor]);
         
     }
 

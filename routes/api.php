@@ -34,6 +34,7 @@ Route::post('CrearActividadLibroFaltante', 'Api\Auth\Coordinador\Actividades\Cre
 Route::post('CrearActividadEvaluacionPedido', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadEvaluacionPedidos');
 
 Route::post('login', 'Api\Auth\LoginController@login');
+//Route::post('loginMovil', 'Api\Auth\Supervisores\LoginSupervisoresController@login');
 //Route::post('refresh', 'Api\Auth\LoginController@refresh');
 //ruta protegidad por el middleware y Auth donde iran todos los controladores en geneal para los usuarios
 Route::middleware('auth:api')->group(function () {
@@ -82,6 +83,14 @@ Route::post('logout', 'Api\Auth\LoginController@logout');//controlador de cerrar
     Route::get('MostrarRoles', 'Api\Auth\Administrador\CrearUsuariosController@MostrarRol');
     Route::post('crearRegion', 'Api\Auth\Administrador\CrearUsuariosController@crearRegion');
 
+});
+
+//rutas para un Supervisor
+Route::middleware(['auth:api','supervisores'])->group(function(){
+    //Vista de inicio para los supervisores
+    Route::get('homeSupervisor', 'Api\Auth\Supervisores\HomeSupervisorController@index');
+    //ruta de envio de datos para las actividades
+    Route::post('actividad', 'Api\Auth\Supervisores\ActividadesController@index');
 });
 
 

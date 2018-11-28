@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api\Auth\Supervisores;
 
 use Illuminate\Http\Request;
 use Laravel\Passport\Client;
@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class LoginController extends Controller
+class LoginSupervisoresController extends Controller
 {
 
     private $client;
@@ -21,7 +21,6 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-
       /*  $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
@@ -58,34 +57,9 @@ class LoginController extends Controller
 
         }
 
-
-
-
        
 
     }
-
-    public function refresh(Request $request)
-    {
-        $this->validate($request, [
-            'refresh_token' => 'required'
-        ]);
-        
-        $params = [
-            'grant_type' => 'refresh_token',
-            'client_id' => $this->client->id,
-            'client_secret' => $this->client->secret,
-            'username' => request('username'),
-            'password' => request('password')
-        ];
-
-        $request->request->add($params);
-
-         $proxy = Request::create('oauth/token', 'POST');
-
-        return Route::dispatch($proxy);
-    }
-
 
     public function logout(Request $request)
     {
@@ -95,7 +69,7 @@ class LoginController extends Controller
 
       $accessToken->revoke();
 
-      return response()->json('Sesion cerrada', 204);
+      return response()->json([], 204);
 
 
     }

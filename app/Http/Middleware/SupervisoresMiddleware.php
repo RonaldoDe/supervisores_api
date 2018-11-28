@@ -30,8 +30,7 @@ class SupervisoresMiddleware
             $user_super=DB::table('usuarios_roles as ur')
             ->where('ur.id_usuario','=',$user_supervisor->id_usuario)
             ->where('ur.id_rol','=',1)
-            ->first();
-
+            ->get();
             if(count($user_super)>0){
                 return $next($request);
             }

@@ -52,7 +52,7 @@ public function validarFechasInicioRepetido($array){
         for($j=0; $j<sizeof($array);$j++){
             if($j!=$i)
             {
-                if($array[$i]["fecha_inicio"]==$array[$j]["fecha_inicio"]){
+                if($array[$i]["fecha_inicio"]==$array[$j]["fecha_inicio"] || $array[$i]["fecha_fin"]==$array[$j]["fecha_fin"]){
 
                     $sw=$sw+1;
 
@@ -69,19 +69,22 @@ public function validarFechasInicioRepetido($array){
 }
 //funcion para actividades que el request de las fechas no son array devuelve si exiten fechas de inicio en el mismo plan de rabajo
 //y en una actividad o tabla especifica
-public function validarQuenoExistanFechasRepetidadEnLaBase($tabla,$id_plan_trabajo,$fecha_inicio){
+public function validarQuenoExistanFechasRepetidadEnLaBase($consulta,$fecha_ini,$fecha_finn){
 
 
 
     $sw=0;
-    $respuesta=DB::table($tabla)
-    ->select('id_plan_trabajo','fecha_inicio')
-    ->where('id_plan_trabajo','=',$id_plan_trabajo)
-    ->where('fecha_inicio','=',$fecha_inicio)->get();
+    foreach($consulta as $valor){
+        if($valor->fecha_inicio == $fecha_ini.' 00:00:00' || $valor->fecha_fin ==$fecha_finn.' 23:59:00'){
 
-    if(count($respuesta)>0){
-        $sw=$sw+1;
+         $sw++;
+
+
+        }
+
     }
+
+
 
     return $sw;
 }
@@ -95,7 +98,7 @@ public function validarFechasBaseDatoArray($fechas_array,$consulta){
     $sw=0;
     foreach($fechas_array as $valor){
         foreach($consulta as $valor1){
-            if($valor['fecha_inicio'].' 00:00:00' == $valor1->fecha_inicio){
+            if($valor['fecha_inicio'].' 00:00:00' == $valor1->fecha_inicio || $valor['fecha_fin'].' 23:59:00' == $valor1->fecha_fin){
                 $sw++;
             }
         }

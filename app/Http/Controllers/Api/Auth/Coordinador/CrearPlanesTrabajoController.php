@@ -36,6 +36,14 @@ class CrearPlanesTrabajoController extends Controller
             $date = Carbon::now("America/Bogota");
             $day=$date->toDateTimeString();
 
+            //obtener el id del cordinador logueado
+            $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+            $cordinador=DB::table('coordinadores')
+            ->select('id_cordinador')
+            ->where('correo','=',$user->email)
+            ->first();
+
+            if($cordinador!==null){
 
 
             $plan_trabajo =PlanTrabajoAsignacion::create([
@@ -44,11 +52,21 @@ class CrearPlanesTrabajoController extends Controller
                 'fecha_creacion' =>$day,
                 'id_supervisor' =>request('id_supervisor'),
                 'estado'=>0,
+                'idcoornidador' =>$cordinador->id_cordinador,
 
             ]);
+            return response()->json(["id_plan_trabajo"=>$plan_trabajo->id_plan_trabajo],201);
+
+            }else{
+
+                return response()->json(["error"=>"no hay existe el corrdinador"],400);
+            }
+
+
+
 
             //retorno del id creado en ese momento para asignarlo alas actividades
-            return response()->json(["id_plan_trabajo"=>$plan_trabajo->id_plan_trabajo],201);
+
         }
 
     }

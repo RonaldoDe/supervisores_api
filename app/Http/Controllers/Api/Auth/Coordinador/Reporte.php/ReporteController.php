@@ -13,5 +13,16 @@ use Carbon\Carbon;
 class CrearReportesPlanesTrabajo extends Controller
 {
 
+    public function mostrarReportePorCordinador(){
+
+        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+        $cordinador=DB::table('coordinadores')
+        ->select('id_cordinador')
+        ->where('correo','=',$user->email)
+        ->first();
+
+
+
+    }
 
 }

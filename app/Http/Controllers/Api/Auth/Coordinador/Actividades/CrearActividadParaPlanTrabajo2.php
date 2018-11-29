@@ -43,7 +43,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
 
             $fechas_base_datos=DB::table('kardex')
-                        ->select('fecha_inicio','id_plan_trabajo')
+                        ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                         ->where('id_plan_trabajo',request('id_plan_trabajo'))
                         ->get();
 
@@ -63,7 +63,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                         $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                         if($validacion_fecha_base > 0){
-                            return response()->json(["error"=>'Las fechas inicio ya estan  registrada en esta actividad con este plan de trabajo'],400);
+                            return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato'],400);
                         }else{
 
                 $kardex =Kardex::create([
@@ -78,7 +78,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                 ]);
                         }
                     }else{
-                        return response()->json(["error"=>"las fechas inicios  son iguales"],400);
+                        return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales"],400);
                     }
                  }
                 return response()->json(["succes"=>"Actividad Kardex creada"],201);
@@ -116,7 +116,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                 $fechas_converter_d=json_decode($fechas_converter,true);
 
                 $fechas_base_datos=DB::table('seguimiento_vendedores')
-                ->select('fecha_inicio','id_plan_trabajo')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
                 ->get();
 
@@ -137,7 +137,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                             $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                             if($validacion_fecha_base > 0){
-                                return response()->json(["error"=>'Las fechas inicio ya estan  registrada en esta actividad con este plan de trabajo'],400);
+                                return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato '],400);
                             }else{
 
                             $seguimiento_vendedor =SeguimientoVendedor::create([
@@ -154,7 +154,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                             }
 
                         }else{
-                            return response()->json(["error"=>"las fechas inicios  son iguales"],400);
+                            return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes"],400);
                         }
 
 
@@ -197,17 +197,21 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $tabla='evaluacion_pedidos';
-                    $id_plan_t=request('id_plan_trabajo');
-                    $fecha_ini=request('fecha_inicio');
+                    $fechas_base_datos=DB::table('evaluacion_pedidos')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
 //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
 //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($tabla,$id_plan_t,$fecha_ini);
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
 
             if($respuesta>0){
 
-                return response()->json (["error"=>"ya hay un registro con esta fecha de inicio en esta actividad y este plan de trabajo"],400);
+                return response()->json (["error"=>"ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato"],400);
 
             }else{
                     $evaluacionPedidos =EvaluacionPedidos::create([
@@ -227,7 +231,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                     return response()->json(["succes"=>" Actividad Evaluacion Pedidos  creada"],201);
 
                 }else{
-                    return response()->json(["error"=>"  fechas incorrectas"],400);
+                    return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
 
                 }
 
@@ -266,17 +270,20 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
 
+                    $fechas_base_datos=DB::table('presupuesto_pedido')
+                    ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                    ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                    ->get();
 
-                        $tabla='presupuesto_pedido';
-                        $id_plan_t=request('id_plan_trabajo');
-                        $fecha_ini=request('fecha_inicio');
+                $fecha_ini=request('fecha_inicio');
+                $fecha_finn=request('fecha_fin');
 //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
 //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-                $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($tabla,$id_plan_t,$fecha_ini);
+                $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
                         if($respuesta>0){
 
-                        return response()->json (["error"=>"ya hay un registro con esta fecha de inicio en esta actividad"],400);
+                        return response()->json (["error"=>"ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato"],400);
 
                     }else{
 
@@ -297,7 +304,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                     return response()->json(["succes"=>" Actividad Presupuesto pedidos creada"],201);
 
                 }else{
-                    return response()->json(["error"=>"  fechas incorrectas"],400);
+                    return response()->json(["error"=>" las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
 
                 }
 
@@ -334,7 +341,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
 
             $fechas_base_datos=DB::table('libros_faltantes')
-            ->select('fecha_inicio','id_plan_trabajo')
+            ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
             ->where('id_plan_trabajo',request('id_plan_trabajo'))
             ->get();
 
@@ -354,7 +361,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                         $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                         if($validacion_fecha_base > 0){
-                            return response()->json(["error"=>'Las fechas inicio ya estan  registrada en esta actividad con este plan de trabajo'],400);
+                            return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato'],400);
                         }else{
 
 
@@ -372,7 +379,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                 ]);
                         }
                     }else{
-                        return response()->json(["error"=>"las fechas inicios  son iguales"],400);
+                        return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes"],400);
                     }
                  }
                 return response()->json(["succes"=>"Actividad libros faltantes creada"],201);
@@ -411,17 +418,21 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $tabla='captura_cliente';
-                    $id_plan_t=request('id_plan_trabajo');
-                    $fecha_ini=request('fecha_inicio');
+                    $fechas_base_datos=DB::table('captura_cliente')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
 //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
 //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($tabla,$id_plan_t,$fecha_ini);
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
 
             if($respuesta>0){
 
-                return response()->json (["error"=>"ya hay un registro con esta fecha de inicio en esta actividad y este plan de trabajo"],400);
+                return response()->json (["error"=>"ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato"],400);
 
             }else{
                     $captura_cliente =CapturaClientes::create([

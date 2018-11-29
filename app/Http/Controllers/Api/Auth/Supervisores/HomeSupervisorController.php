@@ -24,7 +24,9 @@ class HomeSupervisorController extends Controller
        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
 
        //obtener los datos del usuario supervisor
-       $user_supervisor=DB::table('usuario as u')->where('u.correo','=',$user->email)->first();
+       $user_supervisor=DB::table('usuario as u')
+       ->select('u.id_usuario', 'u.nombre', 'u.apellido', 'u.cedula', 'u.correo', 'u.telefono')
+       ->where('u.correo','=',$user->email)->first();
 
         //obtener el id del rol del usuario
        $usuario_rol = DB::table('usuarios_roles as ur')
@@ -45,10 +47,11 @@ class HomeSupervisorController extends Controller
        //bucle que itera las actividades y las obtiene segun la fecha
        foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
+            ->where('ac.estado','activo')
             ->get();
 
             foreach($fe as $fecha){
-                if($fecha->fecha_inicio == date('Y-m-d 00:00:00') && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
+                if($fecha->fecha_inicio >= date('Y-m-d 00:00:00') && date('Y-m-d 00:00:00') <= $fecha->fecha_fin && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
                     $fecha->nombre_tabla = $ac->nombre_tabla;
                     $fecha->nombre_sucursal = $ac->nombre;
                     $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre_actividad, $fecha);
@@ -64,7 +67,7 @@ class HomeSupervisorController extends Controller
                     $aux[$key] = $row->id_prioridad;
                 }
                 array_multisort($aux, SORT_DESC, $actividades_habilitadas);
-                return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor]);
+                return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor], 200);
             }else{
                 return response()->json(['Actividades' => 'No tienes actividadedes para el dia de hoy','datos_usuario' => $user_supervisor],400);
             }

@@ -90,7 +90,7 @@ Route::post('logout', 'Api\Auth\LoginController@logout');//controlador de cerrar
 Route::middleware(['auth:api','supervisores'])->group(function(){
     //Vista de inicio para los supervisores
     Route::get('homeSupervisor', 'Api\Auth\Supervisores\HomeSupervisorController@index');
-    Route::get('mostrarActivcidades', 'Api\Auth\Supervisores\ListarActividadesController@index');
+    Route::get('mostrarActividades', 'Api\Auth\Supervisores\ListarActividadesController@index');
     //ruta de envio de datos para las actividades
     Route::post('actividad', 'Api\Auth\Supervisores\ActividadesController@index');
 });

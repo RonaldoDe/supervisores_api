@@ -60,8 +60,8 @@ class HomeSupervisorController extends Controller
             }
 
 
-
         }
+        //validar que el array trae actividades y ordenarlas por prioridad
             if(count($actividades_habilitadas) > 0){
                 foreach($actividades_habilitadas as $key => $row){
                     $aux[$key] = $row->id_prioridad;

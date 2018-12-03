@@ -13,7 +13,7 @@ class PlanTrabajoAsignacion  extends Model{
 
     public $timestamps=false;
 
-    protected $fillable=['id_sucursal','fecha_creacion','id_supervisor','estado'];
+    protected $fillable=['id_sucursal','fecha_creacion','id_supervisor','estado','idcoordinador'];
 
 
 

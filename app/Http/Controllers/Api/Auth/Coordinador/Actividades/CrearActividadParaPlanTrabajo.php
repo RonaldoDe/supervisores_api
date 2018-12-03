@@ -27,6 +27,7 @@ class CrearActividadParaPlanTrabajo extends Controller
 
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
+
             'id_plan_trabajo'=>'required|numeric',
             'array_fechas_apertura.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'array_fechas_apertura.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -46,6 +47,12 @@ class CrearActividadParaPlanTrabajo extends Controller
             //decodificcion del reques recibido para iterar el aary
             $fechas_converter_d=json_decode($fechas_converter,true);
 
+            //consulta ala base de dato para traer todas las fechas de una actividad en un lan de trabajo especifico
+            $fechas_base_datos=DB::table('apertura')
+                        ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                        ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                        ->get();
+
 
 
                //ciclo que me me permite iterar el array  mediante la funcion sizeof
@@ -57,8 +64,17 @@ class CrearActividadParaPlanTrabajo extends Controller
                {
                for($i=0; $i<sizeof($fechas_converter_d);$i++)
                {
+                $validacionFechas=$this->validarFechasInicioRepetido($fechas_converter_d);
 
-//validar la fecha de inicio en el requiere de la funcion validater pendiente cv
+                if($validacionFechas==0){
+
+                    $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
+
+                    if($validacion_fecha_base > 0){
+                        return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato '],400);
+                    }else{
+
+
                    $apertura =Apertura::create([
 
                        'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -69,13 +85,18 @@ class CrearActividadParaPlanTrabajo extends Controller
                        'estado' =>'Activo',
 
                    ]);
+                    }
+
+                }else{
+                    return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales "],400);
+                }
 
                }
                return response()->json(["succes"=>"Actividad Apertura creada"],201);
             }
 
             else if($validacion>0){
-                return response()->json(["error"=>"ERROR"],401);
+                return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la feca final"],400);
             }
 
 
@@ -118,23 +139,42 @@ public function crearActividadDocumentacionLegal(Request $request){
 
         if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-            $documentacion_legal =DocumentacionLegal::create([
 
-                'id_plan_trabajo' =>request('id_plan_trabajo'),
-                'fecha_inicio' =>request('fecha_inicio'),
-                'fecha_fin' =>request('fecha_fin'.'23:59:00'),
-                'observacion'=>'',
-                'id_prioridad' =>request('id_prioridad'),
-                'estado' =>'Activo',
+            $fechas_base_datos=DB::table('documentacion_legal')
+            ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+            ->where('id_plan_trabajo',request('id_plan_trabajo'))
+            ->get();
 
-            ]);
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
 
-            // DB::commit();
+
+
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["error"=>"ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato "],400);
+            }else{
+
+                $documentacion_legal =DocumentacionLegal::create([
+
+                    'id_plan_trabajo' =>request('id_plan_trabajo'),
+                    'fecha_inicio' =>request('fecha_inicio'),
+                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                    'observacion'=>'',
+                    'id_prioridad' =>request('id_prioridad'),
+                    'estado' =>'Activo',
+
+                ]);
+
+            }
+
 
             return response()->json(["succes"=>" Actividad documentacion legal creada"],201);
 
         }else{
-            return response()->json(["error"=>" fallaron las fechas"],401);
+            return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
 
         }
 
@@ -179,13 +219,16 @@ public function crearActividadDocumentacionLegal(Request $request){
         else
         {
 
-
-
             $fechas=request('array_fechas_papeleria');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary
             $fechas_converter_d=json_decode($fechas_converter,true);
+
+            $fechas_base_datos=DB::table('papeleria_consignaciones')
+            ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+            ->where('id_plan_trabajo',request('id_plan_trabajo'))
+            ->get();
 
             $validacion=$this->validarArrayFechas($fechas_converter_d);
 
@@ -194,6 +237,16 @@ public function crearActividadDocumentacionLegal(Request $request){
 
                for($i=0; $i<sizeof($fechas_converter_d);$i++)
                {
+
+                $validacionFechas=$this->validarFechasInicioRepetido($fechas_converter_d);
+
+                if($validacionFechas==0){
+
+                    $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
+
+                    if($validacion_fecha_base > 0){
+                        return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato '],400);
+                    }else{
 
                    $papeleria =PapeleriaConsignaciones::create([
 
@@ -207,11 +260,16 @@ public function crearActividadDocumentacionLegal(Request $request){
 
                    ]);
 
+                    }
+                }else{
+                    return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales"],400);
+                }
+
                }
                return response()->json(["succes"=>" papeleria consignacion creada"],201);
             }
             else if($validacion>0){
-                return response()->json(["error"=>"ERROR"],401);
+                return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
             }
 
 
@@ -247,6 +305,11 @@ public function crearActividadDocumentacionLegal(Request $request){
             //decodificcion del reques recibido para iterar el aary
             $fechas_converter_d=json_decode($fechas_converter,true);
 
+            $fechas_base_datos=DB::table('formulas_despachos')
+            ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+            ->where('id_plan_trabajo',request('id_plan_trabajo'))
+            ->get();
+
             $validacion=$this->validarArrayFechas($fechas_converter_d);
 
             if($validacion==0)
@@ -254,6 +317,15 @@ public function crearActividadDocumentacionLegal(Request $request){
 
                for($i=0; $i<sizeof($fechas_converter_d);$i++)
                {
+                $validacionFechas=$this->validarFechasInicioRepetido($fechas_converter_d);
+
+                if($validacionFechas==0){
+
+                    $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
+
+                    if($validacion_fecha_base > 0){
+                        return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato'],400);
+                    }else{
 
                    $formulas =FormulasDespachos::create([
 
@@ -266,13 +338,17 @@ public function crearActividadDocumentacionLegal(Request $request){
 
 
                    ]);
+                    }
+                }else{
+                    return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes"],400);
+                }
 
                }
                return response()->json(["succes"=>" formulas despachos creada"],201);
             }
 
             else if($validacion>0){
-                return response()->json(["error"=>"ERROR"],401);
+                return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
             }
 
 
@@ -310,6 +386,11 @@ public function crearActividadDocumentacionLegal(Request $request){
             //decodificcion del reques recibido para iterar el aary
             $fechas_converter_d=json_decode($fechas_converter,true);
 
+            $fechas_base_datos=DB::table('remisiones')
+            ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+            ->where('id_plan_trabajo',request('id_plan_trabajo'))
+            ->get();
+
             $validacion=$this->validarArrayFechas($fechas_converter_d);
 
             if($validacion==0)
@@ -318,6 +399,15 @@ public function crearActividadDocumentacionLegal(Request $request){
                for($i=0; $i<sizeof($fechas_converter_d);$i++)
                {
 
+                $validacionFechas=$this->validarFechasInicioRepetido($fechas_converter_d);
+
+                if($validacionFechas==0){
+
+                    $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
+
+                    if($validacion_fecha_base > 0){
+                        return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato'],400);
+                    }else{
                    $remisiones =Remisiones::create([
 
                        'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -330,11 +420,17 @@ public function crearActividadDocumentacionLegal(Request $request){
 
                    ]);
 
+                    }
+
+                }else{
+                    return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes"],400);
+                }
+
                }
                return response()->json(["succes"=>" actividad remision creada"],201);
             }
             else if($validacion>0){
-                return response()->json(["error"=>"ERROR"],401);
+                return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
             }
 
 
@@ -369,25 +465,46 @@ public function crearActividadDocumentacionLegal(Request $request){
 
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
+                $fechas_base_datos=DB::table('condiciones_locativas')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+
+
+//funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+//no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+
+        if($respuesta>0){
+
+            return response()->json (["error"=>"ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato"],400);
+
+        }else{
+
 
     //instancia del modelo documentacion legal para crear un registro de esta tabla
                 $condiciones_locativas =CondicionesLocativas::create([
 
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>request('fecha_inicio'),
-                    'fecha_fin' =>request('fecha_fin'.'23:59:00'),
+                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                     'observacion'=>'',
                     'id_prioridad' =>request('id_prioridad'),
                     'estado' =>'Activo',
 
                 ]);
+        }
 
                 // DB::commit();
 
                 return response()->json(["succes"=>" Actividad documentacion legal creada"],201);
                 }
                 else{
-                    return response()->json(["error"=>" fallaron las fechas"],401);
+                    return response()->json(["error"=>" las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
 
                 }
         }

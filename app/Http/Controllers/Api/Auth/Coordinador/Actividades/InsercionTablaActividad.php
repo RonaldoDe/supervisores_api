@@ -19,16 +19,16 @@ public function insertarTablasAactividad(Request $request){
 
     $validator=\Validator::make($request->all(),[
         'id_plan_trabajo'=>'required|numeric',
+
        'array_actividades.*.id_prioridad'=>'required|numeric',
        'array_actividades.*.nombre_tabla'=>'required',
        'array_actividades.*.nombre_actividad'=>'required'
 
+       ]);
 
-    ]);
-
-    if($validator->fails())
-    {
-      return response()->json( $errors=$validator->errors()->all() );
+       if($validator->fails())
+       {
+           return response()->json( $errors=$validator->errors()->all() );
     }
 
     else
@@ -40,6 +40,7 @@ public function insertarTablasAactividad(Request $request){
         $actividades_converter_d=json_decode($actividades_converter,true);
 
 
+
         for($i=0; $i<sizeof($actividades_converter_d);$i++){
 
             $actividad =ActividadesTabla::create([
@@ -47,15 +48,15 @@ public function insertarTablasAactividad(Request $request){
                 'id_plan_trabajo' =>request('id_plan_trabajo'),
                 'id_prioridad' =>$actividades_converter_d[$i]["id_prioridad"],
                 'nombre_tabla' =>$actividades_converter_d[$i]["nombre_tabla"],
-                'nombre_actividad'=>$actividades_converter_d[$i]["nombre_actividad"],
+                'nombre_actividad'=>$actividades_converter_d[$i]["nombre_actividad"]
 
-            ]);
+                ]);
 
 
         }
 
-        return response()->json(["succes"=>"codificacion de tabla"],201);
 
+        return response()->json(["message "=>'Activida creada cvX50'],201);
 
     }
 

@@ -25,7 +25,7 @@ class HomeSupervisorController extends Controller
 
        //obtener los datos del usuario supervisor
        $user_supervisor=DB::table('usuario as u')
-       ->select('u.id_usuario', 'u.nombre', 'u.apellido', 'u.cedula', 'u.correo', 'u.telefono')
+       ->select('u.id_usuario', 'u.nombre', 'u.apellido', 'u.cedula', 'u.correo', 'u.telefono', 'u.codigo', 'u.foto')
        ->where('u.correo','=',$user->email)->first();
 
         //obtener el id del rol del usuario

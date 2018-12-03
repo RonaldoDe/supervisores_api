@@ -52,7 +52,7 @@ class CrearPlanesTrabajoController extends Controller
                 'fecha_creacion' =>$day,
                 'id_supervisor' =>request('id_supervisor'),
                 'estado'=>0,
-                'idcoornidador' =>$cordinador->id_cordinador,
+                'idcoordinador' =>$cordinador->id_cordinador,
 
             ]);
             return response()->json(["id_plan_trabajo"=>$plan_trabajo->id_plan_trabajo],201);

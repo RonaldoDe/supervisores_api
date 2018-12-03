@@ -39,13 +39,16 @@ Route::post('login', 'Api\Auth\LoginController@login');
 //Route::post('refresh', 'Api\Auth\LoginController@refresh');
 //ruta protegidad por el middleware y Auth donde iran todos los controladores en geneal para los usuarios
 Route::middleware('auth:api')->group(function () {
-Route::post('logout', 'Api\Auth\LoginController@logout');//controlador de cerrar cesion
-//Route::get('dashboard', 'Api\DashboardWebController@index');//valida el tipo de usuario que se autentifica
+    Route::post('logout', 'Api\Auth\LoginController@logout');//controlador de cerrar cesion
+    //Route::get('dashboard', 'Api\DashboardWebController@index');//valida el tipo de usuario que se autentifica
 });
 
 //colcoar las validaciones del array por fechas base de datos esta en plantrabajoactividad3
 //rutas coordinadores
-    Route::middleware(['auth:api','coordinadores'])->group(function(){
+Route::middleware(['auth:api','coordinadores'])->group(function(){
+    //se agregaron estos para ps repores segir mirando
+    Route::get('reporte', 'Api\Auth\Coordinador\Reporte\ReporteController@mostrarReportePorCoordinador');
+    Route::get('reporteActividad', 'Api\Auth\Coordinador\Reporte\ReporteController@mostrarActividadesPorSucursal');
     Route::get('HomeCoordinador', 'Api\Auth\Coordinador\HomeCoordinadorController@index');
     Route::post('CrearPlanTrabajo', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@crearPlanTrabajo');
     Route::post('CrearSupervisoresCord', 'Api\Auth\Coordinador\HomeCoordinadorController@CrearSupervisores');

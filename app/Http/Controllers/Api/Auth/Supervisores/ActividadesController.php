@@ -25,12 +25,16 @@ class ActividadesController extends ValidarActividadesController
         else
         {
             
-            //guada el nombre de la tabla de la actividad
+            //guarda el nombre de la tabla de la actividad
             $tabla = request('nombre_tabla');
             
             //valida la tabla y llama la funcion del controlador que inserta y valida los datos de la actividad
-            $validar=$this->$tabla($request);
-            return $validar;
+            if(method_exists($this, $tabla)){
+                $validar=$this->$tabla($request);
+                return $validar;
+            }else{
+                return response()->json(['message' => 'El metodo no existe']);
+            }
         }       
  
     }

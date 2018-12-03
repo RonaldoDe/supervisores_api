@@ -9,6 +9,17 @@ use App\Modelos\Actividades\PapeleriaConsignaciones;
 use App\Modelos\Actividades\FormulasDespachos;
 use App\Modelos\Actividades\Remisiones;
 use App\Modelos\Actividades\Kardex;
+use App\Modelos\Actividades\CapturaClientes;
+use App\Modelos\Actividades\ConvenioExhibicion;
+use App\Modelos\Actividades\EvaluacionPedidos;
+use App\Modelos\Actividades\Excesos;
+use App\Modelos\Actividades\IngresoSucursal;
+use App\Modelos\Actividades\LibroAgendasCliente;
+use App\Modelos\Actividades\LibrosFaltantes;
+use App\Modelos\Actividades\LibroVencimientos;
+use App\Modelos\Actividades\PresupuestoPedidos;
+use App\Modelos\Actividades\RevisionCompletaInventarios;
+use App\Modelos\Actividades\SeguimientoVendedor;
 
 class ValidarActividadesController extends Controller
 {
@@ -37,7 +48,7 @@ class ValidarActividadesController extends Controller
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observaciones = request('observaciones');
                 $actividad->estado = 'completo';
-                $actividad->calificacion = 1;
+                $actividad->calificacion = 5;
                 $actividad->calificacion_pv = request('calificacion_pv');
                 $actividad->update();
                 return response()->json(['message' => 'Actividad realizada con exito']);
@@ -71,7 +82,7 @@ class ValidarActividadesController extends Controller
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = 1;
+                 $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
@@ -105,7 +116,7 @@ class ValidarActividadesController extends Controller
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = 1;
+                 $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
@@ -139,7 +150,7 @@ class ValidarActividadesController extends Controller
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = 1;
+                 $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
@@ -179,7 +190,7 @@ class ValidarActividadesController extends Controller
                  $actividad->valor_faltante = request('valor_faltante');
                  $actividad->valor_sobrante = request('valor_sobrante');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = 1;
+                 $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
@@ -211,7 +222,351 @@ class ValidarActividadesController extends Controller
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = 1;
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->update();
+                 return response()->json(['message' => 'Actividad realizada con exito']);
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     //requerimiento de datos para la actividad
+     public function captura_cliente($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'calificacion_pv' => 'required',
+     
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( $errors=$validator->errors()->all() );
+         }
+ 
+         else
+         {
+ 
+             //actualizacion de la actividad por el supervisor
+             $actividad = CapturaClientes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->update();
+                 return response()->json(['message' => 'Actividad realizada con exito']);
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function convenio_exhibicion($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'calificacion_pv' => 'required',
+     
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( $errors=$validator->errors()->all() );
+         }
+ 
+         else
+         {
+ 
+             //actualizacion de la actividad por el supervisor
+             $actividad = ConvenioExhibicion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->update();
+                 return response()->json(['message' => 'Actividad realizada con exito']);
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function evaluacion_pedidos($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'calificacion_pv' => 'required',
+             'num_remision' => 'required',
+     
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( $errors=$validator->errors()->all() );
+         }
+ 
+         else
+         {
+ 
+             //actualizacion de la actividad por el supervisor
+             $actividad = EvaluacionPedidos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->num_remision = request('num_remision');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->update();
+                 return response()->json(['message' => 'Actividad realizada con exito']);
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function excesos($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'calificacion_pv' => 'required',
+     
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( $errors=$validator->errors()->all() );
+         }
+ 
+         else
+         {
+ 
+             //actualizacion de la actividad por el supervisor
+             $actividad = Excesos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->update();
+                 return response()->json(['message' => 'Actividad realizada con exito']);
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function ingreso_sucursal($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'calificacion_pv' => 'required',
+     
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( $errors=$validator->errors()->all() );
+         }
+ 
+         else
+         {
+ 
+             //actualizacion de la actividad por el supervisor
+             $actividad = IngresoSucursal::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->update();
+                 return response()->json(['message' => 'Actividad realizada con exito']);
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function libro_agendaclientes($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'calificacion_pv' => 'required',
+     
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( $errors=$validator->errors()->all() );
+         }
+ 
+         else
+         {
+ 
+             //actualizacion de la actividad por el supervisor
+             $actividad = LibroAgendasCliente::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->update();
+                 return response()->json(['message' => 'Actividad realizada con exito']);
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function libros_faltantes($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'calificacion_pv' => 'required',
+     
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( $errors=$validator->errors()->all() );
+         }
+ 
+         else
+         {
+ 
+             //actualizacion de la actividad por el supervisor
+             $actividad = LibrosFaltantes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->update();
+                 return response()->json(['message' => 'Actividad realizada con exito']);
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function libro_vencimientos($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'calificacion_pv' => 'required',
+     
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( $errors=$validator->errors()->all() );
+         }
+ 
+         else
+         {
+ 
+             //actualizacion de la actividad por el supervisor
+             $actividad = LibroVencimientos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->update();
+                 return response()->json(['message' => 'Actividad realizada con exito']);
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function presupuesto_pedido($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'calificacion_pv' => 'required',
+     
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( $errors=$validator->errors()->all() );
+         }
+ 
+         else
+         {
+ 
+             //actualizacion de la actividad por el supervisor
+             $actividad = PresupuestoPedidos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->update();
+                 return response()->json(['message' => 'Actividad realizada con exito']);
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function revision_completa_inventarios($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'calificacion_pv' => 'required',
+     
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( $errors=$validator->errors()->all() );
+         }
+ 
+         else
+         {
+ 
+             //actualizacion de la actividad por el supervisor
+             $actividad = RevisionCompletaInventarios::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->update();
+                 return response()->json(['message' => 'Actividad realizada con exito']);
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function seguimiento_vendedores($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'calificacion_pv' => 'required',
+     
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( $errors=$validator->errors()->all() );
+         }
+ 
+         else
+         {
+ 
+             //actualizacion de la actividad por el supervisor
+             $actividad = SeguimientoVendedor::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);

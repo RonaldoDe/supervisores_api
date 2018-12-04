@@ -39,7 +39,7 @@ class ListarActividadesController extends Controller
     //array que almacenará las actividanes correspondientes a los 7 dias despues del dia actual 
     $lista_actividades_arr = array();
     $semanal = date('Y-m-d', strtotime('+7 day', strtotime(date('Y-m-d'))));
-    //bucle que itera las actividades y las obtiene segun la fecha
+    //bucle que itera las actividades y las obtiene segun el plan de trabajo
     foreach($actividades as $ac){
         $fe = DB::table($ac->nombre_tabla. ' as ac')
          ->select('ac.fecha_inicio', 'ac.fecha_fin', 'ac.id_plan_trabajo')
@@ -48,8 +48,9 @@ class ListarActividadesController extends Controller
          ->get();
 
          $count++;
+        //  generar el array con el listado de actividades pendientes en la semana
         foreach($fe as $fecha){
-            if($fecha->id_plan_trabajo == $ac->id_plan_trabajo && $fecha->fecha_inicio >= date('Y-m-d 00:00:00') && $fecha->fecha_inicio <= $semanal.' 00:00:00'){
+            if($fecha->id_plan_trabajo == $ac->id_plan_trabajo && $fecha->fecha_fin <= $semanal.' 23:59:00'){
                 $fecha->nombre_actividad = $ac->nombre_actividad;
                 array_push($lista_actividades_arr, [$ac->nombre =>$fecha]);
                 
@@ -58,6 +59,7 @@ class ListarActividadesController extends Controller
         
         
     }
+        // validar si el array tiene actividades
          if(count($lista_actividades_arr) > 0){
              
              return response()->json(['Actividades' => $lista_actividades_arr],200);

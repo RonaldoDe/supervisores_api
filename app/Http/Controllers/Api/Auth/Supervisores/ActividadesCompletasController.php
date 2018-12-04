@@ -11,16 +11,11 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Modelos\Usuario;
 use App\Modelos\Usuario_roles;
-
-
-class HomeSupervisorController extends Controller
+class ActividadesCompletasController extends Controller
 {
-/*Author Ronaldo camacho */
-
-    public function index(Request $request)
+    public function index()
     {
-
-        //Se recupera los datos del usuario que se ha autenticado
+         //Se recupera los datos del usuario que se ha autenticado
        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
 
        //obtener los datos del usuario supervisor
@@ -47,7 +42,7 @@ class HomeSupervisorController extends Controller
        //bucle que itera las actividades y las obtiene segun la fecha
        foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
-            ->where('ac.estado','Activo')
+            ->where('ac.estado','completo')
             ->get();
 
             foreach($fe as $fecha){
@@ -74,5 +69,5 @@ class HomeSupervisorController extends Controller
 
 
     }
-
+    
 }

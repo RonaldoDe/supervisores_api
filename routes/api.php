@@ -93,9 +93,8 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
 Route::middleware(['auth:api','supervisores'])->group(function(){
     //Vista de inicio para los supervisores
     Route::get('homeSupervisor', 'Api\Auth\Supervisores\HomeSupervisorController@index');
-    //mostrar las actividades completas 
+
     Route::get('actividades_completas', 'Api\Auth\Supervisores\ActividadesCompletasController@index');
-    //mostrar todas lsa actividades del dia actual a 7 dias
     Route::get('mostrarActividades', 'Api\Auth\Supervisores\ListarActividadesController@index');
     //ruta de envio de datos para las actividades
     Route::post('actividad', 'Api\Auth\Supervisores\ActividadesController@index');

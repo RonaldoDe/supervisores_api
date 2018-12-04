@@ -21,7 +21,7 @@ class ValidarActividadesController extends Controller
             'id_plan_trabajo' => 'required',
             'nombre_tabla' => 'required',
             'calificacion_pv' => 'required',
-    
+
         ]);
         if($validator->fails())
         {
@@ -37,7 +37,7 @@ class ValidarActividadesController extends Controller
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observaciones = request('observaciones');
                 $actividad->estado = 'completo';
-                $actividad->calificacion = 1;
+                $actividad->calificacion = 5;
                 $actividad->calificacion_pv = request('calificacion_pv');
                 $actividad->update();
                 return response()->json(['message' => 'Actividad realizada con exito']);
@@ -55,23 +55,23 @@ class ValidarActividadesController extends Controller
             'nombre_tabla' => 'required',
             'id_plan_trabajo' => 'required',
             'calificacion_pv' => 'required',
-     
+
          ]);
          if($validator->fails())
          {
            return response()->json( $errors=$validator->errors()->all() );
          }
- 
+
          else
          {
- 
+
              //actualizacion de la actividad por el supervisor
              $actividad = CondicionesLocativas::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = 1;
+                 $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
@@ -89,23 +89,23 @@ class ValidarActividadesController extends Controller
             'nombre_tabla' => 'required',
             'id_plan_trabajo' => 'required',
             'calificacion_pv' => 'required',
-     
+
          ]);
          if($validator->fails())
          {
            return response()->json( $errors=$validator->errors()->all() );
          }
- 
+
          else
          {
- 
+
              //actualizacion de la actividad por el supervisor
              $actividad = FormulasDespachos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = 1;
+                 $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
@@ -123,23 +123,23 @@ class ValidarActividadesController extends Controller
             'nombre_tabla' => 'required',
             'id_plan_trabajo' => 'required',
             'calificacion_pv' => 'required',
-     
+
          ]);
          if($validator->fails())
          {
            return response()->json( $errors=$validator->errors()->all() );
          }
- 
+
          else
          {
- 
+
              //actualizacion de la actividad por el supervisor
              $actividad = Kardex::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = 1;
+                 $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
@@ -159,16 +159,16 @@ class ValidarActividadesController extends Controller
              'valor_faltante' => 'required',
              'valor_sobrante' => 'required',
              'calificacion_pv' => 'required',
-     
+
          ]);
          if($validator->fails())
          {
            return response()->json( $errors=$validator->errors()->all() );
          }
- 
+
          else
          {
- 
+
              //actualizacion de la actividad por el supervisor
              $actividad = PapeleriaConsignaciones::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
@@ -179,7 +179,7 @@ class ValidarActividadesController extends Controller
                  $actividad->valor_faltante = request('valor_faltante');
                  $actividad->valor_sobrante = request('valor_sobrante');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = 1;
+                 $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
@@ -195,23 +195,23 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
-     
+
          ]);
          if($validator->fails())
          {
            return response()->json( $errors=$validator->errors()->all() );
          }
- 
+
          else
          {
- 
+
              //actualizacion de la actividad por el supervisor
              $actividad = Remisiones::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->estado = 'completo';
-                 $actividad->calificacion = 1;
+                 $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);

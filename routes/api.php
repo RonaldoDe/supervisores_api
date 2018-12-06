@@ -45,6 +45,7 @@ Route::middleware('auth:api')->group(function () {
 
 //colcoar las validaciones del array por fechas base de datos esta en plantrabajoactividad3
 //rutas coordinadores
+Route::post('CrearActividadIngresoSucursal', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadIngresoSucursal');
 Route::middleware(['auth:api','coordinadores'])->group(function(){
     //se agregaron estos para ps repores segir mirando
     Route::get('reporte', 'Api\Auth\Coordinador\Reporte\ReporteController@mostrarReportePorCoordinador');
@@ -76,7 +77,6 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('CrearActividadConvenioExhibicion', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadConvenioExhibicion');
     Route::post('CrearActividadExcesos', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadExcesos');
     Route::post('CrearActividadLibroVencimientos', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadLibroVencimientos');
-    Route::post('CrearActividadIngresoSucursal', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadIngresoSucursal');
 });
 
 //rutas para un Administrador

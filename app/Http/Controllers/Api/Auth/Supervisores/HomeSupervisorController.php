@@ -59,7 +59,6 @@ class HomeSupervisorController extends Controller
                 }
             }
 
-
         }
         //validar que el array trae actividades y ordenarlas por prioridad
             if(count($actividades_habilitadas) > 0){
@@ -71,8 +70,6 @@ class HomeSupervisorController extends Controller
             }else{
                 return response()->json(['Actividades' => 'No tienes actividadedes para el dia de hoy','datos_usuario' => $user_supervisor],400);
             }
-
-
     }
 
 }

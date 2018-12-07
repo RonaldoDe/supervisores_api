@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -22,10 +23,6 @@ class LoginController extends Controller
     public function login(Request $request)
     {
 
-      /*  $this->validate($request, [
-            'username' => 'required',
-            'password' => 'required'
-        ]);*/
         $validator=\Validator::make($request->all(),[
     		'username' => 'required|email',
     		'password' => 'required|min:6',
@@ -41,26 +38,49 @@ class LoginController extends Controller
         }
         else
         {
-        $params = [
+            $user=DB::table('users as u')->where('u.email',request('username'))
+            ->first();
+            if (Hash::check(request('password'), $user->password)) {
+                DB::table('oauth_access_tokens')->where('user_id', $user->id)->delete();
+
+                $validar_token = DB::table('oauth_access_tokens')->where('user_id', $user->id)->first();
+                $params = [
                     'grant_type' => 'password',
                     'client_id' => $this->client->id,
                     'client_secret' => $this->client->secret,
                     'username' => request('username'),
                     'password' => request('password'),
                     'scope' => '*'
-            ];
+                ];
 
-        $request->request->add($params);
-        $proxy = Request::create('oauth/token', 'POST');
+                $request->request->add($params);
+                $proxy = Request::create('oauth/token', 'POST');
 
-        return Route::dispatch($proxy);
-        //return response()->json( $datos=['datos'] );
+                return Route::dispatch($proxy);
+            }else{
+                $validar_token = DB::table('oauth_access_tokens')->where('user_id', $user->id)->first();
+                $params = [
+                    'grant_type' => 'password',
+                    'client_id' => $this->client->id,
+                    'client_secret' => $this->client->secret,
+                    'username' => request('username'),
+                    'password' => request('password'),
+                    'scope' => '*'
+                ];
 
+                $request->request->add($params);
+                $proxy = Request::create('oauth/token', 'POST');
+
+                return Route::dispatch($proxy);
+            }
+            
+            
+
+            
+            //return response()->json( $datos=['datos'] );
+
+    
         }
-
-
-
-
        
 
     }
@@ -92,8 +112,8 @@ class LoginController extends Controller
       $accessToken = Auth::user()->token();
 
       DB::table('oauth_access_tokens')->where('user_id', Auth::id())->delete();
-
       return response()->json(['message' => 'La sesion a sido cerrada con exito'], 200);
+
 
 
     }

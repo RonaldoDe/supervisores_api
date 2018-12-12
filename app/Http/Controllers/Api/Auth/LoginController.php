@@ -40,23 +40,24 @@ class LoginController extends Controller
         {
             $user=DB::table('users as u')->where('u.email',request('username'))
             ->first();
-            if (Hash::check(request('password'), $user->password)) {
-                DB::table('oauth_access_tokens')->where('user_id', $user->id)->delete();
+            if($user != null){
+                if (Hash::check(request('password'), $user->password)) {
+                    DB::table('oauth_access_tokens')->where('user_id', $user->id)->delete();
 
-                $validar_token = DB::table('oauth_access_tokens')->where('user_id', $user->id)->first();
-                $params = [
-                    'grant_type' => 'password',
-                    'client_id' => $this->client->id,
-                    'client_secret' => $this->client->secret,
-                    'username' => request('username'),
-                    'password' => request('password'),
-                    'scope' => '*'
-                ];
+                    $validar_token = DB::table('oauth_access_tokens')->where('user_id', $user->id)->first();
+                    $params = [
+                        'grant_type' => 'password',
+                        'client_id' => $this->client->id,
+                        'client_secret' => $this->client->secret,
+                        'username' => request('username'),
+                        'password' => request('password'),
+                        'scope' => '*'
+                    ];
 
-                $request->request->add($params);
-                $proxy = Request::create('oauth/token', 'POST');
+                    $request->request->add($params);
+                    $proxy = Request::create('oauth/token', 'POST');
 
-                return Route::dispatch($proxy);
+                    return Route::dispatch($proxy);
             }else{
                 $validar_token = DB::table('oauth_access_tokens')->where('user_id', $user->id)->first();
                 $params = [
@@ -73,16 +74,12 @@ class LoginController extends Controller
 
                 return Route::dispatch($proxy);
             }
-            
-            
-
-            
-            //return response()->json( $datos=['datos'] );
-
-    
+        }else{
+            return response()->json(['message' => 'Usuario no encontrado'], 201);
         }
        
 
+        }
     }
 
     public function refresh(Request $request)

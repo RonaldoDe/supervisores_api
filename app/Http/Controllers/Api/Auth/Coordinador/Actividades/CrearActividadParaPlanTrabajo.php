@@ -30,7 +30,7 @@ class CrearActividadParaPlanTrabajo extends Controller
 
             'id_plan_trabajo'=>'required|numeric',
             'array_fechas_apertura.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_apertura.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
         ]);
         if($validator->fails())
         {
@@ -39,7 +39,7 @@ class CrearActividadParaPlanTrabajo extends Controller
 
         else
         {
-
+            $id_planT=request('id_plan_trabajo');
 
             $fechas=request('array_fechas_apertura');
             //codificacion a json
@@ -59,54 +59,135 @@ class CrearActividadParaPlanTrabajo extends Controller
                //itera mediante las propiedades del array asi como le mando los parametros
                //exactos los nombres de las propiedades
 
-               $plan_trabajo_existente=DB::table('plan_trabajo_asignacion')
-               ->select('id_plan_trabajo')
-               ->where('id_plan_trabajo',request('id_plan_trabajo'))
-               ->first();
+            //funcion en contrler que valida que un plan de trabajo exista en la base de datos
+               $validarPlanTrabajo=$this->validarQueExistaElPlandeTrabajo($id_planT);
 
-               if(count($plan_trabajo_existente)>0){
+               if(count($validarPlanTrabajo)>0){
+                $sw=0;
+                $fecha= date('Y-m-d');
+                for($i=0;$i<sizeof($fechas_converter_d);$i++){
 
+        if($fechas_converter_d[$i]["fecha_inicio"]>=$fecha ){
 
-               $validacion=$this->validarArrayFechas($fechas_converter_d);
-
-               if($validacion==0)
-               {
-               for($i=0; $i<sizeof($fechas_converter_d);$i++)
-               {
-                $validacionFechas=$this->validarFechasInicioRepetido($fechas_converter_d);
-
-                if($validacionFechas==0){
-
-                    $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
-
-                    if($validacion_fecha_base > 0){
-                        return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato '],400);
-                    }else{
+            $sw;
 
 
-                   $apertura =Apertura::create([
+        }else{
+            $sw=$sw+1;
+        }
 
-                       'id_plan_trabajo' =>request('id_plan_trabajo'),
-                       'fecha_inicio' =>$fechas_converter_d[$i]["fecha_inicio"],
-                       'fecha_fin' =>$fechas_converter_d[$i]["fecha_fin"]." "."23:59:00",
-                       'observaciones'=>'',
-                       'id_prioridad' =>1,
-                       'estado' =>'Activo',
+                }
 
-                   ]);
+                if($sw==0){
+
+                    $sw1=0;
+
+                    for($j=0;$j<sizeof($fechas_converter_d);$j++){
+
+                        for($k=0;$k<sizeof($fechas_converter_d);$k++){
+
+                            if($k!=$j)
+            {
+                if($fechas_converter_d[$j]["fecha_inicio"]==$fechas_converter_d[$k]["fecha_inicio"] ){
+
+                    $sw1=$sw1+1;
+
+                }
+            }
+
+                        }
+
+
                     }
 
                 }else{
-                    return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales "],400);
+                    return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual "],400);
                 }
 
-               }
-               return response()->json(["succes"=>"Actividad Apertura creada"],201);
-            }
+                $sw2=0;
+                if($sw1==0){
 
-            else if($validacion>0){
-                return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la feca final"],400);
-            }
+
+
+                    foreach($fechas_converter_d as $valor){
+
+                        foreach($fechas_base_datos as $valor1){
+
+                        if($valor['fecha_inicio'].' 00:00:00' == $valor1->fecha_inicio ){
+                                $sw2++;
+                            }
+                        }
+
+
+                    }
+
+                }else{
+                    return response()->json(["error"=>"las fechas inicios  no pueden ser  iguales "],400);
+                }
+
+                if($sw2>0){
+
+                    return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato '],400);
+
+                }else{
+
+                    for($i=0;$i<sizeof($fechas_converter_d);$i++){
+                    $apertura =Apertura::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>$fechas_converter_d[$i]["fecha_inicio"],
+                        'fecha_fin' =>$fechas_converter_d[$i]["fecha_inicio"]." "."23:59:00",
+                        'observaciones'=>'',
+                        'id_prioridad' =>1,
+                        'estado' =>'Activo',
+
+                    ]);
+                }
+                    return response()->json(["succes"=>"Actividad Apertura creada"],201);
+                }
+
+
+
+            //    $validacion=$this->validarArrayFechas($fechas_converter_d);
+
+            //    if($validacion==0)
+            //    {
+            //    for($i=0; $i<sizeof($fechas_converter_d);$i++)
+            //    {
+            //     $validacionFechas=$this->validarFechasInicioRepetido($fechas_converter_d);
+
+            //     if($validacionFechas==0){
+
+            //         $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
+
+            //         if($validacion_fecha_base > 0){
+            //             return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato '],400);
+            //         }else{
+
+
+            //        $apertura =Apertura::create([
+
+            //            'id_plan_trabajo' =>request('id_plan_trabajo'),
+            //            'fecha_inicio' =>$fechas_converter_d[$i]["fecha_inicio"],
+            //            'fecha_fin' =>$fechas_converter_d[$i]["fecha_inicio"]." "."23:59:00",
+            //            'observaciones'=>'',
+            //            'id_prioridad' =>1,
+            //            'estado' =>'Activo',
+
+            //        ]);
+            //         }
+
+            //     }else{
+            //         return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales "],400);
+            //     }
+
+            //    }
+            //    return response()->json(["succes"=>"Actividad Apertura creada"],201);
+            // }
+
+            // else if($validacion>0){
+            //     return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la feca final"],400);
+            // }
 
                }else{
 

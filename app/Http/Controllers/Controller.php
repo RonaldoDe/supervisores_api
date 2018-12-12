@@ -108,4 +108,22 @@ public function validarFechasBaseDatoArray($fechas_array,$consulta){
 
     return $sw;
 }
+
+public function validarQueExistaElPlandeTrabajo($id_planT){
+$sw=0;
+
+    $plan_trabajo_existente=DB::table('plan_trabajo_asignacion')
+    ->select('id_plan_trabajo')
+    ->where('id_plan_trabajo','=',$id_planT)
+    ->get();
+
+    return $plan_trabajo_existente;
+    // if(count($plan_trabajo_existente)>0){
+
+    //     $sw=$SW+1;
+    // }
+    // return
+
+
+}
 }

@@ -114,7 +114,5 @@ class LoginController extends Controller
       DB::table('oauth_access_tokens')->where('user_id', Auth::id())->delete();
       return response()->json(['message' => 'La sesion a sido cerrada con exito'], 200);
 
-
-
     }
 }

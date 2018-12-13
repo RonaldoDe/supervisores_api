@@ -46,7 +46,7 @@ class ValidarActividadesController extends Controller
             $actividad = Apertura::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
-                $actividad->observaciones = request('observaciones');
+                $actividad->observacion = request('observaciones');
                 $actividad->estado = 'completo';
                 $actividad->calificacion = 5;
                 $actividad->calificacion_pv = request('calificacion_pv');

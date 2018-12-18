@@ -59,23 +59,10 @@ class LoginController extends Controller
 
                     return Route::dispatch($proxy);
             }else{
-                $validar_token = DB::table('oauth_access_tokens')->where('user_id', $user->id)->first();
-                $params = [
-                    'grant_type' => 'password',
-                    'client_id' => $this->client->id,
-                    'client_secret' => $this->client->secret,
-                    'username' => request('username'),
-                    'password' => request('password'),
-                    'scope' => '*'
-                ];
-
-                $request->request->add($params);
-                $proxy = Request::create('oauth/token', 'POST');
-
-                return Route::dispatch($proxy);
+                return response()->json(['message' => 'Usuario o contraseña incorrectas'], 401);
             }
         }else{
-            return response()->json(['message' => 'Usuario no encontrado'], 201);
+            return response()->json(['message' => 'Usuario no encontrado'], 401);
         }
        
 

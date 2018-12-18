@@ -99,6 +99,8 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     Route::get('mostrarActividades', 'Api\Auth\Supervisores\ListarActividadesController@index');
     //ruta de envio de datos para las actividades
     Route::post('actividad', 'Api\Auth\Supervisores\ActividadesController@index');
+    //ruta de las descripciones de las actividades
+    Route::post('descripcionActividad', 'Api\Auth\Supervisores\DescripcionActividad@description');
 });
 
 

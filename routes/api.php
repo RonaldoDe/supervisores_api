@@ -100,9 +100,11 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     //ruta de envio de datos para las actividades
     Route::post('actividad', 'Api\Auth\Supervisores\ActividadesController@index');
     //ruta de las descripciones de las actividades
-    Route::post('descripcionActividad', 'Api\Auth\Supervisores\DescripcionActividad@description');
+    Route::get('descripcionActividad', 'Api\Auth\Supervisores\DescripcionActividadController@description');
 });
 
+Route::post('cambiar', 'Api\Auth\Supervisores\passwordUpdateController@passwordUpdate');
+Route::post('verify', 'Api\Auth\Supervisores\passwordUpdateController@verify');
 
 
 

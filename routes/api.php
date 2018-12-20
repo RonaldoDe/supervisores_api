@@ -35,12 +35,10 @@ Route::post('CrearActividadLibroFaltante', 'Api\Auth\Coordinador\Actividades\Cre
 Route::post('CrearActividadEvaluacionPedido', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadEvaluacionPedidos');
 
 Route::post('login', 'Api\Auth\LoginController@login');
-//Route::post('loginMovil', 'Api\Auth\Supervisores\LoginSupervisoresController@login');
 //Route::post('refresh', 'Api\Auth\LoginController@refresh');
 //ruta protegidad por el middleware y Auth donde iran todos los controladores en geneal para los usuarios
 Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'Api\Auth\LoginController@logout');//controlador de cerrar cesion
-    //Route::get('dashboard', 'Api\DashboardWebController@index');//valida el tipo de usuario que se autentifica
 });
 
 //colcoar las validaciones del array por fechas base de datos esta en plantrabajoactividad3
@@ -90,6 +88,10 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
 
 });
 
+//cambio de contraseña
+Route::post('changePass', 'Api\Auth\Supervisores\passwordUpdateController@passwordUpdate');
+Route::post('verifyPass', 'Api\Auth\Supervisores\passwordUpdateController@verify');
+
 //rutas para un Supervisor
 Route::middleware(['auth:api','supervisores'])->group(function(){
     //Vista de inicio para los supervisores
@@ -100,7 +102,7 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     //ruta de envio de datos para las actividades
     Route::post('actividad', 'Api\Auth\Supervisores\ActividadesController@index');
     //ruta de las descripciones de las actividades
-    Route::post('descripcionActividad', 'Api\Auth\Supervisores\DescripcionActividad@description');
+    Route::get('descripcionActividad', 'Api\Auth\Supervisores\DescripcionActividadController@description');
 });
 
 

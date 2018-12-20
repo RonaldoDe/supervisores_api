@@ -8,7 +8,6 @@
 </head>
 <body>
    <h2>Hola cabio de contraseña</h2>
-   
    <p>Aqui tiene su codigo de confirmacion, para cambiar su contraseña <h2>{{$codigo}}</h2></p>
 </body>
 </html>

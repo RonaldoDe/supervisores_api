@@ -46,7 +46,7 @@ class LoginController extends Controller
                 if($user->estado == 0){
                     return response()->json([
                         'message' => 'Por favor actualizar su contraseña',
-                        'url' => 'passwordUpdate'
+                        'url' => 'changePass'
                     ], 200);
                 }
 

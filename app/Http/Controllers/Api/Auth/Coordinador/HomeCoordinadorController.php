@@ -154,19 +154,48 @@ class HomeCoordinadorController extends Controller
 /*Author jhonatan cudris */
        //function que recibe un parametro que sera el id de la zona y debuelve todos los puntos de venta que
        //con su supervisor que tiene asiganado el filtro lo hace por el id de la zona que tienen dichos puntos de venta
+       $sw=0;
+       $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
 
-        $sucursal=DB::table('sucursales as s')
-            ->join('zona as zo','s.id_zona','=','zo.id_zona')
-            ->join('usuarios_roles as ur','zo.id_usuario_roles','=','ur.id_usuario_roles')
-            ->join('usuario as us','ur.id_usuario','=','us.id_usuario')
-            ->where('s.id_zona','=',$id)
+       $cordinador=DB::table('coordinadores')
+       ->where('correo','=',$user->email)
+       ->select('id_cordinador')
+       ->first();
 
-            ->select('zo.descripcion_zona','s.id_suscursal','s.cod_sucursal','s.nombre as sucursal','ur.id_usuario_roles as id_supervisor',
-            DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
-            ->get();
+       $zona=DB::table('zona as z')
+        ->join('region as r','z.id_region','=','r.id_region')
+        ->join('coordinadores as co','r.id_cordinador','=','co.id_cordinador')
+        ->where('co.id_cordinador','=',$cordinador->id_cordinador)
+        ->select('z.id_zona')
+        ->get();
 
-        $zona=DB::table('zona')->where('zona.id_zona','=',$id)->first();
-        return response()->json(["sucursal"=>$sucursal,"zona"=>$zona]);
+
+           foreach($zona as $valor){
+               if($valor->id_zona ==$id){
+                $sw=$sw+1;
+               }
+
+           }
+
+
+            if($sw>0){
+
+                $sucursal=DB::table('sucursales as s')
+                ->join('zona as zo','s.id_zona','=','zo.id_zona')
+                ->join('usuarios_roles as ur','zo.id_usuario_roles','=','ur.id_usuario_roles')
+                ->join('usuario as us','ur.id_usuario','=','us.id_usuario')
+                ->where('s.id_zona','=',$id)
+
+                ->select('zo.descripcion_zona','s.id_suscursal','s.cod_sucursal','s.nombre as sucursal','ur.id_usuario_roles as id_supervisor',
+                DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
+                ->get();
+
+            $zona=DB::table('zona')->where('zona.id_zona','=',$id)->first();
+            return response()->json(["sucursal"=>$sucursal,"zona"=>$zona]);
+            }else{
+                return response()->json(["error"=>'esta zona no existe para este coordinador'],400);
+            }
+
     }
 
 

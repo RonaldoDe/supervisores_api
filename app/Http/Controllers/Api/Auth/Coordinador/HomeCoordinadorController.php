@@ -209,7 +209,7 @@ class HomeCoordinadorController extends Controller
 
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all(),401);
+          return response()->json( $errors=$validator->errors()->all(),400);
         }
 
         else
@@ -228,10 +228,10 @@ class HomeCoordinadorController extends Controller
                 if($zona != null){
                     return response()->json($zona,201);
                 }else{
-                    return response()->json('sucursal no encontrada.',401);
+                    return response()->json('sucursal no encontrada.',400);
                 }
             }else{
-                return response()->json('coordinador no encontrado.',401);
+                return response()->json('coordinador no encontrado.',400);
             }
 
         }

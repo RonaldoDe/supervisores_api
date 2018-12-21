@@ -221,7 +221,7 @@ class HomeCoordinadorController extends Controller
                 $zona = DB::table('zona as z')
                 ->select('su.cod_sucursal', 'su.nombre', 'su.direccion')
                 ->join('region as r', 'r.id_region', 'z.id_region')
-                ->join('sucursal as su', 'z.id_zona', 'su.id_zona')
+                ->join('sucursales as su', 'z.id_zona', 'su.id_zona')
                 ->where('r.id_cordinador', $coordinador->id_cordinador)
                 ->where('su.id_suscursal', request('id_sucursal'))
                 ->first();

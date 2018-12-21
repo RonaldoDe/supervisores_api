@@ -198,6 +198,45 @@ class HomeCoordinadorController extends Controller
 
     }
 
+    public function datosSucursal(Request $request)
+    {
+
+        $validator=\Validator::make($request->all(),[
+            'id_sucursal' => 'required',
+
+
+        ]);
+
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all() );
+        }
+
+        else
+        {
+            $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+            $coordinador=DB::table('coordinadores')->where('correo','=',$user->email)->first();
+
+            if($coordinador != null){
+                $zona = DB::table('zona as z')
+                ->select('su.cod_sucursal', 'su.nombre', 'su.direccion')
+                ->join('region as r', 'r.id_region', 'z.id_region')
+                ->join('sucursal as su', 'z.id_zona', 'su.id_zona')
+                >where('r.id_cordinador', $coordinador->id_cordinador)
+                ->where('su.id_suscursal', request('id_sucursal'))
+                ->first();
+                if($zona != null){
+                    return response()->json($zona,201);
+                }else{
+                    return response()->json('sucursal no encontrada.',401);
+                }
+            }else{
+                return response()->json('coordinador no encontrado.',401);
+            }
+
+        }
+    }
+
 
 
     }

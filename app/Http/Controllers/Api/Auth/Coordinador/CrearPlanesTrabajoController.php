@@ -70,7 +70,37 @@ class CrearPlanesTrabajoController extends Controller
         }
 
     }
+    public function ActualizarNombrePlanTrabajo (Request $request)
+    {
+        $validator=\Validator::make($request->all(),[
+            'id_plan_trbajo' => 'required',
+            'nombre_plan'=>'required',
 
+
+        ]);
+
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all() );
+        }
+
+        else
+        {
+            $plan = DB::table('plan_trabajo_asignacion')
+            ->where('id_plan_trabajo', request('id_plan_trabajo'))
+            ->first();
+
+            if($plan != null){
+                $plan->nombre=request('nombre_plan');
+                $plan->update();
+                return response()->json('Nombre de plan actualizado',200);
+            }else{
+                return response()->json('Plan de trabajo no encontrado.',202);
+
+            }
+        }
+
+    }
 
 
 }

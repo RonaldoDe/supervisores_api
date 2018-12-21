@@ -219,13 +219,14 @@ class HomeCoordinadorController extends Controller
 
             if($coordinador != null){
                 $zona = DB::table('zona as z')
-                ->select('su.cod_sucursal', 'su.nombre', 'su.direccion')
+                ->select('su.cod_sucursal', 'su.nombre', 'su.direccion', 'zo.id_usuario_roles')
                 ->join('region as r', 'r.id_region', 'z.id_region')
                 ->join('sucursales as su', 'z.id_zona', 'su.id_zona')
                 ->where('r.id_cordinador', $coordinador->id_cordinador)
                 ->where('su.id_suscursal', request('id_sucursal'))
                 ->first();
                 if($zona != null){
+                    
                     return response()->json($zona,201);
                 }else{
                     return response()->json('sucursal no encontrada.',400);

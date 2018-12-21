@@ -137,7 +137,7 @@ class CrearActividadParaPlanTrabajo extends Controller
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
                         'fecha_inicio' =>$fechas_converter_d[$i]["fecha_inicio"],
                         'fecha_fin' =>$fechas_converter_d[$i]["fecha_inicio"]." "."23:59:00",
-                        'observaciones'=>'',
+                        'observacion'=>'',
                         'id_prioridad' =>1,
                         'estado' =>'Activo',
 

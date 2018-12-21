@@ -219,7 +219,7 @@ class HomeCoordinadorController extends Controller
 
             if($coordinador != null){
                 $zona = DB::table('zona as z')
-                ->select('su.cod_sucursal', 'su.nombre', 'su.direccion', 'z.id_usuario_roles', 'usu.nombre', 'usu.apellido')
+                ->select('su.cod_sucursal', 'su.nombre', 'su.direccion', 'z.id_usuario_roles', 'usu.nombre as nombre_usuario', 'usu.apellido')
                 ->join('region as r', 'r.id_region', 'z.id_region')
                 ->join('sucursales as su', 'z.id_zona', 'su.id_zona')
                 ->join('usuarios_roles as ur', 'z.id_usuario_roles', 'ur.id_usuario_roles')

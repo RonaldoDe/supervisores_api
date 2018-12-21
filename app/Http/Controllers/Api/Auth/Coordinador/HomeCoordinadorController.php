@@ -222,7 +222,7 @@ class HomeCoordinadorController extends Controller
                 ->select('su.cod_sucursal', 'su.nombre', 'su.direccion', 'z.id_usuario_roles', 'usu.id_usuario')
                 ->join('region as r', 'r.id_region', 'z.id_region')
                 ->join('sucursales as su', 'z.id_zona', 'su.id_zona')
-                ->join('usuario_roles as ur', 'z.id_usuario_roles', 'ur.id_usuario_roles')
+                ->join('usuarios_roles as ur', 'z.id_usuario_roles', 'ur.id_usuario_roles')
                 ->join('usuario as usu', 'ur.id_usuario', 'usu.id_usuario')
                 ->where('r.id_cordinador', $coordinador->id_cordinador)
                 ->where('su.id_suscursal', request('id_sucursal'))

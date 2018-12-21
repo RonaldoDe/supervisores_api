@@ -72,5 +72,4 @@ class CrearPlanesTrabajoController extends Controller
     }
 
 
-
 }

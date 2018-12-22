@@ -86,10 +86,8 @@ class CrearPlanesTrabajoController extends Controller
 
         else
         {
-            $plan = DB::table('plan_trabajo_asignacion')
-            ->where('id_plan_trabajo', request('id_plan_trabajo'))
-            ->first();
-
+            
+            $plan = PlanTrabajoAsignacion::where('id_plan_trabajo', request('id_plan_trabajo'));
             if($plan != null){
                 $plan->nombre=request('nombre_plan');
                 $plan->update();

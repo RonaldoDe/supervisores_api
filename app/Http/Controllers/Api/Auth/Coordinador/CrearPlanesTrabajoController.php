@@ -73,7 +73,7 @@ class CrearPlanesTrabajoController extends Controller
     public function ActualizarNombrePlanTrabajo (Request $request)
     {
         $validator=\Validator::make($request->all(),[
-            'id_plan_trbajo' => 'required',
+            'id_plan_trabajo' => 'required',
             'nombre_plan'=>'required',
 
 

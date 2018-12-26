@@ -57,7 +57,6 @@ class ListarActividadesController extends Controller
             }
         }
         
-        
     }
         // validar si el array tiene actividades
          if(count($lista_actividades_arr) > 0){

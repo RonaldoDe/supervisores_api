@@ -43,14 +43,21 @@ public function insertarTablasAactividad(Request $request){
 
         for($i=0; $i<sizeof($actividades_converter_d);$i++){
 
-            $actividad =ActividadesTabla::create([
+            $verificador = DB::table('actividades')
+            ->where('id_plan_trabajo', request('id_plan_trabajo'))
+            ->where('nombre_tabla', $actividades_converter_d[$i]["nombre_tabla"])
+            ->first();
 
-                'id_plan_trabajo' =>request('id_plan_trabajo'),
-                'id_prioridad' =>$actividades_converter_d[$i]["id_prioridad"],
-                'nombre_tabla' =>$actividades_converter_d[$i]["nombre_tabla"],
-                'nombre_actividad'=>$actividades_converter_d[$i]["nombre_actividad"]
+            if($validator == null){
+                $actividad =ActividadesTabla::create([
 
-                ]);
+                    'id_plan_trabajo' =>request('id_plan_trabajo'),
+                    'id_prioridad' =>$actividades_converter_d[$i]["id_prioridad"],
+                    'nombre_tabla' =>$actividades_converter_d[$i]["nombre_tabla"],
+                    'nombre_actividad'=>$actividades_converter_d[$i]["nombre_actividad"]
+    
+                    ]);
+            }
 
 
         }

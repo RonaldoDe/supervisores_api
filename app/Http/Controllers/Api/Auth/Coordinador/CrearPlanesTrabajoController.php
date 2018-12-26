@@ -102,7 +102,44 @@ class CrearPlanesTrabajoController extends Controller
 
     public function mostrarPlanSucursal(Request $request)
     {
-        
+        $validator=\Validator::make($request->all(),[
+            'id_zona' => 'required',
+            'id_sucursal' => 'required',
+
+        ]);
+
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all() );
+        }
+
+        else
+        {
+            $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+            $coordinador=DB::table('coordinadores')->where('cedula',$user->cedula)->first();
+
+            //validar si la sucursal pertenece al coordinador
+            $perteneciente = DB::table('region as re')
+            ->join('zona as zo' , 're.id_region', 'zo.id_region')
+            ->join('sucursales as su' , 'zo.id_zona', 'su.id_zona')
+            ->where('re.id_cordinador', $coordinador->id_cordinador)
+            ->where('zo.id_zona', request('id_zona'))
+            ->where('su.id_suscursal', request('id_sucursal'))
+            ->first();
+            
+            if($perteneciente != null){
+                $planes = DB::table('plan_trabajo_asignacion')
+                ->where('id_sucursal', request('id_sucursal'))
+                ->get();
+                if(count($planes) > 0){
+                    return response()->json($planes, 200);
+                }else{
+                    return response()->json('No tiene planes asignados', 401);
+                }
+            }else{
+                    return response()->json('Sucursal no encontrada', 401);
+            }
+        }
     }
 
 

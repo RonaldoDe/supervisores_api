@@ -47,7 +47,9 @@ Route::middleware('auth:api')->group(function () {
 
 Route::middleware(['auth:api','coordinadores'])->group(function(){
     //se agregaron estos para ps repores segir mirando
+    Route::post('mostrarPlanes', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@mostrarPlanSucursal');
     Route::get('reporte', 'Api\Auth\Coordinador\Reporte\ReporteController@mostrarReportePorCoordinador');
+    Route::post('actividades', 'Api\Auth\Coordinador\PlanesController@listarActividades');
     Route::get('reporteActividad', 'Api\Auth\Coordinador\Reporte\ReporteController@mostrarActividadesPorSucursal');
     Route::get('HomeCoordinador', 'Api\Auth\Coordinador\HomeCoordinadorController@index');
     Route::post('datosSucursal', 'Api\Auth\Coordinador\HomeCoordinadorController@datosSucursal');

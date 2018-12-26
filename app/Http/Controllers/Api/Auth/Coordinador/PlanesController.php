@@ -36,6 +36,10 @@ class PlanesController extends Controller
                 ->where('p.idcoordinador',$coordinador->id_cordinador)
                 ->orderby('ac.id_plan_trabajo','desc')
                 ->get();
+
+                $plan = DB::table('plan_trabajo_asignacion')
+                ->where('id_plan_trabajo', request('id_plan_trabajo'))
+                ->first();
     
                 //array que almacenará las actividanes correspondientes a los 7 dias despues del dia actual 
                 $lista_actividades_arr = array();
@@ -49,21 +53,16 @@ class PlanesController extends Controller
                     //  generar el array con el listado de actividades pendientes en la semana
                     foreach($fe as $fecha){
                         $fecha->nombre_actividad = $ac->nombre_actividad;
-                        $fecha->nombrePlan = $ac->nombrePlan;
                         array_push($lista_actividades_arr, [$ac->nombreSucursal =>$fecha]);
                     }
                     
                     
                 }
                     // validar si el array tiene actividades
-                if(count($lista_actividades_arr) > 0){
-                    return response()->json(['Actividades' => $lista_actividades_arr],200);
-                }else{
-                    return response()->json(['Actividades' => 'No tienes actividadedes'],401);
-                }
+                    return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre],200);
                 
             }else{
-                return response()->json('No tienes permiso para acceder a esta ruta',401);
+                return response()->json('No tienes permiso para acceder a esta ruta',400);
             }
             
         }

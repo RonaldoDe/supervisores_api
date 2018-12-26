@@ -134,10 +134,10 @@ class CrearPlanesTrabajoController extends Controller
                 if(count($planes) > 0){
                     return response()->json($planes, 200);
                 }else{
-                    return response()->json('No tiene planes asignados', 401);
+                    return response()->json('No tiene planes asignados', 402);
                 }
             }else{
-                    return response()->json('Sucursal no encontrada', 401);
+                    return response()->json('Sucursal no encontrada', 402);
             }
         }
     }

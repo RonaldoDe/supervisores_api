@@ -37,8 +37,8 @@ class PlanesController extends Controller
                 ->orderby('ac.id_plan_trabajo','desc')
                 ->get();
 
-                $plan = DB::table('plan_trabajo_asignacion')
-                ->where('id_plan_trabajo', request('id_plan_trabajo'))
+                $plan = DB::table('plan_trabajo_asignacion as p')
+                ->where('p.id_plan_trabajo', request('id_plan_trabajo'))
                 ->first();
     
                 //array que almacenará las actividanes correspondientes a los 7 dias despues del dia actual 
@@ -59,7 +59,7 @@ class PlanesController extends Controller
                     
                 }
                     // validar si el array tiene actividades
-                    return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre],200);
+                    return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre, 'Sucursal' => $plan->id_sucursal],200);
                 
             }else{
                 return response()->json('No tienes permiso para acceder a esta ruta',400);

@@ -42,13 +42,13 @@ class LoginController extends Controller
             ->first();
             if($user != null){
 
-                //validar si el usuario esta verificado y a cambiado su contraseña
-                if($user->estado == 0){
-                    return response()->json([
-                        'message' => 'Por favor actualizar su contraseña',
-                        'url' => 'changePass'
-                    ], 200);
-                }
+                // //validar si el usuario esta verificado y a cambiado su contraseña
+                // if($user->estado == 0){
+                //     return response()->json([
+                //         'message' => 'Por favor actualizar su contraseña',
+                //         'url' => 'changePass'
+                //     ], 200);
+                // }
 
                 if (Hash::check(request('password'), $user->password)) {
                     DB::table('oauth_access_tokens')->where('user_id', $user->id)->delete();

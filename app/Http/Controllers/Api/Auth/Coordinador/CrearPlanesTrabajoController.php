@@ -87,7 +87,7 @@ class CrearPlanesTrabajoController extends Controller
         else
         {
             
-            $plan = PlanTrabajoAsignacion::where('id_plan_trabajo', request('id_plan_trabajo'));
+            $plan = PlanTrabajoAsignacion::find(request('id_plan_trabajo'));
             if($plan != null){
                 $plan->nombre=request('nombre_plan');
                 $plan->update();
@@ -98,6 +98,11 @@ class CrearPlanesTrabajoController extends Controller
             }
         }
 
+    }
+
+    public function mostrarPlanSucursal(Request $request)
+    {
+        
     }
 
 

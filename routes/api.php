@@ -39,6 +39,7 @@ Route::post('login', 'Api\Auth\LoginController@login');
 //ruta protegidad por el middleware y Auth donde iran todos los controladores en geneal para los usuarios
 Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'Api\Auth\LoginController@logout');//controlador de cerrar cesion
+    Route::post('nombrePlan', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@ActualizarNombrePlanTrabajo');
 });
 
 //colcoar las validaciones del array por fechas base de datos esta en plantrabajoactividad3
@@ -51,7 +52,6 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::get('HomeCoordinador', 'Api\Auth\Coordinador\HomeCoordinadorController@index');
     Route::post('datosSucursal', 'Api\Auth\Coordinador\HomeCoordinadorController@datosSucursal');
     Route::post('CrearPlanTrabajo', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@crearPlanTrabajo');
-    Route::post('nombrePlan', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@ActualizarNombrePlanTrabajo');
     Route::post('CrearSupervisoresCord', 'Api\Auth\Coordinador\HomeCoordinadorController@CrearSupervisores');
     Route::get('sucursalesZona/{id}', 'Api\Auth\Coordinador\HomeCoordinadorController@mostrarPuntosVentasIdZona');
     Route::post('crearZonas', 'Api\Auth\Coordinador\ZonasCordinadorController@CrearZonas');
@@ -91,8 +91,8 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
 });
 
 //cambio de contraseña
-Route::post('changePass', 'Api\Auth\Supervisores\passwordUpdateController@passwordUpdate');
-Route::post('verifyPass', 'Api\Auth\Supervisores\passwordUpdateController@verify');
+Route::post('changePass', 'Api\Auth\Supervisores\PasswordUpdateController@passwordUpdate');
+Route::post('verifyPass', 'Api\Auth\Supervisores\PasswordUpdateController@verify');
 
 //rutas para un Supervisor
 Route::middleware(['auth:api','supervisores'])->group(function(){

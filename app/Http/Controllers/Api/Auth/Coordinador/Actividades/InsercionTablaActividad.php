@@ -48,7 +48,7 @@ public function insertarTablasAactividad(Request $request){
             ->where('nombre_tabla', $actividades_converter_d[$i]["nombre_tabla"])
             ->first();
 
-            if($validator == null){
+            if($verificador == null){
                 $actividad =ActividadesTabla::create([
 
                     'id_plan_trabajo' =>request('id_plan_trabajo'),

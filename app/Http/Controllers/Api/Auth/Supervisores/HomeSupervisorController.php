@@ -68,7 +68,7 @@ class HomeSupervisorController extends Controller
                 array_multisort($aux, SORT_DESC, $actividades_habilitadas);
                 return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor], 200);
             }else{
-                return response()->json(['Actividades' => 'No tienes actividadedes para el dia de hoy','datos_usuario' => $user_supervisor],400);
+                return response()->json(['Actividades' => 'No tienes actividades para el dia de hoy','datos_usuario' => $user_supervisor],400);
             }
     }
 

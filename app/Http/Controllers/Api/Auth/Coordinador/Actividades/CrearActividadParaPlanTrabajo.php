@@ -27,7 +27,7 @@ class CrearActividadParaPlanTrabajo extends Controller
 
         $validator=\Validator::make($request->all(),[
             // 'id_prioridad' => 'required|numeric',
-
+            
             'id_plan_trabajo'=>'required|numeric',
             'array_fechas_apertura.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
 

@@ -9,7 +9,7 @@ class EvaluacionPedidos extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='evaluacion_pedidos';
-    protected $primaryKey='id_evaluacion_pedidos';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

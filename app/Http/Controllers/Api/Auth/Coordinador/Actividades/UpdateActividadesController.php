@@ -42,8 +42,6 @@ class UpdateActividadesController extends Controller
                         ->where('id_plan_trabajo',request('id_plan_trabajo'))
                         ->get();
 
-
-
                //ciclo que me me permite iterar el array  mediante la funcion sizeof
                //itera mediante las propiedades del array asi como le mando los parametros
                //exactos los nombres de las propiedades
@@ -86,7 +84,6 @@ class UpdateActividadesController extends Controller
 
                         }
 
-
                     }
 
                 }else{
@@ -95,8 +92,6 @@ class UpdateActividadesController extends Controller
 
                 $sw2=0;
                 if($sw1==0){
-
-
 
                     foreach($fechas_converter_d as $valor){
 
@@ -135,8 +130,6 @@ class UpdateActividadesController extends Controller
                 }
                     return response()->json(["message"=>"Array error"],201);
                 }
-
-
 
             //    $validacion=$this->validarArrayFechas($fechas_converter_d);
 
@@ -184,11 +177,6 @@ class UpdateActividadesController extends Controller
                 return response()->json(["error"=>"error este plan trabajo no existe"],400);
                }
 
-
-
-
             }
-
-
     }
 }

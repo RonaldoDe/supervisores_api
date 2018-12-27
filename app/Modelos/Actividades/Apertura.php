@@ -9,7 +9,7 @@ class Apertura extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='apertura';
-    protected $primaryKey='id_apertura';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

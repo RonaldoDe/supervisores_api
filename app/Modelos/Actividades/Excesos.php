@@ -9,7 +9,7 @@ class Excesos extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='excesos';
-    protected $primaryKey='id_excesos';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

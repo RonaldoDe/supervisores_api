@@ -9,7 +9,7 @@ class ConvenioExhibicion extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='convenio_exhibicion';
-    protected $primaryKey='id_convenio_exhibicion';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

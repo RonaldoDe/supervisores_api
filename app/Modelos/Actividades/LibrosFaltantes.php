@@ -9,7 +9,7 @@ class LibrosFaltantes extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='libros_faltantes';
-    protected $primaryKey='id_librofaltante';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

@@ -9,7 +9,7 @@ class IngresoSucursal extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='ingreso_sucursal';
-    protected $primaryKey='id_ingreso_sucursal';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

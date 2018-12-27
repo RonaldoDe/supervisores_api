@@ -9,7 +9,7 @@ class DocumentacionLegal extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='documentacion_legal';
-    protected $primaryKey='id_documentacion';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

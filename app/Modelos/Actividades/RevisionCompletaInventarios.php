@@ -9,7 +9,7 @@ class RevisionCompletaInventarios extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='revision_completa_inventarios';
-    protected $primaryKey='id_revision';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

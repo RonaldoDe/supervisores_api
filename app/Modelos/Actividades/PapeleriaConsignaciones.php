@@ -9,7 +9,7 @@ class PapeleriaConsignaciones extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='papeleria_consignaciones';
-    protected $primaryKey='id_papel_consignaciones';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

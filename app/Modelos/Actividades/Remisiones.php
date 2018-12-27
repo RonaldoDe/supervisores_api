@@ -9,7 +9,7 @@ class Remisiones extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='remisiones';
-    protected $primaryKey='id_remision';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

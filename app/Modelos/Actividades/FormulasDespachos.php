@@ -9,7 +9,7 @@ class FormulasDespachos extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='formulas_despachos';
-    protected $primaryKey='id_formula';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

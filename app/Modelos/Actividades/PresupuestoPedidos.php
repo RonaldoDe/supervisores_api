@@ -9,7 +9,7 @@ class PresupuestoPedidos extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='presupuesto_pedido';
-    protected $primaryKey='id_presupuesto_pedido';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

@@ -9,7 +9,7 @@ class SeguimientoVendedor extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='seguimiento_vendedores';
-    protected $primaryKey='id_seguimiento';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

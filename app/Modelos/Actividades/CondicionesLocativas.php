@@ -9,7 +9,7 @@ class CondicionesLocativas extends Model{
     //modelo que instancia la tabla Apertura
 
     protected $table ='condiciones_locativas';
-    protected $primaryKey='id_condiciones';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

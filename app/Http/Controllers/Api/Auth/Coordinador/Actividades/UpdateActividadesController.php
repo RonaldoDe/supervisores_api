@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Modelos\Actividades\Apertura;
+use App\Modelos\Actividades\DocumentacionLegal;
+use App\Modelos\Actividades\PapeleriaConsignaciones;
 
 class UpdateActividadesController extends Controller
 {
@@ -178,5 +180,151 @@ class UpdateActividadesController extends Controller
                }
 
             }
+    }
+    public function updateActividadDocumentacionLegal(Request $request){
+
+        //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
+    
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'id_actividad'=>'required',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required',
+            'fecha_fin'=>'date_format:"Y-m-d"|required'
+    
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all() );
+        }
+    
+        else
+        {
+    
+    
+    
+    //instancia del modelo documentacion legal para crear un registro de esta tabla
+    
+            $fecha= date('Y-m-d');
+    
+            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+    
+    
+                $fechas_base_datos=DB::table('documentacion_legal')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+    
+                $fecha_ini=request('fecha_inicio');
+                $fecha_finn=request('fecha_fin');
+    
+    
+    
+                $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+    
+                if($respuesta>0){
+    
+                    return response()->json (["error"=>"ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato "],400);
+                }else{
+                    
+                    $actividad = DocumentacionLegal::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+                        if($actividad!= null){
+                            $actividad->fecha_inicio = request('fecha_inicio');
+                            $actividad->fecha_fin = request('fecha_fin').' '.'23:59:00';
+                            $actividad->estado = 'Activo';
+                            $actividad->id_prioridad = request('id_prioridad');
+                            $actividad->update();
+                            return response()->json(['message' => 'Actividad actualizada con exito']);
+                        }
+                        return response()->json(['message' => 'Error Actividad no encontrada']);
+                }
+    
+        
+            }else{
+                return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
+    
+            }
+    
+    
+    
+        }
+    
+    }
+
+    public function updateActividadPapeleriaConsignaciones(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_actividad' => 'required',
+            'id_plan_trabajo'=>'required|numeric',
+            'array_fechas_papeleria.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas_papeleria.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all() );
+        }
+
+        else
+        {
+
+            $fechas=request('array_fechas_papeleria');
+            //codificacion a json
+            $fechas_converter=json_encode($fechas,true);
+            //decodificcion del reques recibido para iterar el aary
+            $fechas_converter_d=json_decode($fechas_converter,true);
+
+            $fechas_base_datos=DB::table('papeleria_consignaciones')
+            ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+            ->where('id_plan_trabajo',request('id_plan_trabajo'))
+            ->get();
+
+            $validacion=$this->validarArrayFechas($fechas_converter_d);
+
+            if($validacion==0)
+            {
+
+               for($i=0; $i<sizeof($fechas_converter_d);$i++)
+               {
+
+                $validacionFechas=$this->validarFechasInicioRepetido($fechas_converter_d);
+
+                if($validacionFechas==0){
+
+                    $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
+
+                    if($validacion_fecha_base > 0){
+                        return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato '],400);
+                    }else{
+                        $actividad = PapeleriaConsignaciones::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+                        if($actividad!= null){
+                            $actividad->fecha_inicio = $fechas_converter_d[$i]["fecha_inicio"];
+                            $actividad->fecha_fin = $fechas_converter_d[$i]["fecha_fin"]." "."23:59:00";
+                            $actividad->estado = 'Activo';
+                            $actividad->id_prioridad = request('id_prioridad');
+                            $actividad->update();
+                            return response()->json(['message' => 'Actividad actualizada con exito']);
+                        }
+                        return response()->json(['message' => 'Error Actividad no encontrada']);
+
+                    }
+                }else{
+                    return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales"],400);
+                }
+
+               }
+               return response()->json(["succes"=>" papeleria consignacion creada"],201);
+            }
+            else if($validacion>0){
+                return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
+            }
+
+
+
+            }
+
     }
 }

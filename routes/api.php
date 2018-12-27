@@ -49,7 +49,11 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     //se agregaron estos para ps repores segir mirando
     //rutas de actualizar actividades
     Route::post('updateApertura', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadApertura');
-
+    Route::post('updateDocumentacionLegal', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadDocumentacionLegal');
+    Route::post('updatePapeleria', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadPapeleriaConsignaciones');
+    //eliminar actividades
+    Route::post('deleteActividad', 'Api\Auth\Coordinador\Actividades\DeleteActividadController@deleteActividad');
+    
     Route::post('mostrarPlanes', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@mostrarPlanSucursal');
     Route::post('actividades', 'Api\Auth\Coordinador\PlanesController@listarActividades');
     Route::get('reporte', 'Api\Auth\Coordinador\Reporte\ReporteController@mostrarReportePorCoordinador');

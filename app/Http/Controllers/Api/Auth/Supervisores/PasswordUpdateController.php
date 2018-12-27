@@ -34,7 +34,7 @@ class PasswordUpdateController extends Controller
                     $codigo = str_random(4);
                     $validate_code = DB::table('users')->where('code_confirmation', $codigo)->first();
                 }
-                $user->estado = $codigo;
+                $user->code_confirmation = $codigo;
                 $user->email_verified_at = true;
                 $user->update();
                 return response()->json('Correo de cambio de contraseña enviado.', 200);
@@ -66,7 +66,7 @@ class PasswordUpdateController extends Controller
             ->where('email', request('email'))
             ->first();
             if($user != null){
-                $user->estado=null;
+                $user->code_confirmation=null;
                 $user->email_verified_at = false;
                 $user->password = bcrypt(request('password'));
                 $user->update();

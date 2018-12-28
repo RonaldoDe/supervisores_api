@@ -28,9 +28,9 @@ class DeleteActividadController extends Controller
             ->where('id_plan_trabajo', request('id_plan_trabajo'))
             ->delete();
             if($delete){
-                return response()->json('Actividad eliminada');
+                return response()->json('Actividad eliminada',200);
             }else{
-                return response()->json('Actividad no encontrada');
+                return response()->json('Actividad no encontrada',400);
             }
 
         }

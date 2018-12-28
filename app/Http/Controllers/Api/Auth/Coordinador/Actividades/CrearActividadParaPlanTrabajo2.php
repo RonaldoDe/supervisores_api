@@ -226,9 +226,8 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                     ]);
             }
 
-                    // DB::commit();
 
-                    return response()->json(["succes"=>" Actividad Evaluacion Pedidos  creada"],201);
+                    return response()->json(["succes"=>" Actividad Evaluacion Pedidos  creada", 'id' => $evaluacionPedidos->id],201);
 
                 }else{
                     return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
@@ -301,7 +300,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                     }
 
 
-                    return response()->json(["succes"=>" Actividad Presupuesto pedidos creada"],201);
+                    return response()->json(["succes"=>" Actividad Presupuesto pedidos creada", 'id' => $evaluacionPedidos->id],201);
 
                 }else{
                     return response()->json(["error"=>" las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
@@ -382,7 +381,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                         return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes"],400);
                     }
                  }
-                return response()->json(["succes"=>"Actividad libros faltantes creada"],201);
+                return response()->json(["succes"=>"Actividad libros faltantes creada", 'id'=>$libro_faltantes->id],201);
               }
               elseif($validacion>0)
               {
@@ -449,7 +448,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
                     // DB::commit();
 
-                    return response()->json(["succes"=>" Actividad  Captura Cliente  creada"],201);
+                    return response()->json(["succes"=>" Actividad  Captura Cliente  creada", 'id' => $captura_cliente->id],201);
 
                 }else{
                     return response()->json(["error"=>"la fecha de inicio debe ser igual o mayor a la fecha actual y menor o igual a la fecha final"],400);

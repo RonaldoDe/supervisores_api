@@ -91,7 +91,7 @@ class CrearActividadParaPlanTrabajo3 extends Controller
                         return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes"],400);
                     }
                  }
-                return response()->json(["succes"=>"Actividad libro agenda cliente creada"],201);
+                return response()->json(["succes"=>"Actividad libro agenda cliente creada", 'id' => $libroAgendaCliente->id],201);
               }
               elseif($validacion>0)
               {
@@ -160,7 +160,7 @@ class CrearActividadParaPlanTrabajo3 extends Controller
 
                     // DB::commit();
 
-                    return response()->json(["succes"=>" Actividad convenio exhibicion  creada"],201);
+                    return response()->json(["succes"=>" Actividad convenio exhibicion  creada", 'id' => $convenio_exhibicion->id],201);
 
                 }else{
                     return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
@@ -235,7 +235,7 @@ class CrearActividadParaPlanTrabajo3 extends Controller
 
                     // DB::commit();
 
-                    return response()->json(["succes"=>" Actividad Excesos creada"],201);
+                    return response()->json(["succes"=>" Actividad Excesos creada", 'id' => $excesos->id],201);
 
                 }else{
                     return response()->json(["error"=>"  fechas incorrectas la fecha inicio debe ser mayor o igual ala actual y menor o igua a la final"],400);
@@ -307,7 +307,7 @@ class CrearActividadParaPlanTrabajo3 extends Controller
 
                     // DB::commit();
 
-                    return response()->json(["succes"=>" Actividad Libro Vencimientos  creada"],201);
+                    return response()->json(["succes"=>" Actividad Libro Vencimientos  creada", 'id' => $libro_vencimiemto->id],201);
 
                 }else{
                     return response()->json(["error"=>"  fechas incorrectas la fecha inicio debe ser mayor o igual ala actual y menor o igua a la final"],400);
@@ -379,7 +379,7 @@ class CrearActividadParaPlanTrabajo3 extends Controller
 
                     // DB::commit();
 
-                    return response()->json(["succes"=>" Actividad Ingreso Sucursal  creada"],201);
+                    return response()->json(["succes"=>" Actividad Ingreso Sucursal  creada", 'id' => $ingreso_sucursal->id],201);
 
                 }else{
                     return response()->json(["error"=>"  fechas incorrectas la fecha inicio debe ser mayor o igual ala actual y menor o igua a la final"],400);

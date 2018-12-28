@@ -266,7 +266,7 @@ public function crearActividadDocumentacionLegal(Request $request){
             }
 
 
-            return response()->json(["succes"=>" Actividad documentacion legal creada"],201);
+            return response()->json(["succes"=>" Actividad documentacion legal creada", 'id' => $documentacion_legal->id],201);
 
         }else{
             return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
@@ -361,7 +361,7 @@ public function crearActividadDocumentacionLegal(Request $request){
                 }
 
                }
-               return response()->json(["succes"=>" papeleria consignacion creada"],201);
+               return response()->json(["succes"=>" papeleria consignacion creada", 'id' => $papeleria->id],201);
             }
             else if($validacion>0){
                 return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
@@ -381,8 +381,6 @@ public function crearActividadDocumentacionLegal(Request $request){
             'id_plan_trabajo'=>'required|numeric',
             'array_fechas_formulas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'array_fechas_formulas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date',
-
-
 
         ]);
         if($validator->fails())
@@ -439,7 +437,7 @@ public function crearActividadDocumentacionLegal(Request $request){
                 }
 
                }
-               return response()->json(["succes"=>" formulas despachos creada"],201);
+               return response()->json(["succes"=>" formulas despachos creada", $formulas->id],201);
             }
 
             else if($validacion>0){
@@ -522,7 +520,7 @@ public function crearActividadDocumentacionLegal(Request $request){
                 }
 
                }
-               return response()->json(["succes"=>" actividad remision creada"],201);
+               return response()->json(["succes"=>" actividad remision creada", 'id' => $remisiones->id],201);
             }
             else if($validacion>0){
                 return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
@@ -596,7 +594,7 @@ public function crearActividadDocumentacionLegal(Request $request){
 
                 // DB::commit();
 
-                return response()->json(["succes"=>" Actividad documentacion legal creada"],201);
+                return response()->json(["succes"=>" Actividad documentacion legal creada", 'id' => $condiciones_locativas->id],201);
                 }
                 else{
                     return response()->json(["error"=>" las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);

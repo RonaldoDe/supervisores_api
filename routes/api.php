@@ -59,6 +59,12 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('updateEvaluacionPedido', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadEvaluacionPedidos');
     Route::post('updatePresupuestoPedido', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadPresupuestoPedidos');
     Route::post('updateLibroFaltante', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadLibrosFaltantes');
+    Route::post('updateCapturaCliente', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadCapturaClientes');
+    Route::post('updateLibroAgenda', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadLibroAgendaCliente');
+    Route::post('updateConvenioExhibicion', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadConvenioExhibicion');
+    Route::post('updateExcesos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadExcesos');
+    Route::post('updateLibroVencimiento', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadLibroVencimientos');
+    Route::post('updateIngresoSucursal', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadIngresoSucursal');
 
     //eliminar actividades
     Route::post('deleteActividad', 'Api\Auth\Coordinador\Actividades\DeleteActividadController@deleteActividad');

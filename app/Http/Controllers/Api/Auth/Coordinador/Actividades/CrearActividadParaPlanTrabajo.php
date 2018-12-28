@@ -143,7 +143,7 @@ class CrearActividadParaPlanTrabajo extends Controller
 
                     ]);
                 }
-                    return response()->json(["succes"=>"Actividad Apertura creada"],201);
+                    return response()->json(["success"=>"Actividad Apertura creada", 'id' => $apertura->id],201);
                 }
 
 

@@ -81,7 +81,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                         return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales"],400);
                     }
                  }
-                return response()->json(["succes"=>"Actividad Kardex creada"],201);
+                return response()->json(["succes"=>"Actividad Kardex creada", 'id' => $kardex->id],201);
               }
               elseif($validacion>0)
               {
@@ -159,7 +159,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
 
                     }
-                    return response()->json(["succes"=>"Actividad Seguimiento vendedores creada"],201);
+                    return response()->json(["succes"=>"Actividad Seguimiento vendedores creada", 'id' => $seguimiento_vendedor->id],201);
                   }
                   elseif($validacion>0)
                   {

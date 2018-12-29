@@ -37,4 +37,16 @@ class DescripcionActividadController extends Controller
 
         }
     }
+
+    public function rutas(Request $request)
+    {
+            $rutas = DB::table('nombre_actividades')->get();
+
+            if($rutas != null){
+                return response()->json(['message' => $rutas], 201);
+            }else{
+                return response()->json(['message' => 'Nombre de tabla no adminita'], 400);
+            }
+
+        }
 }

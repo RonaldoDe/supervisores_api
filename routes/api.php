@@ -50,20 +50,20 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     //rutas de actualizar actividades
     Route::post('updateApertura', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadApertura');
     Route::post('updateDocumentacionLegal', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadDocumentacionLegal');
-    Route::post('updatePapeleria', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadPapeleriaConsignaciones');
-    Route::post('updateFormulas', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadFormulaDespachos');
-    Route::post('updateCondiciones', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadCondicionesLocativas');
-    Route::post('updateRemiciones', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadRemisiones');
+    Route::post('updatePapeleriaConsignaciones', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadPapeleriaConsignaciones');
+    Route::post('updateFormulasDespachos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadFormulaDespachos');
+    Route::post('updateCondicionesLocativas', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadCondicionesLocativas');
+    Route::post('updateRemisiones', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadRemisiones');
     Route::post('updateKardex', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadKardex');
-    Route::post('updateSeguimiento', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadSeguimientoVendedor');
-    Route::post('updateEvaluacionPedido', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadEvaluacionPedidos');
-    Route::post('updatePresupuestoPedido', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadPresupuestoPedidos');
+    Route::post('updateSeguimientoVendedor', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadSeguimientoVendedor');
+    Route::post('updateEvaluacionPedidos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadEvaluacionPedidos');
+    Route::post('updatePresupuestoPedidos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadPresupuestoPedidos');
     Route::post('updateLibroFaltante', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadLibrosFaltantes');
-    Route::post('updateCapturaCliente', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadCapturaClientes');
-    Route::post('updateLibroAgenda', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadLibroAgendaCliente');
+    Route::post('updateCapturaClientes', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadCapturaClientes');
+    Route::post('updateLibroAgendaCliente', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadLibroAgendaCliente');
     Route::post('updateConvenioExhibicion', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadConvenioExhibicion');
     Route::post('updateExcesos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadExcesos');
-    Route::post('updateLibroVencimiento', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadLibroVencimientos');
+    Route::post('updateLibroVencimientos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadLibroVencimientos');
     Route::post('updateIngresoSucursal', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadIngresoSucursal');
 
     //eliminar actividades
@@ -84,6 +84,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
    // Route::get('MostrarFrecuencia', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@MostrarTablafrecuencia');
     Route::get('devolverSupervisoresSinAsignar', 'Api\Auth\Coordinador\ZonasCordinadorController@DevolverUsuariosSupervisores');
     //Actividades
+    Route::post('InsercionTablaActividad', 'Api\Auth\Coordinador\Actividades\InsercionTablaActividad@insertarTablasAactividad');
     Route::post('CrearActividadApertura', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadApertura');
     Route::post('CrearActividadDocumentacionLegal', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadDocumentacionLegal');
     Route::post('CrearActividadPapeleriaConsignaciones', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadPapeleriaConsignaciones');
@@ -91,12 +92,11 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('CrearActividadRemisiones', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadRemisiones');
     Route::post('CrearActividadKardex', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadAKardex');
     Route::post('CrearActividadCondicionesLocativas', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadCondicionesLocativas');
-    Route::post('InsercionTablaActividad', 'Api\Auth\Coordinador\Actividades\InsercionTablaActividad@insertarTablasAactividad');
     Route::post('CrearActividadSeguimientoVendedor', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadSeguimientoVendedor');
     Route::post('CrearActividadEvaluacionPedidos', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadEvaluacionPedidos');
     Route::post('CrearActividadPresupuestoPedidos', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadPresupuestoPedidos');
     Route::post('CrearActividadCapturaClientes', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadCapturaClientes');
-    Route::post('CrearActividadLibroFaltantes', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadLibrosFaltantes');
+    Route::post('CrearActividadLibroFaltante', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadLibrosFaltantes');
     Route::post('CrearActividadLibroAgendaCliente', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadLibroAgendaCliente');
     Route::post('CrearActividadConvenioExhibicion', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadConvenioExhibicion');
     Route::post('CrearActividadExcesos', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadExcesos');

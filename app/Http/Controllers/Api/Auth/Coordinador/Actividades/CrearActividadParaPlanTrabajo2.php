@@ -23,8 +23,8 @@ class CrearActividadParaPlanTrabajo2 extends Controller
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
-            'array_fechas_kardex.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_kardex.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
         ]);
         if($validator->fails())
         {
@@ -35,7 +35,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
         {
 
 
-            $fechas=request('array_fechas_kardex');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary
@@ -99,8 +99,8 @@ class CrearActividadParaPlanTrabajo2 extends Controller
             $validator=\Validator::make($request->all(),[
                 'id_prioridad' => 'required',
                 'id_plan_trabajo'=>'required',
-                'array_fechas_seguimientoVendedor.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-                'array_fechas_seguimientoVendedor.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+                'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+                'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
             ]);
             if($validator->fails())
             {
@@ -109,7 +109,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
             else
             {
-                $fechas=request('array_fechas_seguimientoVendedor');
+                $fechas=request('array_fechas');
                 //codificacion a json
                 $fechas_converter=json_encode($fechas,true);
                 //decodificcion del reques recibido para iterar el aary
@@ -320,8 +320,8 @@ class CrearActividadParaPlanTrabajo2 extends Controller
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
-            'array_fechas_libro_faltantes.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_libro_faltantes.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
         ]);
         if($validator->fails())
         {
@@ -332,7 +332,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
         {
 
 
-            $fechas=request('array_fechas_libro_faltantes');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary

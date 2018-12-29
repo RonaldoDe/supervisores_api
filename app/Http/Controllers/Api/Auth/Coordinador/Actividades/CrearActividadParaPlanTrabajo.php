@@ -29,7 +29,7 @@ class CrearActividadParaPlanTrabajo extends Controller
             // 'id_prioridad' => 'required|numeric',
             
             'id_plan_trabajo'=>'required|numeric',
-            'array_fechas_apertura.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
 
         ]);
         if($validator->fails())
@@ -41,7 +41,7 @@ class CrearActividadParaPlanTrabajo extends Controller
         {
             $id_planT=request('id_plan_trabajo');
 
-            $fechas=request('array_fechas_apertura');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary
@@ -300,8 +300,8 @@ public function crearActividadDocumentacionLegal(Request $request){
             'id_prioridad' => 'required|numeric',
 
             'id_plan_trabajo'=>'required|numeric',
-            'array_fechas_papeleria.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_papeleria.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
 
 
 
@@ -314,7 +314,7 @@ public function crearActividadDocumentacionLegal(Request $request){
         else
         {
 
-            $fechas=request('array_fechas_papeleria');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary
@@ -379,8 +379,8 @@ public function crearActividadDocumentacionLegal(Request $request){
             'id_prioridad' => 'required|numeric',
 
             'id_plan_trabajo'=>'required|numeric',
-            'array_fechas_formulas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_formulas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date',
 
         ]);
         if($validator->fails())
@@ -392,7 +392,7 @@ public function crearActividadDocumentacionLegal(Request $request){
         {
 
 
-            $fechas=request('array_fechas_formulas');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary
@@ -458,8 +458,8 @@ public function crearActividadDocumentacionLegal(Request $request){
             'id_prioridad' => 'required|numeric',
 
             'id_plan_trabajo'=>'required|numeric',
-            'array_fechas_remisiones.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_remisiones.*.fecha_fin'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date',
 
 
 
@@ -473,7 +473,7 @@ public function crearActividadDocumentacionLegal(Request $request){
         {
 
 
-            $fechas=request('array_fechas_remisiones');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary

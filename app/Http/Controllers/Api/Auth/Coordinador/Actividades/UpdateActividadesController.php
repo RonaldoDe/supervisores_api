@@ -33,7 +33,7 @@ class UpdateActividadesController extends Controller
             
             'id_plan_trabajo'=>'required|numeric',
             'id_actividad'=>'required',
-            'array_fechas_apertura.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
 
         ]);
         if($validator->fails())
@@ -45,7 +45,7 @@ class UpdateActividadesController extends Controller
         {
             $id_planT=request('id_plan_trabajo');
 
-            $fechas=request('array_fechas_apertura');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary
@@ -270,8 +270,8 @@ class UpdateActividadesController extends Controller
             'id_prioridad' => 'required|numeric',
             'id_actividad' => 'required',
             'id_plan_trabajo'=>'required|numeric',
-            'array_fechas_papeleria.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_papeleria.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
         ]);
         if($validator->fails())
         {
@@ -281,7 +281,7 @@ class UpdateActividadesController extends Controller
         else
         {
 
-            $fechas=request('array_fechas_papeleria');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary
@@ -343,8 +343,8 @@ class UpdateActividadesController extends Controller
             'id_prioridad' => 'required|numeric',
             'id_actividad' => 'required',
             'id_plan_trabajo'=>'required|numeric',
-            'array_fechas_formularios.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_formularios.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
 
         ]);
         if($validator->fails())
@@ -355,7 +355,7 @@ class UpdateActividadesController extends Controller
         {
 
 
-            $fechas=request('array_fechas_formulas');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary
@@ -417,8 +417,8 @@ class UpdateActividadesController extends Controller
             'id_prioridad' => 'required|numeric',
             'id_actividad' => 'required',
             'id_plan_trabajo'=>'required|numeric',
-            'array_fechas_remisiones.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_remisiones.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
 
 
 
@@ -432,7 +432,7 @@ class UpdateActividadesController extends Controller
         {
 
 
-            $fechas=request('array_fechas_remisiones');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary
@@ -559,8 +559,8 @@ class UpdateActividadesController extends Controller
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
             'id_actividad'=>'required',
-            'array_fechas_kardex.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_kardex.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
         ]);
         if($validator->fails())
         {
@@ -571,7 +571,7 @@ class UpdateActividadesController extends Controller
         {
 
 
-            $fechas=request('array_fechas_kardex');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary
@@ -633,8 +633,8 @@ class UpdateActividadesController extends Controller
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
             'id_actividad'=>'required',
-            'array_fechas_seguimientoVendedor.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_seguimientoVendedor.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
         ]);
         if($validator->fails())
         {
@@ -643,7 +643,7 @@ class UpdateActividadesController extends Controller
 
         else
         {
-            $fechas=request('array_fechas_seguimientoVendedor');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary
@@ -840,8 +840,8 @@ class UpdateActividadesController extends Controller
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
             'id_actividad'=>'required',
-            'array_fechas_libro_faltantes.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_libro_faltantes.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
         ]);
         if($validator->fails())
         {
@@ -852,7 +852,7 @@ class UpdateActividadesController extends Controller
         {
 
 
-            $fechas=request('array_fechas_libro_faltantes');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary
@@ -984,8 +984,8 @@ class UpdateActividadesController extends Controller
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
             'id_actividad'=>'required',
-            'array_fechas_libro_agenda_cliente.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas_libro_agenda_cliente.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
+            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
         ]);
         if($validator->fails())
         {
@@ -996,7 +996,7 @@ class UpdateActividadesController extends Controller
         {
 
 
-            $fechas=request('array_fechas_libro_agenda_cliente');
+            $fechas=request('array_fechas');
             //codificacion a json
             $fechas_converter=json_encode($fechas,true);
             //decodificcion del reques recibido para iterar el aary

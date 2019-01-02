@@ -20,6 +20,7 @@ use App\Modelos\Actividades\LibroVencimientos;
 use App\Modelos\Actividades\PresupuestoPedidos;
 use App\Modelos\Actividades\RevisionCompletaInventarios;
 use App\Modelos\Actividades\SeguimientoVendedor;
+use App\Modelos\Actividades\DocumentacionLegal;
 
 class ValidarActividadesController extends Controller
 {
@@ -565,6 +566,44 @@ class ValidarActividadesController extends Controller
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->update();
+                 return response()->json(['message' => 'Actividad realizada con exito']);
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function documentacion_legal($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'documento_vencido' => 'required|mimes:png,jpg',
+             'documento_renovado' => 'required|mimes:png,jpg',
+             'tiempo_actividad' => 'required',
+             'calificacion_pv' => 'required',
+
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( $errors=$validator->errors()->all() );
+         }
+
+         else
+         {
+
+             //actualizacion de la actividad por el supervisor
+             $actividad = DocumentacionLegal::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             return response()->json($request->file('documento_vencido'));exit;
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->documento_vencido = request('documento_vencido');
+                 $actividad->documento_renovado = request('documento_renovado');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');

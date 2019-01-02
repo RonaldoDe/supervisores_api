@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Storage;
+
 use Illuminate\Http\Request;
 use App\Modelos\Actividades\Apertura;
 use App\Modelos\Actividades\CondicionesLocativas;

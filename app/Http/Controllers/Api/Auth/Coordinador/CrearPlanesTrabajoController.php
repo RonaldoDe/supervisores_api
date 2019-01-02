@@ -28,7 +28,7 @@ class CrearPlanesTrabajoController extends Controller
 
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -81,7 +81,7 @@ class CrearPlanesTrabajoController extends Controller
 
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -110,7 +110,7 @@ class CrearPlanesTrabajoController extends Controller
 
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else

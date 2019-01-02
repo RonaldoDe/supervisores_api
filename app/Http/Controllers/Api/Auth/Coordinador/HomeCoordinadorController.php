@@ -93,7 +93,7 @@ class HomeCoordinadorController extends Controller
             {
 
 
-              return response()->json( $errors=$validator->errors()->all() );
+              return response()->json( $errors=$validator->errors()->all(),400 );
             }
 
             else

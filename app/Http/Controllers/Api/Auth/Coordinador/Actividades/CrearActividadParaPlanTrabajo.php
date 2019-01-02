@@ -34,7 +34,7 @@ class CrearActividadParaPlanTrabajo extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all());
+          return response()->json( $errors=$validator->errors()->all(),400);
         }
 
         else
@@ -220,7 +220,7 @@ public function crearActividadDocumentacionLegal(Request $request){
     ]);
     if($validator->fails())
     {
-      return response()->json( $errors=$validator->errors()->all() );
+      return response()->json( $errors=$validator->errors()->all(),400 );
     }
 
     else
@@ -308,7 +308,7 @@ public function crearActividadDocumentacionLegal(Request $request){
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -385,7 +385,7 @@ public function crearActividadDocumentacionLegal(Request $request){
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -466,7 +466,7 @@ public function crearActividadDocumentacionLegal(Request $request){
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -548,7 +548,7 @@ public function crearActividadDocumentacionLegal(Request $request){
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else

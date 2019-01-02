@@ -42,7 +42,7 @@ class ZonasCordinadorController extends Controller
 
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -162,7 +162,7 @@ catch(Exeption $e){
 
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else

@@ -28,7 +28,7 @@ class DeleteActividadController extends Controller
             ->where('id_plan_trabajo', request('id_plan_trabajo'))
             ->first();
             if($actividad){
-                if($delete->estado == 'completo'){
+                if($actividad->estado == 'completo'){
                     return response()->json('Actividad eliminada',200);
                 }else{
                     return response()->json('La actividad esta completa no puedes eliminar',400);

@@ -581,8 +581,8 @@ class ValidarActividadesController extends Controller
          //validacion de los datos de la actividad
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
-             'documento_vencido' => 'required|mimes:png,jpg',
-             'documento_renovado' => 'required|mimes:png,jpg',
+             'documento_vencido' => 'required',
+             'documento_renovado' => 'required',
              'tiempo_actividad' => 'required',
              'calificacion_pv' => 'required',
 
@@ -603,10 +603,10 @@ class ValidarActividadesController extends Controller
                  $actividad->observacion = request('observaciones');
                  $actividad->documento_vencido = request('documento_vencido');
                  $actividad->documento_renovado = request('documento_renovado');
-                 $actividad->tiempo_actividad = request('tiempo_actividad');
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }

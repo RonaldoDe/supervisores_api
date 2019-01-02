@@ -600,8 +600,8 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = DocumentacionLegal::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
-                 $img_vencido = 'documento_vencido' . time() . '.png';
-                 $img_renovado = 'documento_renovado' . time() . '.png';
+                 $img_vencido = 'documento_vencido' . time() . '.jpg';
+                 $img_renovado = 'documento_renovado' . time() . '.jpg';
                  if (request('documento_vencido') != "" && request('documento_renovado') != "") { // storing image in storage/app/public Folder
                     Storage::disk('public')->put('img/'.$img_vencido, base64_decode(request('documento_vencido')));
                     Storage::disk('public')->put('img/'.$img_renovado, base64_decode(request('documento_renovado')));

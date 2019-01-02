@@ -603,8 +603,8 @@ class ValidarActividadesController extends Controller
                  $img_vencido = 'documento_vencido' . time() . '.png';
                  $img_renovado = 'documento_renovado' . time() . '.png';
                  if (request('documento_vencido') != "" && request('documento_renovado') != "") { // storing image in storage/app/public Folder
-                    Storage::disk('public/img')->put($img_vencido, base64_decode(request('documento_vencido')));
-                    Storage::disk('public/img')->put('img/'.$img_renovado, base64_decode(request('documento_renovado')));
+                    Storage::disk('public')->put('img/'.$img_vencido, base64_decode(request('documento_vencido')));
+                    Storage::disk('public')->put('img/'.$img_renovado, base64_decode(request('documento_renovado')));
                 }
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');

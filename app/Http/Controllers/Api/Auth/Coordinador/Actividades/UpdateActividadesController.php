@@ -38,7 +38,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all());
+          return response()->json( $errors=$validator->errors()->all(), 400);
         }
 
         else
@@ -208,7 +208,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
     
         else
@@ -247,9 +247,9 @@ class UpdateActividadesController extends Controller
                             $actividad->estado = 'Activo';
                             $actividad->id_prioridad = request('id_prioridad');
                             $actividad->update();
-                            return response()->json('Actividad actualizada con exito');
+                            return response()->json('Actividad actualizada con exito',200);
                         }
-                        return response()->json('Error Actividad no encontrada');
+                        return response()->json('Error Actividad no encontrada',400);
                 }
     
         
@@ -275,7 +275,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(), 400);
         }
 
         else
@@ -349,7 +349,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
         else
         {
@@ -425,7 +425,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -502,7 +502,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -564,7 +564,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -638,7 +638,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -714,7 +714,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -781,7 +781,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -845,7 +845,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -921,7 +921,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -989,7 +989,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -1070,7 +1070,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -1136,7 +1136,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -1206,7 +1206,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -1280,7 +1280,7 @@ class UpdateActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else

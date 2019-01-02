@@ -23,12 +23,16 @@ class DeleteActividadController extends Controller
         }
         else
         {
-            $delete = DB::table(request('actividad'))
+            $actividad = DB::table(request('actividad'))
             ->where('id', request('id_actividad'))
             ->where('id_plan_trabajo', request('id_plan_trabajo'))
-            ->delete();
-            if($delete){
-                return response()->json('Actividad eliminada',200);
+            ->first();
+            if($actividad){
+                if($delete->estado == 'completo'){
+                    return response()->json('Actividad eliminada',200);
+                }else{
+                    return response()->json('La actividad esta completa no puedes eliminar',400);
+                }
             }else{
                 return response()->json('Actividad no encontrada',400);
             }

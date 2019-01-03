@@ -44,13 +44,12 @@ class ActividadesCompletasController extends Controller
             $fe = DB::table($ac->nombre_tabla. ' as ac')
             ->where('ac.estado','completo')
             ->get();
-
             foreach($fe as $fecha){
+                // return response()->json($fecha);
                 if(date('Y-m-d').' 00:00:00' >= $fecha->fecha_inicio && date('Y-m-d').' 00:00:00' <= $fecha->fecha_fin && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
                     $fecha->nombre_tabla = $ac->nombre_tabla;
                     $fecha->nombre_sucursal = $ac->nombre;
                     $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre_actividad, $fecha);
-
                 }
             }
 

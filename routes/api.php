@@ -49,6 +49,9 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     //listado de rutas y nombre de actividades
     Route::get('rutas', 'Api\Auth\Supervisores\DescripcionActividadController@rutas');
 
+    Route::post('viewActividades', 'Api\Auth\Supervisores\PlanesController@allActividades');
+
+
     //se agregaron estos para ps repores segir mirando
     //rutas de actualizar actividades
     Route::post('updateApertura', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadApertura');

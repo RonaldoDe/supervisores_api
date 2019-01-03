@@ -159,7 +159,7 @@ class PlanesController extends Controller
                         $delete_plan = DB::table('plan_trabajo_asignacion')
                         ->where('id_plan_trabajo', request('id_plan_trabajo'))
                         ->delete();
-                        if($delete){
+                        if($delete_plan){
                             return response()->json('Plan eliminado con exito',200);
                         }else{
                             return response()->json('Error del servido o plan inexistente',400);

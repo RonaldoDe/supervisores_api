@@ -36,7 +36,6 @@ class DeleteActividadController extends Controller
                     if($delete){
                         $delete_actividad = DB::table(request('actividad'))
                         ->where('id_plan_trabajo', request('id_plan_trabajo'))
-                        ->where('id', request('id_actividad'))
                         ->get();
                         if(count($delete_actividad) == 0){
                             $delete_actividad = DB::table('actividades')

@@ -49,7 +49,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     //listado de rutas y nombre de actividades
     Route::get('rutas', 'Api\Auth\Supervisores\DescripcionActividadController@rutas');
 
-    Route::post('viewActividades', 'Api\Auth\Supervisores\PlanesController@allActividades');
+    Route::post('viewActividades', 'Api\Auth\Coordinador\PlanesController@allActividades');
 
 
     //se agregaron estos para ps repores segir mirando

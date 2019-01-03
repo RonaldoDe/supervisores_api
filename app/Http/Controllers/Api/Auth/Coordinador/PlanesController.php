@@ -117,7 +117,7 @@ class PlanesController extends Controller
                     
                 }
                     // validar si el array tiene actividades
-                    return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre, 'id_sucursal' => $plan->id_sucursal, 'sucursal' => $ac->nombreSucursal], '',200);
+                    return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre, $plan->id_sucursal, 'sucursal' => $ac->nombreSucursal], '',200);
                 
             }else{
                 return response()->json('No tienes permiso para acceder a esta ruta',400);

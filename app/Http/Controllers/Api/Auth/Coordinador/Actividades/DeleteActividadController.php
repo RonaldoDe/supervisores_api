@@ -29,7 +29,7 @@ class DeleteActividadController extends Controller
             ->first();
             if($actividad){
                 if($actividad->estado != 'completo'){
-                    $detele = DB::table(request('actividad'))
+                    $delete = DB::table(request('actividad'))
                     ->where('id', request('id_actividad'))
                     ->where('id_plan_trabajo', request('id_plan_trabajo'))
                     ->delete();

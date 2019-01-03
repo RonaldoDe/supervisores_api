@@ -147,7 +147,7 @@ class PlanesController extends Controller
                 $plan_coordinador=DB::table('plan_trabajo_asignacion as p')
                 ->where('p.id_plan_trabajo',request('id_plan_trabajo'))
                 ->where('p.idcoordinador',$coordinador->id_cordinador)
-                ->frist();
+                ->first();
 
                 if($plan_coordinador != null){
                     $plan = DB::table('actividades')

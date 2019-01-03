@@ -33,7 +33,21 @@ class DeleteActividadController extends Controller
                     ->where('id', request('id_actividad'))
                     ->where('id_plan_trabajo', request('id_plan_trabajo'))
                     ->delete();
-                    return response()->json('Actividad eliminada',200);
+                    if($delete){
+                        $delete_actividad = DB::table('actividades')
+                        ->where('id_plan_trabajo', request('id_plan_trabajo'))
+                        ->where('nombre_tabla', request('actividad'))
+                        ->get();
+                        if(!count($delete_actividad) > 0){
+                            $delete_actividad = DB::table('actividades')
+                            ->where('id_plan_trabajo', request('id_plan_trabajo'))
+                            ->where('nombre_tabla', request('actividad'))
+                            ->delete();
+                        }
+                        return response()->json('Actividad eliminada',200);
+                    }else{
+                        return response()->json('Actividad no encontrada o al momento de eliminar',400);
+                    }
                 }else{
                     return response()->json('La actividad esta completa no puedes eliminar',400);
                 }

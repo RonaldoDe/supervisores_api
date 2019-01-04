@@ -41,7 +41,7 @@ class ValidarActividadesController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all(),400 );
+          return response()->json( ['message' => $validator->errors()->all()],400 );
         }
 
         else
@@ -57,6 +57,7 @@ class ValidarActividadesController extends Controller
                 $actividad->calificacion_pv = request('calificacion_pv');
                 $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
+                $actividad->motivo_ausencia = request('motivo_ausencia');
                 $actividad->calificacion_pv = request('calificacion_pv');
                 $actividad->update();
                 return response()->json(['message' => 'Actividad realizada con exito']);
@@ -80,7 +81,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -96,7 +97,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -118,7 +120,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -134,7 +136,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -156,7 +159,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -172,7 +175,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -196,7 +200,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -216,7 +220,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -236,7 +241,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -252,7 +257,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -272,7 +278,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -288,7 +294,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -307,7 +314,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -323,7 +330,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -343,7 +351,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -360,7 +368,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -379,7 +388,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -395,7 +404,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -414,7 +424,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -430,7 +440,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -449,7 +460,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -465,7 +476,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -484,7 +496,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -500,7 +512,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -519,7 +532,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -535,7 +548,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -554,7 +568,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -570,7 +584,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -589,7 +604,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -605,7 +620,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -624,7 +640,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400 );
+           return response()->json( ['message' => $validator->errors()->all()],400 );
          }
 
          else
@@ -640,7 +656,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -661,7 +678,7 @@ class ValidarActividadesController extends Controller
          ]);
          if($validator->fails())
          {
-           return response()->json( $errors=$validator->errors()->all(),400);
+           return response()->json( ['message' => $validator->errors()->all()],400);
          }
 
          else
@@ -685,7 +702,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                  $actividad->tiempo_total = request('tiempo_total');
-                 $actividad->update();
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);

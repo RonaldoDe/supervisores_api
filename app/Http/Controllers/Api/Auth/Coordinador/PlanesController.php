@@ -100,24 +100,27 @@ class PlanesController extends Controller
                 ->where('p.id_plan_trabajo', request('id_plan_trabajo'))
                 ->first();
     
-                //array que almacenará las actividanes correspondientes a los 7 dias despues del dia actual 
-                $lista_actividades_arr = array();
-                //bucle que itera las actividades y las obtiene segun el plan de trabajo
-                foreach($actividades as $ac){
-                    $fe = DB::table($ac->nombre_tabla. ' as ac')
-                    ->where('ac.id_plan_trabajo',$ac->id_plan_trabajo)
-                    ->get();
-    
-                    //  generar el array con el listado de actividades pendientes en la semana
-                    foreach($fe as $fecha){
-                        $fecha->nombre_actividad = $ac->nombre_actividad;
-                        array_push($lista_actividades_arr, $fecha);
+                if(count($actividades) > 0){
+                    //array que almacenará las actividanes correspondientes a los 7 dias despues del dia actual 
+                    $lista_actividades_arr = array();
+                    //bucle que itera las actividades y las obtiene segun el plan de trabajo
+                    foreach($actividades as $ac){
+                        $fe = DB::table($ac->nombre_tabla. ' as ac')
+                        ->where('ac.id_plan_trabajo',$ac->id_plan_trabajo)
+                        ->get();
+        
+                        //  generar el array con el listado de actividades pendientes en la semana
+                        foreach($fe as $fecha){
+                            $fecha->nombre_actividad = $ac->nombre_actividad;
+                            array_push($lista_actividades_arr, $fecha);
+                        }
+                        
+                        
                     }
-                    
-                    
-                }
-                    // validar si el array tiene actividades
                     return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre, 'id_sucursal' => $plan->id_sucursal, 'sucursal' => $ac->nombreSucursal],200);
+                }else{
+                    return response()->json(['Actividades' => 'No tiene actividades disponible'],400);
+                }
                 
             }else{
                 return response()->json('No tienes permiso para acceder a esta ruta',400);

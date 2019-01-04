@@ -59,7 +59,7 @@ public function insertarTablasAactividad(Request $request){
                     ]);
                     return response()->json(["message "=>'Activida creada'],201);
                 }else{
-                return response()->json(["message "=>'Activida existente'],400);                
+                return response()->json(["message "=>'Activida existente'],200);                
             }
 
 

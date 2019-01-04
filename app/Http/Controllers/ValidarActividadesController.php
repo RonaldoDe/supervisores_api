@@ -669,8 +669,6 @@ class ValidarActividadesController extends Controller
          //validacion de los datos de la actividad
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
-             'documento_vencido' => 'required',
-             'documento_renovado' => 'required',
              'calificacion_pv' => 'required',
              'tiempo_actividad'=>'required',
             'tiempo_total'=>'required',

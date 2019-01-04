@@ -19,10 +19,10 @@ public function insertarTablasAactividad(Request $request){
 
     $validator=\Validator::make($request->all(),[
         'id_plan_trabajo'=>'required|numeric',
-
-       'array_actividades.*.id_prioridad'=>'required|numeric',
-       'array_actividades.*.nombre_tabla'=>'required',
-       'array_actividades.*.nombre_actividad'=>'required'
+        
+        'array_actividades.*.id_prioridad'=>'required|numeric',
+        'array_actividades.*.nombre_tabla'=>'required',
+        'array_actividades.*.nombre_actividad'=>'required'
 
        ]);
 
@@ -55,15 +55,15 @@ public function insertarTablasAactividad(Request $request){
                     'id_prioridad' =>$actividades_converter_d[$i]["id_prioridad"],
                     'nombre_tabla' =>$actividades_converter_d[$i]["nombre_tabla"],
                     'nombre_actividad'=>$actividades_converter_d[$i]["nombre_actividad"]
-    
+
                     ]);
+                    return response()->json(["message "=>'Activida creada'],201);
+                }else{
+                return response()->json(["message "=>'Activida existente'],400);                
             }
 
 
         }
-
-
-        return response()->json(["message "=>'Activida creada cvX50'],201);
 
     }
 

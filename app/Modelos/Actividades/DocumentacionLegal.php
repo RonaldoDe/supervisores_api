@@ -13,5 +13,5 @@ class DocumentacionLegal extends Model{
 
     public $timestamps=false;
 
-    protected $fillable=['id_plan_trabajo','id_prioridad','calificacion','fecha_inicio','fecha_fin','fecha_mod','observacion','calificacion_pv','estado', 'tiempo_actividad', 'documento_vencido'. 'documento_renovado'];
+    protected $fillable=['id_plan_trabajo','id_prioridad','calificacion','fecha_inicio','fecha_fin','fecha_mod','observacion','calificacion_pv','estado', 'tiempo_actividad', 'tiempo_total', 'documento_vencido'. 'documento_renovado'];
 }

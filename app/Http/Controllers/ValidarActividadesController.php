@@ -35,6 +35,8 @@ class ValidarActividadesController extends Controller
             'id_plan_trabajo' => 'required',
             'nombre_tabla' => 'required',
             'calificacion_pv' => 'required',
+            'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
         ]);
         if($validator->fails())
@@ -53,6 +55,9 @@ class ValidarActividadesController extends Controller
                 $actividad->estado = 'completo';
                 $actividad->calificacion = 5;
                 $actividad->calificacion_pv = request('calificacion_pv');
+                $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
+                $actividad->calificacion_pv = request('calificacion_pv');
                 $actividad->update();
                 return response()->json(['message' => 'Actividad realizada con exito']);
             }
@@ -69,6 +74,8 @@ class ValidarActividadesController extends Controller
             'nombre_tabla' => 'required',
             'id_plan_trabajo' => 'required',
             'calificacion_pv' => 'required',
+            'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -87,6 +94,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -103,6 +112,8 @@ class ValidarActividadesController extends Controller
             'nombre_tabla' => 'required',
             'id_plan_trabajo' => 'required',
             'calificacion_pv' => 'required',
+            'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -121,6 +132,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -137,6 +150,8 @@ class ValidarActividadesController extends Controller
             'nombre_tabla' => 'required',
             'id_plan_trabajo' => 'required',
             'calificacion_pv' => 'required',
+            'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -155,6 +170,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -173,6 +190,8 @@ class ValidarActividadesController extends Controller
              'valor_faltante' => 'required',
              'valor_sobrante' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+             'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -195,6 +214,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -209,6 +230,8 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -227,6 +250,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -241,6 +266,8 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -259,6 +286,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -272,6 +301,8 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -290,6 +321,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -304,6 +337,8 @@ class ValidarActividadesController extends Controller
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
              'num_remision' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -323,6 +358,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -336,6 +373,8 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -354,6 +393,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -367,6 +408,8 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -385,6 +428,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -398,6 +443,8 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -416,6 +463,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -429,6 +478,8 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -447,6 +498,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -460,6 +513,8 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -478,6 +533,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -491,6 +548,8 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -509,6 +568,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -522,6 +583,8 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -540,6 +603,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -553,6 +618,8 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -571,6 +638,8 @@ class ValidarActividadesController extends Controller
                  $actividad->estado = 'completo';
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }
@@ -585,8 +654,9 @@ class ValidarActividadesController extends Controller
              'id_actividad' => 'required',
              'documento_vencido' => 'required',
              'documento_renovado' => 'required',
-             'tiempo_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
 
          ]);
          if($validator->fails())
@@ -614,6 +684,7 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion = 5;
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
+                 $actividad->tiempo_total = request('tiempo_total');
                  $actividad->update();
                  return response()->json(['message' => 'Actividad realizada con exito']);
              }

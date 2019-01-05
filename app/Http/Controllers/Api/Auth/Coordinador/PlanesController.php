@@ -209,11 +209,11 @@ class PlanesController extends Controller
                         if($plan->estado == 1){
                             $plan->estado = 0;
                             $plan->update();
-                            return response()->json('Plan asignado con exito.',200);
+                            return response()->json('Plan desasignado con exito.',200);
                         }else if($plan->estado == 0) {
                             $plan->estado = 1;
                             $plan->update();
-                            return response()->json('Plan desasignado con exito.',200);
+                            return response()->json('Plan asignado con exito.',200);
                         }
                     }
                 }else{

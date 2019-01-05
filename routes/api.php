@@ -53,7 +53,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('viewActividades', 'Api\Auth\Coordinador\PlanesController@allActividades');
 
     //plan asigancion
-    Route::post('asiganarPlan', 'Api\Auth\Coordinador\PlanesController@asignarEstadoPlan');
+    Route::post('asignarPlan', 'Api\Auth\Coordinador\PlanesController@asignarEstadoPlan');
 
 
     //se agregaron estos para ps repores segir mirando

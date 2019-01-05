@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Modelos\PlanTrabajoAsignacion;
 
 class PlanesController extends Controller
 {
@@ -179,5 +180,47 @@ class PlanesController extends Controller
         }
     }
 
+    public function asignarEstadoPlan(Request $request)
+    {
+        $validator=\Validator::make($request->all(),[
+            'id_plan_trabajo' => 'required',
+        ]);
+
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+            $coordinador=DB::table('coordinadores')->where('cedula',$user->cedula)->first();
+
+            if($coordinador != null){
+                //obtener permiso para el coordinador
+                $plan_coordinador=DB::table('plan_trabajo_asignacion as p')
+                ->where('p.id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('p.idcoordinador',$coordinador->id_cordinador)
+                ->first();
+
+                if($plan_coordinador != null){
+                    $plan = PlanTrabajoAsignacion::where('id_plan_trabajo', request('id_plan_trabajo'));
+                    if($plan!= null){
+                        if($plan->estado == 1){
+                            $plan->estado = 0;
+                            $plan->update();
+                            return response()->json('Plan asignado con exito.',200);
+                        }else if($plan->estado == 0) {
+                            $plan->estado = 1;
+                            $plan->update();
+                            return response()->json('Plan desasignado con exito.',200);
+                        }
+                    }
+                }else{
+                    return response()->json('No tienes permiso para acceder a este plan o el plan no existe',400);
+                }
+            }
+        }
+    }
     
 }

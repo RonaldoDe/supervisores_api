@@ -52,6 +52,9 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     //listado de actvidades
     Route::post('viewActividades', 'Api\Auth\Coordinador\PlanesController@allActividades');
 
+    //plan asigancion
+    Route::post('asiganarPlan', 'Api\Auth\Coordinador\PlanesController@asignarEstadoPlan');
+
 
     //se agregaron estos para ps repores segir mirando
     //rutas de actualizar actividades

@@ -33,6 +33,7 @@ class ActividadesCompletasController extends Controller
        ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
        ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
        ->where('p.id_supervisor',$usuario_rol->id_usuario_roles)
+       ->where('p.estado',1)
        ->orderby('ac.id_plan_trabajo','desc')
        ->get();
 

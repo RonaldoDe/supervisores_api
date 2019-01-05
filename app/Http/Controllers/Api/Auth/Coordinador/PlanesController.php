@@ -204,7 +204,7 @@ class PlanesController extends Controller
                 ->first();
 
                 if($plan_coordinador != null){
-                    $plan = PlanTrabajoAsignacion::where('id_plan_trabajo', request('id_plan_trabajo'));
+                    $plan = PlanTrabajoAsignacion::where('id_plan_trabajo', request('id_plan_trabajo'))->first();
                     if($plan!= null){
                         if($plan->estado == 1){
                             $plan->estado = 0;

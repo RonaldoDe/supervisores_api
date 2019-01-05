@@ -214,6 +214,8 @@ class PlanesController extends Controller
                             $plan->estado = 1;
                             $plan->update();
                             return response()->json('Plan asignado con exito.',200);
+                        }else{
+                            return response()->json('Este plan de trabajo ya esta completo.',400);
                         }
                     }
                 }else{

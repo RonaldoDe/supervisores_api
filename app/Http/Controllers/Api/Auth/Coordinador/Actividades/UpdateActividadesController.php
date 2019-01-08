@@ -581,6 +581,7 @@ class UpdateActividadesController extends Controller
             $fechas_base_datos=DB::table('kardex')
                         ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                         ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                        ->where('id', '!=', request('id_actividad'))
                         ->get();
 
            //isntancia de la funcion omnipotente para la validacion de las fechas establecida en Controller

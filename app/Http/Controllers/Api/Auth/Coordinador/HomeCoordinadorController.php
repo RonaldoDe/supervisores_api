@@ -33,6 +33,7 @@ class HomeCoordinadorController extends Controller
 
        //Se recupera los datos del usuario que se ha autenticado
        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+       $coordinador=DB::table('coordinadores')->where('correo','=',$user->email)->first();
 
 
        // Se recupera los datos del coordinador para mostrar su region y datos personales
@@ -58,7 +59,7 @@ class HomeCoordinadorController extends Controller
 
 
        //se retorna por ajax la region y zonas como objetos de las consultas realizadas
-     return response()->json(["region"=>$region,"Zonas"=>$zonas]);
+     return response()->json(["region"=>$region,"Zonas"=>$zonas, 'foto' => $coordinador->foto],200);
 
         // }
         // else
@@ -229,7 +230,7 @@ class HomeCoordinadorController extends Controller
                 ->first();
                 if($zona != null){
                     
-                    return response()->json(['data' => $zona, 'foto' => $coordinador->foto],201);
+                    return response()->json($zona,201);
                 }else{
                     return response()->json('sucursal no encontrada.',400);
                 }

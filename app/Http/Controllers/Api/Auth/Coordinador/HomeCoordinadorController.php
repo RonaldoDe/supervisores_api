@@ -229,7 +229,7 @@ class HomeCoordinadorController extends Controller
                 ->first();
                 if($zona != null){
                     
-                    return response()->json($zona,201);
+                    return response()->json(['data' => $zona, 'foto' => $coordinador->foto],201);
                 }else{
                     return response()->json('sucursal no encontrada.',400);
                 }

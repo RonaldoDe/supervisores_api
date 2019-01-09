@@ -45,13 +45,13 @@ class DeleteActividadController extends Controller
                         }
                         return response()->json('Actividad eliminada',200);
                     }else{
-                        return response()->json('Actividad no encontrada o al momento de eliminar',400);
+                        return response()->json(['Actividad no encontrada al momento de eliminar.'],400);
                     }
                 }else{
-                    return response()->json('La actividad esta completa no puedes eliminar',400);
+                    return response()->json(['La actividad esta completa, no se puede eliminar'],400);
                 }
             }else{
-                return response()->json('Actividad no encontrada',400);
+                return response()->json(['Actividad no encontrada'],400);
             }
 
         }

@@ -103,7 +103,7 @@ class UpdateActividadesController extends Controller
                     }
 
                 }else{
-                    return response()->json("las fechas inicio deben ser mayor o igual ala fecha actual ",400);
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual."],400);
                 }
 
                 $sw2=0;
@@ -122,12 +122,12 @@ class UpdateActividadesController extends Controller
                     }
 
                 }else{
-                    return response()->json("las fechas inicios  no pueden ser  iguales ",400);
+                    return response()->json(["Las fechas iniciales no puede ser iguales."],400);
                 }
 
                 if($sw2>0){
 
-                    return response()->json(['error'=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de datos'],400);
+                    return response()->json(["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
                 }else{
 
@@ -141,10 +141,10 @@ class UpdateActividadesController extends Controller
                             $actividad->update();
                             return response()->json('Actividad actualizada con exito');
                         }
-                        return response()->json('Error Actividad no encontrada');
+                        return response()->json(['Error Actividad no encontrada']);
                    
                 }
-                    return response()->json("Array error",201);
+                    return response()->json("Array error",400);
                 }
 
             //    $validacion=$this->validarArrayFechas($fechas_converter_d);
@@ -190,7 +190,7 @@ class UpdateActividadesController extends Controller
 
                }else{
 
-                return response()->json(['error'=>"Este plan trabajo no existe"],400);
+                return response()->json(["Este plan trabajo no existe"],400);
                }
 
             }
@@ -239,7 +239,7 @@ class UpdateActividadesController extends Controller
     
                 if($respuesta>0){
     
-                    return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+                    return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                 }else{
                     
                     $actividad = DocumentacionLegal::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -251,12 +251,12 @@ class UpdateActividadesController extends Controller
                             $actividad->update();
                             return response()->json('Actividad actualizada con exito',200);
                         }
-                        return response()->json(['error'=>'Actividad no encontrada'],400);
+                        return response()->json(['Actividad no encontrada'],400);
                 }
     
         
             }else{
-                return response()->json(['error'=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
     
             }
     
@@ -310,7 +310,7 @@ class UpdateActividadesController extends Controller
                     $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                     if($validacion_fecha_base > 0){
-                        return response()->json('ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato ',400);
+                        return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                     }else{
                         $actividad = PapeleriaConsignaciones::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                         if($actividad!= null){
@@ -325,13 +325,13 @@ class UpdateActividadesController extends Controller
 
                     }
                 }else{
-                    return response()->json(["La fecha inicial y fecha final no pueden ser  iguales"],400);
+                    return response()->json(["La fecha inicial y fecha final no pueden ser iguales"],400);
                 }
 
                }
             }
             else if($validacion>0){
-                return response()->json(["Las fecha inicio deben ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
             }
 
 
@@ -384,7 +384,7 @@ class UpdateActividadesController extends Controller
                     $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                     if($validacion_fecha_base > 0){
-                        return response()->json('ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato',400);
+                        return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                     }else{
                         $actividad = FormulasDespachos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                         if($actividad!= null){
@@ -395,19 +395,19 @@ class UpdateActividadesController extends Controller
                             $actividad->update();
                             return response()->json('Actividad actualizada con exito', 200);
                         }else{
-                            return response()->json('Actividad no encontrada',400);
+                            return response()->json(['Actividad no encontrada'],400);
                         }
                     }
                 }else{
-                    return response()->json("las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes",400);
+                    return response()->json(["Las fecha inicial o fecha final no pueden ser iguales por registros diferentes."],400);
                 }
 
                }
-               return response()->json("Error de servidor",500);
+               return response()->json(["Error de servidor"],500);
             }
 
             else if($validacion>0){
-                return response()->json("las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
             }
             }
 
@@ -463,7 +463,7 @@ class UpdateActividadesController extends Controller
                     $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                     if($validacion_fecha_base > 0){
-                        return response()->json('ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato',400);
+                        return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                     }else{
                         $actividad = Remisiones::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                         if($actividad!= null){
@@ -474,19 +474,19 @@ class UpdateActividadesController extends Controller
                             $actividad->update();
                             return response()->json('Actividad actualizada con exito', 200);
                         }else{
-                            return response()->json('Actividad no encontrada',400);
+                            return response()->json(['Actividad no encontrada'],400);
                         }
                     }
 
                 }else{
-                    return response()->json("las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes",400);
+                    return response()->json(["Las fecha inicial o fecha final no pueden ser iguales por registros diferentes."],400);
                 }
 
                }
-               return response()->json("Error de servidor",500);
+               return response()->json(["Error de servidor"],500);
             }
             else if($validacion>0){
-                return response()->json("las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
             }
 
 
@@ -533,7 +533,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
 
@@ -546,12 +546,12 @@ class UpdateActividadesController extends Controller
                 $actividad->update();
                 return response()->json('Actividad actualizada con exito', 200);
             }else{
-                return response()->json('Actividad no encontrada',400);
+                return response()->json(['Actividad no encontrada'],400);
             }
         }
                 }
                 else{
-                    return response()->json("las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final",400);
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
                 }
         }
@@ -606,7 +606,7 @@ class UpdateActividadesController extends Controller
                         $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                         if($validacion_fecha_base > 0){
-                            return response()->json('ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato',400);
+                            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                         }else{
                             $actividad = Kardex::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                             if($actividad!= null){
@@ -617,18 +617,18 @@ class UpdateActividadesController extends Controller
                                 $actividad->update();
                                 return response()->json('Actividad actualizada con exito', 200);
                             }else{
-                                return response()->json('Actividad no encontrada',400);
+                                return response()->json(['Actividad no encontrada'],400);
                             }
 
                         }
                     }else{
-                        return response()->json("las fechas inicios o fechas  finales no pueden ser  iguales",400);
+                        return response()->json(["La fechas inicial y fechas final no pueden ser iguales."],400);
                     }
                  }
               }
               elseif($validacion>0)
               {
-                return response()->json("la fecha de inicio debe ser igual o mayor a la fecha actual y menor o igual a la fecha final",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
               }
             }
     }
@@ -679,7 +679,7 @@ class UpdateActividadesController extends Controller
                         $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                         if($validacion_fecha_base > 0){
-                            return response()->json('ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato',400);
+                            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                         }else{
                             $actividad = SeguimientoVendedor::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                             if($actividad!= null){
@@ -690,20 +690,20 @@ class UpdateActividadesController extends Controller
                                 $actividad->update();
                                 return response()->json('Actividad actualizada con exito', 200);
                             }else{
-                                return response()->json('Actividad no encontrada',400);
+                                return response()->json(['Actividad no encontrada'],400);
                             }
 
                         }
 
                     }else{
-                        return response()->json("las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes",400);
+                        return response()->json(["Las fecha inicial o fecha final no pueden ser iguales por registros diferentes."],400);
                     }
 
                 }
               }
               elseif($validacion>0)
               {
-                return response()->json("fechas inicio deben ser mayores o iguales a la fecha actual y la fecha fin debe ser mayor o igual ala inicial",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
               }
             }
 
@@ -749,7 +749,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
             $actividad = EvaluacionPedidos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -767,7 +767,7 @@ class UpdateActividadesController extends Controller
 
 
             }else{
-                return response()->json("las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
             }
 
@@ -818,7 +818,7 @@ class UpdateActividadesController extends Controller
 
                     if($respuesta>0){
 
-                        return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+                        return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
                 }else{
                     $actividad = PresupuestoPedidos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -830,12 +830,12 @@ class UpdateActividadesController extends Controller
                         $actividad->update();
                         return response()->json('Actividad actualizada con exito', 200);
                     }else{
-                        return response()->json('Actividad no encontrada',400);
+                        return response()->json(['Actividad no encontrada'],400);
                     }
 
                 }
             }else{
-                return response()->json("las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
             }
 
@@ -891,7 +891,7 @@ class UpdateActividadesController extends Controller
                         $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                         if($validacion_fecha_base > 0){
-                            return response()->json('ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato',400);
+                            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                         }else{
 
 
@@ -904,18 +904,18 @@ class UpdateActividadesController extends Controller
                                 $actividad->update();
                                 return response()->json('Actividad actualizada con exito', 200);
                             }else{
-                                return response()->json('Actividad no encontrada',400);
+                                return response()->json(['Actividad no encontrada'],400);
                             }
 
                         }
                     }else{
-                        return response()->json("las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes",400);
+                        return response()->json(["Las fecha inicial o fecha final no pueden ser iguales por registros diferentes."],400);
                     }
                  }
               }
               elseif($validacion>0)
               {
-                return response()->json("la fecha de inicio debe ser igual o mayor a la fecha actual y menor o igual a la fecha final",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
               }
             }
     }
@@ -959,7 +959,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
             $actividad = CapturaClientes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -971,7 +971,7 @@ class UpdateActividadesController extends Controller
                 $actividad->update();
                 return response()->json('Actividad actualizada con exito', 200);
             }else{
-                return response()->json('Actividad no encontrada',400);
+                return response()->json(['Actividad no encontrada'],400);
             }
                
         }
@@ -980,7 +980,7 @@ class UpdateActividadesController extends Controller
                 return response()->json("Actividad  Captura Cliente  creada",201);
 
             }else{
-                return response()->json("la fecha de inicio debe ser igual o mayor a la fecha actual y menor o igual a la fecha final",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
             }
 
@@ -1042,7 +1042,7 @@ class UpdateActividadesController extends Controller
                         $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                         if($validacion_fecha_base > 0){
-                            return response()->json('ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato',400);
+                            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                         }else{
                             $actividad = LibroAgendasCliente::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                             if($actividad!= null){
@@ -1053,19 +1053,19 @@ class UpdateActividadesController extends Controller
                                 $actividad->update();
                                 return response()->json('Actividad actualizada con exito', 200);
                             }else{
-                                return response()->json('Actividad no encontrada',400);
+                                return response()->json(['Actividad no encontrada'],400);
                             }
                         }
 
                     }else{
-                        return response()->json("las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes",400);
+                        return response()->json(["Las fecha inicial o fecha final no pueden ser iguales por registros diferentes."],400);
                     }
                  }
                 return response()->json("Actividad libro agenda cliente creada",201);
               }
               elseif($validacion>0)
               {
-                return response()->json("la fecha de inicio debe ser igual o mayor a la fecha actual y menor o igual a la fecha final",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
               }
             }
     }
@@ -1110,7 +1110,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
             $actividad = CapturaClientes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -1122,12 +1122,12 @@ class UpdateActividadesController extends Controller
                 $actividad->update();
                 return response()->json('Actividad actualizada con exito', 200);
             }else{
-                return response()->json('Actividad no encontrada',400);
+                return response()->json(['Actividad no encontrada'],400);
             }
         }
 
             }else{
-                return response()->json("las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
             }
 
@@ -1177,7 +1177,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
             $actividad = Excesos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -1189,7 +1189,7 @@ class UpdateActividadesController extends Controller
                 $actividad->update();
                 return response()->json('Actividad actualizada con exito', 200);
             }else{
-                return response()->json('Actividad no encontrada',400);
+                return response()->json(['Actividad no encontrada'],400);
             }
         }
 
@@ -1198,7 +1198,7 @@ class UpdateActividadesController extends Controller
                 return response()->json("Actividad Excesos creada",201);
 
             }else{
-                return response()->json("fechas incorrectas la fecha inicio debe ser mayor o igual ala actual y menor o igua a la final",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
             }
 
@@ -1251,7 +1251,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
             $actividad = LibroVencimientos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -1263,7 +1263,7 @@ class UpdateActividadesController extends Controller
                 $actividad->update();
                 return response()->json('Actividad actualizada con exito', 200);
             }else{
-                return response()->json('Actividad no encontrada',400);
+                return response()->json(['Actividad no encontrada'],400);
             }
 
         }
@@ -1273,7 +1273,7 @@ class UpdateActividadesController extends Controller
                 return response()->json("Actividad Libro Vencimientos  creada",201);
 
             }else{
-                return response()->json("fechas incorrectas la fecha inicio debe ser mayor o igual ala actual y menor o igua a la final",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
             }
 
@@ -1326,7 +1326,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
             $actividad = IngresoSucursal::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -1338,13 +1338,13 @@ class UpdateActividadesController extends Controller
                 $actividad->update();
                 return response()->json('Actividad actualizada con exito', 200);
             }else{
-                return response()->json('Actividad no encontrada',400);
+                return response()->json(['Actividad no encontrada'],400);
             }
         
         }
 
             }else{
-                return response()->json("fechas incorrectas la fecha inicio debe ser mayor o igual ala actual y menor o igua a la final",400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
             }
 

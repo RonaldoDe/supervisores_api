@@ -78,14 +78,14 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                 ]);
                         }
                     }else{
-                        return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales"],400);
+                        return response()->json(["Las fecha inicial y fecha final no pueden ser iguales"],400);
                     }
                  }
-                return response()->json(["succes"=>"Actividad Kardex creada", 'id' => $kardex->id],201);
+                return response()->json(["success"=>"Actividad Kardex creada", 'id' => $kardex->id],201);
               }
               elseif($validacion>0)
               {
-                return response()->json(["error"=>"la fecha de inicio debe ser igual o mayor a la fecha actual y menor o igual a la fecha final"],400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
               }
             }
          }
@@ -154,16 +154,16 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                             }
 
                         }else{
-                            return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes"],400);
+                            return response()->json(["La fecha inicial o fecha final no pueden ser iguales por registros diferentes."],400);
                         }
 
 
                     }
-                    return response()->json(["succes"=>"Actividad Seguimiento vendedores creada", 'id' => $seguimiento_vendedor->id],201);
+                    return response()->json(["success"=>"Actividad Seguimiento vendedores creada", 'id' => $seguimiento_vendedor->id],201);
                   }
                   elseif($validacion>0)
                   {
-                    return response()->json(["error"=>"fechas inicio deben ser mayores o iguales a la fecha actual y la fecha fin debe ser mayor o igual ala inicial"],400);
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
                   }
                 }
 
@@ -227,10 +227,10 @@ class CrearActividadParaPlanTrabajo2 extends Controller
             }
 
 
-                    return response()->json(["succes"=>" Actividad Evaluacion Pedidos  creada", 'id' => $evaluacionPedidos->id],201);
+                    return response()->json(["success"=>" Actividad Evaluacion Pedidos  creada", 'id' => $evaluacionPedidos->id],201);
 
                 }else{
-                    return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
                 }
 
@@ -300,10 +300,10 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                     }
 
 
-                    return response()->json(["succes"=>" Actividad Presupuesto pedidos creada", 'id' => $evaluacionPedidos->id],201);
+                    return response()->json(["success"=>" Actividad Presupuesto pedidos creada", 'id' => $evaluacionPedidos->id],201);
 
                 }else{
-                    return response()->json(["error"=>" las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
                 }
 
@@ -378,14 +378,14 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                 ]);
                         }
                     }else{
-                        return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes"],400);
+                        return response()->json(["La fecha inicial o fecha final no pueden ser iguales por registros diferentes."],400);
                     }
                  }
-                return response()->json(["succes"=>"Actividad libros faltantes creada", 'id'=>$libro_faltantes->id],201);
+                return response()->json(["success"=>"Actividad libros faltantes creada", 'id'=>$libro_faltantes->id],201);
               }
               elseif($validacion>0)
               {
-                return response()->json(["error"=>"la fecha de inicio debe ser igual o mayor a la fecha actual y menor o igual a la fecha final"],400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
               }
             }
          }
@@ -448,10 +448,10 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
                     // DB::commit();
 
-                    return response()->json(["succes"=>" Actividad  Captura Cliente  creada", 'id' => $captura_cliente->id],201);
+                    return response()->json(["success"=>" Actividad  Captura Cliente  creada", 'id' => $captura_cliente->id],201);
 
                 }else{
-                    return response()->json(["error"=>"la fecha de inicio debe ser igual o mayor a la fecha actual y menor o igual a la fecha final"],400);
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
                 }
 

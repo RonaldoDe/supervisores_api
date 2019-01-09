@@ -101,7 +101,7 @@ class CrearActividadParaPlanTrabajo extends Controller
                     }
 
                 }else{
-                    return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual "],400);
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual."],400);
                 }
 
                 $sw2=0;
@@ -122,12 +122,12 @@ class CrearActividadParaPlanTrabajo extends Controller
                     }
 
                 }else{
-                    return response()->json(["error"=>"las fechas inicios  no pueden ser  iguales "],400);
+                    return response()->json(["Las fechas iniciales no puede ser iguales."],400);
                 }
 
                 if($sw2>0){
 
-                    return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato '],400);
+                    return response()->json(["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
                 }else{
 
@@ -161,7 +161,7 @@ class CrearActividadParaPlanTrabajo extends Controller
             //         $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
             //         if($validacion_fecha_base > 0){
-            //             return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato '],400);
+            //             return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
             //         }else{
 
 
@@ -182,7 +182,7 @@ class CrearActividadParaPlanTrabajo extends Controller
             //     }
 
             //    }
-            //    return response()->json(["succes"=>"Actividad Apertura creada"],201);
+            //    return response()->json(["success"=>"Actividad Apertura creada"],201);
             // }
 
             // else if($validacion>0){
@@ -191,7 +191,7 @@ class CrearActividadParaPlanTrabajo extends Controller
 
                }else{
 
-                return response()->json(["error"=>"error este plan trabajo no existe"],400);
+                return response()->json(["Este plan trabajo no existe."],400);
                }
 
 
@@ -249,7 +249,7 @@ public function crearActividadDocumentacionLegal(Request $request){
 
             if($respuesta>0){
 
-                return response()->json (["error"=>"ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato "],400);
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
             }else{
 
                 $documentacion_legal =DocumentacionLegal::create([
@@ -266,10 +266,10 @@ public function crearActividadDocumentacionLegal(Request $request){
             }
 
 
-            return response()->json(["succes"=>" Actividad documentacion legal creada", 'id' => $documentacion_legal->id],201);
+            return response()->json(["success"=>" Actividad documentacion legal creada", 'id' => $documentacion_legal->id],201);
 
         }else{
-            return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
+            return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
         }
 
@@ -340,7 +340,7 @@ public function crearActividadDocumentacionLegal(Request $request){
                     $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                     if($validacion_fecha_base > 0){
-                        return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato '],400);
+                        return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                     }else{
 
                    $papeleria =PapeleriaConsignaciones::create([
@@ -357,14 +357,14 @@ public function crearActividadDocumentacionLegal(Request $request){
 
                     }
                 }else{
-                    return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales"],400);
+                    return response()->json(["La fecha inicial y fecha final no pueden ser iguales"],400);
                 }
 
                }
-               return response()->json(["succes"=>" papeleria consignacion creada", 'id' => $papeleria->id],201);
+               return response()->json(["success"=>" papeleria consignacion creada", 'id' => $papeleria->id],201);
             }
             else if($validacion>0){
-                return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
             }
 
 
@@ -417,7 +417,7 @@ public function crearActividadDocumentacionLegal(Request $request){
                     $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                     if($validacion_fecha_base > 0){
-                        return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato'],400);
+                        return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                     }else{
 
                    $formulas =FormulasDespachos::create([
@@ -433,15 +433,15 @@ public function crearActividadDocumentacionLegal(Request $request){
                    ]);
                     }
                 }else{
-                    return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes"],400);
+                    return response()->json(["La fecha inicial o fecha final no pueden ser iguales por registros diferentes."],400);
                 }
 
                }
-               return response()->json(["succes"=>" formulas despachos creada", $formulas->id],201);
+               return response()->json(["success"=>" formulas despachos creada", $formulas->id],201);
             }
 
             else if($validacion>0){
-                return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
             }
 
 
@@ -499,7 +499,7 @@ public function crearActividadDocumentacionLegal(Request $request){
                     $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                     if($validacion_fecha_base > 0){
-                        return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato'],400);
+                        return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                     }else{
                    $remisiones =Remisiones::create([
 
@@ -516,14 +516,14 @@ public function crearActividadDocumentacionLegal(Request $request){
                     }
 
                 }else{
-                    return response()->json(["error"=>"las fechas inicios o fechas  finales no pueden ser  iguales por registros diferentes"],400);
+                    return response()->json(["La fecha inicial o fecha final no pueden ser iguales por registros diferentes."],400);
                 }
 
                }
-               return response()->json(["succes"=>" actividad remision creada", 'id' => $remisiones->id],201);
+               return response()->json(["success"=>" actividad remision creada", 'id' => $remisiones->id],201);
             }
             else if($validacion>0){
-                return response()->json(["error"=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
+                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
             }
 
 
@@ -574,7 +574,7 @@ public function crearActividadDocumentacionLegal(Request $request){
 
         if($respuesta>0){
 
-            return response()->json (["error"=>"ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato"],400);
+            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
 
@@ -594,10 +594,10 @@ public function crearActividadDocumentacionLegal(Request $request){
 
                 // DB::commit();
 
-                return response()->json(["succes"=>" Actividad documentacion legal creada", 'id' => $condiciones_locativas->id],201);
+                return response()->json(["success"=>" Actividad documentacion legal creada", 'id' => $condiciones_locativas->id],201);
                 }
                 else{
-                    return response()->json(["error"=>" las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
                 }
         }

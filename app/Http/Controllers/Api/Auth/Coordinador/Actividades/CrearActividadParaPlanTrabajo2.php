@@ -85,7 +85,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
               }
               elseif($validacion>0)
               {
-                return response()->json(["ERROR"=>"la fecha de inicio debe ser igual o mayor a la fecha actual y menor o igual a la fecha final"],400);
+                return response()->json(["error"=>"la fecha de inicio debe ser igual o mayor a la fecha actual y menor o igual a la fecha final"],400);
               }
             }
          }

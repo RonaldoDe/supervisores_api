@@ -437,7 +437,7 @@ public function crearActividadDocumentacionLegal(Request $request){
                 }
 
                }
-               return response()->json(["success"=>" formulas despachos creada", $formulas->id],201);
+               return response()->json(["success"=>" formulas despachos creada", 'id'=>$formulas->id],201);
             }
 
             else if($validacion>0){

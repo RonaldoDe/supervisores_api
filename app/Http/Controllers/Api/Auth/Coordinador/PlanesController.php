@@ -98,10 +98,12 @@ class PlanesController extends Controller
                 ->get();
 
                 $plan = DB::table('plan_trabajo_asignacion as p')
+                ->select('su.nombre as nombreSucursal', 'p.nombre as nombrePlan', 'p.id_plan_trabajo', 'p.id_sucursal')
+                ->join('sucursales as su','p.id_sucursal','su.id_suscursal')                
                 ->where('p.id_plan_trabajo', request('id_plan_trabajo'))
                 ->first();
     
-                
+                if(count($actividades) > 0){
                     //array que almacenará las actividanes correspondientes a los 7 dias despues del dia actual 
                     $lista_actividades_arr = array();
                     //bucle que itera las actividades y las obtiene segun el plan de trabajo
@@ -118,8 +120,11 @@ class PlanesController extends Controller
                         
                         
                     }
-                    return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre, 'id_sucursal' => $plan->id_sucursal, 'sucursal' => $actividades->nombreSucursal],200);
-                
+                    return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombrePlan, 'id_sucursal' => $plan->id_sucursal, 'sucursal' => $ac->nombreSucursal],200);
+                }else{
+                    return response()->json(['Actividades' => [], 'Nombre' => $plan->nombrePlan, 'id_sucursal' => $plan->id_sucursal, 'sucursal' => $plan->nombreSucursal],200);
+                    
+                }
                 
             }else{
                 return response()->json('No tienes permiso para acceder a esta ruta',400);

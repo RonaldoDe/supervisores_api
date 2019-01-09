@@ -118,7 +118,7 @@ class PlanesController extends Controller
                     
                     
                 }
-                return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre, 'id_sucursal' => $plan->id_sucursal, 'sucursal' => $ac->nombreSucursal],200);
+                return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre, 'id_sucursal' => $actividades->id_sucursal, 'sucursal' => $ac->nombreSucursal],200);
                 
                 
             }else{

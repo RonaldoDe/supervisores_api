@@ -63,7 +63,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                         $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                         if($validacion_fecha_base > 0){
-                            return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato'],400);
+                            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                         }else{
 
                 $kardex =Kardex::create([
@@ -211,7 +211,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
             if($respuesta>0){
 
-                return response()->json (["error"=>"ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato"],400);
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
             }else{
                     $evaluacionPedidos =EvaluacionPedidos::create([
@@ -282,7 +282,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
                         if($respuesta>0){
 
-                        return response()->json (["error"=>"ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato"],400);
+                        return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
                     }else{
 
@@ -360,7 +360,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                         $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
                         if($validacion_fecha_base > 0){
-                            return response()->json(["error"=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato'],400);
+                            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                         }else{
 
 
@@ -431,7 +431,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
             if($respuesta>0){
 
-                return response()->json (["error"=>"ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato"],400);
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
             }else{
                     $captura_cliente =CapturaClientes::create([

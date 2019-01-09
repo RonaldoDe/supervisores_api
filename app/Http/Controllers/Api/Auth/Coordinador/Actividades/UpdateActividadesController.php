@@ -321,17 +321,17 @@ class UpdateActividadesController extends Controller
                             $actividad->update();
                             return response()->json('Actividad actualizada con exito',200);
                         }
-                        return response()->json(['error'=>['Error Actividad no encontrada']],400);
+                        return response()->json(['Error Actividad no encontrada'],400);
 
                     }
                 }else{
-                    return response()->json(['error'=>["La fecha inicial y fecha final no pueden ser  iguales"]],400);
+                    return response()->json(["La fecha inicial y fecha final no pueden ser  iguales"],400);
                 }
 
                }
             }
             else if($validacion>0){
-                return response()->json(['error'=>["Las fecha inicio deben ser mayor o igual a la fecha actual y menor o igual a la fecha final"]],400);
+                return response()->json(["Las fecha inicio deben ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
             }
 
 

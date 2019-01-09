@@ -325,13 +325,13 @@ class UpdateActividadesController extends Controller
 
                     }
                 }else{
-                    return response()->json("las fechas inicios o fechas  finales no pueden ser  iguales",400);
+                    return response()->json(['error'=>["La fecha inicial y fecha final no pueden ser  iguales"]],400);
                 }
 
                }
             }
             else if($validacion>0){
-                return response()->json("las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final",400);
+                return response()->json(['error'=>["Las fecha inicio deben ser mayor o igual a la fecha actual y menor o igual a la fecha final"]],400);
             }
 
 

@@ -102,23 +102,23 @@ class PlanesController extends Controller
                 ->first();
     
                 
-                //array que almacenará las actividanes correspondientes a los 7 dias despues del dia actual 
-                $lista_actividades_arr = array();
-                //bucle que itera las actividades y las obtiene segun el plan de trabajo
-                foreach($actividades as $ac){
-                    $fe = DB::table($ac->nombre_tabla. ' as ac')
-                    ->where('ac.id_plan_trabajo',$ac->id_plan_trabajo)
-                    ->get();
-    
-                    //  generar el array con el listado de actividades pendientes en la semana
-                    foreach($fe as $fecha){
-                        $fecha->nombre_actividad = $ac->nombre_actividad;
-                        array_push($lista_actividades_arr, $fecha);
+                    //array que almacenará las actividanes correspondientes a los 7 dias despues del dia actual 
+                    $lista_actividades_arr = array();
+                    //bucle que itera las actividades y las obtiene segun el plan de trabajo
+                    foreach($actividades as $ac){
+                        $fe = DB::table($ac->nombre_tabla. ' as ac')
+                        ->where('ac.id_plan_trabajo',$ac->id_plan_trabajo)
+                        ->get();
+        
+                        //  generar el array con el listado de actividades pendientes en la semana
+                        foreach($fe as $fecha){
+                            $fecha->nombre_actividad = $ac->nombre_actividad;
+                            array_push($lista_actividades_arr, $fecha);
+                        }
+                        
+                        
                     }
-                    
-                    
-                }
-                return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre, 'id_sucursal' => $actividades->id_sucursal, 'sucursal' => $ac->nombreSucursal],200);
+                    return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre, 'id_sucursal' => $plan->id_sucursal, 'sucursal' => $actividades->nombreSucursal],200);
                 
                 
             }else{

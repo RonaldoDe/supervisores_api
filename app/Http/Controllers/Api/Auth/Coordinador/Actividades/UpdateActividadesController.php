@@ -22,6 +22,7 @@ use App\Modelos\Actividades\LibroAgendasCliente;
 use App\Modelos\Actividades\Excesos;
 use App\Modelos\Actividades\LibroVencimientos;
 use App\Modelos\Actividades\IngresoSucursal;
+use App\Modelos\Actividades\ConvenioExhibicion;
 
 class UpdateActividadesController extends Controller
 {
@@ -1113,7 +1114,7 @@ class UpdateActividadesController extends Controller
             return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
-            $actividad = CapturaClientes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+            $actividad = ConvenioExhibicion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
                 $actividad->fecha_inicio = request('fecha_inicio');
                 $actividad->fecha_fin = request('fecha_fin').' '.'23:59:00';

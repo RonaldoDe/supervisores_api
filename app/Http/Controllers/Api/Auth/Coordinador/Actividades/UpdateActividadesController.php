@@ -127,7 +127,7 @@ class UpdateActividadesController extends Controller
 
                 if($sw2>0){
 
-                    return response()->json('ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato ',400);
+                    return response()->json(['error'=>'ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de datos'],400);
 
                 }else{
 
@@ -190,7 +190,7 @@ class UpdateActividadesController extends Controller
 
                }else{
 
-                return response()->json("error este plan trabajo no existe",400);
+                return response()->json(['error'=>"Este plan trabajo no existe"],400);
                }
 
             }
@@ -239,7 +239,7 @@ class UpdateActividadesController extends Controller
     
                 if($respuesta>0){
     
-                    return response()->json ("ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato ",400);
+                    return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
                 }else{
                     
                     $actividad = DocumentacionLegal::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -251,12 +251,12 @@ class UpdateActividadesController extends Controller
                             $actividad->update();
                             return response()->json('Actividad actualizada con exito',200);
                         }
-                        return response()->json('Error Actividad no encontrada',400);
+                        return response()->json(['error'=>'Actividad no encontrada'],400);
                 }
     
         
             }else{
-                return response()->json("las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final",400);
+                return response()->json(['error'=>"las fechas inicio deben ser mayor o igual ala fecha actual y menor o igual a la fecha final"],400);
     
             }
     
@@ -321,7 +321,7 @@ class UpdateActividadesController extends Controller
                             $actividad->update();
                             return response()->json('Actividad actualizada con exito',200);
                         }
-                        return response()->json('Error Actividad no encontrada',400);
+                        return response()->json(['error'=>['Error Actividad no encontrada']],400);
 
                     }
                 }else{
@@ -533,7 +533,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json ("ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato",400);
+            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
 
@@ -749,7 +749,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json ("ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato",400);
+            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
             $actividad = EvaluacionPedidos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -818,7 +818,7 @@ class UpdateActividadesController extends Controller
 
                     if($respuesta>0){
 
-                    return response()->json ("ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato",400);
+                        return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
                 }else{
                     $actividad = PresupuestoPedidos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -959,7 +959,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json ("ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato",400);
+            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
             $actividad = CapturaClientes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -1110,7 +1110,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json ("ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato",400);
+            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
             $actividad = CapturaClientes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -1177,7 +1177,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json ("ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato",400);
+            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
             $actividad = Excesos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -1251,7 +1251,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json ("ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato",400);
+            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
             $actividad = LibroVencimientos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
@@ -1326,7 +1326,7 @@ class UpdateActividadesController extends Controller
 
         if($respuesta>0){
 
-            return response()->json ("ya existen  estas  fechas registrada en esta actividad con este plan de trabajo en la base de dato",400);
+            return response()->json (['error'=>"Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
             $actividad = IngresoSucursal::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));

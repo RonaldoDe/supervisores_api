@@ -24,14 +24,14 @@ class PasswordUpdateController extends Controller
         {
             $user = User::where('email', request('email'))->first();
             if($user != null){
-                $codigo = str_random(4);
+                $codigo = random_int(0, 9999);
                 $mail = Mail::send('emails.update_password', ['codigo' => $codigo], function($message) use($request){
                     $message->to(request('email'))
-                            ->subject('Por favor confima el cambio de contraseña');
+                            ->subject('Por favor confirma el cambio de contraseña');
                 });
                 $validate_code = DB::table('users')->where('code_confirmation', $codigo)->first();
                 while($validate_code){
-                    $codigo = str_random(4);
+                $codigo = random_int(0, 9999);
                     $validate_code = DB::table('users')->where('code_confirmation', $codigo)->first();
                 }
                 $user->code_confirmation = $codigo;
@@ -39,7 +39,7 @@ class PasswordUpdateController extends Controller
                 $user->update();
                 return response()->json('Correo de cambio de contraseña enviado.', 200);
             }else{
-                return response()->json('Usuario no encontrado.', 202);
+                return response()->json('Usuario no encontrado.', 400);
             }
         }
     }

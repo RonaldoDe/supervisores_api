@@ -234,8 +234,7 @@ class UpdateActividadesController extends Controller
                 $fecha_ini=request('fecha_inicio');
                 $fecha_finn=request('fecha_fin');
     
-    
-    
+
                 $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
     
                 if($respuesta>0){

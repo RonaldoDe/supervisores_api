@@ -58,7 +58,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     //estadisticas y reporte
     Route::get('allInformation', 'Api\Auth\Coordinador\Reporte\AllInformationController@alInformation');
 
-
+    Route::post('searchProducts', 'Api\Auth\Coordinador\BuscadoresController@searchProducts');
 
     //se agregaron estos para ps repores segir mirando
     //rutas de actualizar actividades

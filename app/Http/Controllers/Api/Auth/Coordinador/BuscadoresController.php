@@ -11,7 +11,7 @@ class BuscadoresController extends Controller
     public function searchProducts(Request $reques)
     {
         $producto=request('nombre_producto');
-        $productos = DB::table('documentacion_legal')
+        $productos = DB::table('productos')
         ->orderBy('nombre_comercial', 'DESC')
         ->where('nombre_comercial', 'LIKE', '%'.$producto.'%')
         ->take(10)

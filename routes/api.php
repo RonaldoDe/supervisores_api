@@ -58,7 +58,6 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     //estadisticas y reporte
     Route::get('allInformation', 'Api\Auth\Coordinador\Reporte\AllInformationController@alInformation');
 
-    Route::post('searchProducts', 'Api\Auth\Coordinador\BuscadoresController@searchProducts');
 
     //se agregaron estos para ps repores segir mirando
     //rutas de actualizar actividades
@@ -139,6 +138,8 @@ Route::post('verifyPass', 'Api\Auth\Supervisores\PasswordUpdateController@verify
 Route::middleware(['auth:api','supervisores'])->group(function(){
     //Vista de inicio para los supervisores
     Route::get('homeSupervisor', 'Api\Auth\Supervisores\HomeSupervisorController@index');
+    
+    Route::post('searchProducts', 'Api\Auth\Coordinador\BuscadoresController@searchProducts');
 
     Route::get('actividades_completas', 'Api\Auth\Supervisores\ActividadesCompletasController@index');
     Route::get('mostrarActividades', 'Api\Auth\Supervisores\ListarActividadesController@index');

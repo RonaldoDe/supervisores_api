@@ -18,6 +18,6 @@ class BuscadoresController extends Controller
         ->where('nombre_comercial', 'LIKE', '%'.$producto.'%')
         ->paginate(10);
 
-        return response()->json(["productos"=>$productos]);
+        return response()->json(["productos"=>$productos],200);
     }
 }

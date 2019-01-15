@@ -14,6 +14,7 @@ class BuscadoresController extends Controller
 
         $productos = DB::table('productos')
         ->select('codigo, nombre_comercial, laboratorio_id')
+        ->orderBy('nombre_comercial', 'ASC')
         ->where('nombre_comercial', 'LIKE', '%'.$producto.'%')
         ->take(10)
         ->get();

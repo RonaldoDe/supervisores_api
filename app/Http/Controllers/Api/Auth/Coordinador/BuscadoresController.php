@@ -16,7 +16,6 @@ class BuscadoresController extends Controller
         ->select('codigo', 'nombre_comercial', 'laboratorio_id')
         ->orderBy('nombre_comercial', 'ASC')
         ->where('nombre_comercial', 'LIKE', '%'.$producto.'%')
-        ->take(10)
         ->get();
 
         return response()->json($productos);

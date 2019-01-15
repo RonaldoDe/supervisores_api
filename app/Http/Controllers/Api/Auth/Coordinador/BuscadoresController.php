@@ -13,7 +13,7 @@ class BuscadoresController extends Controller
         $producto=request('nombre_producto');
 
         $productos = DB::table('productos')
-        ->select('codigo, nombre_comercial, laboratorio_id')
+        ->select('codigo', 'nombre_comercial', 'laboratorio_id')
         ->orderBy('nombre_comercial', 'ASC')
         ->where('nombre_comercial', 'LIKE', '%'.$producto.'%')
         ->take(10)

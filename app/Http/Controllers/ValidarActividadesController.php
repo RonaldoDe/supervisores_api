@@ -23,6 +23,7 @@ use App\Modelos\Actividades\PresupuestoPedidos;
 use App\Modelos\Actividades\RevisionCompletaInventarios;
 use App\Modelos\Actividades\SeguimientoVendedor;
 use App\Modelos\Actividades\DocumentacionLegal;
+use App\Modelos\Notificaciones;
 
 class ValidarActividadesController extends Controller
 {
@@ -46,7 +47,6 @@ class ValidarActividadesController extends Controller
 
         else
         {
-
             //actualizacion de la actividad por el supervisor
             $actividad = Apertura::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
@@ -60,7 +60,41 @@ class ValidarActividadesController extends Controller
                 $actividad->motivo_ausencia = request('motivo_ausencia');
                 $actividad->calificacion_pv = request('calificacion_pv');
                 $actividad->update();
-                return response()->json(['message' => 'Actividad realizada con exito']);
+
+                //registro de notificacion
+                if($actividad){
+                    $nombre_plan = DB::table('plan_trabajo_asignacion')
+                    ->select('nombre')
+                    ->where('id_plan_trabajo', request('id_plan_trabajo'))
+                    ->first();
+
+                    $nombre_actividad = DB::table('actividades')
+                    ->select('nombre_actividad')
+                    ->where('nombre_tabla',request('nombre_tabla'))
+                    ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                    ->first();
+
+                    //Se recupera los datos del usuario que se ha autenticado
+                    $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+
+                    if($user != null){
+                        //obtener los datos del usuario supervisor
+                        $nombre_supervisor=DB::table('usuario as u')
+                        ->select('u.id_usuario', 'u.nombre')
+                        ->where('u.correo','=',$user->email)->first();
+
+                        $notificacion =Notificaciones::create([
+                            'id_plan_trabajo' =>request('id_plan_trabajo'),
+                            'nombre_plan' =>$nombre_plan->nombre,
+                            'nombre_actividad' =>$nombre_actividad->nombre_actividad,
+                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'fecha' => date('Y-m-d H:i:s'),
+        
+                        ]);
+                    }
+
+                    return response()->json(['message' => 'Actividad realizada con exito']);
+                }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }

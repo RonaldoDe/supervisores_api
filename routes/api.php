@@ -58,6 +58,9 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     //estadisticas y reporte
     Route::get('allInformation', 'Api\Auth\Coordinador\Reporte\AllInformationController@alInformation');
 
+    //log de notificaciones al realizar una actividad
+    Route::get('logNotificaciones', 'Api\Auth\Coordinador\Reporte\LogController@logNotificaciones');
+
 
     //se agregaron estos para ps repores segir mirando
     //rutas de actualizar actividades

@@ -82,14 +82,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -154,14 +154,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -226,14 +226,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -298,14 +298,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -376,14 +376,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -446,14 +446,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -516,14 +516,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -585,14 +585,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -656,14 +656,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -725,14 +725,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -794,14 +794,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -863,14 +863,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -932,14 +932,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -1001,14 +1001,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -1070,14 +1070,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -1139,14 +1139,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -1208,14 +1208,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);
@@ -1292,14 +1292,14 @@ class ValidarActividadesController extends Controller
                     if($user != null){
                         //obtener los datos del usuario supervisor
                         $nombre_supervisor=DB::table('usuario as u')
-                        ->select('u.id_usuario', 'u.nombre')
+                        ->select('u.id_usuario', 'u.nombre', 'u.apellido')
                         ->where('u.correo','=',$user->email)->first();
 
                         $notificacion =Notificaciones::create([
                             'id_plan_trabajo' =>request('id_plan_trabajo'),
                             'nombre_plan' =>$nombre_plan->nombre,
                             'nombre_actividad' =>$nombre_actividad->nombre_actividad,
-                            'nombre_supervisor' => $nombre_supervisor->nombre,
+                            'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                             'fecha' => date('Y-m-d H:i:s'),
         
                         ]);

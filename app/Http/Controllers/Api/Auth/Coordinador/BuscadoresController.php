@@ -10,14 +10,28 @@ class BuscadoresController extends Controller
 {
     public function searchProducts(Request $reques)
     {
-        $producto=request('nombre_producto');
+        $validator=\Validator::make($request->all(),[
+            'nombre_producto' => 'required',
+            'laboratorio'=>'required',
+        ]);
 
-        $productos = DB::table('productos')
-        ->select('codigo', 'nombre_comercial', 'laboratorio_id')
-        ->orderBy('nombre_comercial', 'ASC')
-        ->where('nombre_comercial', 'LIKE', '%'.$producto.'%')
-        ->paginate(10);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
 
-        return response()->json(["productos"=>$productos],200);
+        else
+        {
+            $producto=request('nombre_producto');
+
+            $productos = DB::table('productos')
+            ->select('codigo', 'nombre_comercial', 'laboratorio_id')
+            ->orderBy('nombre_comercial', 'ASC')
+            ->where('nombre_comercial', 'LIKE', '%'.$producto.'%')
+            ->where('laboratorio_id', request('laboratorio'))
+            ->paginate(10);
+
+            return response()->json(["productos"=>$productos],200);
+        }
     }
 }

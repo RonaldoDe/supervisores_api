@@ -12,7 +12,6 @@ class LogController extends Controller
     {
         $log = DB::table('notificaciones')
         ->orderBy('fecha', 'DESC')
-        ->where('leido', 0)
         ->take(100)
         ->get();
 

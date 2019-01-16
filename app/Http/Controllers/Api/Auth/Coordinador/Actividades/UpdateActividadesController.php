@@ -614,7 +614,7 @@ class UpdateActividadesController extends Controller
                                 $actividad->fecha_inicio = $fechas_converter_d[$i]["fecha_inicio"];
                                 $actividad->fecha_fin = $fechas_converter_d[$i]["fecha_fin"]." "."23:59:00";
                                 $actividad->estado = 'Activo';
-                                $actividad->laboratorios_asignados = request('id_prioridad');
+                                $actividad->laboratorios_asignados = request('laboratorios');
                                 $actividad->id_prioridad = request('id_prioridad');
                                 $actividad->update();
                                 return response()->json('Actividad actualizada con exito', 200);

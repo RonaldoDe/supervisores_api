@@ -23,6 +23,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
+            'laboratorios'=>'required',
             'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
         ]);
@@ -71,6 +72,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>$fechas_converter_d[$i]["fecha_inicio"],
                     'fecha_fin' =>$fechas_converter_d[$i]["fecha_fin"]." "."23:59:00",
+                    'laboratorios'=>request('laboratorios'),
                     'observacion'=>'',
                     'id_prioridad' =>request('id_prioridad'),
                     'estado' =>'Activo',

@@ -47,7 +47,6 @@ class PlanesController extends Controller
                 //bucle que itera las actividades y las obtiene segun el plan de trabajo
                 foreach($actividades as $ac){
                     $fe = DB::table($ac->nombre_tabla. ' as ac')
-                    ->select('ac.fecha_inicio', 'ac.fecha_fin', 'ac.id_plan_trabajo', 'ac.id', 'ac.id_prioridad', 'ac.estado')
                     ->where('ac.id_plan_trabajo',$ac->id_plan_trabajo)
                     ->where('ac.estado', '!=','completo')
                     ->get();

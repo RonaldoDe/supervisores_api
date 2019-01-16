@@ -12,7 +12,6 @@ class BuscadoresController extends Controller
     {
         $validator=\Validator::make($request->all(),[
             'nombre_producto' => 'required',
-            'laboratorio'=>'required',
         ]);
 
         if($validator->fails())
@@ -24,14 +23,46 @@ class BuscadoresController extends Controller
         {
             $producto=request('nombre_producto');
 
-            $productos = DB::table('productos')
-            ->select('codigo', 'nombre_comercial', 'laboratorio_id')
-            ->orderBy('nombre_comercial', 'ASC')
-            ->where('nombre_comercial', 'LIKE', '%'.$producto.'%')
-            ->where('laboratorio_id', request('laboratorio'))
-            ->paginate(10);
+            if(request('laboratorio') != null){
+                $productos = DB::table('productos')
+                ->select('codigo', 'nombre_comercial', 'laboratorio_id')
+                ->orderBy('nombre_comercial', 'ASC')
+                ->where('nombre_comercial', 'LIKE', '%'.$producto.'%')
+                ->paginate(10);
+            }else{
+                $productos = DB::table('productos')
+                ->select('codigo', 'nombre_comercial', 'laboratorio_id')
+                ->orderBy('nombre_comercial', 'ASC')
+                ->where('nombre_comercial', 'LIKE', '%'.$producto.'%')
+                ->where('laboratorio_id', request('laboratorio'))
+                ->paginate(10);
+            }
 
             return response()->json(["productos"=>$productos],200);
+        }
+    }
+
+    public function searchLaboratories(Request $reques)
+    {
+        $validator=\Validator::make($request->all(),[
+            'laboratorio' => 'required',
+        ]);
+
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+            $laboratorio=request('laboratorio');
+            $laboratorios = DB::table('laboratorio')
+            ->select('dk', 'nombre')
+            ->orderBy('nombre', 'ASC')
+            ->where('nombre', 'LIKE', '%'.$laboratorio.'%')
+            ->paginate(10);
+            
+            return response()->json(["productos"=>$laboratorios],200);
         }
     }
 }

@@ -145,6 +145,7 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     Route::get('homeSupervisor', 'Api\Auth\Supervisores\HomeSupervisorController@index');
     
     Route::post('searchProducts', 'Api\Auth\Coordinador\BuscadoresController@searchProducts');
+    Route::post('searchLaboratories', 'Api\Auth\Coordinador\BuscadoresController@searchLaboratories');
 
     Route::get('actividades_completas', 'Api\Auth\Supervisores\ActividadesCompletasController@index');
     Route::get('mostrarActividades', 'Api\Auth\Supervisores\ListarActividadesController@index');

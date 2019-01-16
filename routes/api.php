@@ -63,7 +63,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('notificacionLeida', 'Api\Auth\Coordinador\Reporte\LogController@notificacionLeida');
     Route::post('notificacionNoLeida', 'Api\Auth\Coordinador\Reporte\LogController@notificacionNoLeida');
     //busqueda de laboratorios
-    Route::post('searchLaboratories', 'Api\Auth\Coordinador\BuscadoresController@searchLaboratories');
+    Route::post('searchLaboratorio', 'Api\Auth\Coordinador\BuscadoresController@searchLaboratories');
 
 
     //se agregaron estos para ps repores segir mirando

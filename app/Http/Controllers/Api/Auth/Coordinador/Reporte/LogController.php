@@ -23,7 +23,7 @@ class LogController extends Controller
     {
          //validacion de los datos de la actividad
          $validator=\Validator::make($request->all(),[
-            'id_notificaicon' => 'required',
+            'id_notificacion' => 'required',
         ]);
         if($validator->fails())
         {
@@ -48,7 +48,7 @@ class LogController extends Controller
     public function notificacionNoLeida(Request $request)
     {
         $validator=\Validator::make($request->all(),[
-            'id_notificaicon' => 'required',
+            'id_notificacion' => 'required',
         ]);
         if($validator->fails())
         {

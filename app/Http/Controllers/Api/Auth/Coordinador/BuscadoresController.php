@@ -23,7 +23,7 @@ class BuscadoresController extends Controller
         {
             $producto=request('nombre_producto');
 
-            if(request('laboratorio') != null){
+            if(request('laboratorio') == null){
                 $productos = DB::table('productos')
                 ->select('codigo', 'nombre_comercial', 'laboratorio_id')
                 ->orderBy('nombre_comercial', 'ASC')

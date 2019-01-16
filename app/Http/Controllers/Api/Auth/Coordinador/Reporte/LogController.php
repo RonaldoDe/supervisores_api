@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Auth\Coordinador\Reporte;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Modelos\Notificaciones;
 
 class LogController extends Controller
 {
@@ -16,5 +17,52 @@ class LogController extends Controller
         ->get();
 
         return response()->json(['message' => $log],200);
+    }
+
+    public function notificacionLeida(Request $request)
+    {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+            'id_notificaicon' => 'required',
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( ['message' => $validator->errors()->all()],400 );
+        }
+
+        else
+        {
+
+            $leer = Notificaciones::find(request('id_notificacion'));
+            if($leer!= null){
+                $leer->leido = 1;
+                $leer->update();
+
+                return response()->json(['message' => $leer],200);
+            }else{
+                return response()->json(['message' => 'Notificación no encontrada.'],400);
+            }
+        }
+    }
+
+    public function notificacionNoLeida(Request $request)
+    {
+        $validator=\Validator::make($request->all(),[
+            'id_notificaicon' => 'required',
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( ['message' => $validator->errors()->all()],400 );
+        }else{
+            $leer = Notificaciones::find(request('id_notificacion'));
+            if($leer!= null){
+                $leer->leido = 0;
+                $leer->update();
+
+                return response()->json(['message' => $leer],200);
+            }else{
+                return response()->json(['message' => 'Notificación no encontrada.'],400);
+            }
+        }
     }
 }

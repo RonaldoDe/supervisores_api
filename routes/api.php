@@ -60,6 +60,8 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
 
     //log de notificaciones al realizar una actividad
     Route::get('logNotificaciones', 'Api\Auth\Coordinador\Reporte\LogController@logNotificaciones');
+    Route::post('notificacionLeida', 'Api\Auth\Coordinador\Reporte\LogController@notificacionLeida');
+    Route::post('notificacionNoLeida', 'Api\Auth\Coordinador\Reporte\LogController@notificacionNoLeida');
 
 
     //se agregaron estos para ps repores segir mirando

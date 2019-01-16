@@ -565,6 +565,7 @@ class UpdateActividadesController extends Controller
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
             'id_actividad'=>'required',
+            'laboratorios'=>'required',
             'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
         ]);
@@ -613,6 +614,7 @@ class UpdateActividadesController extends Controller
                                 $actividad->fecha_inicio = $fechas_converter_d[$i]["fecha_inicio"];
                                 $actividad->fecha_fin = $fechas_converter_d[$i]["fecha_fin"]." "."23:59:00";
                                 $actividad->estado = 'Activo';
+                                $actividad->laboratorios_asignados = request('id_prioridad');
                                 $actividad->id_prioridad = request('id_prioridad');
                                 $actividad->update();
                                 return response()->json('Actividad actualizada con exito', 200);

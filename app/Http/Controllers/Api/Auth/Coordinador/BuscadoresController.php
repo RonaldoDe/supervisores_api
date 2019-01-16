@@ -42,7 +42,7 @@ class BuscadoresController extends Controller
         }
     }
 
-    public function searchLaboratories(Request $reques)
+    public function searchLaboratories(Request $request)
     {
         $validator=\Validator::make($request->all(),[
             'laboratorio' => 'required',
@@ -61,8 +61,8 @@ class BuscadoresController extends Controller
             ->orderBy('nombre', 'ASC')
             ->where('nombre', 'LIKE', '%'.$laboratorio.'%')
             ->paginate(10);
-            
-            return response()->json(["productos"=>$laboratorios],200);
+
+            return response()->json(["laboratorios"=>$laboratorios],200);
         }
     }
 }

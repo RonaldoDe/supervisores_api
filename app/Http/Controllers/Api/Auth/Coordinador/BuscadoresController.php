@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class BuscadoresController extends Controller
 {
-    public function searchProducts(Request $reques)
+    public function searchProducts(Request $request)
     {
         $validator=\Validator::make($request->all(),[
             'nombre_producto' => 'required',

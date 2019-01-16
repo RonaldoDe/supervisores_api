@@ -891,6 +891,8 @@ class ValidarActividadesController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'calificacion_pv' => 'required',
+             'productos' => 'required',
+             'numero_consecutivo' => 'required',
              'tiempo_actividad'=>'required',
             'tiempo_total'=>'required',
 
@@ -913,6 +915,8 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
+                $actividad->productos = request('productos');
+                $actividad->numero_consecutivo = request('numero_consecutivo');
                 $actividad->motivo_ausencia = request('motivo_ausencia');
                 $actividad->update();
                  //registro de notificacion

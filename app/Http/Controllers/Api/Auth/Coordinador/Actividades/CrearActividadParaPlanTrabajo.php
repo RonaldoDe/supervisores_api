@@ -273,6 +273,9 @@ public function crearActividadDocumentacionLegal(Request $request){
                             'id_documento' =>$documento->id,
                         ]);
                     }
+                }else{
+                    return response()->json(["success"=>"Actividad no encontrada o error al crearla."],201);
+
                 }
 
                 return response()->json(["success"=>" Actividad documentacion legal creada", 'id' => $documentacion_legal->id],201);

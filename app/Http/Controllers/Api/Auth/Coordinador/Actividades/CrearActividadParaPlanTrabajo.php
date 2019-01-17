@@ -12,6 +12,7 @@ use App\Modelos\Actividades\DocumentacionLegal;
 use App\Modelos\Actividades\PapeleriaConsignaciones;
 use App\Modelos\Actividades\FormulasDespachos;
 use App\Modelos\Actividades\Remisiones;
+use App\Modelos\Actividades\Detalles\Documentacion;
 use App\Modelos\Actividades\CondicionesLocativas;
 //use App\Modelos\Relevancia;
 
@@ -262,11 +263,22 @@ public function crearActividadDocumentacionLegal(Request $request){
                     'estado' =>'Activo',
 
                 ]);
+                if($documentacion_legal){
+                    $documentos = DB::table('lista_documentacion_legal')
+                    ->get();
 
+                    foreach ($documentos as $documento) {
+                        $documentacion =Documentacion::create([
+                            'id_actividad' =>$documentacion_legal->id,
+                            'id_documento' =>$documento->id,
+                        ]);
+                    }
+                }
+
+                return response()->json(["success"=>" Actividad documentacion legal creada", 'id' => $documentacion_legal->id],201);
             }
 
 
-            return response()->json(["success"=>" Actividad documentacion legal creada", 'id' => $documentacion_legal->id],201);
 
         }else{
             return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);

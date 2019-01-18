@@ -11,6 +11,7 @@ use App\Apertura;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Modelos\Notificaciones;
+use Illuminate\Support\Facades\Auth;
 
 class Controller extends BaseController
 {

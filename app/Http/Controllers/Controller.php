@@ -136,7 +136,7 @@ $sw=0;
 
     }
 
-    public function logNotificaciones($id_plan_trabajo, $nombre_tabla)
+    public function logCrearNotificaciones($id_plan_trabajo, $nombre_tabla)
     {
         $nombre_plan = DB::table('plan_trabajo_asignacion')
                     ->select('nombre', 'id_sucursal')

@@ -179,7 +179,6 @@ class ValidarActividadesController extends Controller
             'nombre_tabla' => 'required',
             'id_plan_trabajo' => 'required',
             'calificacion_pv' => 'required',
-            'kardex' => 'required',
             'tiempo_actividad'=>'required',
             'tiempo_total'=>'required',
 
@@ -202,7 +201,7 @@ class ValidarActividadesController extends Controller
                  $actividad->calificacion_pv = request('calificacion_pv');
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
-                $actividad->laboratorios_realizados = request('kardex');
+                $actividad->laboratorios_realizados = request('laboratorios_realizados');
                 $actividad->motivo_ausencia = request('motivo_ausencia');
                 $actividad->update();
                  //registro de notificacion

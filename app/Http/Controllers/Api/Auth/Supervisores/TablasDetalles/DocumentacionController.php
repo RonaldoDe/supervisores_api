@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth\Coordinador\TablasDetalles;
+namespace App\Http\Controllers\Api\Auth\Supervisores\TablasDetalles;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,6 +14,7 @@ class DocumentacionController extends Controller
          //validacion de los datos de la actividad
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
+             'id_documento' => 'required',
              'documento_vencido' => 'required',
              'documento_renovado' => 'required',
              'observaciones' => 'required',
@@ -31,7 +32,7 @@ class DocumentacionController extends Controller
 
              //actualizacion de la actividad por el supervisor
              $actividad = DB::table('documentacion_actividad')
-             ->where('id_actividad', request('actividad'))
+             ->where('id_actividad', request('id_actividad'))
              ->where('id_documento', request('id_documento'))
              ->first();
              if($actividad!= null){

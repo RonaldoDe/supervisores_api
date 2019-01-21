@@ -14,6 +14,7 @@ use App\Modelos\Actividades\FormulasDespachos;
 use App\Modelos\Actividades\Remisiones;
 use App\Modelos\Actividades\Detalles\Documentacion;
 use App\Modelos\Actividades\CondicionesLocativas;
+use App\Modelos\Actividades\Detalle\CondicionesDetalle;
 //use App\Modelos\Relevancia;
 
 /*Author jhonatan cudris */
@@ -605,11 +606,23 @@ public function crearActividadDocumentacionLegal(Request $request){
                     'estado' =>'Activo',
 
                 ]);
+                if($condiciones_locativas){
+                    $condiciones = DB::table('lista_condiciones_locativas')
+                    ->get();
+
+                    foreach ($condiciones as $condicion) {
+                        $condicion =CondicionesDetalle::create([
+                            'id_actividad' =>$condiciones_locativas->id,
+                            'id_condicion' =>$condicion->id,
+                        ]);
+                    }
+                }else{
+                    return response()->json(["success"=>"Actividad no encontrada o error al crearla."],201);
+
+                }
         }
-
                 // DB::commit();
-
-                return response()->json(["success"=>" Actividad documentacion legal creada", 'id' => $condiciones_locativas->id],201);
+                return response()->json(["success"=>" Actividad condiciones locativas creada", 'id' => $condiciones_locativas->id],201);
                 }
                 else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);

@@ -179,9 +179,9 @@ class ValidarActividadesController extends Controller
             'nombre_tabla' => 'required',
             'id_plan_trabajo' => 'required',
             'calificacion_pv' => 'required',
+            'laboratorios_realizados' => 'required',
             'tiempo_actividad'=>'required',
             'tiempo_total'=>'required',
-
          ]);
          if($validator->fails())
          {

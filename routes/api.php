@@ -154,9 +154,13 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     //ruta de envio de datos para las actividades
     Route::post('actividad', 'Api\Auth\Supervisores\ActividadesController@index');
 
-    //documentacion legal
-    Route::post('listarDocumentacioin', 'Api\Auth\Coordinador\TablasDetalles\DocumentacionController@listarDocumentos');
-    Route::post('terminarDocumento', 'Api\Auth\Coordinador\TablasDetalles\DocumentacionController@documentacion_legal');
+    //documentacion legal detalle
+    Route::post('listarDocumentacioin', 'Api\Auth\Supervisores\TablasDetalles\DocumentacionController@listarDocumentos');
+    Route::post('terminarDocumento', 'Api\Auth\Supervisores\TablasDetalles\DocumentacionController@documentacion_legal');
+
+    //condiciones locativas detalle
+    Route::post('listarCondicionesLocativas', 'Api\Auth\Supervisores\TablasDetalles\CondicionesLocativasDetalle@listarCondicionesLocativas');
+    Route::post('terminarCondicionesLocativas', 'Api\Auth\Supervisores\TablasDetalles\CondicionesLocativasDetalle@condicionesLocativas');
     
     //ruta de las descripciones de las actividades
     Route::get('descripcionActividad', 'Api\Auth\Supervisores\DescripcionActividadController@description');

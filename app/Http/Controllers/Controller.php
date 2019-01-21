@@ -139,24 +139,34 @@ $sw=0;
 
     public function logCrearNotificaciones($id_plan_trabajo, $nombre_tabla)
     {
+        
         $nombre_plan = DB::table('plan_trabajo_asignacion')
-                    ->select('nombre', 'id_sucursal')
-                    ->where('id_plan_trabajo', $id_plan_trabajo)
-                    ->first();
-
+        ->select('nombre', 'id_sucursal')
+        ->where('id_plan_trabajo', $id_plan_trabajo)
+        ->first();
+        
         $nombre_sucursal = DB::table('sucursales')
         ->select('cod_sucursal', 'nombre')
         ->where('id_suscursal', $nombre_plan->id_sucursal)
         ->first();
-
+        
         $nombre_actividad = DB::table('actividades')
         ->select('nombre_actividad')
         ->where('nombre_tabla',$nombre_tabla)
         ->where('id_plan_trabajo',$id_plan_trabajo)
         ->first();
-
+        
         //Se recupera los datos del usuario que se ha autenticado
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+        
+        $usuario_rol=DB::table('usuario_roles')
+        ->where('id_usuario','=',$user->id)->first();
+
+        $region = DB::table('zona')
+        ->where('id_usuario_roles','=',$usuario_rol->id)->first();
+
+        $coordinador = DB::table('region')
+        ->where('id_region','=',$region->id_region)->first();
 
         if($user != null){
             //obtener los datos del usuario supervisor

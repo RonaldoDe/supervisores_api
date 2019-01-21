@@ -155,7 +155,7 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     Route::post('actividad', 'Api\Auth\Supervisores\ActividadesController@index');
 
     //documentacion legal detalle
-    Route::post('listarDocumentacioin', 'Api\Auth\Supervisores\TablasDetalles\DocumentacionController@listarDocumentos');
+    Route::post('listarDocumentacion', 'Api\Auth\Supervisores\TablasDetalles\DocumentacionController@listarDocumentos');
     Route::post('terminarDocumento', 'Api\Auth\Supervisores\TablasDetalles\DocumentacionController@documentacion_legal');
 
     //condiciones locativas detalle

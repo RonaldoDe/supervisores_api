@@ -14,7 +14,7 @@ use App\Modelos\Actividades\FormulasDespachos;
 use App\Modelos\Actividades\Remisiones;
 use App\Modelos\Actividades\Detalles\Documentacion;
 use App\Modelos\Actividades\CondicionesLocativas;
-use App\Modelos\Actividades\Detalle\CondicionesDetalle;
+use App\Modelos\Actividades\Detalles\CondicionesDetalle;
 //use App\Modelos\Relevancia;
 
 /*Author jhonatan cudris */

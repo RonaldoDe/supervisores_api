@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Modelos\Notificaciones;
+use Illuminate\Support\Facades\Auth;
 
 class LogController extends Controller
 {

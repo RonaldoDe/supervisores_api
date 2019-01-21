@@ -11,7 +11,13 @@ class LogController extends Controller
 {
     public function logNotificaciones()
     {
+        
+        //obtener datos del coordinador registrado
+       $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+       $coordinador=DB::table('coordinadores')->where('correo','=',$user->email)->first();
+
         $log = DB::table('notificaciones')
+        ->where('id_coordinador', $coordinador->id_cordinador)
         ->orderBy('fecha', 'DESC')
         ->take(100)
         ->get();

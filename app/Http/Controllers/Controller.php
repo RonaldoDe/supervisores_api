@@ -163,7 +163,7 @@ $sw=0;
         ->where('id_usuario','=',$user->id)->first();
 
         $region = DB::table('zona')
-        ->where('id_usuario_roles','=',$usuario_rol->id)->first();
+        ->where('id_usuario_roles','=',$usuario_rol->id_usuario_roles)->first();
 
         $coordinador = DB::table('region')
         ->where('id_region','=',$region->id_region)->first();

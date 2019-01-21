@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Auth\Supervisores\TablasDetalles;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class CondcionesLocativasDetalle extends Controller
+class CondicionesLocativasDetalle extends Controller
 {
     public function condicionesLocativas(Request $request)
      {

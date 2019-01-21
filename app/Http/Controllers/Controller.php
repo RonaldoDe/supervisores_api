@@ -166,6 +166,7 @@ $sw=0;
 
             $notificacion =Notificaciones::create([
                 'id_plan_trabajo' =>$id_plan_trabajo,
+                'id_coordinador' =>$coordinador->id_cordinador,
                 'nombre_plan' =>$nombre_plan->nombre,
                 'nombre_actividad' =>$nombre_actividad->nombre_actividad,
                 'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,

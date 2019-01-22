@@ -159,14 +159,7 @@ $sw=0;
         //Se recupera los datos del usuario que se ha autenticado
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
         
-        $usuario_rol=DB::table('usuario_roles')
-        ->where('id_usuario','=',$user->id)->first();
-
-        $region = DB::table('zona')
-        ->where('id_usuario_roles','=',$usuario_rol->id_usuario_roles)->first();
-
-        $coordinador = DB::table('region')
-        ->where('id_region','=',$region->id_region)->first();
+      
 
         if($user != null){
             //obtener los datos del usuario supervisor
@@ -176,7 +169,6 @@ $sw=0;
 
             $notificacion =Notificaciones::create([
                 'id_plan_trabajo' =>$id_plan_trabajo,
-                'id_coordinador' =>$coordinador->id_cordinador,
                 'nombre_plan' =>$nombre_plan->nombre,
                 'nombre_actividad' =>$nombre_actividad->nombre_actividad,
                 'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,

@@ -158,6 +158,9 @@ $sw=0;
         
         //Se recupera los datos del usuario que se ha autenticado
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+
+        $usuario_rol=DB::table('usuario')
+        ->where('correo','=',$user->email)->first();
         
         $usuario_rol=DB::table('usuarios_roles')
         ->where('id_usuario','=',$user->id)->first();

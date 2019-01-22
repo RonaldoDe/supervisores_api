@@ -159,11 +159,11 @@ $sw=0;
         //Se recupera los datos del usuario que se ha autenticado
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
         
-        $usuario_rol=DB::table('usuario_roles')
+        $usuario_rol=DB::table('usuarios_roles')
         ->where('id_usuario','=',$user->id)->first();
 
         $region = DB::table('zona')
-        ->where('id_usuarios_roles','=',$usuario_rol->id_usuario_roles)->first();
+        ->where('id_usuario_roles','=',$usuario_rol->id_usuario_roles)->first();
 
         $coordinador = DB::table('region')
         ->where('id_region','=',$region->id_region)->first();

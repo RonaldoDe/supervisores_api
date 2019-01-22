@@ -18,6 +18,7 @@ class LogController extends Controller
        $coordinador=DB::table('coordinadores')->where('correo','=',$user->email)->first();
 
         $log = DB::table('notificaciones')
+        ->where('id_coordinador', $coordinador->id_cordinador)
         ->orderBy('fecha', 'DESC')
         ->take(100)
         ->get();

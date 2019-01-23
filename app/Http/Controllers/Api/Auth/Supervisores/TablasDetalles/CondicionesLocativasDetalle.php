@@ -9,7 +9,6 @@ class CondicionesLocativasDetalle extends Controller
 {
     public function condicionesLocativas(Request $request)
      {
-         //validacion de los datos de la actividad
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'id_condicion' => 'required',

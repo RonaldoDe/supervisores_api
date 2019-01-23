@@ -63,11 +63,38 @@ class CondicionesLocativasDetalle extends Controller
          }
          else
          {
-            $condiciones_locativas = DB::table('condiciones_locativas_actividad')
+            $condiciones_locativas = DB::table('condiciones_locativas_actividad as cl')
+            ->select('cl.id', 'cl.id_condicion', 'lcl.condicion_locativa')
+            ->join('listar_condiciones_locativas as lcl', 'cl.id_condicion', 'ldl.id')
             ->where('id_actividad', request('id_actividad'))
             ->get();
             
             return response()->json($condiciones_locativas, 200);
+         }
+    }
+
+    public function accederCondicion(Request $request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id' => 'required',
+             'id_actividad' => 'required',
+             'id_condicion' => 'required',
+
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( ['message' => $validator->errors()->all()],400);
+         }
+         else
+         {
+            $condicion = DB::table('condiciones_locativas_actividad as cl')
+            ->where('id_actividad', request('id_actividad'))
+            ->where('id', request('id'))
+            ->where('id_condicion', request('id_condicion'))
+            ->first();
+            
+            return response()->json($condicion, 200);
          }
     }
 }

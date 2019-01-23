@@ -157,6 +157,8 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     //documentacion legal detalle
     Route::post('listarDocumentacion', 'Api\Auth\Supervisores\TablasDetalles\DocumentacionController@listarDocumentos');
     Route::post('terminarDocumento', 'Api\Auth\Supervisores\TablasDetalles\DocumentacionController@documentacion_legal');
+    Route::post('accederDocumento', 'Api\Auth\Supervisores\TablasDetalles\DocumentacionController@accederAlDocumento');
+
 
     //crear reporte
     Route::post('reporteSupervisor', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
@@ -167,6 +169,7 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     //condiciones locativas detalle
     Route::post('listarCondicionesLocativas', 'Api\Auth\Supervisores\TablasDetalles\CondicionesLocativasDetalle@listarCondicionesLocativas');
     Route::post('terminarCondicionesLocativas', 'Api\Auth\Supervisores\TablasDetalles\CondicionesLocativasDetalle@condicionesLocativas');
+    Route::post('accederCondicion', 'Api\Auth\Supervisores\TablasDetalles\CondicionesLocativasDetalle@accederCondicion');
     
     //ruta de las descripciones de las actividades
     Route::get('descripcionActividad', 'Api\Auth\Supervisores\DescripcionActividadController@description');

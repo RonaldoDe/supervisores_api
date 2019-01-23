@@ -44,12 +44,12 @@ class DocumentacionController extends Controller
                  if (request('documento_vencido') != "" && request('documento_renovado') != "") { // storing image in storage/app/public Folder
                     if(strpos(request('documento_vencido'), 'supervisores_api/storage/app/public/img/') == false ){
                         Storage::disk('public')->put('img/documentacion_legal/'.request('nombre_sucursal').'/'.request('nombre_documento').'/'.$img_vencido, base64_decode(request('documento_vencido')));
-                        $actividad->documento_vencido = $img_vencido;
+                        $actividad->documento_vencido = 'documentacion_legal/'.request('nombre_sucursal').'/'.request('nombre_documento').'/'.$img_vencido;
                     }
 
                     if(strpos(request('documento_renovado'), 'supervisores_api/storage/app/public/img') == false ){
                         Storage::disk('public')->put('img/documentacion_legal/'.request('nombre_sucursal').'/'.request('nombre_documento').'/'.$img_renovado, base64_decode(request('documento_renovado')));
-                        $actividad->documento_renovado = $img_renovado;
+                        $actividad->documento_renovado = 'documentacion_legal/'.request('nombre_sucursal').'/'.request('nombre_documento').'/'.$img_renovado;
                     }
                 }
                 $actividad->estado_documento = request('estado_documento');

@@ -103,9 +103,9 @@ class DocumentacionController extends Controller
             $documento = DB::table('documentacion_actividad as dl')
             ->select('dl.id', 'dl.id_documento','dl.id_actividad', 'dl.estado_documento', 'dl.documento_vencido', 'dl.documento_renovado', 'dl.observaciones','ldl.nombre_documento as documento')
             ->join('lista_documentacion_legal as ldl', 'dl.id_documento', 'ldl.id')
-            ->where('id_actividad', request('id_actividad'))
-            ->where('id', request('id'))
-            ->where('id_documento', request('id_documento'))
+            ->where('dl.id_actividad', request('id_actividad'))
+            ->where('dl.id', request('id'))
+            ->where('dl.id_documento', request('id_documento'))
             ->first();
             
             return response()->json($documento, 200);

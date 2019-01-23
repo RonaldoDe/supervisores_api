@@ -65,4 +65,41 @@ class BuscadoresController extends Controller
             return response()->json(["laboratorios"=>$laboratorios],200);
         }
     }
+
+    public function searchSucursales(Request $request)
+    {
+        $validator=\Validator::make($request->all(),[
+            'nombre_sucursal' => 'required',
+        ]);
+
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+
+            $supervisor=DB::table('usuario')
+            ->where('correo','=',$user->email)->first();
+            
+            $usuario_rol=DB::table('usuarios_roles')
+            ->where('id_usuario','=',$supervisor->id_usuario)->first();
+
+            $zona = DB::table('zona')
+            ->where('id_usuario_roles','=',$usuario_rol->id_usuario_roles)->first();
+
+            $nombre_sucursal = request('nombre_sucursal');
+            $sucursales = DB::table('sucursales')
+            ->select('id_sucursal', 'cod_sucursal', 'nombre')
+            ->orderBy('nombre', 'ASC')
+            ->where('nombre', 'LIKE', '%'.$nombre_sucursal.'%')
+            ->where('id_zona',$zona->id_zona)
+            ->paginate(10);
+
+            return response()->json(["sucursales"=>$sucursales],200);
+        }
+    }
 }

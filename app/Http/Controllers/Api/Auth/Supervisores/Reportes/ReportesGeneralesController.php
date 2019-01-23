@@ -73,4 +73,5 @@ class ReportesGeneralesController extends Controller
             
         }
     }
+
 }

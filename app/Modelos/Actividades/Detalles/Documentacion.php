@@ -11,5 +11,5 @@ class Documentacion extends Model
  
      public $timestamps=false;
  
-     protected $fillable=['id_actividad','id_documento','documento_vencido','documento_renovado', 'observaciones'];
+     protected $fillable=['id_actividad','id_documento', 'estado_documento','documento_vencido','documento_renovado', 'observaciones'];
 }

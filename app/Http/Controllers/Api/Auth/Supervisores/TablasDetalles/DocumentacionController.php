@@ -15,6 +15,7 @@ class DocumentacionController extends Controller
          $validator=\Validator::make($request->all(),[
              'id_actividad' => 'required',
              'id_documento' => 'required',
+             'estado_documento' => 'required',
              'documento_vencido' => 'required',
              'documento_renovado' => 'required',
              'observaciones' => 'required',
@@ -51,6 +52,7 @@ class DocumentacionController extends Controller
                         $actividad->documento_renovado = $img_renovado;
                     }
                 }
+                $actividad->estado_documento = request('estado_documento');
                 $actividad->observaciones = request('observaciones');
                 $actividad->update();
                 return response()->json(['message' => 'Documento registrado']);
@@ -73,7 +75,9 @@ class DocumentacionController extends Controller
          }
          else
          {
-            $documentos = DB::table('documentacion_actividad')
+            $documentos = DB::table('documentacion_actividad as dl')
+            ->select('dl.id', 'dl.id_documento', 'dl.estado_documento', 'dl.documento_vendico', 'dl.documento_renovado', 'dl.observaciones', 'ldl.nombre_documento as documento')
+            ->join('lista_documentacion_legal as ldl', 'dl.id_documento', 'ldl.id')
             ->where('id_actividad', request('id_actividad'))
             ->get();
             

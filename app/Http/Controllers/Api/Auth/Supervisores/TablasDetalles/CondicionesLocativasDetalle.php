@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Auth\Supervisores\TablasDetalles;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Storage;
+use Illuminate\Support\Facades\DB;
 
 class CondicionesLocativasDetalle extends Controller
 {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modelos\Actividades\DocumentacionLegal;
 use Illuminate\Support\Facades\DB;
+use Storage;
 
 class DocumentacionController extends Controller
 {

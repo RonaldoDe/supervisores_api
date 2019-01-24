@@ -75,7 +75,7 @@ class DocumentacionController extends Controller
          else
          {
             $documentos = DB::table('documentacion_actividad as dl')
-            ->select('dl.id', 'dl.id_documento','ldl.nombre_documento as documento')
+            ->select('dl.id', 'dl.id_documento', 'dl.estado_documento','ldl.nombre_documento as documento')
             ->join('lista_documentacion_legal as ldl', 'dl.id_documento', 'ldl.id')
             ->where('id_actividad', request('id_actividad'))
             ->get();

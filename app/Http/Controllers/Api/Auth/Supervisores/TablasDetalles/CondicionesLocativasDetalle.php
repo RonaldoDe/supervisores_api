@@ -18,7 +18,6 @@ class CondicionesLocativasDetalle extends Controller
              'estado_condicion' => 'required',
              'nombre_sucursal' => 'required',
              'nombre_condicion' => 'required',
-             'foto_condicion' => 'required',
          ]);
          if($validator->fails())
          {

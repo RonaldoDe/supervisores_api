@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Modelos\Actividades\DocumentacionLegal;
 use Illuminate\Support\Facades\DB;
 use Storage;
+use App\Modelos\Actividades\Detalles\Documentacion;
 
 class DocumentacionController extends Controller
 {
@@ -32,11 +33,9 @@ class DocumentacionController extends Controller
          else
          {
 
-             //actualizacion de la actividad por el supervisor
-             $actividad = DB::table('documentacion_actividad')
-             ->where('id_actividad', request('id_actividad'))
-             ->where('id_documento', request('id_documento'))
-             ->first();
+             
+             $actividad = Documentacion::where('id_actividad', request('id_actividad'))->where('id_documento', request('id_documento'));
+
              if($actividad!= null){
                  $img_vencido = 'documento_vencido' . time();
                  $img_renovado = 'documento_renovado' . time();
@@ -56,10 +55,10 @@ class DocumentacionController extends Controller
                 $actividad->estado_documento = request('estado_documento');
                 $actividad->observaciones = request('observaciones');
                 $actividad->update();
-                return response()->json(['message' => 'Documento registrado']);
+                return response()->json(['message' => 'Documento registrado'],200);
 
                 }
-             return response()->json(['message' => 'Error Actividad no encontrada']);
+             return response()->json(['message' => 'Error Actividad no encontrada'],400);
          }
      }
 

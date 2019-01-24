@@ -37,13 +37,13 @@ class CondicionesLocativasDetalle extends Controller
              $actividad = CondicionesDetalle::where('id_actividad', request('id_actividad'))->where('id_condicion', request('id_condicion'))->first();
 
              if($actividad!= null){
-                 $img_evidencia = 'foto_condicion' . time();
-                 
+                $img_evidencia = 'foto_condicion' . time();
+                $url_img = str_slug('condiciones_locativas/'.request('nombre_sucursal').'/'.request('nombre_condicion').'/'.$img_vencido, "_");
 
                  if (request('foto_condicion') != "") { // storing image in storage/app/public Folder
                     if(strpos(request('foto_condicion'), 'supervisores_api/storage/app/public/img/') == false ){
-                        Storage::disk('public')->put('img/condiciones_locativas/'.request('nombre_sucursal').'/'.request('nombre_condicion').'/'.$img_vencido, base64_decode(request('foto_condicion')));
-                        $actividad->foto_condicion = 'condiciones_locativas/'.request('nombre_sucursal').'/'.request('nombre_condicion').'/'.$img_vencido;
+                        Storage::disk('public')->put('img/'.$url_img, base64_decode(request('foto_condicion')));
+                        $actividad->foto_condicion = $url_img;
                     }
                 }
                 $actividad->estado_condicion = request('estado_condicion');

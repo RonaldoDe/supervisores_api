@@ -43,16 +43,17 @@ class ReportesGeneralesController extends Controller
 
                 $foto = 'imagen_reporte' . time();
                  
+                $url_img = str_slug('reportes/'.request('nombre_sucursal').'/'.request('nombre_reporte').'/'.$foto, "_");
 
                  if (request('foto') != "") { // storing image in storage/app/public Folder
                     if(strpos(request('foto'), 'supervisores_api/storage/app/public/img/') == false ){
-                        Storage::disk('public')->put('img/reportes/'.request('nombre_sucursal').'/'.request('nombre_reporte').'/'.$foto, base64_decode(request('foto')));
+                        Storage::disk('public')->put('img/'.$url_img, base64_decode(request('foto')));
                         $reporte = ReporteSupervisor::create([
                             'id_supervisor' => $usuario_rol->id_usuario_roles,
                             'id_coordinador' => $coordinador->id_cordinador,
                             'id_sucursal' => request('id_sucursal'),
                             'nombre_reporte' => request('observaciones'),
-                            'foto' => 'reportes/'.request('nombre_sucursal').'/'.request('nombre_reporte').'/'.$foto,
+                            'foto' => $url_img,
                             'estado_corregido' => 0,
                             'estado_listar' => 1,
                         ]);

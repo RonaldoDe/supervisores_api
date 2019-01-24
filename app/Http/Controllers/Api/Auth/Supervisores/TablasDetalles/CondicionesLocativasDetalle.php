@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Storage;
 use Illuminate\Support\Facades\DB;
+use App\Modelos\Actividades\Detalles\CondicionesDetalle;
 
 class CondicionesLocativasDetalle extends Controller
 {
@@ -32,6 +33,9 @@ class CondicionesLocativasDetalle extends Controller
              ->where('id_actividad', request('id_actividad'))
              ->where('id_condicion', request('id_condicion'))
              ->first();
+
+             $actividad = CondicionesDetalle::where('id_actividad', request('id_actividad'))->where('id_condicion', request('id_condicion'))->first();
+
              if($actividad!= null){
                  $img_evidencia = 'foto_condicion' . time();
                  

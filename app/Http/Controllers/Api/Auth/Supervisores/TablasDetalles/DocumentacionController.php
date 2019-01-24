@@ -39,8 +39,8 @@ class DocumentacionController extends Controller
              if($actividad!= null){
                  $img_vencido = 'documento_vencido' . time();
                  $img_renovado = 'documento_renovado' . time();
-                 $url_img_renovado = str_slug('documentacion_legal/'.request('nombre_sucursal').'/'.request('nombre_documento').'/'.$img_renovado, "_");
-                 $url_img_vencido = str_slug('documentacion_legal/'.request('nombre_sucursal').'/'.request('nombre_documento').'/'.$img_vencido, "_");
+                 $url_img_renovado = str_replace(" ", "_",'documentacion_legal/'.request('nombre_sucursal').'/'.request('nombre_documento').'/'.$img_renovado);
+                 $url_img_vencido = str_replace(" ", "_",'documentacion_legal/'.request('nombre_sucursal').'/'.request('nombre_documento').'/'.$img_vencido);
 
                  if (request('documento_vencido') != "" && request('documento_renovado') != "") { // storing image in storage/app/public Folder
                     if(strpos(request('documento_vencido'), 'supervisores_api/storage/app/public/img/') == false ){

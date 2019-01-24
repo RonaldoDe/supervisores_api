@@ -43,7 +43,7 @@ class ReportesGeneralesController extends Controller
 
                 $foto = 'imagen_reporte' . time();
                  
-                $url_img = str_slug('reportes/'.request('nombre_sucursal').'/'.request('nombre_reporte').'/'.$foto, "_");
+                $url_img = str_replace(" ", "_",'reportes/'.request('nombre_sucursal').'/'.request('nombre_reporte').'/'.$foto);
 
                  if (request('foto') != "") { // storing image in storage/app/public Folder
                     if(strpos(request('foto'), 'supervisores_api/storage/app/public/img/') == false ){

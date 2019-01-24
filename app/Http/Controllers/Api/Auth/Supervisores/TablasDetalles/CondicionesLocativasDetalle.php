@@ -38,7 +38,7 @@ class CondicionesLocativasDetalle extends Controller
 
              if($actividad!= null){
                 $img_evidencia = 'foto_condicion' . time();
-                $url_img = str_slug('condiciones_locativas/'.request('nombre_sucursal').'/'.request('nombre_condicion').'/'.$img_vencido, "_");
+                $url_img = str_replace(" ", "_",'condiciones_locativas/'.request('nombre_sucursal').'/'.request('nombre_condicion').'/'.$img_vencido);
 
                  if (request('foto_condicion') != "") { // storing image in storage/app/public Folder
                     if(strpos(request('foto_condicion'), 'supervisores_api/storage/app/public/img/') == false ){

@@ -18,7 +18,6 @@ class DocumentacionController extends Controller
              'id_actividad' => 'required',
              'id_documento' => 'required',
              'estado_documento' => 'required',
-             'observaciones' => 'required',
              'nombre_sucursal' => 'required',
              'nombre_documento' => 'required',
 

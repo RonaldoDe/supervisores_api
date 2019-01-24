@@ -34,7 +34,7 @@ class DocumentacionController extends Controller
          {
 
              
-             $actividad = Documentacion::where('id_actividad', request('id_actividad'))->where('id_documento', request('id_documento'));
+             $actividad = Documentacion::where('id_actividad', request('id_actividad'))->where('id_documento', request('id_documento'))->first();
 
              if($actividad!= null){
                  $img_vencido = 'documento_vencido' . time();

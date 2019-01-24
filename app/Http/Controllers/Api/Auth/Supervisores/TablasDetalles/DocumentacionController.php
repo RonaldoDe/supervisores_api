@@ -42,12 +42,13 @@ class DocumentacionController extends Controller
                  $url_img_renovado = str_replace(" ", "_",'documentacion_legal/'.request('nombre_sucursal').'/'.request('nombre_documento').'/'.$img_renovado);
                  $url_img_vencido = str_replace(" ", "_",'documentacion_legal/'.request('nombre_sucursal').'/'.request('nombre_documento').'/'.$img_vencido);
 
-                 if (request('documento_vencido') != "" && request('documento_renovado') != "") { // storing image in storage/app/public Folder
+                 if (request('documento_vencido') != "") { // storing image in storage/app/public Folder
                     if(strpos(request('documento_vencido'), 'supervisores_api/storage/app/public/img/') == false ){
                         Storage::disk('public')->put('img/'.$url_img_vencido, base64_decode(request('documento_vencido')));
                         $actividad->documento_vencido = $url_img_vencido;
                     }
-
+                }
+                if(request('documento_renovado') != ""){
                     if(strpos(request('documento_renovado'), 'supervisores_api/storage/app/public/img') == false ){
                         Storage::disk('public')->put('img/'.$url_img_renovado, base64_decode(request('documento_renovado')));
                         $actividad->documento_renovado = $url_img_renovado;

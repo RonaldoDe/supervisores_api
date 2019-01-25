@@ -17,7 +17,7 @@ class PasswordUpdateController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400 );
         }
 
         else
@@ -56,7 +56,7 @@ class PasswordUpdateController extends Controller
         ]);
         if($validator->fails())
         {
-          return response()->json( $errors=$validator->errors()->all() );
+          return response()->json( $errors=$validator->errors()->all(),400);
         }
 
         else
@@ -72,7 +72,7 @@ class PasswordUpdateController extends Controller
                 $user->update();
                 return response()->json('Contraseña Cambiada con exito',200);
             }else{
-                return response()->json('Credenciales incorrerctas',401);
+                return response()->json('El código no es valido o ya fue usuado.',400);
 
             }
             

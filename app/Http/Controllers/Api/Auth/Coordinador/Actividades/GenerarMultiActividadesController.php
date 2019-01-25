@@ -9,6 +9,7 @@ use App\Modelos\PlanTrabajoAsignacion;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Modelos\Actividades\ActividadesTabla;
 
 class GenerarMultiActividadesController extends MultiActividadController
 {
@@ -48,6 +49,7 @@ class GenerarMultiActividadesController extends MultiActividadController
 
                 if($cordinador!==null){
 
+                    
 
                     foreach ($listaSucursales as $sucursal) {
                         $plan_trabajo =PlanTrabajoAsignacion::create([
@@ -59,14 +61,35 @@ class GenerarMultiActividadesController extends MultiActividadController
                             'idcoordinador' =>$cordinador->id_cordinador,
     
                         ]);
-                    }
-                if($plan_trabajo){
+                        if($plan_trabajo){
 
-                    $validarActividades = DB::table('actividades')
-                    ->where('id_plan_trabajo', $plan_trabajo->id_plan_trabajo)
-                    ->where('nombre_tabla', $actividades_converter_d[$i]["nombre_tabla"])
-                    ->first();
+                            $array_actividades=request('lista_actividades');
+                            $lista_actividades=json_encode($array_actividades,true);
+                            $actividades=json_decode($lista_actividades);
+
+                        foreach ($actividades as $actividad) {
+                                $validarActividades = DB::table('actividades')
+                                ->where('id_plan_trabajo', $plan_trabajo->id_plan_trabajo)
+                                ->where('nombre_tabla', $actividad->nombre_tabla)
+                                ->first();
+
+                                if($validarActividades == null){
+                                    $actividad =ActividadesTabla::create([
+
+                                        'id_plan_trabajo' =>$plan_trabajo->id_plan_trabajo,
+                                        'id_prioridad' =>1,
+                                        'nombre_tabla' =>$actividad->nombre_tabla,
+                                        'nombre_actividad'=>$actividad->nombre
+                    
+                                        ]);
+                                    
+                                }
+
+                        }
+                    }
                 }
+                return response()->json(["success"=>"Creado"],400);
+
                 }else{
 
                     return response()->json(["success"=>"no existe el corrdinador"],400);

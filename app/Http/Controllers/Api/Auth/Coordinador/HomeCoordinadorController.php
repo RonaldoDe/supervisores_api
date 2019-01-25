@@ -59,7 +59,7 @@ class HomeCoordinadorController extends Controller
 
 
        //se retorna por ajax la region y zonas como objetos de las consultas realizadas
-     return response()->json(["region"=>$region,"Zonas"=>$zonas, 'foto' => $coordinador->foto],200);
+     return response()->json(["region"=>$region,"Zonas"=>$zonas, 'foto' => $coordinador->foto, 'email' => $coordinador->correo],200);
 
         // }
         // else

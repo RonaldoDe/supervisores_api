@@ -48,6 +48,8 @@ Route::middleware('auth:api')->group(function () {
 Route::middleware(['auth:api','coordinadores'])->group(function(){
     //listado de rutas y nombre de actividades
     Route::get('rutas', 'Api\Auth\Supervisores\DescripcionActividadController@rutas');
+
+    Route::post('multiActividades', 'Api\Auth\Coordinador\Actividades\GenerarMultiActividadesController@generarMultiActividades');
     
     //listado de actvidades
     Route::post('viewActividades', 'Api\Auth\Coordinador\PlanesController@allActividades');

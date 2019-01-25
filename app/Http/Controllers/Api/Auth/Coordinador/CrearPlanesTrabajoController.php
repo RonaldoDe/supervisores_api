@@ -59,7 +59,7 @@ class CrearPlanesTrabajoController extends Controller
 
             }else{
 
-                return response()->json(["error"=>"no hay existe el corrdinador"],400);
+                return response()->json(["success"=>"no existe el corrdinador"],400);
             }
 
 

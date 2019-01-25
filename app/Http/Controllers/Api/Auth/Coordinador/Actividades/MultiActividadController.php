@@ -34,7 +34,8 @@ class MultiActividadController extends Controller
             // 'id_prioridad' => 'required|numeric',
             
             'id_plan_trabajo'=>'required|numeric',
-            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date',
 
         ]);
         if($validator->fails())
@@ -44,120 +45,49 @@ class MultiActividadController extends Controller
 
         else
         {
-            $id_planT=request('id_plan_trabajo');
+            $fecha= date('Y-m-d');
 
-            $fechas=request('array_fechas');
-            //codificacion a json
-            $fechas_converter=json_encode($fechas,true);
-            //decodificcion del reques recibido para iterar el aary
-            $fechas_converter_d=json_decode($fechas_converter,true);
+            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-            //consulta ala base de dato para traer todas las fechas de una actividad en un lan de trabajo especifico
-            $fechas_base_datos=DB::table('apertura')
-                        ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                        ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                        ->get();
+                $fechas_base_datos=DB::table('apertura')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
 
 
+        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
-               //ciclo que me me permite iterar el array  mediante la funcion sizeof
-               //itera mediante las propiedades del array asi como le mando los parametros
-               //exactos los nombres de las propiedades
 
-            //funcion en contrler que valida que un plan de trabajo exista en la base de datos
-               $validarPlanTrabajo=$this->validarQueExistaElPlandeTrabajo($id_planT);
+        if($respuesta>0){
 
-               if(count($validarPlanTrabajo)>0){
-                $sw=0;
-                $fecha= date('Y-m-d');
-                for($i=0;$i<sizeof($fechas_converter_d);$i++){
-
-        if($fechas_converter_d[$i]["fecha_inicio"]>=$fecha ){
-
-            $sw;
-
+            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
         }else{
-            $sw=$sw+1;
+
+
+        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                $apertura =Apertura::create([
+
+                    'id_plan_trabajo' =>request('id_plan_trabajo'),
+                    'fecha_inicio' =>request('fecha_inicio'),
+                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                    'observacion'=>'',
+                    'id_prioridad' =>1,
+                    'estado' =>'Activo',
+
+                ]);
         }
+                // DB::commit();
+                }
+                else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
                 }
-
-                if($sw==0){
-
-                    $sw1=0;
-
-                    for($j=0;$j<sizeof($fechas_converter_d);$j++){
-
-                        for($k=0;$k<sizeof($fechas_converter_d);$k++){
-
-                            if($k!=$j)
-            {
-                if($fechas_converter_d[$j]["fecha_inicio"]==$fechas_converter_d[$k]["fecha_inicio"] ){
-
-                    $sw1=$sw1+1;
-
-                }
-            }
-
-                        }
-
-
-                    }
-
-                }else{
-                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual."],400);
-                }
-
-                $sw2=0;
-                if($sw1==0){
-
-                    foreach($fechas_converter_d as $valor){
-
-                        foreach($fechas_base_datos as $valor1){
-
-                        if($valor['fecha_inicio'].' 00:00:00' == $valor1->fecha_inicio ){
-                                $sw2++;
-                            }
-                        }
-
-
-                    }
-
-                }else{
-                    return response()->json(["Las fechas iniciales no puede ser iguales."],400);
-                }
-
-                if($sw2>0){
-
-                    return response()->json(["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-                }else{
-
-                    for($i=0;$i<sizeof($fechas_converter_d);$i++){
-                    $apertura =Apertura::create([
-
-                        'id_plan_trabajo' =>request('id_plan_trabajo'),
-                        'fecha_inicio' =>$fechas_converter_d[$i]["fecha_inicio"],
-                        'fecha_fin' =>$fechas_converter_d[$i]["fecha_inicio"]." "."23:59:00",
-                        'observacion'=>'',
-                        'id_prioridad' =>1,
-                        'estado' =>'Activo',
-
-                    ]);
-                }
-                    return response()->json(["success"=>"Actividad Apertura creada", 'id' => $apertura->id],201);
-                }
-
-
-               }else{
-
-                return response()->json(["Este plan trabajo no existe."],400);
-               }
-
-
-
-
             }
 
 
@@ -565,76 +495,64 @@ class MultiActividadController extends Controller
     }
 
     public function kardex(Request $request){
-
+        
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
-            'laboratorios'=>'required',
-            'array_fechas.*.fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'array_fechas.*.fecha_fin'=>'date_format:"Y-m-d"|required|date'
-        ]);
-        if($validator->fails())
-        {
-          return response()->json( $errors=$validator->errors()->all(),400 );
-        }
-
-        else
-        {
-
-
-            $fechas=request('array_fechas');
-            //codificacion a json
-            $fechas_converter=json_encode($fechas,true);
-            //decodificcion del reques recibido para iterar el aary
-            $fechas_converter_d=json_decode($fechas_converter,true);
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date',
+            ]);
+            if($validator->fails())
+            {
+                return response()->json( $errors=$validator->errors()->all(),400 );
+            }
+            
+            else
+            {
 
 
-            $fechas_base_datos=DB::table('kardex')
-                        ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                        ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                        ->get();
+            $fecha= date('Y-m-d');
 
-           //isntancia de la funcion omnipotente para la validacion de las fechas establecida en Controller
-               $validacion=$this->validarArrayFechas($fechas_converter_d);
+            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-              if($validacion==0)
-              {
-                  //se vuelve a iterrar el array para obtener los valores de las fechas i hacer las inserciones
-                for($i=0; $i<sizeof($fechas_converter_d);$i++)
-                {
-                    //funcion que valida las fechas_inicio para que no esten repetidad en el array
-                    $validacionFechas=$this->validarFechasInicioRepetido($fechas_converter_d);
+                $fechas_base_datos=DB::table('kardex')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
 
-                    if($validacionFechas==0){
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
 
-                        $validacion_fecha_base=$this->validarFechasBaseDatoArray($fechas_converter_d,$fechas_base_datos);
 
-                        if($validacion_fecha_base > 0){
-                            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-                        }else{
+        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
+
+        if($respuesta>0){
+
+            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+        }else{
+
+
+        //instancia del modelo documentacion legal para crear un registro de esta tabla
                 $kardex =Kardex::create([
-
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
-                    'fecha_inicio' =>$fechas_converter_d[$i]["fecha_inicio"],
-                    'fecha_fin' =>$fechas_converter_d[$i]["fecha_fin"]." "."23:59:00",
-                    'laboratorios_asignados'=>request('laboratorios'),
+                    'fecha_inicio' =>request('fecha_inicio'),
+                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                     'observacion'=>'',
-                    'id_prioridad' =>request('id_prioridad'),
+                    'id_prioridad' =>1,
                     'estado' =>'Activo',
 
                 ]);
-                        }
-                    }else{
-                        return response()->json(["Las fecha inicial y fecha final no pueden ser iguales"],400);
-                    }
-                 }
-                return response()->json(["success"=>"Actividad Kardex creada", 'id' => $kardex->id],201);
-              }
-              elseif($validacion>0)
-              {
-                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
-              }
+        }
+                // DB::commit();
+
+                }
+                else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
             }
     }
 

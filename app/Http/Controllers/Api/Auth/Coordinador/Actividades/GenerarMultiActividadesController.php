@@ -68,13 +68,14 @@ class GenerarMultiActividadesController extends MultiActividadController
                             $actividades=json_decode($lista_actividades);
 
                         foreach ($actividades as $actividad) {
+                            
                                 $validarActividades = DB::table('actividades')
                                 ->where('id_plan_trabajo', $plan_trabajo->id_plan_trabajo)
                                 ->where('nombre_tabla', $actividad->nombre_tabla)
                                 ->first();
 
                                 if($validarActividades == null){
-                                    $actividad =ActividadesTabla::create([
+                                    $actividadAux =ActividadesTabla::create([
 
                                         'id_plan_trabajo' =>$plan_trabajo->id_plan_trabajo,
                                         'id_prioridad' =>1,
@@ -84,7 +85,19 @@ class GenerarMultiActividadesController extends MultiActividadController
                                         ]);
                                     
                                 }
-
+                                if($actividadAux){
+                                    $tabla = $actividad->nombre_tabla;
+                                    if(method_exists($this, $tabla)){
+                                        $params = [
+                                            'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo
+                                        ];
+                                        $request->request->add($params);
+                                        $validar=$this->$tabla($request);
+                                        echo $validar;
+                                    }else{
+                                        return response()->json(['message' => 'El metodo no existe']);
+                                    }    
+                                }
                         }
                     }
                 }
@@ -98,12 +111,7 @@ class GenerarMultiActividadesController extends MultiActividadController
             }
 
             
-            if(method_exists($this, $tabla)){
-                $validar=$this->$tabla($request);
-                return $validar;
-            }else{
-                return response()->json(['message' => 'El metodo no existe']);
-            }       
+               
         }
     }
 }

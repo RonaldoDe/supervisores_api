@@ -101,7 +101,7 @@ class GenerarMultiActividadesController extends MultiActividadController
                         }
                     }
                 }
-                return response()->json(["success"=>"Creado"],400);
+                return response()->json(["success"=>"Creado"],200);
 
                 }else{
 

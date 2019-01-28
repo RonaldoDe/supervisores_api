@@ -59,7 +59,7 @@ class GenerarMultiActividadesController extends MultiActividadController
                                 'fecha_creacion' =>$day,
                                 'id_supervisor' =>$sucursal->id_supervisor,
                                 'nombre' =>request('nombre_plan'),
-                                'estado'=>0,
+                                'estado'=>1,
                                 'idcoordinador' =>$cordinador->id_cordinador,
         
                             ]);
@@ -69,7 +69,7 @@ class GenerarMultiActividadesController extends MultiActividadController
                                 'id_sucursal' =>$sucursal->id_sucursal,
                                 'fecha_creacion' =>$day,
                                 'id_supervisor' =>$sucursal->id_supervisor,
-                                'estado'=>0,
+                                'estado'=>1,
                                 'idcoordinador' =>$cordinador->id_cordinador,
         
                             ]);

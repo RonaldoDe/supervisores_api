@@ -89,6 +89,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('updateExcesos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadExcesos');
     Route::post('updateLibroVencimientos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadLibroVencimientos');
     Route::post('updateIngresoSucursal', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadIngresoSucursal');
+    Route::post('updatePtc', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadPtc');
 
     //eliminar 
     //actividades
@@ -129,6 +130,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('CrearActividadExcesos', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadExcesos');
     Route::post('CrearActividadIngresoSucursal', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadIngresoSucursal');
     Route::post('CrearActividadLibroVencimientos', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadLibroVencimientos');
+    Route::post('CrearActividadPtc', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadPtc');
 });
 
 //rutas para un Administrador

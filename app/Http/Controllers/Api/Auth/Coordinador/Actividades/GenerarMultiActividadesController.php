@@ -50,7 +50,7 @@ class GenerarMultiActividadesController extends MultiActividadController
                 if($cordinador!==null){
 
                     
-
+                    DB::beginTransaction();
                     foreach ($listaSucursales as $sucursal) {
                         $plan_trabajo =PlanTrabajoAsignacion::create([
 
@@ -101,6 +101,7 @@ class GenerarMultiActividadesController extends MultiActividadController
                         }
                     }
                 }
+                DB::commit();
                 return response()->json(["success"=>"Creado"],200);
 
                 }else{

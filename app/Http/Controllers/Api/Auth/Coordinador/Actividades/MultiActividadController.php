@@ -81,6 +81,8 @@ class MultiActividadController extends Controller
 
                 ]);
         }
+                return response()->json(["Apertura creada"],200);
+
                 // DB::commit();
                 }
                 else{

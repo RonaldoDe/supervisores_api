@@ -84,6 +84,29 @@ class DocumentacionController extends Controller
          }
     }
 
+    public function listarDocumentosCoordinador(Request $request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( ['message' => $validator->errors()->all()],400);
+         }
+         else
+         {
+            $documentos = DB::table('documentacion_actividad as dl')
+            ->select('dl.id', 'dl.id_documento', 'dl.estado_documento', 'dl.documento_vencido', 'dl.documento_renovado', 'dl.observaciones','ldl.nombre_documento as documento')
+            ->join('lista_documentacion_legal as ldl', 'dl.id_documento', 'ldl.id')
+            ->where('id_actividad', request('id_actividad'))
+            ->get();
+            
+            return response()->json($documentos, 200);
+         }
+    }
+
     public function accederAlDocumento(Request $request)
      {
          //validacion de los datos de la actividad

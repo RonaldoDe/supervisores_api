@@ -385,7 +385,6 @@ class MultiActividadController extends Controller
 
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required',
             'fecha_fin'=>'date_format:"Y-m-d"|required'
@@ -956,7 +955,6 @@ class MultiActividadController extends Controller
 
                 // DB::commit();
 
-                return response()->json(["success"=>" Actividad convenio exhibicion  creada", 'id' => $convenio_exhibicion->id],201);
 
             }else{
                 return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);

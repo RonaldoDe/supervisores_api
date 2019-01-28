@@ -81,7 +81,6 @@ class MultiActividadController extends Controller
 
                 ]);
         }
-                return response()->json(["Apertura creada"],200);
 
                 // DB::commit();
                 }
@@ -163,7 +162,6 @@ class MultiActividadController extends Controller
     
                     }
     
-                    return response()->json(["success"=>" Actividad documentacion legal creada"],200);
                 }
     
     
@@ -233,9 +231,7 @@ class MultiActividadController extends Controller
                     'estado' =>'Activo',
 
                 ]);
-                if($papeleria){
-                    return response()->json(["Papelearia consignacion creada"],200);
-                }
+                
         }
                 // DB::commit();
 
@@ -303,9 +299,7 @@ class MultiActividadController extends Controller
                     'estado' =>'Activo',
 
                 ]);
-                if($formulas){
-                    return response()->json(["Formulas despachos creada"],200);
-                }
+                
         }
                 // DB::commit();
 
@@ -375,9 +369,7 @@ class MultiActividadController extends Controller
                 ]);
         }
                 // DB::commit();
-                if($remisiones){
-                    return response()->json(["Remisiones creada"],200);
-                }
+                
 
                 }
                 else{
@@ -462,7 +454,6 @@ class MultiActividadController extends Controller
                 }
         }
                 // DB::commit();
-                return response()->json(["success"=>" Actividad condiciones locativas creada"],200);
                 }
                 else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -525,9 +516,7 @@ class MultiActividadController extends Controller
                     'estado' =>'Activo',
 
                 ]);
-                if($kardex){
-                    return response()->json(["Kardex creada"],200);
-                }
+                
         }
                 // DB::commit();
 
@@ -591,9 +580,7 @@ class MultiActividadController extends Controller
 
                 ]);
 
-                if($seguimiento){
-                    return response()->json(["Seguimiento vendedores creada"],200);
-                }
+                
         }
                 // DB::commit();
 
@@ -661,9 +648,7 @@ class MultiActividadController extends Controller
 
                 ]);
 
-                if($evaluacionPedidos){
-                    return response()->json(["Evaluacion pedidos creada"],200);
-                }
+                
                 
         }
 
@@ -722,9 +707,7 @@ class MultiActividadController extends Controller
                         'id_prioridad' =>1,
                         'estado' =>'Activo',
                     ]);
-                    if($presupuestoPedidos){
-                        return response()->json(["Presupuesto pedidos creada"],200);
-                    }
+                    
                 }
                 
 
@@ -785,9 +768,7 @@ class MultiActividadController extends Controller
                     'estado' =>'Activo',
 
                 ]);
-                if($libroFaltante){
-                    return response()->json(["Libros faltantes creada"],200);
-                }
+                
         }
                 // DB::commit();
 
@@ -846,9 +827,7 @@ class MultiActividadController extends Controller
                         'estado' =>'Activo',
 
                     ]);
-                    if($captura_cliente){
-                        return response()->json(["Captura clientes creada"],200);
-                    }
+                    
             }
                     // DB::commit();
                     return response()->json(["success"=>" Actividad  Captura Cliente  creada", 'id' => $captura_cliente->id],201);
@@ -910,9 +889,7 @@ class MultiActividadController extends Controller
 
                 ]);
 
-                if($libroAgenda){
-                    return response()->json(["Libro agenda cliente creada"],200);
-                }
+                
         }
                 // DB::commit();
 
@@ -977,9 +954,7 @@ class MultiActividadController extends Controller
                     'estado' =>'Activo',
 
                 ]);
-                if($convenio_exhibicion){
-                    return response()->json(["Convenio exhibicion creada"],200);
-                }
+                
         }
 
                 // DB::commit();
@@ -1055,9 +1030,7 @@ class MultiActividadController extends Controller
 
                 // DB::commit();
 
-                if($excesos){
-                    return response()->json(["Excesos creada"],200);
-                }
+                
 
             }else{
                 return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -1127,9 +1100,7 @@ class MultiActividadController extends Controller
 
                 // DB::commit();
 
-                if($libro_vencimiemto){
-                    return response()->json(["Libro vencimientos creada"],200);
-                }
+                
 
             }else{
                 return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -1195,9 +1166,7 @@ class MultiActividadController extends Controller
         }
                 // DB::commit();
 
-                if($ingreso_sucursal){
-                    return response()->json(["Ingreso sucursal creada"],200);
-                }
+                
 
             }else{
                 return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);

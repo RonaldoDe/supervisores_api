@@ -51,7 +51,7 @@ class GenerarMultiActividadesController extends MultiActividadController
 
                     
                     DB::beginTransaction();
-                    foreach ($requestSucursales as $sucursal) {
+                    foreach ($listaSucursales as $sucursal) {
                         if(request('nombre_plan') != null){
                             $plan_trabajo =PlanTrabajoAsignacion::create([
     
@@ -80,7 +80,7 @@ class GenerarMultiActividadesController extends MultiActividadController
                             $lista_actividades=json_encode($array_actividades,true);
                             $actividades=json_decode($lista_actividades);
 
-                        foreach ($array_actividades as $actividad) {
+                        foreach ($actividades as $actividad) {
                             
                                 $validarActividades = DB::table('actividades')
                                 ->where('id_plan_trabajo', $plan_trabajo->id_plan_trabajo)

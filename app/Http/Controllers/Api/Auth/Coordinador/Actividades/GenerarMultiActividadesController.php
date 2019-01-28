@@ -122,9 +122,54 @@ class GenerarMultiActividadesController extends MultiActividadController
                     return response()->json(["success"=>"no existe el corrdinador"],400);
                 }
 
-            }
+            }else{
+                $plan_trabajo = DB::table('plan_trabajo_asignacion')
+                ->where('id_plan_trabajo', request('id_plan_trabajo'))
+                ->first();
+                if($plan_trabajo){
+                    DB::beginTransaction();
 
-            
+                    $array_actividades=request('lista_actividades');
+                            $lista_actividades=json_encode($array_actividades,true);
+                            $actividades=json_decode($lista_actividades);
+
+                        foreach ($actividades as $actividad) {
+                            
+                                $validarActividades = DB::table('actividades')
+                                ->where('id_plan_trabajo', $plan_trabajo->id_plan_trabajo)
+                                ->where('nombre_tabla', $actividad->nombre_tabla)
+                                ->first();
+
+                                if($validarActividades == null){
+                                    $actividadAux =ActividadesTabla::create([
+
+                                        'id_plan_trabajo' =>$plan_trabajo->id_plan_trabajo,
+                                        'id_prioridad' =>1,
+                                        'nombre_tabla' =>$actividad->nombre_tabla,
+                                        'nombre_actividad'=>$actividad->nombre
+                    
+                                        ]);
+                                    
+                                }
+                                if($actividadAux){
+                                    $tabla = $actividad->nombre_tabla;
+                                    if(method_exists($this, $tabla)){
+                                        $params = [
+                                            'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo
+                                        ];
+                                        $request->request->add($params);
+                                        $validar=$this->$tabla($request);
+                                        echo $validar;
+                                    }else{
+                                        return response()->json(['message' => 'El metodo no existe', 'metodo' => $actividad->nombre_tabla],400);
+                                    }    
+                                }
+                }
+            }else{
+                return response()->json(['message' => 'El plan de trabajo no exciste'],400);
+            }
+            DB::commit();
+        }           
                
         }
     }

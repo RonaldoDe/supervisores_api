@@ -653,8 +653,6 @@ class MultiActividadController extends Controller
         }
 
 
-                return response()->json(["success"=>" Actividad Evaluacion Pedidos  creada", 'id' => $evaluacionPedidos->id],201);
-
             }else{
                 return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
@@ -830,7 +828,6 @@ class MultiActividadController extends Controller
                     
             }
                     // DB::commit();
-                    return response()->json(["success"=>" Actividad  Captura Cliente  creada", 'id' => $captura_cliente->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);

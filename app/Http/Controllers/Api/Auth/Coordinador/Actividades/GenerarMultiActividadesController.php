@@ -52,12 +52,14 @@ class GenerarMultiActividadesController extends MultiActividadController
                     
                     DB::beginTransaction();
                     foreach ($listaSucursales as $sucursal) {
-                        if(request('nombre_plan') == null || request('nombre_plan') == ""){
+                        return request('nombre_plan');
+                        if(request('nombre_plan') != null){
                             $plan_trabajo =PlanTrabajoAsignacion::create([
-
+    
                                 'id_sucursal' =>$sucursal->id_sucursal,
                                 'fecha_creacion' =>$day,
                                 'id_supervisor' =>$sucursal->id_supervisor,
+                                'nombre' =>request('nombre_plan'),
                                 'estado'=>0,
                                 'idcoordinador' =>$cordinador->id_cordinador,
         
@@ -68,7 +70,6 @@ class GenerarMultiActividadesController extends MultiActividadController
                                 'id_sucursal' =>$sucursal->id_sucursal,
                                 'fecha_creacion' =>$day,
                                 'id_supervisor' =>$sucursal->id_supervisor,
-                                'nombre' =>request('nombre_plan'),
                                 'estado'=>0,
                                 'idcoordinador' =>$cordinador->id_cordinador,
         

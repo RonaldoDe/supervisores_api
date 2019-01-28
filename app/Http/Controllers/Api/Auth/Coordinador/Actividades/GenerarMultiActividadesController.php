@@ -52,7 +52,6 @@ class GenerarMultiActividadesController extends MultiActividadController
                     
                     DB::beginTransaction();
                     foreach ($listaSucursales as $sucursal) {
-                        return request('nombre_plan');
                         if(request('nombre_plan') != null){
                             $plan_trabajo =PlanTrabajoAsignacion::create([
     

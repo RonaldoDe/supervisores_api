@@ -836,7 +836,7 @@ class MultiActividadController extends Controller
             }
     }
 
-    public function libro_agendacliente(Request $request){
+    public function libro_agendaclientes(Request $request){
 
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required',

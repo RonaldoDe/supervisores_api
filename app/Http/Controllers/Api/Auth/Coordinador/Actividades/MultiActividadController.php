@@ -25,6 +25,8 @@ use App\Modelos\Actividades\DocumentacionLegal;
 use App\Modelos\Notificaciones;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Modelos\Actividades\Detalles\CondicionesDetalle;
+use App\Modelos\Actividades\Detalles\Documentacion;
 class MultiActividadController extends Controller
 {
     public function apertura(Request $request)

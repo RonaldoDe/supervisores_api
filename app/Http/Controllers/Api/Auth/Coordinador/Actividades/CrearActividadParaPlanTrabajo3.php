@@ -398,6 +398,7 @@ class CrearActividadParaPlanTrabajo3 extends Controller
 
             $validator=\Validator::make($request->all(),[
                 'id_prioridad' => 'required|numeric',
+                'titulo' => 'required',
                 'id_plan_trabajo'=>'required|numeric',
                 'fecha_inicio'=>'date_format:"Y-m-d"|required',
                 'fecha_fin'=>'date_format:"Y-m-d"|required'
@@ -439,6 +440,7 @@ class CrearActividadParaPlanTrabajo3 extends Controller
                     $ptc =ActividadPtc::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'titulo' =>request('titulo'),
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',

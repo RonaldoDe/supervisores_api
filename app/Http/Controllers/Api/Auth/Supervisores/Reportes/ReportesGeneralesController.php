@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Auth\Supervisores\Reportes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modelos\Reportes\ReporteSupervisor;
+use Illuminate\Support\Facades\DB;
 
 class ReportesGeneralesController extends Controller
 {
@@ -58,20 +59,38 @@ class ReportesGeneralesController extends Controller
                             'estado_listar' => 1,
                         ]);
                         if($reporte){
-                            return respose()->json(['message' => 'Reporte realizado con exitio'], 200);
+                            return response()->json(['message' => 'Reporte realizado con exitio'], 200);
                         }
                     }
-                    return respose()->json(['message' => 'Error al carar la imagen'], 400);
+                    return response()->json(['message' => 'Error al carar la imagen'], 400);
 
                 }else{
-                    return respose()->json(['message' => 'Error Foto no existe'], 400);
+                    return response()->json(['message' => 'Error Foto no existe'], 400);
                 }
 
                
             }else{
-                return respose()->json(['message' => 'Coordinador no encontrado'], 400);
+                return response()->json(['message' => 'Coordinador no encontrado'], 400);
             }
             
+        }
+    }
+
+    public function generarReporeteCoordinador(Request $request)
+    {
+        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+        $coordinador=DB::table('coordinadores')->where('correo','=',$user->email)->first();
+
+        if($coordinador){
+            $reporte = DB::table('reportes_supervisor as rs')
+            ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido')
+            ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
+            ->join('sucursales as su', 'rs.id_sucursal', 'su.id_susucursal')
+            ->get();
+
+            return response()->json($reporte, 200);
+        }else{
+            return response()->json('Coordinador no existe', 400);
         }
     }
 

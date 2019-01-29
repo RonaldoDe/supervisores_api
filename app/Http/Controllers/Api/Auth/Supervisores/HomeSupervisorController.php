@@ -75,4 +75,20 @@ class HomeSupervisorController extends Controller
             }
     }
 
+    public function profileUser(Type $var = null)
+    {
+        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+
+       //obtener los datos del usuario supervisor
+       $user_supervisor=DB::table('usuario as u')
+       ->select('u.id_usuario', 'u.nombre', 'u.apellido', 'u.cedula', 'u.correo', 'u.telefono', 'u.codigo', 'u.foto')
+       ->where('u.correo','=',$user->email)->first();
+
+       if($user_supervisor){
+            return response()->json($user_supervisor, 200);
+       }else{
+        return response()->json('Usuario no existe', 400);
+       }
+    }
+
 }

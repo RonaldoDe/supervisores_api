@@ -75,7 +75,7 @@ class HomeSupervisorController extends Controller
             }
     }
 
-    public function profileUser(Type $var = null)
+    public function profileUser()
     {
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
 

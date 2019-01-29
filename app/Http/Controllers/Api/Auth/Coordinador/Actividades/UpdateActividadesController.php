@@ -1365,6 +1365,7 @@ class UpdateActividadesController extends Controller
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'id_actividad'=>'required|numeric',
+            'titulo'=>'required',
             'fecha_inicio'=>'date_format:"Y-m-d"|required',
             'fecha_fin'=>'date_format:"Y-m-d"|required'
 
@@ -1407,6 +1408,7 @@ class UpdateActividadesController extends Controller
             $actividad = ActividadPtc::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
                 $actividad->fecha_inicio = request('fecha_inicio');
+                $actividad->titulo = request('titulo');
                 $actividad->fecha_fin = request('fecha_fin').' '.'23:59:00';
                 $actividad->estado = 'Activo';
                 $actividad->id_prioridad = request('id_prioridad');

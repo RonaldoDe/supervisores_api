@@ -70,7 +70,7 @@ class CondicionesLocativasDetalle extends Controller
          {
             $condiciones_locativas = DB::table('condiciones_locativas_actividad as cl')
             ->select('cl.id', 'cl.id_condicion', 'lcl.condicion_locativa')
-            ->join('listar_condiciones_locativas as lcl', 'cl.id_condicion', 'ldl.id')
+            ->join('lista_condiciones_locativas as lcl', 'cl.id_condicion', 'ldl.id')
             ->where('id_actividad', request('id_actividad'))
             ->get();
             
@@ -95,7 +95,7 @@ class CondicionesLocativasDetalle extends Controller
          {
             $condicion = DB::table('condiciones_locativas_actividad as cl')
             ->select('cl.id', 'cl.id_actividad','cl.id_condicion', 'cl.estado_condicion', 'cl.foto_condicion', 'cl.observaciones','lcl.condicion_locativa')
-            ->join('listar_condiciones_locativas as lcl', 'cl.id_condicion', 'ldl.id')
+            ->join('lista_condiciones_locativas as lcl', 'cl.id_condicion', 'ldl.id')
             ->where('id_actividad', request('id_actividad'))
             ->where('id', request('id'))
             ->where('id_condicion', request('id_condicion'))

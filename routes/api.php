@@ -71,6 +71,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('searchLaboratorio', 'Api\Auth\Coordinador\BuscadoresController@searchLaboratories');
 
     Route::post('listaDocumentos', 'Api\Auth\Supervisores\TablasDetalles\DocumentacionController@listarDocumentosCoordinador');
+    Route::post('listaCondiciones', 'Api\Auth\Supervisores\TablasDetalles\CondicionesLocativasDetalle@listarCondicionesLocativas');
 
 
     //se agregaron estos para ps repores segir mirando

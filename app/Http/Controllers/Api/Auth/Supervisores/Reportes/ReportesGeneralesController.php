@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modelos\Reportes\ReporteSupervisor;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Storage;
+
 
 class ReportesGeneralesController extends Controller
 {
@@ -85,7 +88,7 @@ class ReportesGeneralesController extends Controller
             $reporte = DB::table('reportes_supervisor as rs')
             ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido')
             ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
-            ->join('sucursales as su', 'rs.id_sucursal', 'su.id_susucursal')
+            ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
             ->where('rs.id_coordinador', $coordinador->id_cordinador)
             ->get();
 

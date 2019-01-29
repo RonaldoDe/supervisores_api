@@ -181,9 +181,9 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     Route::post('accederCondicion', 'Api\Auth\Supervisores\TablasDetalles\CondicionesLocativasDetalle@accederCondicion');
     
     //ruta de las descripciones de las actividades
-    Route::get('homeSupervisor', 'Api\Auth\Supervisores\HomeSupervisorController@profileUser');
+    Route::get('profileUser', 'Api\Auth\Supervisores\HomeSupervisorController@profileUser');
     //perfil de usuario
-    Route::get('profileUser', 'Api\Auth\Supervisores\DescripcionActividadController@description');
+    Route::get('descripcionActividad', 'Api\Auth\Supervisores\DescripcionActividadController@description');
 });
 
 

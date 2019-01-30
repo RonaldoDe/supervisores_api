@@ -101,11 +101,22 @@ class GenerarMultiActividadesController extends MultiActividadController
                                 if($actividadAux){
                                     $tabla = $actividad->nombre_tabla;
                                     if(method_exists($this, $tabla)){
-                                        $params = [
-                                            'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo
-                                        ];
+
+                                        if($actividad->nombre_tabla == 'actividades_ptc'){
+                                            $params = [
+                                                'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo,
+                                                'titulo' => $actividad->titulo
+                                            ];
+                                        }else{
+                                            $params = [
+                                                'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo
+                                            ];
+                                        }
+
                                         $request->request->add($params);
+
                                         $validar=$this->$tabla($request);
+
                                         echo $validar;
                                     }else{
                                         return response()->json(['message' => 'El metodo no existe', 'metodo' => $actividad->nombre_tabla],400);
@@ -142,21 +153,27 @@ class GenerarMultiActividadesController extends MultiActividadController
 
                                 if($validarActividades == null){
                                     $actividadAux =ActividadesTabla::create([
-
                                         'id_plan_trabajo' =>$plan_trabajo->id_plan_trabajo,
                                         'id_prioridad' =>1,
                                         'nombre_tabla' =>$actividad->nombre_tabla,
                                         'nombre_actividad'=>$actividad->nombre
-                    
+
                                         ]);
                                     
                                 }
                                 if($actividadAux){
                                     $tabla = $actividad->nombre_tabla;
                                     if(method_exists($this, $tabla)){
-                                        $params = [
-                                            'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo
-                                        ];
+                                        if($actividad->nombre_tabla == 'actividades_ptc'){
+                                            $params = [
+                                                'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo,
+                                                'titulo' => $actividad->titulo
+                                            ];
+                                        }else{
+                                            $params = [
+                                                'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo
+                                            ];
+                                        }
                                         $request->request->add($params);
                                         $validar=$this->$tabla($request);
                                         echo $validar;

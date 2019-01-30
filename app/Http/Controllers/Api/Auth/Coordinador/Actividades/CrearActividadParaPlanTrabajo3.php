@@ -421,22 +421,7 @@ class CrearActividadParaPlanTrabajo3 extends Controller
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
 
-                    $fechas_base_datos=DB::table('actividades_ptc')
-            ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-            ->where('id_plan_trabajo',request('id_plan_trabajo'))
-            ->get();
-
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-//funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-//no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
-
-
-            if($respuesta>0){
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
+                    
                     $ptc =ActividadPtc::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -448,7 +433,7 @@ class CrearActividadParaPlanTrabajo3 extends Controller
                         'estado' =>'Activo',
 
                     ]);
-            }
+            
 
                     // DB::commit();
 

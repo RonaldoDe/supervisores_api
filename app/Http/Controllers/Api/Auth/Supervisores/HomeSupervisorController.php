@@ -82,7 +82,7 @@ class HomeSupervisorController extends Controller
        //obtener los datos del usuario supervisor
        $user_supervisor=DB::table('usuario as u')
        ->select('u.id_usuario', 'u.nombre', 'u.apellido', 'u.cedula', 'u.correo', 'u.telefono', 'u.codigo', 'u.foto', 'ur.id_rol')
-       ->join('usuarios_roles as ur', 'u.id', 'ur.id_usuario')
+       ->join('usuarios_roles as ur', 'u.id_usuario', 'ur.id_usuario')
        ->where('u.correo','=',$user->email)->first();
 
 

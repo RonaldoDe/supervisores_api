@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Modelos\Actividades\Detalles\CondicionesDetalle;
 use App\Modelos\Actividades\Detalles\Documentacion;
+use App\Modelos\Actividades\ActividadPtc;
 class MultiActividadController extends Controller
 {
     public function apertura(Request $request)
@@ -1178,7 +1179,6 @@ class MultiActividadController extends Controller
         //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'titulo' => 'required',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required',
@@ -1225,7 +1225,7 @@ class MultiActividadController extends Controller
                     'fecha_inicio' =>request('fecha_inicio'),
                     'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                     'observacion'=>'',
-                    'id_prioridad' =>request('id_prioridad'),
+                    'id_prioridad' =>1,
                     'estado' =>'Activo',
 
                 ]);
@@ -1233,7 +1233,6 @@ class MultiActividadController extends Controller
 
                 // DB::commit();
 
-                return response()->json(["success"=>" Actividad Ptc creada", 'id' => $ptc->id],201);
 
             }else{
                 return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);

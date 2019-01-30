@@ -84,8 +84,12 @@ class HomeSupervisorController extends Controller
        ->select('u.id_usuario', 'u.nombre', 'u.apellido', 'u.cedula', 'u.correo', 'u.telefono', 'u.codigo', 'u.foto')
        ->where('u.correo','=',$user->email)->first();
 
+       $usuario_rol = DB::table('usuarios_roles as ur')
+       ->where('ur.id_usuario',$user_supervisor->id_usuario)
+       ->first();
+
        if($user_supervisor){
-            return response()->json($user_supervisor, 200);
+            return response()->json([$user_supervisor, $usuario_rol->id_rol], 200);
        }else{
         return response()->json('Usuario no existe', 400);
        }

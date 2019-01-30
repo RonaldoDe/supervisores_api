@@ -87,7 +87,7 @@ class HomeSupervisorController extends Controller
 
 
        if($user_supervisor){
-            return response()->json([$user_supervisor], 200);
+            return response()->json($user_supervisor, 200);
        }else{
         return response()->json('Usuario no existe', 400);
        }

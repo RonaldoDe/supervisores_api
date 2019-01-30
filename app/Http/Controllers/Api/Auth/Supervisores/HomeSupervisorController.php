@@ -81,15 +81,13 @@ class HomeSupervisorController extends Controller
 
        //obtener los datos del usuario supervisor
        $user_supervisor=DB::table('usuario as u')
-       ->select('u.id_usuario', 'u.nombre', 'u.apellido', 'u.cedula', 'u.correo', 'u.telefono', 'u.codigo', 'u.foto')
+       ->select('u.id_usuario', 'u.nombre', 'u.apellido', 'u.cedula', 'u.correo', 'u.telefono', 'u.codigo', 'u.foto', 'ur.id_rol')
+       ->join('usuarios_roles as ur', 'u.id', 'ur.id_usuario')
        ->where('u.correo','=',$user->email)->first();
 
-       $usuario_rol = DB::table('usuarios_roles as ur')
-       ->where('ur.id_usuario',$user_supervisor->id_usuario)
-       ->first();
 
        if($user_supervisor){
-            return response()->json([$user_supervisor, $usuario_rol->id_rol], 200);
+            return response()->json([$user_supervisor], 200);
        }else{
         return response()->json('Usuario no existe', 400);
        }

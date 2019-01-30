@@ -117,7 +117,7 @@ class GenerarMultiActividadesController extends MultiActividadController
 
                                         $validar=$this->$tabla($request);
 
-                                        echo $validar;
+                                        return $validar;
                                     }else{
                                         return response()->json(['message' => 'El metodo no existe', 'metodo' => $actividad->nombre_tabla],400);
                                     }    

@@ -51,7 +51,7 @@ class ListarActividadesController extends Controller
          $count++;
         //  generar el array con el listado de actividades pendientes en la semana
         foreach($fe as $fecha){
-            if($fecha->id_plan_trabajo == $ac->id_plan_trabajo && $fecha->fecha_inicio <= $semanal.' 23:59:00'){
+            if($fecha->id_plan_trabajo == $ac->id_plan_trabajo && $fecha->fecha_inicio <= $semanal.' 23:59:00' && $fecha->fecha_inicio >=  date('Y-m-d').' 00:00:00'){
                 $fecha->nombre_actividad = $ac->nombre_actividad;
                 array_push($lista_actividades_arr, [$ac->nombre =>$fecha]);
                 

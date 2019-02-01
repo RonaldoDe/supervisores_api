@@ -98,4 +98,86 @@ class ReportesGeneralesController extends Controller
         }
     }
 
+    public function porcentajeActividades(Request $request)
+    {
+        //Se recupera los datos del usuario que se ha autenticado
+       $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+
+       //obtener los datos del usuario supervisor
+       $user_supervisor=DB::table('usuario as u')
+       ->select('u.id_usuario', 'u.nombre', 'u.apellido', 'u.cedula', 'u.correo', 'u.telefono', 'u.codigo', 'u.foto')
+       ->where('u.correo','=',$user->email)->first();
+
+        //obtener el id del rol del usuario
+       $usuario_rol = DB::table('usuarios_roles as ur')
+       ->where('ur.id_usuario',$user_supervisor->id_usuario)
+       ->first();
+
+        //obtener las actividades segun su plan de trabajo
+       $actividades=DB::table('plan_trabajo_asignacion as p')
+       ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
+       ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
+       ->where('p.id_supervisor',$usuario_rol->id_usuario_roles)
+       ->where('p.estado',1)
+       ->orderBy('p.id_sucursal', 'desc')
+       ->get();
+
+        $porcentaje_sucursal_array = array();
+        $porcentajes_generales_array = array();
+        $porcentajes_generales_array['actividades_activas'] = 0;
+        $porcentajes_generales_array['actividades_completas'] = 0;
+        $porcentajes_generales_array['actividades_noRealizadas'] = 0;
+        $porcentajes_generales_array['todas_las_actividades'] = 0;
+       //bucle que itera las actividades y las obtiene segun la fecha
+       foreach($actividades as $ac){
+            $fe = DB::table($ac->nombre_tabla. ' as ac')
+            ->get();
+
+            foreach($fe as $fecha){
+                if($ac->id_plan_trabajo == $fecha->id_plan_trabajo){
+                    
+                    if(!isset($porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_activas'])){
+                        $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_activas'] = 0;
+                    }
+                    if(!isset($porcentaje_sucursal_array[$ac->cod_sucursal]['todas_las_actividades'])){
+                        $porcentaje_sucursal_array[$ac->cod_sucursal]['todas_las_actividades'] = 0;
+                    }
+                    if(!isset($porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_completas'])){
+                        $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_completas'] = 0;
+                    }
+                    if(!isset($porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_noRealizadas'])){
+                        $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_noRealizadas'] = 0;
+                    }
+                    
+                    $porcentajes_generales_array['todas_las_actividades'] += 1;
+                    $porcentaje_sucursal_array[$ac->cod_sucursal]['todas_las_actividades']++;
+                    switch ($fecha->estado) {
+                        case 'Activo':
+                        $porcentajes_generales_array['actividades_activas'] += 1;
+                        $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_activas'] ++;
+                        break;
+                        
+                        case 'completo':
+                        $porcentajes_generales_array['actividades_completas'] += 1;
+                        $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_completas'] ++;
+                        break;
+                        
+                        case 'noReaizada':
+                        $porcentajes_generales_array['actividades_noRealizadas'] += 1;
+                        $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_noRealizadas'] ++;
+                        break;
+                        
+                        default:
+                            return response()->json('Estad no definido o no validado', 400);
+                        break;
+                    }
+                }
+                
+            }
+            
+        }
+            return response()->json(['porcentaje_general' => $porcentajes_generales_array, 'porcentaje_sucursal' => $porcentaje_sucursal_array], 200);
+            
+    }
+
 }

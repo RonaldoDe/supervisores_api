@@ -102,11 +102,15 @@ class ReportesGeneralesController extends Controller
                 ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
                 ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
                 ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
-                ->where('id', request('id_reporte'))
+                ->where('rs.id', request('id_reporte'))
                 ->where('rs.id_coordinador', $coordinador->id_cordinador)
                 ->first();
+
+                $mensajes = DB::table('mensaje_reporte as mr')
+                ->where('mr.id_reporte', request('id_reporte'))
+                ->get();
                 if($reporte){
-                    return response()->json(['message' => $reporte], 200);
+                    return response()->json(['detalle' => $reporte, 'mensajes' => $mensajes], 200);
                 }else{
                     return response()->json(['message' => 'Reporte no encontado o no pertenece a sus sucursales'], 400);
                 }
@@ -174,6 +178,8 @@ class ReportesGeneralesController extends Controller
             
         
     }
+
+    
 
     public function generarReporeteCoordinador(Request $request)
     {

@@ -99,7 +99,6 @@ class ReportesGeneralesController extends Controller
 
             $supervisor = DB::table('usuario')
             ->where('correo','=',$user->email)->first();
-            dd($coordinador);
 
             if($coordinador){
                 $reporte = DB::table('reportes_supervisor as rs')

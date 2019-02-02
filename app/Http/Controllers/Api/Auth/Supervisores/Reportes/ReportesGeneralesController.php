@@ -141,7 +141,7 @@ class ReportesGeneralesController extends Controller
 
             if($coordinador){
                 $reporteMensaje = MensajeReporte::create([
-                    'id_reporte' => reques('id_reporte'),
+                    'id_reporte' => request('id_reporte'),
                     'nombre_usuario' => $coordinador->nombre." ".$coordinador->apellido,
                     'tipo_usuario' => 1,
                     'mensaje' => request('mensaje'),

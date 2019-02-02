@@ -33,7 +33,7 @@ class ActividadesController extends ValidarActividadesController
                 $validar=$this->$tabla($request);
                 return $validar;
             }else{
-                return response()->json(['message' => 'El metodo no existe']);
+                return response()->json(['message' => 'El metodo no existe'],400);
             }
         }       
  

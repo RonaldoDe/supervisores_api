@@ -26,6 +26,7 @@ use App\Modelos\Actividades\DocumentacionLegal;
 use App\Modelos\Notificaciones;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Modelos\Actividades\ActividadPtc;
 
 class ValidarActividadesController extends Controller
 {
@@ -815,6 +816,51 @@ class ValidarActividadesController extends Controller
 
              //actualizacion de la actividad por el supervisor
              $actividad = DocumentacionLegal::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+
+                 
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->estado = 'completo';
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                 $actividad->tiempo_total = request('tiempo_total');
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->update();
+                 //registro de notificacion
+                 if($actividad){
+                    if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        return response()->json(['message' => 'Actividad realizada con exito']);
+                    }else{
+                        return response()->json(['message' => 'Error al generar la notificacion']);
+                    }
+                }
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function actividades_ptc($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+             'id_actividad' => 'required',
+             'calificacion_pv' => 'required',
+             'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
+
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( ['message' => $validator->errors()->all()],400);
+         }
+
+         else
+         {
+
+             //actualizacion de la actividad por el supervisor
+             $actividad = ActividadPtc::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
 
                  

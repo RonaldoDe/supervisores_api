@@ -136,7 +136,7 @@ class ReportesGeneralesController extends Controller
             $coordinador = DB::table('coordinadores')
             ->where('correo','=',$user->email)->first();
 
-            $supervisor = DB::table('usuarios')
+            $supervisor = DB::table('usuario')
             ->where('correo','=',$user->email)->first();
 
             if($coordinador){

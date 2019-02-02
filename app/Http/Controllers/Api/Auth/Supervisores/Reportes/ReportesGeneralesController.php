@@ -97,13 +97,16 @@ class ReportesGeneralesController extends Controller
             $coordinador = DB::table('coordinadores')
             ->where('correo','=',$user->email)->first();
 
+            $supervisor = DB::table('usuario')
+            ->where('correo','=',$user->email)->first();
+
             if($coordinador){
                 $reporte = DB::table('reportes_supervisor as rs')
                 ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
                 ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
                 ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
                 ->where('rs.id', request('id_reporte'))
-                ->where('rs.id_coordinador', $coordinador->id_cordinador)
+                ->where('rs.id_supervisor', $coordinador->id_cordinador)
                 ->first();
 
                 $mensajes = DB::table('mensaje_reporte as mr')
@@ -115,8 +118,27 @@ class ReportesGeneralesController extends Controller
                     return response()->json(['message' => 'Reporte no encontado o no pertenece a sus sucursales'], 400);
                 }
 
+            }else if($supervisor){
+            
+                $reporte = DB::table('reportes_supervisor as rs')
+                ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
+                ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
+                ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
+                ->where('rs.id', request('id_reporte'))
+                ->where('rs.id_coordinador', $supervisor->id_usuario)
+                ->first();
+
+                $mensajes = DB::table('mensaje_reporte as mr')
+                ->where('mr.id_reporte', request('id_reporte'))
+                ->get();
+                if($reporte){
+                    return response()->json(['detalle' => $reporte, 'mensajes' => $mensajes], 200);
+                }else{
+                    return response()->json(['message' => 'Reporte no encontado o no pertenece a sus sucursales'], 400);
+                }
+            
             }else{
-                return response()->json(['message' => 'Coordinador no valido'], 400);
+                return response()->json(['message' => 'Usuario no encontrado'], 400);
             }
  
         }
@@ -197,6 +219,25 @@ class ReportesGeneralesController extends Controller
             return response()->json($reporte, 200);
         }else{
             return response()->json('Coordinador no existe', 400);
+        }
+    }
+
+    public function generarReporeteSupervisor(Request $request)
+    {
+        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+        $supervisor=DB::table('usuario')->where('correo','=',$user->email)->first();
+
+        if($supervisor){
+            $reporte = DB::table('reportes_supervisor as rs')
+            ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
+            ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
+            ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
+            ->where('rs.id_supervisor', $supervisor->id_usuario)
+            ->get();
+
+            return response()->json($reporte, 200);
+        }else{
+            return response()->json('Supervisor no existe', 400);
         }
     }
 

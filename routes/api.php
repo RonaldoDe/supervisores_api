@@ -176,6 +176,10 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     Route::post('reporteSupervisor', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
     Route::get('porcentajeActividades', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@porcentajeActividades');
 
+    //listar reortes
+    Route::get('obtenerReporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@generarReporeteSupervisor');
+    Route::post('detalleRepSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
+
     //buscar sucursales
     Route::post('searchSucursales', 'Api\Auth\Coordinador\BuscadoresController@searchSucursales');
 

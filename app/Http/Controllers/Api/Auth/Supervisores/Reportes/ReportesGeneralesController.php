@@ -8,6 +8,7 @@ use App\Modelos\Reportes\ReporteSupervisor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Storage;
+use App\Modelos\Reportes\MensajeReporte;
 
 
 class ReportesGeneralesController extends Controller
@@ -109,6 +110,61 @@ class ReportesGeneralesController extends Controller
 
             }else{
                 return response()->json(['message' => 'Coordinador no valido'], 400);
+            }
+ 
+        }
+            
+        
+    }
+
+    public function crearMensageReporte(Request $request)
+    {
+        $validator=\Validator::make($request->all(),[
+            'id_reporte' => 'required',
+            'mensaje' => 'required',
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( ['message' => $validator->errors()->all()],400);
+        }
+
+        else
+        {
+            //Se recupera los datos del usuario que se ha autenticado
+            $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+
+            $coordinador = DB::table('coordinadores')
+            ->where('correo','=',$user->email)->first();
+
+            $supervisor = DB::table('usuarios')
+            ->where('correo','=',$user->email)->first();
+
+            if($coordinador){
+                $reporteMensaje = MensajeReporte::create([
+                    'id_reporte' => reques('id_reporte'),
+                    'nombre_usuario' => $coordinador->nombre." ".$coordinador->apellido,
+                    'tipo_usuario' => 1,
+                    'mensaje' => request('mensaje'),
+                ]);
+                if($reporteMensaje){
+                    return response()->json(['message' => 'Mensaje enviado'], 200);                    
+                }else{
+                    return response()->json(['message' => 'Error al crear el mensaje'], 400);                    
+                }
+            }else if($supervisor){
+                $reporteMensaje = MensajeReporte::create([
+                    'id_reporte' => reques('id_reporte'),
+                    'nombre_usuario' => $supervisor->nombre." ".$supervisor->apellido,
+                    'tipo_usuario' => 2,
+                    'mensaje' => request('mensaje'),
+                ]);
+                if($reporteMensaje){
+                    return response()->json(['message' => 'Mensaje enviado'], 200);                    
+                }else{
+                    return response()->json(['message' => 'Error al crear el mensaje'], 400);                    
+                }
+            }else{
+                return response()->json(['message' => 'Tipo de usuario no valido'], 400);
             }
  
         }

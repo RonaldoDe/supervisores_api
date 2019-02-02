@@ -11,5 +11,5 @@ class MensajeReporte extends Model
 
     public $timestamps=false;
 
-    protected $fillable=['id_reporte','nombre_usuario','tipo_usuario','mesanje','fecha'];
+    protected $fillable=['id_reporte','nombre_usuario','tipo_usuario','mensaje','fecha'];
 }

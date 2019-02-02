@@ -58,7 +58,7 @@ class ReportesGeneralesController extends Controller
                             'id_sucursal' => request('id_sucursal'),
                             'nombre_reporte' => request('observaciones'),
                             'foto' => $url_img,
-                            'estado_corregido' => 0,
+                            'estado_corregido' => 1,
                             'estado_listar' => 1,
                         ]);
                         if($reporte){
@@ -77,6 +77,43 @@ class ReportesGeneralesController extends Controller
             }
             
         }
+    }
+
+    public function detalleReporteSucursal(Request $request)
+    {
+        $validator=\Validator::make($request->all(),[
+            'id_reporte' => 'required',
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( ['message' => $validator->errors()->all()],400);
+        }
+
+        else
+        {
+            //Se recupera los datos del usuario que se ha autenticado
+            $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+            $coordinador = DB::table('coordinadores')
+            ->where('correo','=',$user->email)->first();
+
+            if($coordinador){
+                $reporte = DB::table('reportes_supervisor')
+                ->where('id', request('id_reporte'))
+                ->where('id_coordinador', $coordinador->id_cordinador)
+                ->first();
+                if($reporte){
+                    return response()->json(['message' => $reporte], 200);
+                }else{
+                    return response()->json(['message' => 'Reporte no encontado o no pertenece a sus sucursales'], 400);
+                }
+
+            }else{
+                return response()->json(['message' => 'Coordinador no valido'], 400);
+            }
+ 
+        }
+            
+        
     }
 
     public function generarReporeteCoordinador(Request $request)

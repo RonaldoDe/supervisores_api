@@ -51,6 +51,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
 
     //ver reportes de sucursales
     Route::get('reporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@generarReporeteCoordinador');
+    Route::post('detalleReporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
 
     Route::post('multiActividades', 'Api\Auth\Coordinador\Actividades\GenerarMultiActividadesController@generarMultiActividades');
     

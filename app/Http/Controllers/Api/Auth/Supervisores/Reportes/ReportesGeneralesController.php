@@ -219,8 +219,10 @@ class ReportesGeneralesController extends Controller
             $supervisor = DB::table('usuario')
             ->where('correo','=',$user->email)->first();
 
-            $usuario_rol=DB::table('usuarios_roles')
-            ->where('id_usuario','=',$supervisor->id_usuario)->first();
+            if($supervisor){
+                $usuario_rol=DB::table('usuarios_roles')
+                ->where('id_usuario','=',$supervisor->id_usuario)->first(); 
+            }
 
             if($coordinador){
                 $reporteMensaje = MensajeReporte::create([

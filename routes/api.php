@@ -30,6 +30,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
 
     //ver reportes de sucursales
     Route::get('reporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@generarReporeteCoordinador');
+    Route::post('detalleReporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
     Route::post('mensajeReporte', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@crearMensageReporte');
 
     Route::post('multiActividades', 'Api\Auth\Coordinador\Actividades\GenerarMultiActividadesController@generarMultiActividades');
@@ -151,6 +152,8 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
 
 
     //crear reporte
+    Route::post('reporteSupervisor', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
+
     Route::get('porcentajeActividades', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@porcentajeActividades');
     
     //listar reortes
@@ -176,17 +179,9 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
 Route::middleware(['auth:api','gerenteReporte'])->group(function(){
     Route::get('homeGerente', 'Api\Auth\GerenteReporte\GerenteReporteHomeController@homeGerenteReporte');
     Route::post('enviarMensajeReporteGerente', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@crearMensageReporte');
+    Route::post('reporteGerente', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
 
 });
 
-//rutas compartidas
-Route::middleware(['auth:api','gerenteReporte', 'supervisores'])->group(function(){
-    Route::post('reporteSupervisor', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
-});
-
-Route::middleware(['auth:api','coordinadores', 'supervisores'])->group(function(){
-    Route::post('detalleReporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
-
-});
 
 

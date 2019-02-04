@@ -39,8 +39,8 @@ class ReportesGeneralesController extends Controller
             ->where('id_usuario','=',$supervisor->id_usuario)->first();
             
            if($supervisor){
-                $gerente = ('usuarios_roles')
-            ->where('id_usuario','=',$supervisor->id_usuario)->first();
+                $gerente = DB::table('usuarios_roles')
+                ->where('id_usuario',$supervisor->id_usuario)->first();
            }else{
                 $gerente = 0;
            }
@@ -48,8 +48,20 @@ class ReportesGeneralesController extends Controller
             $region = DB::table('zona')
             ->where('id_usuario_roles','=',$usuario_rol->id_usuario_roles)->first();
 
-            $coordinador = DB::table('region')
-            ->where('id_region','=',$region->id_region)->first();
+            if($region){
+                $coordinador = DB::table('region')
+                ->where('id_region','=',$region->id_region)->first();
+            }else{
+                
+                $zona = DB::table('sucursales')
+                ->where('id_suscursal','=',request('id_sucursal'))->first();
+                
+                $region = DB::table('zona')
+                ->where('id_zona','=',$zona->id_zona)->first();
+
+                $coordinador = DB::table('region')
+                ->where('id_region','=',$region->id_region)->first();
+            }
 
             if($coordinador){
 
@@ -196,7 +208,6 @@ class ReportesGeneralesController extends Controller
         {
           return response()->json( ['message' => $validator->errors()->all()],400);
         }
-
         else
         {
             //Se recupera los datos del usuario que se ha autenticado
@@ -226,7 +237,7 @@ class ReportesGeneralesController extends Controller
             }else if($usuario_rol){
                 $reporteMensaje = MensajeReporte::create([
                     'id_reporte' => request('id_reporte'),
-                    'nombre_usuario' => $usuario_rol->nombre." ".$usuario_rol->apellido,
+                    'nombre_usuario' => $supervisor->nombre." ".$supervisor->apellido,
                     'tipo_usuario' => 2,
                     'mensaje' => request('mensaje'),
                 ]);

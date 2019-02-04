@@ -12,27 +12,6 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('CrearActividadCondicionesLocativa', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadCondicionesLocativas');
-Route::post('CrearActividadPapeleriaConsignacione', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadPapeleriaConsignaciones');
-Route::post('CrearActividadIngresoSucursa', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadIngresoSucursal');
-Route::post('CrearActividadLibroVencimiento', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadLibroVencimientos');
-Route::post('CrearActividadExceso', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadExcesos');
-Route::post('CrearActividadRemisione', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadRemisiones');
-Route::post('CrearActividadFormulasDespacho', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadFormulaDespachos');
-Route::post('CrearActividadPapeleriaConsignacione', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadPapeleriaConsignaciones');
-Route::post('CrearActividadSeguimientoVendedo', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadSeguimientoVendedor');
-Route::post('CrearActividadLibroAgendaClient', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadLibroAgendaCliente');
-Route::post('CrearPlanTrabaj', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@crearPlanTrabajo');
-
-
-Route::post('CrearActividadCapturaCliente', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadCapturaClientes');
-Route::post('CrearActividadCondicionesLocativa', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadCondicionesLocativas');
-Route::post('CrearActividadDocumentacionLega', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadDocumentacionLegal');
-Route::post('CrearActividadKarde', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadAKardex');
-Route::post('CrearActividadApertur', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadApertura');
-Route::post('CrearActividadPresupuestoPedido', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadPresupuestoPedidos');
-Route::post('CrearActividadLibroFaltante', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadLibrosFaltantes');
-Route::post('CrearActividadEvaluacionPedido', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadEvaluacionPedidos');
 
 Route::post('login', 'Api\Auth\LoginController@login');
 //Route::post('refresh', 'Api\Auth\LoginController@refresh');
@@ -175,10 +154,11 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     //crear reporte
     Route::post('reporteSupervisor', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
     Route::get('porcentajeActividades', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@porcentajeActividades');
-
+    
     //listar reortes
     Route::get('obtenerReporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@generarReporeteSupervisor');
     Route::post('detalleRepSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
+    Route::post('enviarMensajeReporte', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@crearMensageReporte');
 
     //buscar sucursales
     Route::post('searchSucursales', 'Api\Auth\Coordinador\BuscadoresController@searchSucursales');
@@ -194,7 +174,13 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     Route::get('descripcionActividad', 'Api\Auth\Supervisores\DescripcionActividadController@description');
 });
 
+//rutas protegidas par ael gerente de repore encargado de realiar reporte de alguna anomalia en cualquien sucursal
+Route::middleware(['auth:api','gerenteReporte'])->group(function(){
+    Route::get('homeGerente', 'Api\Auth\GerenteReporte\GerenteReporteHomeController@homeGerenteReporte');
+    Route::post('enviarMensajeReporteGerente', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@crearMensageReporte');
+    Route::post('reporteGerente', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
 
+});
 
 
 

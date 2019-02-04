@@ -59,7 +59,7 @@ class ReportesGeneralesController extends Controller
                             'id_sucursal' => request('id_sucursal'),
                             'nombre_reporte' => request('observaciones'),
                             'foto' => $url_img,
-                            'estado_corregido' => 1,
+                            'estado_corregido' => 0,
                             'estado_listar' => 1,
                         ]);
                         if($reporte){
@@ -100,13 +100,18 @@ class ReportesGeneralesController extends Controller
             $supervisor = DB::table('usuario')
             ->where('correo','=',$user->email)->first();
 
+            if($supervisor){
+                $usuario_rol=DB::table('usuarios_roles')
+                ->where('id_usuario','=',$supervisor->id_usuario)->first();
+            }
+
             if($coordinador){
                 $reporte = DB::table('reportes_supervisor as rs')
                 ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
                 ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
                 ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
                 ->where('rs.id', request('id_reporte'))
-                ->where('rs.id_supervisor', $coordinador->id_cordinador)
+                ->where('rs.id_coordinador', $coordinador->id_cordinador)
                 ->first();
 
                 $mensajes = DB::table('mensaje_reporte as mr')
@@ -118,13 +123,14 @@ class ReportesGeneralesController extends Controller
                     return response()->json(['message' => 'Reporte no encontado o no pertenece a sus sucursales'], 400);
                 }
 
-            }else if($supervisor){
+            }else if($usuario_rol){
                 $reporte = DB::table('reportes_supervisor as rs')
-                ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
-                ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
+                ->select('usu.nombre', 'usu.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
+                ->join('usuarios_roles as us', 'rs.id_supervisor', 'us.id_usuario')
+                ->join('usuario as usu', 'us.id_usuario', 'usu.id_usuario')
                 ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
                 ->where('rs.id', request('id_reporte'))
-                ->where('rs.id_supervisor', $supervisor->id_usuario)
+                ->where('rs.id_supervisor', $usuario_rol->id_usuario)
                 ->first();
 
                 $mensajes = DB::table('mensaje_reporte as mr')
@@ -167,6 +173,9 @@ class ReportesGeneralesController extends Controller
             $supervisor = DB::table('usuario')
             ->where('correo','=',$user->email)->first();
 
+            $usuario_rol=DB::table('usuarios_roles')
+            ->where('id_usuario','=',$supervisor->id_usuario)->first();
+
             if($coordinador){
                 $reporteMensaje = MensajeReporte::create([
                     'id_reporte' => request('id_reporte'),
@@ -179,17 +188,17 @@ class ReportesGeneralesController extends Controller
                 }else{
                     return response()->json(['message' => 'Error al crear el mensaje'], 400);                    
                 }
-            }else if($supervisor){
+            }else if($usuario_rol){
                 $reporteMensaje = MensajeReporte::create([
-                    'id_reporte' => reques('id_reporte'),
-                    'nombre_usuario' => $supervisor->nombre." ".$supervisor->apellido,
+                    'id_reporte' => request('id_reporte'),
+                    'nombre_usuario' => $usuario_rol->nombre." ".$usuario_rol->apellido,
                     'tipo_usuario' => 2,
                     'mensaje' => request('mensaje'),
                 ]);
                 if($reporteMensaje){
                     return response()->json(['message' => 'Mensaje enviado'], 200);                    
                 }else{
-                    return response()->json(['message' => 'Error al crear el mensaje'], 400);                    
+                    return response()->json(['message' => 'Error al enviar el mensaje'], 400);                    
                 }
             }else{
                 return response()->json(['message' => 'Tipo de usuario no valido'], 400);
@@ -210,7 +219,8 @@ class ReportesGeneralesController extends Controller
         if($coordinador){
             $reporte = DB::table('reportes_supervisor as rs')
             ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
-            ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
+            ->join('usuarios_roles as us', 'rs.id_supervisor', 'us.id_usuario')
+            ->join('usuario as usu', 'us.id_usuario', 'usu.id_usuario')
             ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
             ->where('rs.id_coordinador', $coordinador->id_cordinador)
             ->get();
@@ -226,12 +236,16 @@ class ReportesGeneralesController extends Controller
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
         $supervisor=DB::table('usuario')->where('correo','=',$user->email)->first();
 
-        if($supervisor){
+        $usuario_rol=DB::table('usuarios_roles')
+        ->where('id_usuario','=',$supervisor->id_usuario)->first();
+
+        if($usuario_rol){
             $reporte = DB::table('reportes_supervisor as rs')
             ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
             ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
             ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
-            ->where('rs.id_supervisor', $supervisor->id_usuario)
+            ->where('rs.id_supervisor', $usuario_rol->id_usuario)
+            ->where('rs.estado_listar', 1)
             ->get();
 
             return response()->json($reporte, 200);

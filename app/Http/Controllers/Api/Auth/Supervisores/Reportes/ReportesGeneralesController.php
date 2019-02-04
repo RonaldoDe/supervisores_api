@@ -414,7 +414,7 @@ class ReportesGeneralesController extends Controller
                 ->update(['estado_corregido' => 2]);
                 
                 if($reporte){
-                    return response()->json(['detalle' => $reporte], 200);
+                    return response()->json(['message' => $reporte], 200);
                 }else{
                     return response()->json(['message' => 'Reporte no encontado o no pertenece a sus sucursales'], 400);
                 }

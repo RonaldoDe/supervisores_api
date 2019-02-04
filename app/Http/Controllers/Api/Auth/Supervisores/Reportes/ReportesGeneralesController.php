@@ -37,6 +37,13 @@ class ReportesGeneralesController extends Controller
             
             $usuario_rol=DB::table('usuarios_roles')
             ->where('id_usuario','=',$supervisor->id_usuario)->first();
+            
+           if($supervisor){
+                $gerente = ('usuarios_roles')
+            ->where('id_usuario','=',$supervisor->id_usuario)->first();
+           }else{
+                $gerente = 0;
+           }
 
             $region = DB::table('zona')
             ->where('id_usuario_roles','=',$usuario_rol->id_usuario_roles)->first();
@@ -73,8 +80,34 @@ class ReportesGeneralesController extends Controller
                 }
 
                
+            }else if($gerente && $gerente->id_rol == 4){
+                $foto = 'imagen_reporte' . time();
+                 
+                $url_img = str_replace(" ", "_",'reportes/'.request('nombre_sucursal').'/'.request('nombre_reporte').'/'.$foto);
+
+                 if (request('foto') != "") { // storing image in storage/app/public Folder
+                    if(strpos(request('foto'), 'supervisores_api/storage/app/public/img/') == false ){
+                        Storage::disk('public')->put('img/'.$url_img, base64_decode(request('foto')));
+                        $reporte = ReporteSupervisor::create([
+                            'id_supervisor' => $gerente->id_usuario_roles,
+                            'id_coordinador' => $coordinador->id_cordinador,
+                            'id_sucursal' => request('id_sucursal'),
+                            'nombre_reporte' => request('observaciones'),
+                            'foto' => $url_img,
+                            'estado_corregido' => 0,
+                            'estado_listar' => 1,
+                        ]);
+                        if($reporte){
+                            return response()->json(['message' => 'Reporte realizado con exitio'], 200);
+                        }
+                    }
+                    return response()->json(['message' => 'Error al carar la imagen'], 400);
+
+                }else{
+                    return response()->json(['message' => 'Error Foto no existe'], 400);
+                }
             }else{
-                return response()->json(['message' => 'Coordinador no encontrado'], 400);
+                return response()->json(['message' => 'No tienes permiso para acceder a esta ruta'], 400);
             }
             
         }
@@ -103,6 +136,8 @@ class ReportesGeneralesController extends Controller
             if($supervisor){
                 $usuario_rol=DB::table('usuarios_roles')
                 ->where('id_usuario','=',$supervisor->id_usuario)->first();
+            }else{
+                $usuario_rol = 0;
             }
 
             if($coordinador){
@@ -123,7 +158,7 @@ class ReportesGeneralesController extends Controller
                     return response()->json(['message' => 'Reporte no encontado o no pertenece a sus sucursales'], 400);
                 }
 
-            }else if($usuario_rol){
+            }else if($usuario_rol && $gerente->id_rol == 4){
                 $reporte = DB::table('reportes_supervisor as rs')
                 ->select('usu.nombre', 'usu.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
                 ->join('usuarios_roles as us', 'rs.id_supervisor', 'us.id_usuario')
@@ -218,7 +253,7 @@ class ReportesGeneralesController extends Controller
 
         if($coordinador){
             $reporte = DB::table('reportes_supervisor as rs')
-            ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
+            ->select('usu.nombre', 'usu.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
             ->join('usuarios_roles as us', 'rs.id_supervisor', 'us.id_usuario')
             ->join('usuario as usu', 'us.id_usuario', 'usu.id_usuario')
             ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')

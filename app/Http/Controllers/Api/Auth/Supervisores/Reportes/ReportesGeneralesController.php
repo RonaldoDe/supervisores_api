@@ -160,7 +160,7 @@ class ReportesGeneralesController extends Controller
                 ->where('rs.id', request('id_reporte'))
                 ->where('rs.id_coordinador', $coordinador->id_cordinador)
                 ->first();
-
+                
                 $mensajes = DB::table('mensaje_reporte as mr')
                 ->where('mr.id_reporte', request('id_reporte'))
                 ->get();
@@ -169,17 +169,17 @@ class ReportesGeneralesController extends Controller
                 }else{
                     return response()->json(['message' => 'Reporte no encontado o no pertenece a sus sucursales'], 400);
                 }
-
-            }else if($usuario_rol && $gerente->id_rol == 4){
+                
+            }else if($usuario_rol){
                 $reporte = DB::table('reportes_supervisor as rs')
                 ->select('usu.nombre', 'usu.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
-                ->join('usuarios_roles as us', 'rs.id_supervisor', 'us.id_usuario')
+                ->join('usuarios_roles as us', 'rs.id_supervisor', 'us.id_usuario_roles')
                 ->join('usuario as usu', 'us.id_usuario', 'usu.id_usuario')
                 ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
                 ->where('rs.id', request('id_reporte'))
-                ->where('rs.id_supervisor', $usuario_rol->id_usuario)
+                ->where('rs.id_supervisor', $usuario_rol->id_usuario_roles)
                 ->first();
-
+                
                 $mensajes = DB::table('mensaje_reporte as mr')
                 ->where('mr.id_reporte', request('id_reporte'))
                 ->get();
@@ -221,7 +221,13 @@ class ReportesGeneralesController extends Controller
 
             if($supervisor){
                 $usuario_rol=DB::table('usuarios_roles')
-                ->where('id_usuario','=',$supervisor->id_usuario)->first(); 
+                ->where('id_usuario','=',$supervisor->id_usuario)->first();
+                if($usuario_rol){
+                    $permiso = DB::table('reportes_supervisor')
+                    ->where('id_supervisor', $usuario_rol->id_usuario_roles)
+                    ->where('id', request('id_reporte'))
+                    ->first();
+                } 
             }
 
             if($coordinador){
@@ -236,7 +242,7 @@ class ReportesGeneralesController extends Controller
                 }else{
                     return response()->json(['message' => 'Error al crear el mensaje'], 400);                    
                 }
-            }else if($usuario_rol){
+            }else if($permiso){
                 $reporteMensaje = MensajeReporte::create([
                     'id_reporte' => request('id_reporte'),
                     'nombre_usuario' => $supervisor->nombre." ".$supervisor->apellido,
@@ -249,7 +255,7 @@ class ReportesGeneralesController extends Controller
                     return response()->json(['message' => 'Error al enviar el mensaje'], 400);                    
                 }
             }else{
-                return response()->json(['message' => 'Tipo de usuario no valido'], 400);
+                return response()->json(['message' => 'Tipo de usuario no valido o el reporte no es tuyo'], 400);
             }
  
         }
@@ -382,6 +388,42 @@ class ReportesGeneralesController extends Controller
         }
             return response()->json(['porcentaje_general' => $porcentajes_generales_array, 'porcentaje_sucursal' => $porcentaje_sucursal_array], 200);
             
+    }
+
+    public function corregirReporte(Request $request)
+    {
+        $validator=\Validator::make($request->all(),[
+            'id_reporte' => 'required',
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( ['message' => $validator->errors()->all()],400);
+        }
+
+        else
+        {
+            //Se recupera los datos del usuario que se ha autenticado
+            $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+            $coordinador = DB::table('coordinadores')
+            ->where('correo','=',$user->email)->first();
+
+            if($coordinador){
+                $reporte = DB::table('reportes_supervisor as rs')
+                ->where('rs.id', request('id_reporte'))
+                ->where('rs.id_coordinador', $coordinador->id_cordinador)
+                ->update(['estado_corregido' => 2]);
+                
+                if($reporte){
+                    return response()->json(['detalle' => $reporte, 'mensajes' => $mensajes], 200);
+                }else{
+                    return response()->json(['message' => 'Reporte no encontado o no pertenece a sus sucursales'], 400);
+                }
+                
+            }else{
+                return response()->json(['message' => 'Usuario no encontrado'], 400);
+            }
+ 
+        }
     }
 
 }

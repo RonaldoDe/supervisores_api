@@ -15,28 +15,25 @@ class GerenteReporteHomeController extends Controller
         $gerente = DB::table('usuario')->where('correo', $user->email)->first();
 
         if($gerente){
-            $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
-            $supervisor=DB::table('usuario')->where('correo','=',$user->email)->first();
 
             $usuario_rol=DB::table('usuarios_roles')
-            ->where('id_usuario','=',$supervisor->id_usuario)->first();
+            ->where('id_usuario','=',$gerente->id_usuario)->first();
 
             if($usuario_rol){
                 $reporte = DB::table('reportes_supervisor as rs')
                 ->select('usu.nombre', 'usu.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
-                ->join('usuarios_roles as us', 'rs.id_supervisor', 'us.id_usuario')
+                ->join('usuarios_roles as us', 'rs.id_supervisor', 'us.id_usuario_roles')
                 ->join('usuario as usu', 'us.id_usuario', 'usu.id_usuario')
                 ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
-                ->where('rs.id', request('id_reporte'))
-                ->where('rs.id_supervisor', $usuario_rol->id_usuario)
-                ->first();
+                ->where('rs.id_supervisor', $usuario_rol->id_usuario_roles)
+                ->get();
 
                 return response()->json($reporte, 200);
             }else{
             return response()->json('Supervisor no existe', 400);
         }
         }else{
-            return response()->json("Usuario no encontrado");
+            return response()->json("Usuario no encontrado", 400);
         }
     }
 }

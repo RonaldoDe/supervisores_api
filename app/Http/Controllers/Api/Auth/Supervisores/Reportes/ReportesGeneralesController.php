@@ -219,6 +219,14 @@ class ReportesGeneralesController extends Controller
             $supervisor = DB::table('usuario')
             ->where('correo','=',$user->email)->first();
 
+            if($coordinador){
+                $permisoCoordinador = DB::table('reportes_supervisor')
+                ->where('id_coordinador', $coordinador->id_cordinador)
+                ->where('id', request('id_reporte'))
+                ->first();
+            }
+
+
             if($supervisor){
                 $usuario_rol=DB::table('usuarios_roles')
                 ->where('id_usuario','=',$supervisor->id_usuario)->first();
@@ -237,8 +245,13 @@ class ReportesGeneralesController extends Controller
                     'tipo_usuario' => 1,
                     'mensaje' => request('mensaje'),
                 ]);
+                
                 if($reporteMensaje){
-                    return response()->json(['message' => 'Mensaje enviado'], 200);                    
+                    if($this->logCrearNotificacionesMensaje(request('id_reporte'), $coordinador->id_cordinador, $permisoCoordinador->nombre_reporte, $coordinador->nombre. " " . $coordinador->apellido)){
+                        return response()->json(['message' => 'Mensaje enviado'], 200);                    
+                    }else{
+                        return response()->json(['message' => 'Error al generar la notificacion']);
+                    }
                 }else{
                     return response()->json(['message' => 'Error al crear el mensaje'], 400);                    
                 }
@@ -250,7 +263,11 @@ class ReportesGeneralesController extends Controller
                     'mensaje' => request('mensaje'),
                 ]);
                 if($reporteMensaje){
-                    return response()->json(['message' => 'Mensaje enviado'], 200);                    
+                    if($this->logCrearNotificacionesMensaje(request('id_reporte'), $permiso->id_coordinador, $permiso->nombre_reporte, $supervisor->nombre." ".$supervisor->apellido)){
+                        return response()->json(['message' => 'Mensaje enviado'], 200);                    
+                    }else{
+                        return response()->json(['message' => 'Error al generar la notificacion']);
+                    }                
                 }else{
                     return response()->json(['message' => 'Error al enviar el mensaje'], 400);                    
                 }

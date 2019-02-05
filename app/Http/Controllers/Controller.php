@@ -184,6 +184,27 @@ $sw=0;
                 'nombre_actividad' =>$nombre_actividad->nombre_actividad,
                 'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                 'nombre_sucursal' => $nombre_sucursal->nombre,
+                'tipo' => 1,
+                'fecha' => date('Y-m-d H:i:s'),
+
+            ]);
+
+            return $notificacion;
+        }
+    }
+
+    public function logCrearNotificacionesMensaje($id_reporte, $id_coordinador, $nombre_reporte, $nombre_creador)
+    {
+        
+        if($id_reporte != ''){
+            //obtener los datos del usuario supervisor
+
+            $notificacion =Notificaciones::create([
+                'id_plan_trabajo' =>$id_reporte,
+                'id_coordinador' =>$id_coordinador,
+                'nombre_plan' =>$nombre_reporte,
+                'nombre_supervisor' => $nombre_creador,
+                'tipo' => 2,
                 'fecha' => date('Y-m-d H:i:s'),
 
             ]);

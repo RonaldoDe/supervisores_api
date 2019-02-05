@@ -91,6 +91,11 @@ class CrearPlanesTrabajoController extends Controller
             if($plan != null){
                 $plan->nombre=request('nombre_plan');
                 $plan->update();
+                if($plan){
+                    $update_nombre = DB::table('notificaciones')
+                    ->where('id_plan_trabajo', request('id_plan_trabajo'))
+                    ->update(['nombre_plan' => request('nombre_plan')]);
+                }
                 return response()->json('Nombre de plan actualizado',200);
             }else{
                 return response()->json('Plan de trabajo no encontrado.',202);

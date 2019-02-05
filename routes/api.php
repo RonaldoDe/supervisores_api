@@ -19,6 +19,10 @@ Route::post('login', 'Api\Auth\LoginController@login');
 Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'Api\Auth\LoginController@logout');//controlador de cerrar cesion
     Route::post('nombrePlan', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@ActualizarNombrePlanTrabajo');
+
+    Route::post('reporteSupervisor', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
+    Route::post('detalleRepSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
+    Route::post('enviarMensajeReporte', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@crearMensageReporte');
 });
 
 //colcoar las validaciones del array por fechas base de datos esta en plantrabajoactividad3
@@ -153,14 +157,12 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
 
 
     //crear reporte
-    Route::post('reporteSupervisor', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
-
+    
     Route::get('porcentajeActividades', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@porcentajeActividades');
     
     //listar reortes
     Route::get('obtenerReporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@generarReporeteSupervisor');
-    Route::post('detalleRepSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
-    Route::post('enviarMensajeReporte', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@crearMensageReporte');
+    
 
     //buscar sucursales
     Route::post('searchSucursales', 'Api\Auth\Coordinador\BuscadoresController@searchSucursales');
@@ -179,9 +181,6 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
 //rutas protegidas par ael gerente de repore encargado de realiar reporte de alguna anomalia en cualquien sucursal
 Route::middleware(['auth:api','gerenteReporte'])->group(function(){
     Route::get('homeGerente', 'Api\Auth\GerenteReporte\GerenteReporteHomeController@homeGerenteReporte');
-    Route::post('enviarMensajeReporteGerente', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@crearMensageReporte');
-    Route::post('reporteGerente', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
-    Route::post('detalleReporteGerente', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
 
 });
 

@@ -76,13 +76,14 @@ class ReportesGeneralesController extends Controller
                             'id_supervisor' => $usuario_rol->id_usuario_roles,
                             'id_coordinador' => $coordinador->id_cordinador,
                             'id_sucursal' => request('id_sucursal'),
-                            'nombre_reporte' => request('observaciones'),
+                            'nombre_reporte' => request('nombre_reporte'),
                             'foto' => $url_img,
                             'estado_corregido' => 0,
+                            'observaciones' => request('observaciones'),
                             'estado_listar' => 1,
                         ]);
                         if($reporte){
-                            return response()->json(['message' => 'Reporte realizado con exitio'], 200);
+                            return response()->json(['message' => 'Reporte realizado con exito'], 200);
                         }
                     }
                     return response()->json(['message' => 'Error al carar la imagen'], 400);
@@ -104,13 +105,14 @@ class ReportesGeneralesController extends Controller
                             'id_supervisor' => $gerente->id_usuario_roles,
                             'id_coordinador' => $coordinador->id_cordinador,
                             'id_sucursal' => request('id_sucursal'),
-                            'nombre_reporte' => request('observaciones'),
+                            'nombre_reporte' => request('nombre_reporte'),
                             'foto' => $url_img,
+                            'observaciones' => request('observaciones'),
                             'estado_corregido' => 0,
                             'estado_listar' => 1,
                         ]);
                         if($reporte){
-                            return response()->json(['message' => 'Reporte realizado con exitio'], 200);
+                            return response()->json(['message' => 'Reporte realizado con exito'], 200);
                         }
                     }
                     return response()->json(['message' => 'Error al carar la imagen'], 400);

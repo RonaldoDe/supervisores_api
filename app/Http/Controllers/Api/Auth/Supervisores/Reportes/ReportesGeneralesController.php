@@ -358,6 +358,9 @@ class ReportesGeneralesController extends Controller
                     if(!isset($porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_noRealizadas'])){
                         $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_noRealizadas'] = 0;
                     }
+                    if(!isset($porcentaje_sucursal_array[$ac->cod_sucursal]['nombre_sucursal'])){
+                        $porcentaje_sucursal_array[$ac->cod_sucursal]['nombre_sucursal'] = $ac->nombre;
+                    }
                     
                     $porcentajes_generales_array['todas_las_actividades'] += 1;
                     $porcentaje_sucursal_array[$ac->cod_sucursal]['todas_las_actividades']++;

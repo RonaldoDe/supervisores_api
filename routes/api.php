@@ -20,6 +20,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'Api\Auth\LoginController@logout');//controlador de cerrar cesion
     Route::post('nombrePlan', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@ActualizarNombrePlanTrabajo');
 
+    //buscar sucursales
+    Route::post('searchSucursales', 'Api\Auth\Coordinador\BuscadoresController@searchSucursales');
+
     Route::post('reporteSupervisor', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
     Route::post('detalleRepSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
     Route::post('enviarMensajeReporte', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@crearMensageReporte');
@@ -163,9 +166,6 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     //listar reortes
     Route::get('obtenerReporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@generarReporeteSupervisor');
     
-
-    //buscar sucursales
-    Route::post('searchSucursales', 'Api\Auth\Coordinador\BuscadoresController@searchSucursales');
 
     //condiciones locativas detalle
     Route::post('listarCondicionesLocativas', 'Api\Auth\Supervisores\TablasDetalles\CondicionesLocativasDetalle@listarCondicionesLocativas');

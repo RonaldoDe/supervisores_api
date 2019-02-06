@@ -90,14 +90,22 @@ class BuscadoresController extends Controller
 
             $zona = DB::table('zona')
             ->where('id_usuario_roles','=',$usuario_rol->id_usuario_roles)->first();
-
-            $nombre_sucursal = request('nombre_sucursal');
-            $sucursales = DB::table('sucursales')
-            ->select('id_sucursal', 'cod_sucursal', 'nombre')
-            ->orderBy('nombre', 'ASC')
-            ->where('nombre', 'LIKE', '%'.$nombre_sucursal.'%')
-            ->where('id_zona',$zona->id_zona)
-            ->paginate(10);
+            if($zona){
+                $nombre_sucursal = request('nombre_sucursal');
+                $sucursales = DB::table('sucursales')
+                ->select('id_sucursal', 'cod_sucursal', 'nombre')
+                ->orderBy('nombre', 'ASC')
+                ->where('nombre', 'LIKE', '%'.$nombre_sucursal.'%')
+                ->where('id_zona',$zona->id_zona)
+                ->paginate(10);
+            }else{
+                $nombre_sucursal = request('nombre_sucursal');
+                $sucursales = DB::table('sucursales')
+                ->select('id_sucursal', 'cod_sucursal', 'nombre')
+                ->orderBy('nombre', 'ASC')
+                ->where('nombre', 'LIKE', '%'.$nombre_sucursal.'%')
+                ->paginate(10);
+            }
 
             return response()->json(["sucursales"=>$sucursales],200);
         }

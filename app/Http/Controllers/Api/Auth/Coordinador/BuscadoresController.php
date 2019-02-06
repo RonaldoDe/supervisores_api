@@ -94,7 +94,7 @@ class BuscadoresController extends Controller
             if($zona){
                 $nombre_sucursal = request('nombre_sucursal');
                 $sucursales = DB::table('sucursales')
-                ->select('id_sucursal', 'cod_sucursal', 'nombre')
+                ->select('id_suscursal', 'cod_sucursal', 'nombre')
                 ->orderBy('nombre', 'ASC')
                 ->where('nombre', 'LIKE', '%'.$nombre_sucursal.'%')
                 ->where('id_zona',$zona->id_zona)
@@ -102,7 +102,7 @@ class BuscadoresController extends Controller
             }else{
                 $nombre_sucursal = request('nombre_sucursal');
                 $sucursales = DB::table('sucursales')
-                ->select('id_sucursal', 'cod_sucursal', 'nombre')
+                ->select('id_suscursal', 'cod_sucursal', 'nombre')
                 ->orderBy('nombre', 'ASC')
                 ->where('nombre', 'LIKE', '%'.$nombre_sucursal.'%')
                 ->paginate(10);

@@ -193,7 +193,7 @@ $sw=0;
         }
     }
 
-    public function logCrearNotificacionesMensaje($id_reporte, $id_coordinador, $nombre_reporte, $nombre_creador)
+    public function logCrearNotificacionesMensaje($id_reporte, $id_coordinador, $nombre_reporte, $nombre_creador, $tipo)
     {
         
         if($id_reporte != ''){
@@ -204,7 +204,7 @@ $sw=0;
                 'id_coordinador' =>$id_coordinador,
                 'nombre_plan' =>$nombre_reporte,
                 'nombre_supervisor' => $nombre_creador,
-                'tipo' => 2,
+                'tipo' => $tipo,
                 'fecha' => date('Y-m-d H:i:s'),
 
             ]);

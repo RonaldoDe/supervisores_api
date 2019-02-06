@@ -20,7 +20,6 @@ class ReportesGeneralesController extends Controller
             'id_sucursal' => 'required',
             'nombre_sucursal' => 'required',
             'observaciones' => 'required',
-            'foto' => 'required',
         ]);
         if($validator->fails())
         {
@@ -78,18 +77,40 @@ class ReportesGeneralesController extends Controller
                             'id_sucursal' => request('id_sucursal'),
                             'nombre_reporte' => request('nombre_reporte'),
                             'foto' => $url_img,
-                            'estado_corregido' => 0,
+                            'estado_corregido' => 1,
                             'observaciones' => request('observaciones'),
                             'estado_listar' => 1,
                         ]);
+
                         if($reporte){
-                            return response()->json(['message' => 'Reporte realizado con exito'], 200);
+                            if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3)){
+                                return response()->json(['message' => 'Reporte realizado con exito'], 200);
+                            }else{
+                                return response()->json(['message' => 'Error al generar la notificacion']);
+                            } 
                         }
+                        
                     }
                     return response()->json(['message' => 'Error al carar la imagen'], 400);
 
                 }else{
-                    return response()->json(['message' => 'Error Foto no existe'], 400);
+                    $reporte = ReporteSupervisor::create([
+                        'id_supervisor' => $usuario_rol->id_usuario_roles,
+                        'id_coordinador' => $coordinador->id_cordinador,
+                        'id_sucursal' => request('id_sucursal'),
+                        'nombre_reporte' => request('nombre_reporte'),
+                        'estado_corregido' => 1,
+                        'observaciones' => request('observaciones'),
+                        'estado_listar' => 1,
+                    ]);
+
+                    if($reporte){
+                        if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3)){
+                            return response()->json(['message' => 'Mensaje enviado'], 200);                    
+                        }else{
+                            return response()->json(['message' => 'Error al generar la notificacion']);
+                        } 
+                    }
                 }
 
                
@@ -112,13 +133,32 @@ class ReportesGeneralesController extends Controller
                             'estado_listar' => 1,
                         ]);
                         if($reporte){
-                            return response()->json(['message' => 'Reporte realizado con exito'], 200);
+                            if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3)){
+                                return response()->json(['message' => 'Reporte realizado con exito'], 200);
+                            }else{
+                                return response()->json(['message' => 'Error al generar la notificacion']);
+                            } 
                         }
                     }
                     return response()->json(['message' => 'Error al carar la imagen'], 400);
 
                 }else{
-                    return response()->json(['message' => 'Error Foto no existe'], 400);
+                    $reporte = ReporteSupervisor::create([
+                        'id_supervisor' => $usuario_rol->id_usuario_roles,
+                        'id_coordinador' => $coordinador->id_cordinador,
+                        'id_sucursal' => request('id_sucursal'),
+                        'nombre_reporte' => request('nombre_reporte'),
+                        'estado_corregido' => 1,
+                        'observaciones' => request('observaciones'),
+                        'estado_listar' => 1,
+                    ]);
+                    if($reporte){
+                        if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3)){
+                            return response()->json(['message' => 'Reporte realizado con exito'], 200);
+                        }else{
+                            return response()->json(['message' => 'Error al generar la notificacion']);
+                        } 
+                    }
                 }
             }else{
                 return response()->json(['message' => 'No tienes permiso para acceder a esta ruta'], 400);
@@ -249,7 +289,7 @@ class ReportesGeneralesController extends Controller
                 ]);
                 
                 if($reporteMensaje){
-                    if($this->logCrearNotificacionesMensaje(request('id_reporte'), $coordinador->id_cordinador, $permisoCoordinador->nombre_reporte, $coordinador->nombre. " " . $coordinador->apellido)){
+                    if($this->logCrearNotificacionesMensaje(request('id_reporte'), $coordinador->id_cordinador, $permisoCoordinador->nombre_reporte, $coordinador->nombre. " " . $coordinador->apellido, 2)){
                         return response()->json(['message' => 'Mensaje enviado'], 200);                    
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -265,7 +305,7 @@ class ReportesGeneralesController extends Controller
                     'mensaje' => request('mensaje'),
                 ]);
                 if($reporteMensaje){
-                    if($this->logCrearNotificacionesMensaje(request('id_reporte'), $permiso->id_coordinador, $permiso->nombre_reporte, $supervisor->nombre." ".$supervisor->apellido)){
+                    if($this->logCrearNotificacionesMensaje(request('id_reporte'), $permiso->id_coordinador, $permiso->nombre_reporte, $supervisor->nombre." ".$supervisor->apellido,2)){
                         return response()->json(['message' => 'Mensaje enviado'], 200);                    
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);

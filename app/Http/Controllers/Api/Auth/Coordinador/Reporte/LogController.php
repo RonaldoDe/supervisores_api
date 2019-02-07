@@ -18,10 +18,12 @@ class LogController extends Controller
        $coordinador=DB::table('coordinadores')->where('correo','=',$user->email)->first();
 
        $supervisor=DB::table('usuario')
-            ->where('correo','=',$user->email)->first();
-            
-        $usuario_rol=DB::table('usuarios_roles')
-        ->where('id_usuario','=',$supervisor->id_usuario)->first();
+        ->where('correo','=',$user->email)->first();
+        if($supervisor){
+            $usuario_rol=DB::table('usuarios_roles')
+            ->where('id_usuario','=',$supervisor->id_usuario)->first();
+        }
+        
 
         
 

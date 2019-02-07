@@ -69,6 +69,7 @@ class CrearActividadParaPlanTrabajo extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
+                        'prioridad' => 1,
                         'estado' =>'Activo',
 
                     ]);

@@ -17,11 +17,32 @@ class LogController extends Controller
        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
        $coordinador=DB::table('coordinadores')->where('correo','=',$user->email)->first();
 
-        $log = DB::table('notificaciones')
-        ->where('id_coordinador', $coordinador->id_cordinador)
-        ->orderBy('fecha', 'DESC')
-        ->take(100)
-        ->get();
+       $supervisor=DB::table('usuario')
+            ->where('correo','=',$user->email)->first();
+            
+        $usuario_rol=DB::table('usuarios_roles')
+        ->where('id_usuario','=',$supervisor->id_usuario)->first();
+
+        
+
+       if($coordinador){
+            $log = DB::table('notificaciones')
+            ->where('id_coordinador', $coordinador->id_cordinador)
+            ->orderBy('fecha', 'DESC')
+            ->take(100)
+            ->get();
+       }else if($usuario_rol){
+            $log = DB::table('notificaciones')
+            ->where('id_supervisor', $usuario_rol->id_usuario_roles)
+            ->where('tipo', 2)
+            ->orderBy('fecha', 'DESC')
+            ->take(100)
+            ->get();
+       }else{
+            return response()->json(['message' => 'Usuario no encontrado'],400);
+       }
+
+        
 
         return response()->json(['message' => $log],200);
     }

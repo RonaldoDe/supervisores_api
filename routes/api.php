@@ -176,6 +176,9 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     Route::get('profileUser', 'Api\Auth\Supervisores\HomeSupervisorController@profileUser');
     //perfil de usuario
     Route::get('descripcionActividad', 'Api\Auth\Supervisores\DescripcionActividadController@description');
+
+    Route::get('logNotificacionesUsuario', 'Api\Auth\Coordinador\Reporte\LogController@logNotificaciones');
+
 });
 
 //rutas protegidas par ael gerente de repore encargado de realiar reporte de alguna anomalia en cualquien sucursal

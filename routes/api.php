@@ -19,7 +19,8 @@ Route::post('login', 'Api\Auth\LoginController@login');
 Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'Api\Auth\LoginController@logout');//controlador de cerrar cesion
     Route::post('nombrePlan', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@ActualizarNombrePlanTrabajo');
-
+    
+    Route::get('profileUser', 'Api\Auth\Supervisores\HomeSupervisorController@profileUser');
     //buscar sucursales
     Route::post('searchSucursales', 'Api\Auth\Coordinador\BuscadoresController@searchSucursales');
 
@@ -173,7 +174,6 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     Route::post('accederCondicion', 'Api\Auth\Supervisores\TablasDetalles\CondicionesLocativasDetalle@accederCondicion');
     
     //ruta de las descripciones de las actividades
-    Route::get('profileUser', 'Api\Auth\Supervisores\HomeSupervisorController@profileUser');
     //perfil de usuario
     Route::get('descripcionActividad', 'Api\Auth\Supervisores\DescripcionActividadController@description');
 

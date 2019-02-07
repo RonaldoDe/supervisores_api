@@ -23,10 +23,11 @@ Route::middleware('auth:api')->group(function () {
     Route::get('profileUser', 'Api\Auth\Supervisores\HomeSupervisorController@profileUser');
     //buscar sucursales
     Route::post('searchSucursales', 'Api\Auth\Coordinador\BuscadoresController@searchSucursales');
-
+    
     Route::post('reporteSupervisor', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
     Route::post('detalleRepSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
     Route::post('enviarMensajeReporte', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@crearMensageReporte');
+    Route::get('obtenerReporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@generarReporeteSupervisor');
 });
 
 //colcoar las validaciones del array por fechas base de datos esta en plantrabajoactividad3
@@ -165,7 +166,6 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     Route::get('porcentajeActividades', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@porcentajeActividades');
     
     //listar reortes
-    Route::get('obtenerReporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@generarReporeteSupervisor');
     
 
     //condiciones locativas detalle

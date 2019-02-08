@@ -83,7 +83,7 @@ class ReportesGeneralesController extends Controller
                         ]);
 
                         if($reporte){
-                            if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, $usuario_rol->id_usuario_roles,request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3)){
+                            if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, $usuario_rol->id_usuario_roles,request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3, 1)){
                                 return response()->json(['message' => 'Reporte realizado con exito'], 200);
                             }else{
                                 return response()->json(['message' => 'Error al generar la notificacion']);
@@ -105,7 +105,7 @@ class ReportesGeneralesController extends Controller
                     ]);
 
                     if($reporte){
-                        if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, $usuario_rol->id_usuario_roles, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3)){
+                        if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, $usuario_rol->id_usuario_roles, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3, 1)){
                             return response()->json(['message' => 'Reporte realizado con exito'], 200);
                         }else{
                             return response()->json(['message' => 'Error al generar la notificacion']);
@@ -133,7 +133,7 @@ class ReportesGeneralesController extends Controller
                             'estado_listar' => 1,
                         ]);
                         if($reporte){
-                            if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, $usuario_rol->id_usuario_roles, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3)){
+                            if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, $usuario_rol->id_usuario_roles, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3, 2)){
                                 return response()->json(['message' => 'Reporte realizado con exito'], 200);
                             }else{
                                 return response()->json(['message' => 'Error al generar la notificacion']);
@@ -153,7 +153,7 @@ class ReportesGeneralesController extends Controller
                         'estado_listar' => 1,
                     ]);
                     if($reporte){
-                        if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, $usuario_rol->id_usuario_roles, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3)){
+                        if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, $usuario_rol->id_usuario_roles, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3, 2)){
                             return response()->json(['message' => 'Reporte realizado con exito'], 200);
                         }else{
                             return response()->json(['message' => 'Error al generar la notificacion']);
@@ -289,7 +289,7 @@ class ReportesGeneralesController extends Controller
                 ]);
                 
                 if($reporteMensaje){
-                    if($this->logCrearNotificacionesMensaje(request('id_reporte'), $coordinador->id_cordinador, $permisoCoordinador->id_supervisor, $permisoCoordinador->nombre_reporte, $coordinador->nombre. " " . $coordinador->apellido, 2)){
+                    if($this->logCrearNotificacionesMensaje(request('id_reporte'), $coordinador->id_cordinador, $permisoCoordinador->id_supervisor, $permisoCoordinador->nombre_reporte, $coordinador->nombre. " " . $coordinador->apellido, 2, 1)){
                         return response()->json(['message' => 'Mensaje enviado'], 200);                    
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -305,7 +305,7 @@ class ReportesGeneralesController extends Controller
                     'mensaje' => request('mensaje'),
                 ]);
                 if($reporteMensaje){
-                    if($this->logCrearNotificacionesMensaje(request('id_reporte'), $permiso->id_coordinador, $usuario_rol->id_usuario_roles,$permiso->nombre_reporte, $supervisor->nombre." ".$supervisor->apellido,2)){
+                    if($this->logCrearNotificacionesMensaje(request('id_reporte'), $permiso->id_coordinador, $usuario_rol->id_usuario_roles,$permiso->nombre_reporte, $supervisor->nombre." ".$supervisor->apellido,2, 2)){
                         return response()->json(['message' => 'Mensaje enviado'], 200);                    
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);

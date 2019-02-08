@@ -31,12 +31,14 @@ class LogController extends Controller
             $log = DB::table('notificaciones')
             ->where('id_coordinador', $coordinador->id_cordinador)
             ->orderBy('fecha', 'DESC')
+            ->where('tipo_usuario', 2)
             ->take(100)
             ->get();
        }else if($usuario_rol){
             $log = DB::table('notificaciones')
             ->where('id_usuario', $usuario_rol->id_usuario_roles)
             ->where('tipo', 2)
+            ->where('tipo_usuario', 1)
             ->orderBy('fecha', 'DESC')
             ->take(100)
             ->get();

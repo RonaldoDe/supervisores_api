@@ -35,7 +35,7 @@ class LogController extends Controller
             ->get();
        }else if($usuario_rol){
             $log = DB::table('notificaciones')
-            ->where('id_supervisor', $usuario_rol->id_usuario_roles)
+            ->where('id_usuario', $usuario_rol->id_usuario_roles)
             ->where('tipo', 2)
             ->orderBy('fecha', 'DESC')
             ->take(100)

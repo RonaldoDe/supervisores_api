@@ -180,6 +180,7 @@ $sw=0;
             $notificacion =Notificaciones::create([
                 'id_plan_trabajo' =>$id_plan_trabajo,
                 'id_coordinador' =>$coordinador->id_cordinador,
+                'id_usuario' => $usuario_rol->id_usuario_roles,
                 'nombre_plan' =>$nombre_plan->nombre,
                 'nombre_actividad' =>$nombre_actividad->nombre_actividad,
                 'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
@@ -193,7 +194,7 @@ $sw=0;
         }
     }
 
-    public function logCrearNotificacionesMensaje($id_reporte, $id_coordinador, $nombre_reporte, $nombre_creador, $tipo)
+    public function logCrearNotificacionesMensaje($id_reporte, $id_coordinador, $usuario,$nombre_reporte, $nombre_creador, $tipo)
     {
         
         if($id_reporte != ''){
@@ -202,6 +203,7 @@ $sw=0;
             $notificacion =Notificaciones::create([
                 'id_plan_trabajo' =>$id_reporte,
                 'id_coordinador' =>$id_coordinador,
+                'id_usuario' => $usuario,
                 'nombre_plan' =>$nombre_reporte,
                 'nombre_supervisor' => $nombre_creador,
                 'tipo' => $tipo,

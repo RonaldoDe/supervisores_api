@@ -48,9 +48,7 @@ class HomeSupervisorController extends Controller
        //bucle que itera las actividades y las obtiene segun la fecha
        foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
-            ->join('plan_trabajo_asignacion as p','ac.id_plan_trabajo','p.id_plan_trabajo')
             ->where('ac.estado','Activo')
-            ->orderby('p.id_sucursal','desc')
             ->get();
 
             foreach($fe as $fecha){
@@ -67,15 +65,8 @@ class HomeSupervisorController extends Controller
 
         }
         //validar que el array trae actividades y ordenarlas por prioridad
-            if(count($actividades_habilitadas) > 0){
-                foreach($actividades_habilitadas as $key => $row){
-                    $aux[$key] = $row->id_prioridad;
-                }
-                array_multisort($aux, SORT_DESC, $actividades_habilitadas);
-                return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor], 200);
-            }else{
-                return response()->json(['Actividades' => 'No tienes actividades para el dia de hoy','datos_usuario' => $user_supervisor],400);
-            }
+        return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor, "ordenar" => $actividades], 200);
+            
     }
 
     public function profileUser()

@@ -48,7 +48,9 @@ class HomeSupervisorController extends Controller
        //bucle que itera las actividades y las obtiene segun la fecha
        foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
+            ->join('plan_trabajo_asignacion as p','ac.id_plan_trabajo','p.id_plan_trabajo')
             ->where('ac.estado','Activo')
+            ->orderby('p.id_sucursal','desc')
             ->get();
 
             foreach($fe as $fecha){

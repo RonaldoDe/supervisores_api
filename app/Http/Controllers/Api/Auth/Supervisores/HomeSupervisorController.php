@@ -49,7 +49,6 @@ class HomeSupervisorController extends Controller
        foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
             ->where('ac.estado','Activo')
-            ->orderby('ac.id_plan_trabajo','desc')
             ->get();
 
             foreach($fe as $fecha){

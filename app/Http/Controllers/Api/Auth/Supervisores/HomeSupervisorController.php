@@ -39,7 +39,7 @@ class HomeSupervisorController extends Controller
        ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
        ->where('p.id_supervisor',$usuario_rol->id_usuario_roles)
        ->where('p.estado',1)
-       ->orderby('su.nombre','desc')
+       ->orderby('su.nombre','asc')
        ->get();
 
        //array que almacenara las actividades correspondientes al dia actual

@@ -166,6 +166,7 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     Route::get('porcentajeActividades', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@porcentajeActividades');
     
     //listar reortes
+    Route::post('notificacionLeidaMensaje', 'Api\Auth\Coordinador\Reporte\LogController@notificacionLeida');
     
 
     //condiciones locativas detalle

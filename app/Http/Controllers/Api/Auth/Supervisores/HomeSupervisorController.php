@@ -65,7 +65,7 @@ class HomeSupervisorController extends Controller
 
         }
         //validar que el array trae actividades y ordenarlas por prioridad
-        return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor, "ordenar" => $actividades], 200);
+        return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor], 200);
             
     }
 

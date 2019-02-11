@@ -186,6 +186,7 @@ $sw=0;
                 'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                 'nombre_sucursal' => $nombre_sucursal->nombre,
                 'tipo' => 1,
+                'tipo_usuario' => 2,
                 'fecha' => date('Y-m-d H:i:s'),
 
             ]);

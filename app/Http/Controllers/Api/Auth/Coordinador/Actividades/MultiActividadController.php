@@ -746,7 +746,7 @@ class MultiActividadController extends Controller
             }
     }
 
-    public function libro_vencimiento(Request $request){
+    public function libro_vencimientos(Request $request){
 
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',

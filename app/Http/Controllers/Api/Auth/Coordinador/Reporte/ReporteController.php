@@ -100,12 +100,12 @@ class ReporteController extends Controller
                 ]);
 
                 if($soporte){
-                    return responde()->json('Ya hemos recivido su petición, Gracias!', 200);
+                    return response()->json('Ya hemos recivido su petición, Gracias!', 200);
                 }else{
-                    return responde()->json('Error al crear peticion', 400);
+                    return response()->json('Error al crear peticion', 400);
                 }
             }else{
-                return responde()->json('Usuario no encontrado', 400);
+                return response()->json('Usuario no encontrado', 400);
             }
         }
     }

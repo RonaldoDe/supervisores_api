@@ -88,7 +88,7 @@ class CrearActividadesPlanController extends Controller
                 ]);
         }
 
-                // DB::commit();
+        return response()->json(["success"=>" Actividad  Apertura creada", 'id' => $apertura->id],201);
                 }
                 else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -162,6 +162,7 @@ class CrearActividadesPlanController extends Controller
                                 'id_documento' =>$documento->id,
                             ]);
                         }
+                        return response()->json(["success"=>" Actividad  Apertura creada", 'id' => $documentacion_legal->id],201);
                     }else{
                         return response()->json(["success"=>"Actividad no encontrada o error al crearla."],400);
     

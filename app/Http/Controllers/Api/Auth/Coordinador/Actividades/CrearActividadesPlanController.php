@@ -29,6 +29,7 @@ use App\Modelos\Actividades\Detalles\Documentacion;
 use App\Modelos\Actividades\Detalles\CondicionesDetalle;
 use App\Modelos\Actividades\LibrosFaltantes;
 use App\Modelos\Actividades\Kardex;
+use App\Modelos\Actividades\Remisiones;
 
 class CrearActividadesPlanController extends Controller
 {

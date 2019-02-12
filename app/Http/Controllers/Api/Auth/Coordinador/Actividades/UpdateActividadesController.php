@@ -60,7 +60,7 @@ class UpdateActividadesController extends Controller
                 $fechas_base_datos=DB::table('apertura')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', 'id_actividad')
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -194,6 +194,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('arqueo_caja')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');

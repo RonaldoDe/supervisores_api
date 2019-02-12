@@ -10,5 +10,5 @@ class SoporteTecnico extends Model
 
     public $timestamps=false;
 
-    protected $fillable=['aunto','correo','fecha'];
+    protected $fillable=['asunto', 'mensaje','correo','fecha'];
 }

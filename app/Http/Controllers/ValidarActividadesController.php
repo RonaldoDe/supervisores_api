@@ -353,8 +353,6 @@ class ValidarActividadesController extends Controller
          }
      }
 
-     
-
      public function actividades_ptc($request)
      {
          //validacion de los datos de la actividad

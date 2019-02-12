@@ -95,6 +95,7 @@ class ReporteController extends Controller
             if($user){
                 $soporte = SoporteTecnico::create([
                     'asunto' => request('asunto'),
+                    'mensaje' => request('mensaje'),
                     'correo' => $user->email,
                 ]);
 

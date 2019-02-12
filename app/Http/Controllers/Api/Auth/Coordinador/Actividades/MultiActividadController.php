@@ -189,7 +189,6 @@ class MultiActividadController extends Controller
     public function arqueo_caja(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -228,7 +227,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -247,7 +246,6 @@ class MultiActividadController extends Controller
     public function domicilios(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date',
@@ -286,7 +284,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -303,7 +301,6 @@ class MultiActividadController extends Controller
     public function envio_correspondencia(Request $request){
 
             $validator=\Validator::make($request->all(),[
-                'id_prioridad' => 'required|numeric',
                 'id_plan_trabajo'=>'required|numeric',
                 'fecha_inicio'=>'date_format:"Y-m-d"|required',
                 'fecha_fin'=>'date_format:"Y-m-d"|required'
@@ -343,7 +340,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -360,7 +357,6 @@ class MultiActividadController extends Controller
     public function evolucion_clientes(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -400,7 +396,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -419,7 +415,6 @@ class MultiActividadController extends Controller
     public function examen_gimed(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -462,7 +457,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -481,7 +476,6 @@ class MultiActividadController extends Controller
     public function exhibiciones(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -521,7 +515,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -538,7 +532,6 @@ class MultiActividadController extends Controller
     public function facturacion(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -578,7 +571,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -594,7 +587,6 @@ class MultiActividadController extends Controller
     public function gimed(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -634,7 +626,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -650,7 +642,6 @@ class MultiActividadController extends Controller
     public function inventario_mercancia(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -690,7 +681,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -705,7 +696,6 @@ class MultiActividadController extends Controller
     public function julienne(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -744,7 +734,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -759,7 +749,6 @@ class MultiActividadController extends Controller
     public function libro_vencimiento(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -799,7 +788,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -815,7 +804,6 @@ class MultiActividadController extends Controller
     public function productos_bonificados(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -855,7 +843,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -871,7 +859,6 @@ class MultiActividadController extends Controller
     public function programa_mercadeo(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -911,7 +898,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -927,7 +914,6 @@ class MultiActividadController extends Controller
     public function crear_relacion_servicios_publicos(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -967,7 +953,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -983,7 +969,6 @@ class MultiActividadController extends Controller
     public function crear_relacion_vendedores(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -1023,7 +1008,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -1103,7 +1088,6 @@ class MultiActividadController extends Controller
     public function revicion_completa_inventario(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date',
@@ -1142,7 +1126,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -1159,7 +1143,6 @@ class MultiActividadController extends Controller
     public function servicio_bodega(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -1199,7 +1182,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);
@@ -1215,7 +1198,6 @@ class MultiActividadController extends Controller
     public function uso_institucional(Request $request){
 
         $validator=\Validator::make($request->all(),[
-            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -1255,7 +1237,7 @@ class MultiActividadController extends Controller
                         'fecha_inicio' =>request('fecha_inicio'),
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
-                        'id_prioridad' =>request('id_prioridad'),
+                        'id_prioridad' =>1,
                         'id_estado' =>1,
 
                     ]);

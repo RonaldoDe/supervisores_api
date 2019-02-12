@@ -162,7 +162,7 @@ class CrearActividadesPlanController extends Controller
                                 'id_documento' =>$documento->id,
                             ]);
                         }
-                        return response()->json(["success"=>" Actividad  Apertura creada", 'id' => $documentacion_legal->id],201);
+                        return response()->json(["success"=>" Actividad creada", 'id' => $documentacion_legal->id],201);
                     }else{
                         return response()->json(["success"=>"Actividad no encontrada o error al crearla."],400);
     
@@ -249,7 +249,8 @@ class CrearActividadesPlanController extends Controller
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date',
+            'laboratorios'=>'required',
         ]);
         if($validator->fails())
         {
@@ -286,6 +287,7 @@ class CrearActividadesPlanController extends Controller
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
                         'id_prioridad' =>request('id_prioridad'),
+                        'laboratorios_asignados' =>request('laboratorios'),
                         'id_estado' =>1,
 
                     ]);

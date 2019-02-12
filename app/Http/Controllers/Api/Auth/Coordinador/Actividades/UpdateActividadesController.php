@@ -132,6 +132,7 @@ class UpdateActividadesController extends Controller
                 $fechas_base_datos=DB::table('documentacion_legal')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
     
                 $fecha_ini=request('fecha_inicio');
@@ -256,6 +257,7 @@ class UpdateActividadesController extends Controller
                 $fechas_base_datos=DB::table('condiciones_locativas')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -320,6 +322,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('domicilios')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -376,7 +379,8 @@ class UpdateActividadesController extends Controller
                 $fechas_base_datos=DB::table('envio_correspondencia')
             ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
             ->where('id_plan_trabajo',request('id_plan_trabajo'))
-            ->get();
+                ->where('id', '!=', request('id_actividad'))
+                ->get();
 
             $fecha_ini=request('fecha_inicio');
             $fecha_finn=request('fecha_fin');
@@ -434,6 +438,7 @@ class UpdateActividadesController extends Controller
 
                     $fechas_base_datos=DB::table('evolucion_clientes')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id', '!=', request('id_actividad'))
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
                 ->get();
 
@@ -494,6 +499,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('examen_gimed')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -554,6 +560,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('exhibiciones')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -610,6 +617,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('facturacion')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -665,6 +673,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('gimed')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -720,6 +729,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('kardex')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -775,6 +785,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('inventario_mercancia')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -831,6 +842,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('julienne')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -886,6 +898,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('libro_vencimiento')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -942,6 +955,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('productos_bonificados')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -997,6 +1011,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('programa_mercadeo')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -1052,6 +1067,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('relacion_servicios_publicos')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -1107,6 +1123,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('relacion_vendedores')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -1161,6 +1178,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('remisiones')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -1216,6 +1234,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('servicio_bodega')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -1271,6 +1290,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('uso_institucional')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
@@ -1328,6 +1348,7 @@ class UpdateActividadesController extends Controller
                     $fechas_base_datos=DB::table('libros_faltantes')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->where('id', '!=', request('id_actividad'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');

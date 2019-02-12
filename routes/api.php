@@ -140,7 +140,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('CrearActividadRevicionCompletaInventario', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_revicion_completa_inventario');
     Route::post('CrearActividadServicioBodega', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_servicio_bodega');
     Route::post('CrearActividadUsoInstitucional', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_uso_institucional');
-    Route::post('CrearActividadLibroFaltantes', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_libros_faltantes');
+    Route::post('CrearActividadLibroFaltante', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_libros_faltantes');
 });
 
 //rutas para un Administrador

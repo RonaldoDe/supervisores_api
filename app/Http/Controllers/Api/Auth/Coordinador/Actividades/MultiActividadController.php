@@ -911,7 +911,7 @@ class MultiActividadController extends Controller
             }
     }
 
-    public function crear_relacion_servicios_publicos(Request $request){
+    public function relacion_servicios_publicos(Request $request){
 
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
@@ -966,7 +966,7 @@ class MultiActividadController extends Controller
             }
     }
 
-    public function crear_relacion_vendedores(Request $request){
+    public function relacion_vendedores(Request $request){
 
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',

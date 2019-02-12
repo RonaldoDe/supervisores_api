@@ -713,7 +713,7 @@ class UpdateActividadesController extends Controller
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date',
             'id_actividad' => 'required',
-            'laboratorio' => 'required',
+            'laboratorios' => 'required',
         ]);
         if($validator->fails())
         {
@@ -750,7 +750,7 @@ class UpdateActividadesController extends Controller
                     $actividad->fecha_fin = request('fecha_fin').' '.'23:59:00';
                     $actividad->id_estado = 1;
                     $actividad->id_prioridad = request('id_prioridad');
-                    $actividad->laboratorios_asignados = request('laboratorio');
+                    $actividad->laboratorios_asignados = request('laboratorios');
                     $actividad->update();
                     return response()->json('Actividad actualizada con exito',200);
                 }

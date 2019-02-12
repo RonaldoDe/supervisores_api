@@ -6,21 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modelos\Actividades\Apertura;
 use App\Modelos\Actividades\CondicionesLocativas;
-use App\Modelos\Actividades\PapeleriaConsignaciones;
-use App\Modelos\Actividades\FormulasDespachos;
 use App\Modelos\Actividades\Remisiones;
 use App\Modelos\Actividades\Kardex;
-use App\Modelos\Actividades\CapturaClientes;
-use App\Modelos\Actividades\ConvenioExhibicion;
-use App\Modelos\Actividades\EvaluacionPedidos;
-use App\Modelos\Actividades\Excesos;
-use App\Modelos\Actividades\IngresoSucursal;
-use App\Modelos\Actividades\LibroAgendasCliente;
 use App\Modelos\Actividades\LibrosFaltantes;
 use App\Modelos\Actividades\LibroVencimientos;
-use App\Modelos\Actividades\PresupuestoPedidos;
 use App\Modelos\Actividades\RevisionCompletaInventarios;
-use App\Modelos\Actividades\SeguimientoVendedor;
 use App\Modelos\Actividades\DocumentacionLegal;
 use App\Modelos\Notificaciones;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +18,22 @@ use Illuminate\Support\Facades\Auth;
 use App\Modelos\Actividades\Detalles\CondicionesDetalle;
 use App\Modelos\Actividades\Detalles\Documentacion;
 use App\Modelos\Actividades\ActividadPtc;
+use App\Modelos\Actividades\ArqueoCaja;
+use App\Modelos\Actividades\Domicilio;
+use App\Modelos\Actividades\EnvioCorrespondencia;
+use App\Modelos\Actividades\EvolucionClientes;
+use App\Modelos\Actividades\ExamenGimed;
+use App\Modelos\Actividades\Exhibiciones;
+use App\Modelos\Actividades\Facturacion;
+use App\Modelos\Actividades\Gimed;
+use App\Modelos\Actividades\InventarioMercancia;
+use App\Modelos\Actividades\Julienne;
+use App\Modelos\Actividades\ProductosBonificados;
+use App\Modelos\Actividades\ProgramaMercadeo;
+use App\Modelos\Actividades\RelacionServiciosPublicos;
+use App\Modelos\Actividades\RelacionVendedores;
+use App\Modelos\Actividades\ServicioBodega;
+use App\Modelos\Actividades\UsoInstitucional;
 class MultiActividadController extends Controller
 {
     public function apertura(Request $request)
@@ -80,7 +86,7 @@ class MultiActividadController extends Controller
                     'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                     'observacion'=>'',
                     'id_prioridad' =>1,
-                    'estado' =>'Activo',
+                    'id_estado' =>1,
 
                 ]);
         }
@@ -147,7 +153,7 @@ class MultiActividadController extends Controller
                         'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                         'observacion'=>'',
                         'id_prioridad' =>1,
-                        'estado' =>'Activo',
+                        'id_estado' => 1,
     
                     ]);
                     if($documentacion_legal){
@@ -180,10 +186,240 @@ class MultiActividadController extends Controller
     
     }
 
-    public function papeleria_consignaciones(Request $request){
+    public function arqueo_caja(Request $request){
 
         $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
 
+        else
+        {
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('arqueo_caja')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $arqueo_caja =ArqueoCaja::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+
+
+
+            }
+    }
+
+    public function domicilios(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date',
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('domicilios')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+             //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $domicilios =Domicilio::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+
+            }
+    }
+
+    public function envio_correspondencia(Request $request){
+
+            $validator=\Validator::make($request->all(),[
+                'id_prioridad' => 'required|numeric',
+                'id_plan_trabajo'=>'required|numeric',
+                'fecha_inicio'=>'date_format:"Y-m-d"|required',
+                'fecha_fin'=>'date_format:"Y-m-d"|required'
+
+            ]);
+            if($validator->fails())
+            {
+              return response()->json( $errors=$validator->errors()->all(),400 );
+            }
+
+            else
+            {
+
+            $fecha= date('Y-m-d');
+
+            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                $fechas_base_datos=DB::table('envio_correspondencia')
+            ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+            ->where('id_plan_trabajo',request('id_plan_trabajo'))
+            ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $envio_correspondencia =EnvioCorrespondencia::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+
+            }
+    }
+
+    public function evolucion_clientes(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('evolucion_clientes')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $evolucion_pedido =EvolucionClientes::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+
+
+
+            }
+    }
+
+    public function examen_gimed(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
@@ -201,45 +437,38 @@ class MultiActividadController extends Controller
 
             $fecha= date('Y-m-d');
 
-            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                $fechas_base_datos=DB::table('papeleria_consignaciones')
+                    $fechas_base_datos=DB::table('examen_gimed')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
             $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
 
-        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+            if($respuesta>0){
 
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
-        if($respuesta>0){
+            }else{
+                    $examen_gimed =ExamenGimed::create([
 
-            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
 
-        }else{
+                    ]);
+            }
 
-
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
-                $papeleria =PapeleriaConsignaciones::create([
-                    'id_plan_trabajo' =>request('id_plan_trabajo'),
-                    'fecha_inicio' =>request('fecha_inicio'),
-                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
-                    'observacion'=>'',
-                    'id_prioridad' =>1,
-                    'estado' =>'Activo',
-
-                ]);
-                
-        }
-                // DB::commit();
-
-                }
-                else{
+                }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
                 }
@@ -247,15 +476,15 @@ class MultiActividadController extends Controller
 
 
             }
-
     }
 
-    public function formulas_despachos(Request $request){
+    public function exhibiciones(Request $request){
 
         $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'fecha_fin'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
 
         ]);
         if($validator->fails())
@@ -266,61 +495,548 @@ class MultiActividadController extends Controller
         else
         {
 
-
             $fecha= date('Y-m-d');
 
-            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                $fechas_base_datos=DB::table('formulas_despachos')
+                    $fechas_base_datos=DB::table('exhibiciones')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
                 ->get();
 
             $fecha_ini=request('fecha_inicio');
             $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
+            if($respuesta>0){
 
-        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
+            }else{
+                    $exhibiciones =Exhibiciones::create([
 
-        if($respuesta>0){
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
 
-            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+                    ]);
+            }
 
-        }else{
-
-
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
-                $formulas =FormulasDespachos::create([
-                    'id_plan_trabajo' =>request('id_plan_trabajo'),
-                    'fecha_inicio' =>request('fecha_inicio'),
-                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
-                    'observacion'=>'',
-                    'id_prioridad' =>1,
-                    'estado' =>'Activo',
-
-                ]);
-                
-        }
-                // DB::commit();
-
-                }
-                else{
+                }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
                 }
 
+            }
+    }
 
+    public function facturacion(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('facturacion')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $facturacion =Facturacion::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
             }
 
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
+                }
+            }
+    }
+
+    public function gimed(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('gimed')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $gimed =Gimed::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+
+    public function inventario_mercancia(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('inventario_mercancia')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $inventario_mercancia =InventarioMercancia::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+
+    public function julienne(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('julienne')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $julienne =Julienne::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+
+    public function libro_vencimiento(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('libro_vencimiento')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $libro_vencimiento =LibroVencimientos::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+
+    public function productos_bonificados(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('productos_bonificados')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $productos_bonificados =ProductosBonificados::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+
+    public function programa_mercadeo(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('programa_mercadeo')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $programa_mercadeo =ProgramaMercadeo::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+
+    public function crear_relacion_servicios_publicos(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('relacion_servicios_publicos')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $relacion_servicios_publicos =RelacionServiciosPublicos::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+
+    public function crear_relacion_vendedores(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('relacion_vendedores')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $relacion_vendedores =RelacionVendedores::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
     }
 
     public function remisiones(Request $request){
-
-
 
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
@@ -367,7 +1083,7 @@ class MultiActividadController extends Controller
                     'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                     'observacion'=>'',
                     'id_prioridad' =>1,
-                    'estado' =>'Activo',
+                    'id_estado' =>1,
 
                 ]);
         }
@@ -382,6 +1098,174 @@ class MultiActividadController extends Controller
 
             }
 
+    }
+
+    public function revicion_completa_inventario(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date',
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('revicion_completa_inventario')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+             //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $revicion_completa_inventario =RevisionCompletaInventarios::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+
+            }
+    }
+
+    public function servicio_bodega(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('servicio_bodega')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $servicio_bodega =ServicioBodega::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+
+    public function uso_institucional(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required|numeric',
+            'id_plan_trabajo'=>'required|numeric',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $fechas_base_datos=DB::table('uso_institucional')
+                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
+                ->where('id_plan_trabajo',request('id_plan_trabajo'))
+                ->get();
+
+            $fecha_ini=request('fecha_inicio');
+            $fecha_finn=request('fecha_fin');
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+
+            if($respuesta>0){
+
+                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
+
+            }else{
+                    $uso_institucional =UsoInstitucional::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
     }
 
     public function condiciones_locativas(Request $request){
@@ -437,7 +1321,7 @@ class MultiActividadController extends Controller
                     'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                     'observacion'=>'',
                     'id_prioridad' =>1,
-                    'estado' =>'Activo',
+                    'id_estado' =>1,
 
                 ]);
                 if($condiciones_locativas){
@@ -515,7 +1399,7 @@ class MultiActividadController extends Controller
                     'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                     'observacion'=>'',
                     'id_prioridad' =>1,
-                    'estado' =>'Activo',
+                    'id_estado' =>1,
 
                 ]);
                 
@@ -528,194 +1412,6 @@ class MultiActividadController extends Controller
 
                 }
             }
-    }
-
-    public function seguimiento_vendedores(Request $request){
-
-
-
-        $validator=\Validator::make($request->all(),[
-            'id_plan_trabajo'=>'required',
-            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
-        ]);
-        if($validator->fails())
-        {
-          return response()->json( $errors=$validator->errors()->all(),400 );
-        }
-
-        else
-        {
-            $fecha= date('Y-m-d');
-
-            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
-                $fechas_base_datos=DB::table('seguimiento_vendedores')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->get();
-
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-
-
-        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
-
-
-        if($respuesta>0){
-
-            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-        }else{
-
-
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
-                $seguimiento =SeguimientoVendedor::create([
-                    'id_plan_trabajo' =>request('id_plan_trabajo'),
-                    'fecha_inicio' =>request('fecha_inicio'),
-                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
-                    'observacion'=>'',
-                    'id_prioridad' =>1,
-                    'estado' =>'Activo',
-
-                ]);
-
-                
-        }
-                // DB::commit();
-
-                }
-                else{
-                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
-
-                }
-            }
-
-
-    }
-
-    public function evaluacion_pedidos(Request $request){
-
-        //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
-
-        $validator=\Validator::make($request->all(),[
-            'id_plan_trabajo'=>'required|numeric',
-            'fecha_inicio'=>'date_format:"Y-m-d"|required',
-            'fecha_fin'=>'date_format:"Y-m-d"|required'
-
-        ]);
-        if($validator->fails())
-        {
-          return response()->json( $errors=$validator->errors()->all(),400 );
-        }
-
-        else
-        {
-
-
-
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
-
-            $fecha= date('Y-m-d');
-
-            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
-                $fechas_base_datos=DB::table('evaluacion_pedidos')
-            ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-            ->where('id_plan_trabajo',request('id_plan_trabajo'))
-            ->get();
-
-        $fecha_ini=request('fecha_inicio');
-        $fecha_finn=request('fecha_fin');
-        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
-
-
-        if($respuesta>0){
-
-            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-        }else{
-                $evaluacionPedidos =EvaluacionPedidos::create([
-
-                    'id_plan_trabajo' =>request('id_plan_trabajo'),
-                    'fecha_inicio' =>request('fecha_inicio'),
-                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
-                    'observacion'=>'',
-                    'id_prioridad' =>1,
-                    'estado' =>'Activo',
-
-                ]);
-
-                
-                
-        }
-
-
-            }else{
-                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
-
-            }
-
-
-
-        }
-
-    }
-
-    public function presupuesto_pedido(Request $request){
-
-        //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
-
-        $validator=\Validator::make($request->all(),[
-            'id_plan_trabajo'=>'required|numeric',
-            'fecha_inicio'=>'date_format:"Y-m-d"|required',
-            'fecha_fin'=>'date_format:"Y-m-d"|required'
-        ]);
-        if($validator->fails())
-        {
-          return response()->json( $errors=$validator->errors()->all(),400 );
-        }
-        else
-        {
-            $fecha= date('Y-m-d');
-
-            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
-                $fechas_base_datos=DB::table('presupuesto_pedido')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->get();
-
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
-                    if($respuesta>0){
-                    return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-                }else{
-                    $presupuestoPedidos =PresupuestoPedidos::create([
-
-                        'id_plan_trabajo' =>request('id_plan_trabajo'),
-                        'fecha_inicio' =>request('fecha_inicio'),
-                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
-                        'observacion'=>'',
-                        'id_prioridad' =>1,
-                        'estado' =>'Activo',
-                    ]);
-                    
-                }
-                
-
-            }else{
-                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
-
-            }
-        }
     }
 
     public function libros_faltantes(Request $request){
@@ -765,7 +1461,7 @@ class MultiActividadController extends Controller
                     'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                     'observacion'=>'',
                     'id_prioridad' =>1,
-                    'estado' =>'Activo',
+                    'id_estado' =>1,
 
                 ]);
                 
@@ -778,400 +1474,6 @@ class MultiActividadController extends Controller
 
                 }
             }
-    }
-
-    public function captura_cliente(Request $request){
-
-            $validator=\Validator::make($request->all(),[
-                'id_plan_trabajo'=>'required|numeric',
-                'fecha_inicio'=>'date_format:"Y-m-d"|required',
-                'fecha_fin'=>'date_format:"Y-m-d"|required'
-
-            ]);
-            if($validator->fails())
-            {
-              return response()->json( $errors=$validator->errors()->all(),400 );
-            }
-
-            else
-            {
-
-        //instncia del modelo documentacion legal para crear un registro de esta tabla
-
-                $fecha= date('Y-m-d');
-
-                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
-                    $fechas_base_datos=DB::table('captura_cliente')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->get();
-
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
-
-            if($respuesta>0){
-
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-            }else{
-                    $captura_cliente =CapturaClientes::create([
-
-                        'id_plan_trabajo' =>request('id_plan_trabajo'),
-                        'fecha_inicio' =>request('fecha_inicio'),
-                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
-                        'observacion'=>'',
-                        'id_prioridad' =>1,
-                        'estado' =>'Activo',
-
-                    ]);
-                    
-            }
-                    // DB::commit();
-
-                }else{
-                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
-
-                }
-            }
-    }
-
-    public function libro_agendaclientes(Request $request){
-
-        $validator=\Validator::make($request->all(),[
-            'id_plan_trabajo'=>'required',
-            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
-            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
-        ]);
-        if($validator->fails())
-        {
-          return response()->json( $errors=$validator->errors()->all(),400 );
-        }
-
-        else
-        {
-            $fecha= date('Y-m-d');
-
-            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
-                $fechas_base_datos=DB::table('libro_agendaclientes')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->get();
-
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-
-
-        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
-
-
-        if($respuesta>0){
-
-            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-        }else{
-
-
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
-                $libroAgenda =LibroAgendasCliente::create([
-                    'id_plan_trabajo' =>request('id_plan_trabajo'),
-                    'fecha_inicio' =>request('fecha_inicio'),
-                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
-                    'observacion'=>'',
-                    'id_prioridad' =>1,
-                    'estado' =>'Activo',
-
-                ]);
-
-                
-        }
-                // DB::commit();
-
-                }
-                else{
-                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
-
-                }
-            }
-    }
-
-    public function convenio_exhibicion(Request $request){
-
-        //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
-
-        $validator=\Validator::make($request->all(),[
-            'id_plan_trabajo'=>'required|numeric',
-            'fecha_inicio'=>'date_format:"Y-m-d"|required',
-            'fecha_fin'=>'date_format:"Y-m-d"|required'
-
-        ]);
-        if($validator->fails())
-        {
-          return response()->json( $errors=$validator->errors()->all(),400 );
-        }
-
-        else
-        {
-
-
-
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
-
-            $fecha= date('Y-m-d');
-
-            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
-                $fechas_base_datos=DB::table('convenio_exhibicion')
-        ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-        ->where('id_plan_trabajo',request('id_plan_trabajo'))
-        ->get();
-
-        $fecha_ini=request('fecha_inicio');
-        $fecha_finn=request('fecha_fin');
-        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
-
-
-        if($respuesta>0){
-
-            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-        }else{
-                $convenio_exhibicion =ConvenioExhibicion::create([
-
-                    'id_plan_trabajo' =>request('id_plan_trabajo'),
-                    'fecha_inicio' =>request('fecha_inicio'),
-                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
-                    'observacion'=>'',
-                    'id_prioridad' =>1,
-                    'estado' =>'Activo',
-
-                ]);
-                
-        }
-
-                // DB::commit();
-
-
-            }else{
-                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
-
-            }
-
-
-
-        }
-
-    }
-
-    public function excesos(Request $request){
-
-        //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
-
-        $validator=\Validator::make($request->all(),[
-            'id_plan_trabajo'=>'required|numeric',
-            'fecha_inicio'=>'date_format:"Y-m-d"|required',
-            'fecha_fin'=>'date_format:"Y-m-d"|required'
-
-        ]);
-        if($validator->fails())
-        {
-          return response()->json( $errors=$validator->errors()->all(),400 );
-        }
-
-        else
-        {
-
-
-
-            //instancia del modelo documentacion legal para crear un registro de esta tabla
-
-            $fecha= date('Y-m-d');
-
-            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
-
-                $fechas_base_datos=DB::table('excesos')
-        ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-        ->where('id_plan_trabajo',request('id_plan_trabajo'))
-        ->get();
-
-        $fecha_ini=request('fecha_inicio');
-        $fecha_finn=request('fecha_fin');
-        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
-
-
-        if($respuesta>0){
-
-            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-        }else{
-                $excesos =Excesos::create([
-
-                    'id_plan_trabajo' =>request('id_plan_trabajo'),
-                    'fecha_inicio' =>request('fecha_inicio'),
-                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
-                    'observacion'=>'',
-                    'id_prioridad' =>1,
-                    'estado' =>'Activo',
-
-                ]);
-        }
-
-                // DB::commit();
-
-                
-
-            }else{
-                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
-
-            }
-
-
-
-        }
-
-    }
-
-    public function libro_vencimientos(Request $request){
-
-        //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
-
-        $validator=\Validator::make($request->all(),[
-            'id_plan_trabajo'=>'required|numeric',
-            'fecha_inicio'=>'date_format:"Y-m-d"|required',
-            'fecha_fin'=>'date_format:"Y-m-d"|required'
-
-        ]);
-        if($validator->fails())
-        {
-          return response()->json( $errors=$validator->errors()->all(),400 );
-        }
-
-        else
-        {
-
-
-
-            //instancia del modelo documentacion legal para crear un registro de esta tabla
-
-            $fecha= date('Y-m-d');
-
-            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
-
-                $fechas_base_datos=DB::table('libro_vencimientos')
-        ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-        ->where('id_plan_trabajo',request('id_plan_trabajo'))
-        ->get();
-
-        $fecha_ini=request('fecha_inicio');
-        $fecha_finn=request('fecha_fin');
-        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
-
-
-        if($respuesta>0){
-            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-        }else{
-                $libro_vencimiemto =LibroVencimientos::create([
-
-                    'id_plan_trabajo' =>request('id_plan_trabajo'),
-                    'fecha_inicio' =>request('fecha_inicio'),
-                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
-                    'observacion'=>'',
-                    'id_prioridad' =>1,
-                    'estado' =>'Activo',
-
-                ]);
-        }
-
-                // DB::commit();
-
-                
-
-            }else{
-                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
-
-            }
-
-
-
-        }
-
-    }
-
-    public function ingreso_sucursal(Request $request){
-
-        //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
-
-        $validator=\Validator::make($request->all(),[
-            'id_plan_trabajo'=>'required|numeric',
-            'fecha_inicio'=>'date_format:"Y-m-d"|required',
-            'fecha_fin'=>'date_format:"Y-m-d"|required'
-        ]);
-        if($validator->fails())
-        {
-          return response()->json( $errors=$validator->errors()->all(),400 );
-        }
-
-        else
-        {
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
-
-            $fecha= date('Y-m-d');
-
-            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
-
-                $fechas_base_datos=DB::table('ingreso_sucursal')
-        ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-        ->where('id_plan_trabajo',request('id_plan_trabajo'))
-        ->get();
-
-        $fecha_ini=request('fecha_inicio');
-        $fecha_finn=request('fecha_fin');
-        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
-
-
-        if($respuesta>0){
-
-            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-        }else{
-                $ingreso_sucursal =IngresoSucursal::create([
-
-                    'id_plan_trabajo' =>request('id_plan_trabajo'),
-                    'fecha_inicio' =>request('fecha_inicio'),
-                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
-                    'observacion'=>'',
-                    'id_prioridad' =>1,
-                    'estado' =>'Activo',
-
-                ]);
-        }
-                // DB::commit();
-
-                
-
-            }else{
-                return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
-
-            }
-        }
-
     }
 
     public function actividades_ptc(Request $request){
@@ -1210,7 +1512,7 @@ class MultiActividadController extends Controller
                     'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
                     'observacion'=>'',
                     'id_prioridad' =>1,
-                    'estado' =>'Activo',
+                    'id_estado' =>1,
 
                 ]);
         

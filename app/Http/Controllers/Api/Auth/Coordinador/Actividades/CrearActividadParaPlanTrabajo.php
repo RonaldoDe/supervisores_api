@@ -89,11 +89,8 @@ class CrearActividadParaPlanTrabajo extends Controller
             }
 
 
-}
+    }
 
-//funcion para crear Actividad documnetacion legal del punto de venta  como este actividad se hace cada cierto tiempo
-//le mandamos una frecuencia perznalizada paraq ue le cordinador inserte las fechas a estipuladas a cumplir cierta actividad
-//
 
 
 public function crearActividadDocumentacionLegal(Request $request){
@@ -117,7 +114,7 @@ public function crearActividadDocumentacionLegal(Request $request){
 
 
 
-//instancia del modelo documentacion legal para crear un registro de esta tabla
+    //instancia del modelo documentacion legal para crear un registro de esta tabla
 
         $fecha= date('Y-m-d');
 
@@ -196,7 +193,7 @@ public function crearActividadDocumentacionLegal(Request $request){
 
 
 
-//FUNION PARA CREAR LA ACTIVIDAD  PAPELERIA CONSIGNACIONES
+    //FUNION PARA CREAR LA ACTIVIDAD  PAPELERIA CONSIGNACIONES
     public function crearActividadPapeleriaConsignaciones(Request $request){
 
         $validator=\Validator::make($request->all(),[

@@ -23,9 +23,6 @@ class LogController extends Controller
             $usuario_rol=DB::table('usuarios_roles')
             ->where('id_usuario','=',$supervisor->id_usuario)->first();
         }
-        
-
-        
 
        if($coordinador){
             $log = DB::table('notificaciones')

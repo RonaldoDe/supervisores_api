@@ -423,18 +423,18 @@ class ReportesGeneralesController extends Controller
                     
                     $porcentajes_generales_array['todas_las_actividades'] += 1;
                     $porcentaje_sucursal_array[$ac->cod_sucursal]['todas_las_actividades']++;
-                    switch ($fecha->estado) {
-                        case 'Activo':
+                    switch ($fecha->id_estado) {
+                        case 1:
                         $porcentajes_generales_array['actividades_activas'] += 1;
                         $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_activas'] ++;
                         break;
                         
-                        case 'completo':
+                        case 2:
                         $porcentajes_generales_array['actividades_completas'] += 1;
                         $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_completas'] ++;
                         break;
                         
-                        case 'noReaizada':
+                        case 3:
                         $porcentajes_generales_array['actividades_noRealizadas'] += 1;
                         $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_noRealizadas'] ++;
                         break;

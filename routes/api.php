@@ -23,6 +23,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('profileUser', 'Api\Auth\Supervisores\HomeSupervisorController@profileUser');
     //buscar sucursales
     Route::post('searchSucursales', 'Api\Auth\Coordinador\BuscadoresController@searchSucursales');
+    Route::post('soporteTecnico', 'Api\Auth\Coordinador\Reporte\ReporteController@soporteTecnico');
     
     Route::post('reporteSupervisor', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
     Route::post('detalleRepSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
@@ -67,24 +68,30 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
 
     //se agregaron estos para ps repores segir mirando
     //rutas de actualizar actividades
-    Route::post('updateApertura', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadApertura');
-    Route::post('updateDocumentacionLegal', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadDocumentacionLegal');
-    Route::post('updatePapeleriaConsignaciones', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadPapeleriaConsignaciones');
-    Route::post('updateFormulasDespachos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadFormulaDespachos');
-    Route::post('updateCondicionesLocativas', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadCondicionesLocativas');
-    Route::post('updateRemisiones', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadRemisiones');
-    Route::post('updateKardex', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadKardex');
-    Route::post('updateSeguimientoVendedor', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadSeguimientoVendedor');
-    Route::post('updateEvaluacionPedidos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadEvaluacionPedidos');
-    Route::post('updatePresupuestoPedidos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadPresupuestoPedidos');
-    Route::post('updateLibroFaltante', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadLibrosFaltantes');
-    Route::post('updateCapturaClientes', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadCapturaClientes');
-    Route::post('updateLibroAgendaCliente', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadLibroAgendaCliente');
-    Route::post('updateConvenioExhibicion', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadConvenioExhibicion');
-    Route::post('updateExcesos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadExcesos');
-    Route::post('updateLibroVencimientos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadLibroVencimientos');
-    Route::post('updateIngresoSucursal', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadIngresoSucursal');
-    Route::post('updatePtc', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@updateActividadPtc');
+    Route::post('updateApertura', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_apertura');
+    Route::post('updateDocumentacionLegal', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_documentacion_legal');
+    Route::post('updateCondicionesLocativas', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_condiciones_locativas');
+    Route::post('updateDomicilios', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_domicilios');
+    Route::post('updateEnvioCorrespondencia', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_envio_correspondencia');
+    Route::post('updateEvolucionClientes', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_evolucion_clientes');
+    Route::post('updateExamenGimed', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_examen_gimed');
+    Route::post('updateExhibiciones', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_exhibiciones');
+    Route::post('updateFacturacion', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_facturacion');
+    Route::post('updateGimed', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_gimed');
+    Route::post('updateInventarioMercadeo', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_inventario_mercancia');
+    Route::post('updateJulienne', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_julienne');
+    Route::post('updateProductosBonificados', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_productos_bonificados');
+    Route::post('updateProgramaMercadeo', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_programa_mercadeo');
+    Route::post('updateRelacionServiciosPublicos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_relacion_servicios_publicos');
+    Route::post('updateRelacionVendedores', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_relacion_vendedores');
+    Route::post('updateRemisiones', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_remisiones');
+    Route::post('updateRevicionCompletaInventario', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_revicion_completa_inventario');
+    Route::post('updateKardex', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_kardex');
+    Route::post('updateServicioBodega', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_servicio_bodega');
+    Route::post('updateUsoInstitucional', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_uso_institucional');
+    Route::post('updateLibroFaltante', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_libros_faltantes');
+    Route::post('updateLibroVencimientos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_libro_vencimiento');
+    Route::post('updatePtc', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_ptc');
 
     //eliminar 
     //actividades
@@ -106,26 +113,34 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::get('MostrarPrioridad', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@MostrarTablaPrioridad');
    // Route::get('MostrarFrecuencia', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@MostrarTablafrecuencia');
     Route::get('devolverSupervisoresSinAsignar', 'Api\Auth\Coordinador\ZonasCordinadorController@DevolverUsuariosSupervisores');
-    //Actividades
+
+    //Actividades crear
     Route::post('InsercionTablaActividad', 'Api\Auth\Coordinador\Actividades\InsercionTablaActividad@insertarTablasAactividad');
-    Route::post('CrearActividadApertura', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadApertura');
-    Route::post('CrearActividadDocumentacionLegal', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadDocumentacionLegal');
-    Route::post('CrearActividadPapeleriaConsignaciones', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadPapeleriaConsignaciones');
-    Route::post('CrearActividadFormulasDespachos', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadFormulaDespachos');
-    Route::post('CrearActividadRemisiones', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadRemisiones');
-    Route::post('CrearActividadKardex', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadAKardex');
-    Route::post('CrearActividadCondicionesLocativas', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo@crearActividadCondicionesLocativas');
-    Route::post('CrearActividadSeguimientoVendedor', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadSeguimientoVendedor');
-    Route::post('CrearActividadEvaluacionPedidos', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadEvaluacionPedidos');
-    Route::post('CrearActividadPresupuestoPedidos', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadPresupuestoPedidos');
-    Route::post('CrearActividadCapturaClientes', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadCapturaClientes');
-    Route::post('CrearActividadLibroFaltante', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo2@crearActividadLibrosFaltantes');
-    Route::post('CrearActividadLibroAgendaCliente', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadLibroAgendaCliente');
-    Route::post('CrearActividadConvenioExhibicion', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadConvenioExhibicion');
-    Route::post('CrearActividadExcesos', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadExcesos');
-    Route::post('CrearActividadIngresoSucursal', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadIngresoSucursal');
-    Route::post('CrearActividadLibroVencimientos', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadLibroVencimientos');
-    Route::post('CrearActividadPtc', 'Api\Auth\Coordinador\Actividades\CrearActividadParaPlanTrabajo3@crearActividadPtc');
+    Route::post('CrearActividadApertura', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_apertura');
+    Route::post('CrearActividadDocumentacionLegal', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_documentacion_legal');
+    Route::post('CrearActividadRemisiones', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_remisiones');
+    Route::post('CrearActividadKardex', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_kardex');
+    Route::post('CrearActividadCondicionesLocativas', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_condiciones_locativas');
+    Route::post('CrearActividadLibroVencimientos', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_libro_vencimiento');
+    Route::post('CrearActividadPtc', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_ptc');
+    Route::post('CrearActividadArqueoCaja', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_arqueo_caja');
+    Route::post('CrearActividadDomicilios', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_domicilios');
+    Route::post('CrearActividadEnvioCorrespondencia', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_envio_correspondencia');
+    Route::post('CrearActividadEvolucionClientes', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_evolucion_clientes');
+    Route::post('CrearActividadExamenGimed', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_examen_gimed');
+    Route::post('CrearActividadExhibiciones', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_exhibiciones');
+    Route::post('CrearActividadFacturacion', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_facturacion');
+    Route::post('CrearActividadGimed', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_gimed');
+    Route::post('CrearActividadInventarioMercancia', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_inventario_mercancia');
+    Route::post('CrearActividadJulienne', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_julienne');
+    Route::post('CrearActividadProductosBonificados', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_productos_bonificados');
+    Route::post('CrearActividadProgramaMercadeo', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_programa_mercadeo');
+    Route::post('CrearActividadRelacionServiciosPublicos', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_relacion_servicios_publicos');
+    Route::post('CrearActividadRelacionVendedores', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_relacion_vendedores');
+    Route::post('CrearActividadRevicionCompletaInventario', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_revicion_completa_inventario');
+    Route::post('CrearActividadServicioBodega', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_servicio_bodega');
+    Route::post('CrearActividadUsoInstitucional', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_uso_institucional');
+    Route::post('CrearActividadLibroFaltantes', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_libros_faltantes');
 });
 
 //rutas para un Administrador

@@ -342,9 +342,7 @@ class CrearActividadParaPlanTrabajo2 extends Controller
                     ]);
             }
 
-                    // DB::commit();
-
-                    return response()->json(["success"=>" Actividad creada", 'id' => $libro_faltantes->id],201);
+                    return response()->json(["success"=>"Actividad creada", 'id' => $libro_faltantes->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -355,7 +353,6 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
          public function crearActividadCapturaClientes(Request $request)
          {
-
 
             $validator=\Validator::make($request->all(),[
                 'id_prioridad' => 'required|numeric',
@@ -387,8 +384,8 @@ class CrearActividadParaPlanTrabajo2 extends Controller
 
             $fecha_ini=request('fecha_inicio');
             $fecha_finn=request('fecha_fin');
-//funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-//no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
+            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
+            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
             $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
 

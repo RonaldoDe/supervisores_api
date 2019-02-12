@@ -13,5 +13,5 @@ class Kardex extends Model{
 
     public $timestamps=false;
 
-    protected $fillable=['id_plan_trabajo','id_prioridad','fecha_inicio','fecha_fin','fecha_mod','observacion','calificacion_pv','calificacion', 'laboratorios_asignados', 'laboratorios_realizados','tiempo_actividad', 'tiempo_total', 'motivo_ausencia','estado'];
+    protected $fillable=['id_plan_trabajo','id_prioridad','fecha_inicio','fecha_fin','fecha_mod','observacion','calificacion_pv','calificacion', 'laboratorios_asignados', 'laboratorios_realizados','tiempo_actividad', 'tiempo_total', 'motivo_ausencia','id_estado'];
 }

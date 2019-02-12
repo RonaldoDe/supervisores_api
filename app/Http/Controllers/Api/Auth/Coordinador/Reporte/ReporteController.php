@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Modelos\PlanTrabajoAsignacion;
 use Carbon\Carbon;
+use App\Modelos\Reportes\SoporteTecnico;
 
 class ReporteController extends Controller
 {
@@ -73,6 +74,25 @@ class ReporteController extends Controller
             }else{
                 return response()->json(["message" => 'No tienes actividades asignadas'],200);
             }
+        }
+    }
+
+    public function soporteTecnico(Request $request)
+    {
+        $user=DB::table('users as u')->where('u.id',Auth::id())->first();
+        if($user){
+            $soporte = SoporteTecnico::create([
+                'asunto' => request('asunto'),
+                'correo' => $user->email,
+            ]);
+
+            if($soporte){
+                return responde()->json('Ya hemos recivido su petición, Gracias!', 200);
+            }else{
+                return responde()->json('Error al crear peticion', 400);
+            }
+        }else{
+            return responde()->json('Usuario no encontrado', 400);
         }
     }
 

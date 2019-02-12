@@ -48,7 +48,7 @@ class PlanesController extends Controller
                 foreach($actividades as $ac){
                     $fe = DB::table($ac->nombre_tabla. ' as ac')
                     ->where('ac.id_plan_trabajo',$ac->id_plan_trabajo)
-                    ->where('ac.estado', '!=','completo')
+                    ->where('ac.id_estado', '!=',2)
                     ->get();
     
                     //  generar el array con el listado de actividades pendientes en la semana

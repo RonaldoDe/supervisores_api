@@ -43,7 +43,7 @@ class ActividadesCompletasController extends Controller
        //bucle que itera las actividades y las obtiene segun la fecha y el estado completo
        foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
-            ->where('ac.estado','completo')
+            ->where('ac.id_estado',1)
             ->get();
 
             foreach($fe as $fecha){

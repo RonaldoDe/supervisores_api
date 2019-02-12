@@ -100,7 +100,7 @@ class ReporteController extends Controller
                 ]);
 
                 if($soporte){
-                    return response()->json('Ya hemos recivido su petición, Gracias!', 200);
+                    return response()->json('Ya hemos recibido su petición, Gracias!', 200);
                 }else{
                     return response()->json('Error al crear peticion', 400);
                 }

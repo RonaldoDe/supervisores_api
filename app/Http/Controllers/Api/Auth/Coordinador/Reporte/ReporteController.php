@@ -83,7 +83,6 @@ class ReporteController extends Controller
         $validator=\Validator::make($request->all(),[
             'asunto'=>'required',
             'mensaje'=>'required',
-            'correo'=>'required|email',
         ]);
         if($validator->fails())
         {

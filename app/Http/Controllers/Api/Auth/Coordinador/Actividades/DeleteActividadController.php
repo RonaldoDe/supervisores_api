@@ -28,7 +28,7 @@ class DeleteActividadController extends Controller
             ->where('id_plan_trabajo', request('id_plan_trabajo'))
             ->first();
             if($actividad){
-                if($actividad->estado != 'completo'){
+                if($actividad->id_estado != 2){
                     $delete = DB::table(request('actividad'))
                     ->where('id', request('id_actividad'))
                     ->where('id_plan_trabajo', request('id_plan_trabajo'))

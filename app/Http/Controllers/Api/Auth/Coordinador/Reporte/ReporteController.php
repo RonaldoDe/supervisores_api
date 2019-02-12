@@ -79,20 +79,34 @@ class ReporteController extends Controller
 
     public function soporteTecnico(Request $request)
     {
-        $user=DB::table('users as u')->where('u.id',Auth::id())->first();
-        if($user){
-            $soporte = SoporteTecnico::create([
-                'asunto' => request('asunto'),
-                'correo' => $user->email,
-            ]);
 
-            if($soporte){
-                return responde()->json('Ya hemos recivido su petición, Gracias!', 200);
+        $validator=\Validator::make($request->all(),[
+            'asunto'=>'required',
+            'mensaje'=>'required',
+            'correo'=>'required|email',
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all() );
+        }
+
+        else
+        {
+            $user=DB::table('users as u')->where('u.id',Auth::id())->first();
+            if($user){
+                $soporte = SoporteTecnico::create([
+                    'asunto' => request('asunto'),
+                    'correo' => $user->email,
+                ]);
+
+                if($soporte){
+                    return responde()->json('Ya hemos recivido su petición, Gracias!', 200);
+                }else{
+                    return responde()->json('Error al crear peticion', 400);
+                }
             }else{
-                return responde()->json('Error al crear peticion', 400);
+                return responde()->json('Usuario no encontrado', 400);
             }
-        }else{
-            return responde()->json('Usuario no encontrado', 400);
         }
     }
 

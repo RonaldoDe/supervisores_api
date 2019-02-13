@@ -69,6 +69,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     //se agregaron estos para ps repores segir mirando
     //rutas de actualizar actividades
     Route::post('updateApertura', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_apertura');
+    Route::post('updateArqueoCaja', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_arqueo_caja');
     Route::post('updateDocumentacionLegal', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_documentacion_legal');
     Route::post('updateCondicionesLocativas', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_condiciones_locativas');
     Route::post('updateDomicilios', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_domicilios');
@@ -78,7 +79,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('updateExhibiciones', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_exhibiciones');
     Route::post('updateFacturacion', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_facturacion');
     Route::post('updateGimed', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_gimed');
-    Route::post('updateInventarioMercadeo', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_inventario_mercancia');
+    Route::post('updateInventarioMercancia', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_inventario_mercancia');
     Route::post('updateJulienne', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_julienne');
     Route::post('updateProductosBonificados', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_productos_bonificados');
     Route::post('updateProgramaMercadeo', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_programa_mercadeo');

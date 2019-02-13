@@ -15,7 +15,7 @@ use App\Modelos\Actividades\LibrosFaltantes;
 use App\Modelos\Actividades\LibroVencimientos;
 use App\Modelos\Actividades\ActividadPtc;
 use App\Modelos\Actividades\ArqueoCaja;
-use App\Modelos\Actividades\Domicilios;
+use App\Modelos\Actividades\Domicilio;
 use App\Modelos\Actividades\EnvioCorrespondencia;
 use App\Modelos\Actividades\ExamenGimed;
 use App\Modelos\Actividades\EvolucionClientes;
@@ -336,7 +336,7 @@ class UpdateActividadesController extends Controller
                 return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
 
             }else{
-                $actividad = Domicilios::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+                $actividad = Domicilio::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
                     $actividad->fecha_fin = request('fecha_fin').' '.'23:59:00';
@@ -1164,7 +1164,7 @@ class UpdateActividadesController extends Controller
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date',
-            'id_actividad' => 'required,'
+            'id_actividad' => 'required',
         ]);
         if($validator->fails())
         {

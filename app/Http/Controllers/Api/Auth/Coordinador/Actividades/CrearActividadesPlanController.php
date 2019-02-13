@@ -30,6 +30,8 @@ use App\Modelos\Actividades\Detalles\CondicionesDetalle;
 use App\Modelos\Actividades\LibrosFaltantes;
 use App\Modelos\Actividades\Kardex;
 use App\Modelos\Actividades\Remisiones;
+use App\Modelos\Actividades\CondicionesLocativas;
+use App\Modelos\Actividades\DocumentacionLegal;
 
 class CrearActividadesPlanController extends Controller
 {
@@ -911,7 +913,7 @@ class CrearActividadesPlanController extends Controller
                 }
             }
     }
-    public function crear_libro_vencimiento(Request $request){
+    public function crear_libro_vencimientos(Request $request){
 
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
@@ -932,7 +934,7 @@ class CrearActividadesPlanController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('libro_vencimiento')
+                    $fechas_base_datos=DB::table('libro_vencimientos')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
                 ->get();
@@ -1295,7 +1297,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $relacion_vendedores->id],201);
+                    return response()->json(["success"=>" Actividad creada", 'id' => $servicio_bodega->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);

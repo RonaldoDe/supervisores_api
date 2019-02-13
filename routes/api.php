@@ -122,7 +122,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('CrearActividadRemisiones', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_remisiones');
     Route::post('CrearActividadKardex', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_kardex');
     Route::post('CrearActividadCondicionesLocativas', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_condiciones_locativas');
-    Route::post('CrearActividadLibroVencimientos', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_libro_vencimiento');
+    Route::post('CrearActividadLibroVencimientos', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_libro_vencimientos');
     Route::post('CrearActividadPtc', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_ptc');
     Route::post('CrearActividadArqueoCaja', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_arqueo_caja');
     Route::post('CrearActividadDomicilios', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_domicilios');

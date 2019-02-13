@@ -876,7 +876,7 @@ class UpdateActividadesController extends Controller
                 }
             }
     }
-    public function update_libro_vencimiento(Request $request){
+    public function update_libro_vencimientos(Request $request){
 
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
@@ -897,7 +897,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('libro_vencimiento')
+                    $fechas_base_datos=DB::table('libro_vencimientos')
                 ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
                 ->where('id_plan_trabajo',request('id_plan_trabajo'))
                 ->where('id', '!=', request('id_actividad'))

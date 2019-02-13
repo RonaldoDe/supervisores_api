@@ -91,7 +91,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('updateServicioBodega', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_servicio_bodega');
     Route::post('updateUsoInstitucional', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_uso_institucional');
     Route::post('updateLibroFaltante', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_libros_faltantes');
-    Route::post('updateLibroVencimientos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_libro_vencimiento');
+    Route::post('updateLibroVencimientos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_libro_vencimientos');
     Route::post('updatePtc', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_ptc');
 
     //eliminar 

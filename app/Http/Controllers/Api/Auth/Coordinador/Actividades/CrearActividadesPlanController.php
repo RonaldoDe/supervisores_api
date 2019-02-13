@@ -32,6 +32,7 @@ use App\Modelos\Actividades\Kardex;
 use App\Modelos\Actividades\Remisiones;
 use App\Modelos\Actividades\CondicionesLocativas;
 use App\Modelos\Actividades\DocumentacionLegal;
+use App\Modelos\Actividades\ActividadPtc;
 
 class CrearActividadesPlanController extends Controller
 {

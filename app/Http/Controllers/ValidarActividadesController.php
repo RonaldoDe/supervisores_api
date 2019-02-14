@@ -273,10 +273,10 @@ class ValidarActividadesController extends Controller
                 $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
                 $actividad->motivo_ausencia = request('motivo_ausencia');
-                $actividad->ano_anterior = request('calificacion_pv');
-                $actividad->ano_actual = request('correspondencia');
-                $actividad->diferencia = request('correspondencia');
-                $actividad->implementar_estrategia = request('correspondencia');
+                $actividad->ano_anterior = request('ano_anterior');
+                $actividad->ano_actual = request('ano_actual');
+                $actividad->diferencia = request('diferencia');
+                $actividad->implementar_estrategia = request('implementar_estrategia');
                 $actividad->update();
 
                 //registro de notificacion

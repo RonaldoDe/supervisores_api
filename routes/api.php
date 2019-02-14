@@ -24,6 +24,7 @@ Route::middleware('auth:api')->group(function () {
     //buscar sucursales
     Route::post('searchSucursales', 'Api\Auth\Coordinador\BuscadoresController@searchSucursales');
     Route::post('soporteTecnico', 'Api\Auth\Coordinador\Reporte\ReporteController@soporteTecnico');
+    Route::get('logNotificacionesUsuario', 'Api\Auth\Coordinador\Reporte\LogController@logNotificaciones');
     
     Route::post('reporteSupervisor', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
     Route::post('detalleRepSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
@@ -194,7 +195,6 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
     //perfil de usuario
     Route::get('descripcionActividad', 'Api\Auth\Supervisores\DescripcionActividadController@description');
 
-    Route::get('logNotificacionesUsuario', 'Api\Auth\Coordinador\Reporte\LogController@logNotificaciones');
 
 });
 

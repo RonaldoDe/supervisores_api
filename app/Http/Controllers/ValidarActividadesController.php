@@ -370,7 +370,7 @@ class ValidarActividadesController extends Controller
                 $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
                 $actividad->motivo_ausencia = request('motivo_ausencia');
-                $actividad->exhibiciones = request('productos');
+                $actividad->productos = request('productos');
                 $actividad->update();
 
                 //registro de notificacion

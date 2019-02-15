@@ -1193,6 +1193,7 @@ class ValidarActividadesController extends Controller
              'calificacion_pv' => 'required',
              'tiempo_actividad'=>'required',
             'tiempo_total'=>'required',
+            'data' => 'required',
 
          ]);
          if($validator->fails())
@@ -1206,8 +1207,6 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = ActividadPtc::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
-
-                 
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  $actividad->id_estado = 2;
@@ -1216,6 +1215,29 @@ class ValidarActividadesController extends Controller
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                  $actividad->tiempo_total = request('tiempo_total');
                 $actividad->motivo_ausencia = request('motivo_ausencia');
+
+                $array_inputs=request('data');
+                $lista_inputs=json_encode($array_inputs,true);
+                $inputs=json_decode($lista_inputs);
+
+                foreach ($inputs as $input) {
+                    if(isset($input->image)){
+                        foreach ($input->image as $imagen) {
+                            $foto = 'imagen_ptc_'.$actividad->titulo.'_' . time();
+                            $url_img = str_replace(" ", "_",'ptc/'.request('nombre_sucursal').'/'.$actividad->id.'/'.$foto);
+
+                            if ($imagen->respuesta != "") { // storing image in storage/app/public Folder
+                                if(strpos($imagen->respuesta, 'supervisores_api/storage/app/public/img/') == false ){
+                                    Storage::disk('public')->put('img/'.$url_img, base64_decode($imagen->respuesta));
+                                    $imagen->respuesta = $foto; 
+                                }else{
+                                    $imagen->respuesta = '';
+                                }
+                            }
+                        }
+                    }
+                }
+                $actividad->data = request('data');
                 $actividad->update();
                  //registro de notificacion
                  if($actividad){

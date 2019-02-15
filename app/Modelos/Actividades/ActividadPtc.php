@@ -11,6 +11,6 @@ class ActividadPtc extends Model
 
     public $timestamps=false;
 
-    protected $fillable=['id_plan_trabajo','titulo','fecha_inicio','fecha_fin','fecha_mod','id_prioridad','id_estado','calificacion','observacion', 'tiempo_actividad', 'tiempo_total', 'motivo_ausencia','calificacion_pv', 'descripcion_ptc'];
+    protected $fillable=['id_plan_trabajo','titulo','fecha_inicio','fecha_fin','fecha_mod','id_prioridad','id_estado','calificacion','observacion', 'tiempo_actividad', 'tiempo_total', 'motivo_ausencia','calificacion_pv', 'descripcion_ptc', 'data'];
 
 }

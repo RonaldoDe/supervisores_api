@@ -1428,6 +1428,7 @@ class CrearActividadesPlanController extends Controller
             'id_prioridad' => 'required|numeric',
             'titulo' => 'required',
             'descripcion_ptc' => 'required',
+            'data' => 'required',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required',
             'fecha_fin'=>'date_format:"Y-m-d"|required'
@@ -1454,6 +1455,7 @@ class CrearActividadesPlanController extends Controller
                     'observacion'=>'',
                     'id_prioridad' =>request('id_prioridad'),
                     'descripcion_ptc' =>request('descripcion_ptc'),
+                    'data' =>request('plantilla'),
                     'id_estado' =>1,
 
                 ]);

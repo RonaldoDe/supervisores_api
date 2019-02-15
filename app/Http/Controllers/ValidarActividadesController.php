@@ -1238,7 +1238,7 @@ class ValidarActividadesController extends Controller
                     }
                 }
 
-                $data = json_encode($inputs);
+                $data = $inputs;
                 $actividad->data = $data;
                 $actividad->update();
                  //registro de notificacion

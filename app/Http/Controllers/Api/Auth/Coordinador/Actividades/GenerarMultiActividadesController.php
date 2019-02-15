@@ -32,7 +32,7 @@ class GenerarMultiActividadesController extends MultiActividadController
         {
             $requestSucursales=request("lista_sucursales");
             $lista=json_encode($requestSucursales,true);
-            // //decodificcion del reques recibido para iterar el aary
+            // //decodificacion del reques recibido para iterar el aary
             $listaSucursales=json_decode($lista);
             
             if(request('id_plan_trabajo') == null){

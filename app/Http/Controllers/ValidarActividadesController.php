@@ -1219,8 +1219,7 @@ class ValidarActividadesController extends Controller
                 $array_inputs=request('data');
                 $lista_inputs=json_encode($array_inputs,true);
                 $inputs=json_decode($lista_inputs);
-                
-                foreach ($array_inputs as $input) {
+                foreach ($inputs as $input) {
                     if(isset($input->tipo)){
                         $img = 'imagen_ptc_'.$actividad->titulo.'_' . time();
                         $foto = str_replace(" ", "_",$img);

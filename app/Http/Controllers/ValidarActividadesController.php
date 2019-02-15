@@ -1221,23 +1221,25 @@ class ValidarActividadesController extends Controller
                 $inputs=json_decode($lista_inputs);
 
                 foreach ($inputs as $input) {
-                    if(isset($input->image)){
-                        foreach ($input->image as $imagen) {
-                            $foto = 'imagen_ptc_'.$actividad->titulo.'_' . time();
-                            $url_img = str_replace(" ", "_",'ptc/'.request('nombre_sucursal').'/'.$actividad->id.'/'.$foto);
-
-                            if ($imagen->respuesta != "") { // storing image in storage/app/public Folder
-                                if(strpos($imagen->respuesta, 'supervisores_api/storage/app/public/img/') == false ){
-                                    Storage::disk('public')->put('img/'.$url_img, base64_decode($imagen->respuesta));
-                                    $imagen->respuesta = $foto; 
+                    if(isset($input->tipo)){
+                        $img = 'imagen_ptc_'.$actividad->titulo.'_' . time();
+                        $foto = str_replace(" ", "_",$img);
+                        $url_img = str_replace(" ", "_",'ptc/'.request('nombre_sucursal').'/'.$actividad->id.'/'.$foto);
+                        if($input->tipo == "image"){
+                            if ($input->respuesta != "") { // storing image in storage/app/public Folder
+                                if(strpos($input->respuesta, 'supervisores_api/storage/app/public/img/') == false ){
+                                    Storage::disk('public')->put('img/'.$url_img, base64_decode($input->respuesta));
+                                    $input->respuesta = $foto;
                                 }else{
-                                    $imagen->respuesta = '';
+                                    $input->respuesta = '';
                                 }
                             }
                         }
+                        
                     }
                 }
-                $actividad->data = request('data');
+                $data = json_encode($inputs);
+                $actividad->data = $data;
                 $actividad->update();
                  //registro de notificacion
                  if($actividad){

@@ -1394,7 +1394,8 @@ class UpdateActividadesController extends Controller
                 'titulo'=>'required',
                 'descripcion_ptc'=>'required',
                 'fecha_inicio'=>'date_format:"Y-m-d"|required',
-                'fecha_fin'=>'date_format:"Y-m-d"|required'
+                'fecha_fin'=>'date_format:"Y-m-d"|required',
+                'data'=>'required',
     
             ]);
             if($validator->fails())
@@ -1439,6 +1440,7 @@ class UpdateActividadesController extends Controller
                     $actividad->fecha_fin = request('fecha_fin').' '.'23:59:00';
                     $actividad->id_estado = 1;
                     $actividad->id_prioridad = request('id_prioridad');
+                    $actividad->data = request('data');
                     $actividad->descripcion_ptc = request('descripcion_ptc');
                     $actividad->update();
                     return response()->json('Actividad actualizada con exito', 200);

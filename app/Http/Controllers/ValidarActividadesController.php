@@ -1228,7 +1228,6 @@ class ValidarActividadesController extends Controller
                         if($input->tipo == 6){
                             if ($input->respuesta != "") { // storing image in storage/app/public Folder
                                 if(strpos($input->respuesta, 'supervisores_api/storage/app/public/img/') == false ){
-                                    return response()->json($input->respuesta);exit;
                                     Storage::disk('public')->put('img/'.$url_img, base64_decode($input->respuesta));
                                     $input->respuesta = $foto;
                                 }else{

@@ -1217,8 +1217,8 @@ class ValidarActividadesController extends Controller
                 $actividad->motivo_ausencia = request('motivo_ausencia');
 
                 $array_inputs=request('data');
-                //$lista_inputs=json_encode($array_inputs,true);
-                $inputs=json_decode($array_inputs);
+                $lista_inputs=json_encode($array_inputs,true);
+                $inputs=json_decode($lista_inputs);
                 foreach ($inputs as $input) {
                     if(isset($input->tipo)){
                         $img = 'imagen_ptc_'.$actividad->titulo.'_' . time();

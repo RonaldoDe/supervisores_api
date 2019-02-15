@@ -1455,7 +1455,7 @@ class CrearActividadesPlanController extends Controller
                     'observacion'=>'',
                     'id_prioridad' =>request('id_prioridad'),
                     'descripcion_ptc' =>request('descripcion_ptc'),
-                    'data' =>request('plantilla'),
+                    'data' =>request('data'),
                     'id_estado' =>1,
 
                 ]);

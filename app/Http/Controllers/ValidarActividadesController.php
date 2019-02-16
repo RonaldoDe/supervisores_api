@@ -1217,9 +1217,9 @@ class ValidarActividadesController extends Controller
                 $actividad->motivo_ausencia = request('motivo_ausencia');
 
                 $array_inputs=request('data');
-                $lista_inputs=json_encode($array_inputs);
-                $inputs=json_decode($lista_inputs, true);
-                foreach ((array)$inputs as $input) {
+                $lista_inputs=json_decode($array_inputs);
+                //$inputs=json_encode($lista_inputs, true);
+                foreach ((array)$lista_inputs as $input) {
                     if(isset($input->tipo)){
                         $img = 'imagen_ptc_'.$actividad->titulo.'_' . time();
                         $foto = str_replace(" ", "_",$img);
@@ -1238,7 +1238,7 @@ class ValidarActividadesController extends Controller
                     }
                 }
 
-                $data = $inputs;
+                $data = json_encode($lista_inputs);
                 $actividad->data = $data;
                 $actividad->update();
                  //registro de notificacion

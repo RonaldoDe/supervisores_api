@@ -146,7 +146,7 @@ $sw=0;
         ->first();
         
         $nombre_sucursal = DB::table('sucursales')
-        ->select('cod_sucursal', 'nombre')
+        ->select('id_suscursal', 'cod_sucursal', 'nombre')
         ->where('id_suscursal', $nombre_plan->id_sucursal)
         ->first();
         
@@ -181,6 +181,7 @@ $sw=0;
                 'id_plan_trabajo' =>$id_plan_trabajo,
                 'id_coordinador' =>$coordinador->id_cordinador,
                 'id_usuario' => $usuario_rol->id_usuario_roles,
+                'id_sucursal' => $nombre_sucursal->id_suscursal,
                 'nombre_plan' =>$nombre_plan->nombre,
                 'nombre_actividad' =>$nombre_actividad->nombre_actividad,
                 'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,

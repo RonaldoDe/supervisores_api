@@ -10,5 +10,5 @@ class Notificaciones extends Model
 
     public $timestamps=false;
 
-    protected $fillable=['id_plan_trabajo', 'id_coordinador','nombre_plan','nombre_actividad','nombre_supervisor', 'nombre_sucursal','leido','tipo','fecha', 'id_usuario', 'tipo_usuario'];
+    protected $fillable=['id_plan_trabajo', 'id_coordinador', 'id_sucursal','nombre_plan','nombre_actividad','nombre_supervisor', 'nombre_sucursal','leido','tipo','fecha', 'id_usuario', 'tipo_usuario'];
 }

@@ -1441,7 +1441,7 @@ class MultiActividadController extends Controller
                     'id_prioridad' =>1,
                     'id_estado' =>1,
                     'data' =>request('data'),
-                    'descripcion' =>request('descripcion'),
+                    'descripcion_ptc' =>request('descripcion'),
 
                 ]);
         

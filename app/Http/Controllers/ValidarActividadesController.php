@@ -1221,11 +1221,11 @@ class ValidarActividadesController extends Controller
                 //$inputs=json_encode($lista_inputs, true);
                 foreach ((array)$lista_inputs as $input) {
                     if(isset($input->tipo)){
-                        $img = 'imagen_ptc_'.$actividad->titulo.'_' . time();
-                        $foto = str_replace(" ", "_",$img);
-                        $url_img = str_replace(" ", "_",'ptc/'.request('id_plan_trabajo').'/'.$actividad->id.'/'.$foto);
                         if($input->tipo == 6){
                             if ($input->respuesta != "") { // storing image in storage/app/public Folder
+                                $img = 'imagen_ptc_'.$actividad->titulo.'_' .$input->titulo.'_' .time();
+                                $foto = str_replace(" ", "_",$img);
+                                $url_img = str_replace(" ", "_",'ptc/'.request('id_plan_trabajo').'/'.$actividad->id.'/'.$foto);
                                 if(strpos($input->respuesta, 'supervisores_api/storage/app/public/img/') == false ){
                                     Storage::disk('public')->put('img/'.$url_img, base64_decode($input->respuesta));
                                     $input->respuesta = $foto;

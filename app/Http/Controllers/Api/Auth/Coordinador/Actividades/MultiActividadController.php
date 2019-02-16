@@ -1410,8 +1410,8 @@ class MultiActividadController extends Controller
             'titulo' => 'required',
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required',
-            'fecha_fin'=>'date_format:"Y-m-d"|required'
-
+            'fecha_fin'=>'date_format:"Y-m-d"|required',
+            'data' => 'required'
         ]);
         if($validator->fails())
         {
@@ -1439,6 +1439,7 @@ class MultiActividadController extends Controller
                     'observacion'=>'',
                     'id_prioridad' =>1,
                     'id_estado' =>1,
+                    'data' =>request('data'),
 
                 ]);
         

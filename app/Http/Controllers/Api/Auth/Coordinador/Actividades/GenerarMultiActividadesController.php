@@ -105,7 +105,9 @@ class GenerarMultiActividadesController extends MultiActividadController
                                         if($actividad->nombre_tabla == 'actividades_ptc'){
                                             $params = [
                                                 'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo,
-                                                'titulo' => $actividad->titulo
+                                                'titulo' => $actividad->titulo,
+                                                'data' => $actividad->data,
+                                                'descripcion' => $actividad->descripcion
                                             ];
                                         }else{
                                             $params = [

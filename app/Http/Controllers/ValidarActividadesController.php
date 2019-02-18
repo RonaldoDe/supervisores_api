@@ -1228,7 +1228,7 @@ class ValidarActividadesController extends Controller
                                 $url_img = str_replace(" ", "_",'ptc/'.request('id_plan_trabajo').'/'.$actividad->id.'/'.$foto);
                                 if(strpos($input->respuesta, 'supervisores_api/storage/app/public/img/') == false ){
                                     Storage::disk('public')->put('img/'.$url_img, base64_decode($input->respuesta));
-                                    $input->respuesta = $foto;
+                                    $input->respuesta = $url_img;
                                 }else{
                                     $input->respuesta = '';
                                 }

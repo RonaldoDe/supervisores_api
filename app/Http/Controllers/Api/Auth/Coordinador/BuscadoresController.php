@@ -89,8 +89,8 @@ class BuscadoresController extends Controller
             $usuario_rol=DB::table('usuarios_roles')
             ->where('id_usuario','=',$supervisor->id_usuario)->first();
 
-            $zona = DB::table('zona')
-            ->where('id_usuario_roles','=',$usuario_rol->id_usuario_roles)->first();
+            $zona = DB::table('usuario_zona')
+            ->where('id_usuario','=',$usuario_rol->id_usuario_roles)->first();
             if($zona){
                 $nombre_sucursal = request('nombre_sucursal');
                 $sucursales = DB::table('sucursales')

@@ -165,8 +165,8 @@ $sw=0;
         $usuario_rol=DB::table('usuarios_roles')
         ->where('id_usuario','=',$supervisor->id_usuario)->first();
 
-        $region = DB::table('zona')
-        ->where('id_usuario_roles','=',$usuario_rol->id_usuario_roles)->first();
+        $region = DB::table('usuario_zona')
+        ->where('id_usuario','=',$usuario_rol->id_usuario_roles)->first();
 
         $coordinador = DB::table('region')
         ->where('id_region','=',$region->id_region)->first();

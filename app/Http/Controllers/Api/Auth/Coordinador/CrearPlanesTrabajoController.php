@@ -22,8 +22,6 @@ class CrearPlanesTrabajoController extends Controller
             'id_sucursal' => 'required|numeric',
            // 'fecha_creacion' => 'date_format:"Y-m-d H:i:s"|required',
             'id_supervisor'=>'required|numeric',
-
-
         ]);
 
         if($validator->fails())

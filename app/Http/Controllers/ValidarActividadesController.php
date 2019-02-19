@@ -97,7 +97,8 @@ class ValidarActividadesController extends Controller
             'sobrante' => 'required',
             'faltante' => 'required',
             'diferencia' => 'required',
-            'general' => 'required',
+            'gatos' => 'required',
+            'base' => 'required',
         ]);
         if($validator->fails())
         {
@@ -121,7 +122,8 @@ class ValidarActividadesController extends Controller
                 $actividad->sobrante = request('sobrante');
                 $actividad->faltante = request('faltante');
                 $actividad->diferencia = request('diferencia');
-                $actividad->general = request('general');
+                $actividad->diferencia = request('gatos');
+                $actividad->diferencia = request('base');
                 $actividad->update();
 
                 //registro de notificacion

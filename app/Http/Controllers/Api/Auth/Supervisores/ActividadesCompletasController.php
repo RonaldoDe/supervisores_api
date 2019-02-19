@@ -28,11 +28,15 @@ class ActividadesCompletasController extends Controller
        ->where('ur.id_usuario',$user_supervisor->id_usuario)
        ->first();
 
+       $usuario_zona = DB::table('usuario_zona as uz')
+       ->where('uz.id_usuario',$usuario_rol->id_usuario_roles)
+       ->first();
+
         //obtener las actividades segun su plan de trabajo
        $actividades=DB::table('plan_trabajo_asignacion as p')
        ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
        ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
-       ->where('p.id_supervisor',$usuario_rol->id_usuario_roles)
+       ->where('su.id_zona',$usuario_zona->id_zona)
        ->where('p.estado',1)
        ->orderby('ac.id_plan_trabajo','desc')
        ->get();
@@ -61,10 +65,6 @@ class ActividadesCompletasController extends Controller
         }
         //validar que el array trae actividades y ordenarlas por prioridad
             if(count($actividades_habilitadas) > 0){
-                foreach($actividades_habilitadas as $key => $row){
-                    $aux[$key] = $row->id_prioridad;
-                }
-                array_multisort($aux, SORT_DESC, $actividades_habilitadas);
                 return response()->json(['Actividades' => $actividades_habilitadas,'datos_usuario' => $user_supervisor], 200);
             }else{
                 return response()->json(['Actividades' => 'No tienes actividadedes para el dia de hoy','datos_usuario' => $user_supervisor],400);

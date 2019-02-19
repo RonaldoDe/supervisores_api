@@ -382,11 +382,15 @@ class ReportesGeneralesController extends Controller
        ->where('ur.id_usuario',$user_supervisor->id_usuario)
        ->first();
 
+       $usuario_zona = DB::table('usuario_zona as uz')
+       ->where('uz.id_usuario',$usuario_rol->id_usuario_roles)
+       ->first();
+
         //obtener las actividades segun su plan de trabajo
        $actividades=DB::table('plan_trabajo_asignacion as p')
        ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
        ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
-       ->where('p.id_supervisor',$usuario_rol->id_usuario_roles)
+       ->where('su.id_zona',$usuario_zona->id_zona)
        ->where('p.estado',1)
        ->orderBy('p.id_sucursal', 'desc')
        ->get();

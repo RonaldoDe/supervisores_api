@@ -54,6 +54,7 @@ class HomeCoordinadorController extends Controller
                 ->join('coordinadores as c','c.id_cordinador','=','r.id_cordinador')
                 //->join('sucursales as s','s.id_zona','=','z.id_zona')
                 ->where('r.id_cordinador','=',$region->id_cordinador)
+                ->where('u.id_rol','=',1)
                 ->select('z.descripcion_zona','z.id_zona','us.nombre as supervisor','uz.id_usuario as id_usuario_supervisor',
                 DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
                 ->get();

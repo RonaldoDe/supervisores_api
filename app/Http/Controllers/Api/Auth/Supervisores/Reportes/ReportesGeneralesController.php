@@ -44,8 +44,8 @@ class ReportesGeneralesController extends Controller
                 $gerente = 0;
            }
 
-            $region = DB::table('zona')
-            ->where('id_usuario_roles','=',$usuario_rol->id_usuario_roles)->first();
+            $region = DB::table('usuario_zona')
+            ->where('id_usuario','=',$usuario_rol->id_usuario_roles)->first();
 
             if($region){
                 $coordinador = DB::table('region')

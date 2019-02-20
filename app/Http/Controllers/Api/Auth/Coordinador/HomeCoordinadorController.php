@@ -219,11 +219,11 @@ class HomeCoordinadorController extends Controller
             $coordinador=DB::table('coordinadores')->where('correo','=',$user->email)->first();
 
             if($coordinador != null){
-                $zona = DB::table('zona as z')
-                ->select('su.cod_sucursal', 'su.nombre', 'su.direccion', 'z.id_usuario_roles', 'usu.nombre as nombre_usuario', 'usu.apellido', 'su.id_zona')
+                $zona = DB::table('usuario_zona as z')
+                ->select('su.cod_sucursal', 'su.nombre', 'su.direccion', 'z.id_usuario', 'usu.nombre as nombre_usuario', 'usu.apellido', 'su.id_zona')
                 ->join('region as r', 'r.id_region', 'z.id_region')
                 ->join('sucursales as su', 'z.id_zona', 'su.id_zona')
-                ->join('usuarios_roles as ur', 'z.id_usuario_roles', 'ur.id_usuario_roles')
+                ->join('usuarios_roles as ur', 'z.id_usuario', 'ur.id_usuario_roles')
                 ->join('usuario as usu', 'ur.id_usuario', 'usu.id_usuario')
                 ->where('r.id_cordinador', $coordinador->id_cordinador)
                 ->where('su.id_suscursal', request('id_sucursal'))

@@ -49,7 +49,7 @@ class HomeCoordinadorController extends Controller
                 ->join('region as r','r.id_region','=','z.id_region')
                 ->join('usuarios_roles as u','u.id_usuario_roles','=','uz.id_usuario')
                 ->join('roles as ro','ro.id_roles','=','u.id_rol')
-                ->join('usuario as us','us.id_usuario','=','u.id_usuario')
+                ->join('usuario as us','us.id_usuario','=','uz.id_usuario')
                 ->join('coordinadores as c','c.id_cordinador','=','r.id_cordinador')
                 ->join('usuario_zona as uz','z.id_zona','=','uz.id_zona')
                 //->join('sucursales as s','s.id_zona','=','z.id_zona')

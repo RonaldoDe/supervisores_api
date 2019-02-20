@@ -45,7 +45,7 @@ class HomeCoordinadorController extends Controller
 
 
       // Se recupera los datos de las zonas asociados a la region del coordinador autenticado
-    $zonas=DB::table('zona as z')
+    $zonas=DB::table('usuario_zona as z')
                 ->join('region as r','r.id_region','=','z.id_region')
                 ->join('usuarios_roles as u','u.id_usuario_roles','=','z.id_usuario_roles')
                 ->join('roles as ro','ro.id_roles','=','u.id_rol')
@@ -53,7 +53,7 @@ class HomeCoordinadorController extends Controller
                 ->join('coordinadores as c','c.id_cordinador','=','r.id_cordinador')
                 //->join('sucursales as s','s.id_zona','=','z.id_zona')
                 ->where('r.id_cordinador','=',$region->id_cordinador)
-                ->select('z.descripcion_zona','z.id_zona','us.nombre as supervisor','z.id_usuario_roles as id_usuario_supervisor',
+                ->select('z.descripcion_zona','z.id_zona','us.nombre as supervisor','z.id_usuario as id_usuario_supervisor',
                 DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
                 ->get();
 

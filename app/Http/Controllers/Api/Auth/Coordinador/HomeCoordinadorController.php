@@ -186,6 +186,7 @@ class HomeCoordinadorController extends Controller
                 $sucursal=DB::table('zona as zo')
                 ->join('sucursales as s','zo.id_zona','=','s.id_zona')
                 ->join('usuario_zona as uz','zo.id_zona','=','uz.id_zona')
+                ->join('usuarios_roles as ur','uz.id_usuario','=','ur.id_usuario_roles')
                 ->join('usuario as us','ur.id_usuario','=','us.id_usuario')
                 ->where('s.id_zona','=',$id)
 

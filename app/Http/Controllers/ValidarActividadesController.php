@@ -1232,7 +1232,7 @@ class ValidarActividadesController extends Controller
                 foreach ((array)$lista_inputs as $input) {
                     if(isset($input->tipo)){
                         if($input->tipo == 6){
-                            if ($input->respuesta != "") { // storing image in storage/app/public Folder
+                            if ($input->respuesta != "" && strlen($input->respuesta) > 200) { // storing image in storage/app/public Folder
                                 $img = 'imagen_ptc_'.$actividad->titulo.'_' .$input->titulo.'_' .time();
                                 $foto = str_replace(" ", "_",$img);
                                 $url_img = str_replace(" ", "_",'ptc/'.request('id_plan_trabajo').'/'.$actividad->id.'/'.$foto);

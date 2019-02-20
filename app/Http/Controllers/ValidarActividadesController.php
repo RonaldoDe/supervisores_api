@@ -154,6 +154,8 @@ class ValidarActividadesController extends Controller
             'venta_domicilios_proyeccion'=>'required',
             'numero_mensajeros_planta'=>'required',
             'pro_domicilio_mensajero'=>'required',
+            'mes_actual'=>'required',
+            'dias_transcurridos'=>'required',
         ]);
         if($validator->fails())
         {
@@ -178,6 +180,8 @@ class ValidarActividadesController extends Controller
                 $actividad->venta_domicilios_proyeccion = request('venta_domicilios_proyeccion');
                 $actividad->numero_mensajeros_planta = request('numero_mensajeros_planta');
                 $actividad->pro_domicilio_mensajero = request('pro_domicilio_mensajero');
+                $actividad->mes_actual = request('mes_actual');
+                $actividad->dias_transcurridos = request('dias_transcurridos');
                 $actividad->update();
 
                 //registro de notificacion

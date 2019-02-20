@@ -1019,6 +1019,8 @@ class ValidarActividadesController extends Controller
              'calificacion_pv' => 'required',
              'tiempo_actividad'=>'required',
             'tiempo_total'=>'required',
+            'consecutivos'=>'required',
+            'numero_remisiones'=>'required',
 
          ]);
          if($validator->fails())
@@ -1040,6 +1042,8 @@ class ValidarActividadesController extends Controller
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
                 $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->consecutivos = request('consecutivos');
+                $actividad->numero_remisiones = request('numero_remisiones');
                 $actividad->update();
                  //registro de notificacion
                  if($actividad){

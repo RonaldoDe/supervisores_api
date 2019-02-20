@@ -184,12 +184,13 @@ class HomeCoordinadorController extends Controller
             if($sw>0){
 
                 $sucursal=DB::table('sucursales as s')
-                ->join('usuario_zona as uz','s.id_zona','=','uz.id_zona')
+                ->join('zona as zo','s.id_zona','=','zo.id_zona')
+                ->join('usuario_zona as uz','zo.id_zona','=','uz.id_zona')
                 ->join('usuarios_roles as ur','uz.id_usuario','=','ur.id_usuario_roles')
                 ->join('usuario as us','ur.id_usuario','=','us.id_usuario')
                 ->where('s.id_zona','=',$id)
                 ->where('ur.id_rol', 1)
-                ->select('uz.descripcion_zona','s.id_suscursal','s.cod_sucursal','s.nombre as sucursal','ur.id_usuario_roles as id_supervisor',
+                ->select('zo.descripcion_zona','s.id_suscursal','s.cod_sucursal','s.nombre as sucursal','ur.id_usuario_roles as id_supervisor',
                 DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
                 ->get();
 

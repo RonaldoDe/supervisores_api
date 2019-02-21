@@ -49,7 +49,7 @@ class CrearPlanesTrabajoController extends Controller
                 'id_sucursal' =>request('id_sucursal'),
                 'fecha_creacion' =>$day,
                 'id_supervisor' =>request('id_supervisor'),
-                'estado'=>0,
+                'estado'=>1,
                 'idcoordinador' =>$cordinador->id_cordinador,
 
             ]);

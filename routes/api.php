@@ -42,7 +42,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     //listado de rutas y nombre de actividades
     Route::get('rutas', 'Api\Auth\Supervisores\DescripcionActividadController@rutas');
 
-    Route::get('panelControl', 'Api\Auth\Coordinador\Panel\PanelControlController@listaSupervisores');
+    Route::get('listaSupervisores', 'Api\Auth\Coordinador\Panel\PanelControlController@listaSupervisores');
 
 
     //ver reportes de sucursales

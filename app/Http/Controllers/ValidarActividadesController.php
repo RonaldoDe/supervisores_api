@@ -879,7 +879,7 @@ class ValidarActividadesController extends Controller
             'calificacion_pv' => 'required',
             'tiempo_actividad'=>'required',
             'tiempo_total'=>'required',
-            'productos'=>'productos',
+            'productos'=>'required',
             
         ]);
         if($validator->fails())

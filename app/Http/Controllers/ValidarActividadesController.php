@@ -890,7 +890,7 @@ class ValidarActividadesController extends Controller
         else
         {
             //actualizacion de la actividad por el supervisor
-            $actividad = ServicioBodega::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+            $actividad = UsoInstitucional::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');

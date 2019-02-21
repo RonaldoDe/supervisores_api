@@ -27,7 +27,6 @@ class PanelControlController extends Controller
         ->join('usuario as us','ur.id_usuario','=','us.id_usuario')
         ->join('coordinadores as co','r.id_cordinador','=','co.id_cordinador')
         ->where('co.id_cordinador','=',$coordinador->id_cordinador)
-        ->where('ur.id_rol','=',1)
         ->select('ur.id_usuario_roles', 'us.nombre', 'us.apellido', 'us.cedula', 'us.correo', 'us.telefono')
         ->get();
 

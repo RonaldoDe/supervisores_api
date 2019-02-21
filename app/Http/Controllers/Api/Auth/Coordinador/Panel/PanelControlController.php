@@ -21,10 +21,11 @@ class PanelControlController extends Controller
 
        $supervisores=DB::table('usuario_zona as uz')
         ->join('region as r','uz.id_region','=','r.id_region')
-        ->join('usuarios_roles as ur','z.id_region','=','r.id_region')
+        ->join('usuarios_roles as ur','uz.id_usuario','=','ur.id_usuario_roles')
+        ->join('usuario as us','ur.id_usuario','=','us.id_usuario')
         ->join('coordinadores as co','r.id_cordinador','=','co.id_cordinador')
         ->where('co.id_cordinador','=',$cordinador->id_cordinador)
-        ->select('z.id_zona')
+        ->select('ur.id_usuario_roles', 'us.nombre', 'us.apellido', 'us.cedula', 'us.correo', 'us.telefono')
         ->get();
     }
 }

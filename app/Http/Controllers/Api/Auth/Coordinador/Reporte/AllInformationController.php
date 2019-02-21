@@ -24,7 +24,11 @@ class AllInformationController extends Controller
                         ->first();
 
         $zonas=DB::table('zona as zo')
+        ->select('zo.descripcion_zona', 'uz.id_region', 'zo.id_zona', 'uz.id_usuario')
+        ->join('usuario_zona as uz','zo.id_zona','=','uz.id_zona')
+        ->join('usuarios_roles as ur','uz.id_usuario','=','ur.id_usuario_roles')
         ->where('zo.id_region',$region->id_region)
+        ->where('ur.id_rol', 1)
         ->get();
 
        $sucursales_array = array();

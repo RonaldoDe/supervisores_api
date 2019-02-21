@@ -31,6 +31,7 @@ use App\Modelos\Actividades\ProgramaMercadeo;
 use App\Modelos\Actividades\RelacionServiciosPublicos;
 use App\Modelos\Actividades\RelacionVendedores;
 use App\Modelos\Actividades\ServicioBodega;
+use App\Modelos\Actividades\ProductosBonificados;
 
 class ValidarActividadesController extends Controller
 {
@@ -628,7 +629,7 @@ class ValidarActividadesController extends Controller
         else
         {
             //actualizacion de la actividad por el supervisor
-            $actividad = Julienne::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+            $actividad = ProductosBonificados::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');

@@ -31,6 +31,7 @@ class GenerarMultiActividadesController extends MultiActividadController
         else
         {
             $requestSucursales=request("lista_sucursales");
+            
             $lista=json_encode($requestSucursales,true);
             // //decodificacion del reques recibido para iterar el aary
             $listaSucursales=json_decode($lista);
@@ -98,6 +99,7 @@ class GenerarMultiActividadesController extends MultiActividadController
                                         ]);
                                     
                                 }
+                                
                                 if($actividadAux){
                                     $tabla = $actividad->nombre_tabla;
                                     if(method_exists($this, $tabla)){
@@ -119,7 +121,6 @@ class GenerarMultiActividadesController extends MultiActividadController
 
                                         $validar=$this->$tabla($request);
 
-                                        echo $validar;
                                     }else{
                                         return response()->json(['message' => 'El metodo no existe', 'metodo' => $actividad->nombre_tabla],400);
                                     }    

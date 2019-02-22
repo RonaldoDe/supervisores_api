@@ -30,6 +30,9 @@ class GenerarMultiActividadesController extends MultiActividadController
 
         else
         {
+            $fecha= date('Y-m-d');
+
+            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
             $requestSucursales=request("lista_sucursales");
             
             $lista=json_encode($requestSucursales,true);
@@ -120,6 +123,8 @@ class GenerarMultiActividadesController extends MultiActividadController
                                         $request->request->add($params);
 
                                         $validar=$this->$tabla($request);
+                                        echo $validar;
+
 
                                     }else{
                                         return response()->json(['message' => 'El metodo no existe', 'metodo' => $actividad->nombre_tabla],400);
@@ -179,18 +184,21 @@ class GenerarMultiActividadesController extends MultiActividadController
                                         }
                                         $request->request->add($params);
                                         $validar=$this->$tabla($request);
-                                        echo $validar;
                                     }else{
                                         return response()->json(['message' => 'El metodo no existe', 'metodo' => $actividad->nombre_tabla],400);
                                     }    
                                 }
                 }
             }else{
-                return response()->json(['message' => 'El plan de trabajo no exciste'],400);
+                return response()->json(['message' => 'El plan de trabajo no existe'],400);
             }
             DB::commit();
         }           
                
-        }
+        }else{
+        return response()->json(['message' => 'La fecha inicio debe ser mayor a la final'],400);
+
+    }
+    }
     }
 }

@@ -22,6 +22,9 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('inputsPlantilla', 'Api\Auth\Coordinador\Reporte\RutasFreeController@inputs');
 
+    Route::post('logErrors', 'Api\Auth\Log\LogErrorsController@logErrors');
+
+
     
     Route::get('profileUser', 'Api\Auth\Supervisores\HomeSupervisorController@profileUser');
     //buscar sucursales

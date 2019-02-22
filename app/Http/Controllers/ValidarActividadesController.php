@@ -568,6 +568,8 @@ class ValidarActividadesController extends Controller
             'venta_mes_anterior'=>'required',
             'proyeccion_mes_actual'=>'required',
             'relacion_faltantes'=>'required',
+            'mes_actual'=>'required',
+            'dias_transcurridos'=>'required',
             
         ]);
         if($validator->fails())
@@ -591,6 +593,8 @@ class ValidarActividadesController extends Controller
                 $actividad->venta_mes_anterior = request('venta_mes_anterior');
                 $actividad->proyeccion_mes_actual = request('proyeccion_mes_actual');
                 $actividad->relacion_faltantes = request('relacion_faltantes');
+                $actividad->mes_actual = request('mes_actual');
+                $actividad->dias_transcurridos = request('dias_transcurridos');
                 $actividad->update();
 
                 //registro de notificacion

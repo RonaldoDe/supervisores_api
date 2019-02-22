@@ -11,5 +11,5 @@ class Julienne extends Model
 
     public $timestamps=false;
 
-    protected $fillable=['id_plan_trabajo','id_prioridad','fecha_inicio','fecha_fin','fecha_mod','observacion','calificacion_pv','calificacion', 'tiempo_actividad', 'tiempo_total', 'motivo_ausencia','id_estado', 'venta_mes_anterior', 'proyeccion_mes_actual', 'relacion_faltantes'];
+    protected $fillable=['id_plan_trabajo','id_prioridad','fecha_inicio','fecha_fin','fecha_mod','observacion','calificacion_pv','calificacion', 'tiempo_actividad', 'tiempo_total', 'motivo_ausencia','id_estado', 'venta_mes_anterior', 'proyeccion_mes_actual', 'relacion_faltantes', 'mes_actual', 'dias_transcurridos'];
 }

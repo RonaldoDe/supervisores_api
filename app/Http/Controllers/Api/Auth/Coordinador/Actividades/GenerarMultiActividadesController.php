@@ -85,6 +85,33 @@ class GenerarMultiActividadesController extends MultiActividadController
                             $actividades=json_decode($lista_actividades);
 
                         foreach ($actividades as $actividad) {
+
+                                $planesSucursal = DB::table('plan_trabajo_asignacion')
+                                ->where('id_sucursal', $sucursal->id_sucursal)
+                                ->orderBy('id_sucursal', 'desc')
+                                ->get();
+                                 
+                                $fechaInicio = date(request('fecha_inicio'), strtotime('-1 day', strtotime(request('fecha_inicio'))));
+                                $fechaFin = date(request('fecha_fin'), strtotime('+1 day', strtotime(request('fecha_fin'))));
+                                foreach($planesSucursal as $planSucursal){
+                                    if($actividad->nombre_tabla != 'actividades_ptc'){
+                                        $validarDuplicadoFechas = DB::table($actividad->nombre_tabla)
+                                        ->select('id', 'fecha_inicio', 'fecha_fin', 'id_plan_trabajo')
+                                        ->where('id_plan_trabajo', $planSucursal->id_plan_trabajo)
+                                        ->where('id_estado', 2)
+                                        ->get();
+                                        if(count($validarDuplicadoFechas) > 0){
+                                            foreach ($validarDuplicadoFechas as $fechasDuplicadas) {
+                                                if(request('fecha_inicio').' 00:00:00' >= $fechasDuplicadas->fecha_inicio && request('fecha_inicio').' 00:00:00' <= $fechasDuplicadas->fecha_fin){
+                                                    if(request('fecha_fin').' 23:59:00' >= $fechasDuplicadas->fecha_inicio && request('fecha_fin').' 23:59:00' <= $fechasDuplicadas->fecha_fin){
+                                                        return response()->json(['La fecha se encunetra en el rango de fechas de otra actividad igual' => $actividad->nombre_tabla, $fechasDuplicadas],400);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
                             
                                 $validarActividades = DB::table('actividades')
                                 ->where('id_plan_trabajo', $plan_trabajo->id_plan_trabajo)
@@ -196,7 +223,7 @@ class GenerarMultiActividadesController extends MultiActividadController
         }           
                
         }else{
-        return response()->json(['message' => 'La fecha inicio debe ser mayor a la final'],400);
+        return response()->json(['message' => 'La fecha inicio debe ser mayor a la final y mayor que el dia actual'],400);
 
     }
     }

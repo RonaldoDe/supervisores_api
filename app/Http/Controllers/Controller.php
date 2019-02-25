@@ -65,6 +65,55 @@ class Controller extends BaseController
                 return 1;
     }
 
+    public function validarFechasSucursalUpdate($id_plan, $fecha_inicio, $fecha_fin, $actividad, $id_actividad)
+    {
+        $sucursalPlan = DB::table('plan_trabajo_asignacion')
+                ->where('id_plan_trabajo', $id_plan)
+                ->orderBy('id_sucursal', 'desc')
+                ->first();
+
+                $planesSucursal = DB::table('plan_trabajo_asignacion')
+                ->where('id_sucursal', $sucursalPlan->id_sucursal)
+                ->orderBy('id_sucursal', 'desc')
+                ->get();
+                 
+                foreach($planesSucursal as $planSucursal){
+                        $validarDuplicadoFechas = DB::table($actividad)
+                        ->select('id', 'fecha_inicio', 'fecha_fin', 'id_plan_trabajo')
+                        ->where('id_plan_trabajo', $planSucursal->id_plan_trabajo)
+                        ->where('id_estado', 1)
+                        ->where('id', '!=', $id_actividad)
+                        ->get();
+                        if(count($validarDuplicadoFechas) > 0){
+                            foreach ($validarDuplicadoFechas as $fechasDuplicadas) {
+                                if($fecha_inicio.' 00:00:00' >= $fechasDuplicadas->fecha_inicio && $fecha_inicio.' 00:00:00' <= $fechasDuplicadas->fecha_fin){
+                                    return 0;
+                                }
+
+                                if($fecha_fin.' 23:59:00' >= $fechasDuplicadas->fecha_inicio && $fecha_fin.' 23:59:00' <= $fechasDuplicadas->fecha_fin){
+                                    return 0;
+
+                                }
+                            }
+                        }
+
+                        if(count($validarDuplicadoFechas) > 0){
+                            foreach ($validarDuplicadoFechas as $fechasDuplicadas) {
+                                if($fechasDuplicadas->fecha_inicio >=  $fecha_inicio.' 00:00:00' && $fechasDuplicadas->fecha_inicio <= $fecha_fin.' 23:59:00'){
+                                    return 0;
+
+                                }
+                                if($fechasDuplicadas->fecha_fin >= $fecha_inicio.' 00:00:00' && $fechasDuplicadas->fecha_fin <= $fecha_fin.' 23:59:00'){
+                                    return 0;
+
+                                }
+                            }
+                        }
+                    
+                }
+                return 1;
+    }
+
 public function validarQuenoExistanFechasRepetidadEnLaBase($consulta,$fecha_ini,$fecha_finn){
 
 

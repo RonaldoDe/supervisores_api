@@ -57,7 +57,7 @@ class UpdateActividadesController extends Controller
 
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'apertura');
+                $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'apertura', request('id_actividad'));
 
 
 
@@ -116,7 +116,7 @@ class UpdateActividadesController extends Controller
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
     
     
-                $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'documentacion_legal');
+                $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'documentacion_legal', request('id_actividad'));
 
     
                 if($respuesta>0){
@@ -169,7 +169,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'arqueo_caja');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'arqueo_caja', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -220,7 +220,7 @@ class UpdateActividadesController extends Controller
 
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'condiciones_locativas');
+                $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'condiciones_locativas', request('id_actividad'));
 
 
         if($respuesta>0){
@@ -271,7 +271,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'domicilios');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'domicilios', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -318,7 +318,7 @@ class UpdateActividadesController extends Controller
 
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'envio_correspondencia');
+                $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'envio_correspondencia', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -369,7 +369,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'evolucion_clientes');
+                $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'evolucion_clientes', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -420,7 +420,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'examen_gimed');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'examen_gimed', request('id_actividad'));
 
 
 
@@ -472,7 +472,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'exhibiciones');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'exhibiciones', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -520,7 +520,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'facturacion');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'facturacion', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -567,7 +567,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'gimed');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'gimed', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -614,7 +614,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'kardex');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'kardex', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -662,7 +662,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'inventario_mercancia');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'inventario_mercancia', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -710,7 +710,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'julienne');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'julienne', request('id_actividad'));
                     
 
             if($respuesta>0){
@@ -756,7 +756,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'libro_vencimientos');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'libro_vencimientos', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -803,7 +803,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'productos_bonificados');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'productos_bonificados', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -850,7 +850,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'programa_mercadeo');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'programa_mercadeo', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -897,7 +897,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'relacion_servicios_publicos');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'relacion_servicios_publicos', request('id_actividad'));
                    
 
             if($respuesta>0){
@@ -944,7 +944,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'relacion_vendedores');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'relacion_vendedores', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -988,7 +988,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'relacion_vendedores');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'relacion_vendedores', request('id_actividad'));
                    
 
             if($respuesta>0){
@@ -1034,7 +1034,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'servicio_bodega');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'servicio_bodega', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -1080,7 +1080,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'uso_institucional');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'uso_institucional', request('id_actividad'));
 
 
             if($respuesta>0){
@@ -1129,7 +1129,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'libros_faltantes');
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'libros_faltantes', request('id_actividad'));
                    
 
 

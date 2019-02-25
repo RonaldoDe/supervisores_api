@@ -988,7 +988,7 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'relacion_vendedores', request('id_actividad'));
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'remiciones', request('id_actividad'));
                    
 
             if($respuesta>0){

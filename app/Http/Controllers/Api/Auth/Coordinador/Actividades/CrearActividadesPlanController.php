@@ -60,7 +60,7 @@ class CrearActividadesPlanController extends Controller
 
 
         //funcion que valida si existe la misma activcidad en el rngo de fechas dado de la misma sucursal
-        $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'Apertura');
+        $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'apertura');
 
 
         if($respuesta == 1){

@@ -91,8 +91,6 @@ class GenerarMultiActividadesController extends MultiActividadController
                                 ->orderBy('id_sucursal', 'desc')
                                 ->get();
                                  
-                                $fechaInicio = date(request('fecha_inicio'), strtotime('-1 day', strtotime(request('fecha_inicio'))));
-                                $fechaFin = date(request('fecha_fin'), strtotime('+1 day', strtotime(request('fecha_fin'))));
                                 foreach($planesSucursal as $planSucursal){
                                     if($actividad->nombre_tabla != 'actividades_ptc'){
                                         $validarDuplicadoFechas = DB::table($actividad->nombre_tabla)

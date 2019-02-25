@@ -17,60 +17,54 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    //funcion para validar el array de fechas que me debuelve cada catividad que puede tener un frecuencia mas
-    //solicitada
-     public function validarArrayFechas($array)
+    public function validarFechasSucursal($id_plan, $fecha_inicio, $fecha_fin, $actividad)
     {
+        $sucursalPlan = DB::table('plan_trabajo_asignacion')
+                ->where('id_plan_trabajo', $id_plan)
+                ->orderBy('id_sucursal', 'desc')
+                ->first();
 
-       $fecha= date('Y-m-d');
+                $planesSucursal = DB::table('plan_trabajo_asignacion')
+                ->where('id_sucursal', $sucursalPlan->id_sucursal)
+                ->orderBy('id_sucursal', 'desc')
+                ->get();
+                 
+                foreach($planesSucursal as $planSucursal){
+                        $validarDuplicadoFechas = DB::table($actividad)
+                        ->select('id', 'fecha_inicio', 'fecha_fin', 'id_plan_trabajo')
+                        ->where('id_plan_trabajo', $planSucursal->id_plan_trabajo)
+                        ->where('id_estado', 1)
+                        ->get();
+                        if(count($validarDuplicadoFechas) > 0){
+                            foreach ($validarDuplicadoFechas as $fechasDuplicadas) {
+                                if($fecha_inicio.' 00:00:00' >= $fechasDuplicadas->fecha_inicio && $fecha_inicio.' 00:00:00' <= $fechasDuplicadas->fecha_fin){
+                                    return 0;
+                                }
 
-        $sw=0;
-        //iterando el for  con la propiedad helper
-     for($i=0; $i<sizeof($array);$i++)
-     {
-         //entro directamente a la propiedad del array  validndo que la fecha inicio se mayor ala del servidor
-         //para que no coloquen planes de trabajo con fechas ya vencida ademas se valida que la fecha inicio sea
-         //menor o igual ala fecha fin para que no hallan errores
-            if($array[$i]["fecha_inicio"]>=$fecha && $array[$i]["fecha_inicio"]<=$array[$i]["fecha_fin"])
-                {
-                    $sw;
+                                if($fecha_fin.' 23:59:00' >= $fechasDuplicadas->fecha_inicio && $fecha_fin.' 23:59:00' <= $fechasDuplicadas->fecha_fin){
+                                    return 0;
 
+                                }
+                            }
+                        }
+
+                        if(count($validarDuplicadoFechas) > 0){
+                            foreach ($validarDuplicadoFechas as $fechasDuplicadas) {
+                                if($fechasDuplicadas->fecha_inicio >=  $fecha_inicio.' 00:00:00' && $fechasDuplicadas->fecha_inicio <= $fecha_fin.' 00:00:00'){
+                                    return 0;
+
+                                }
+                                if($fechasDuplicadas->fecha_fin >= $fecha_inicio.' 23:59:00' && $fechasDuplicadas->fecha_fin <= $fecha_fin.' 23:59:00'){
+                                    return 0;
+
+                                }
+                            }
+                        }
+                    
                 }
-                else
-                {
-                    $sw=$sw+1;
-                }
-
-     }
-          return $sw;
-
-}
-
-//funcion para validar las fechas respetidad por cada registro de una actividad  actividad a un  plan de trabajo
-public function validarFechasInicioRepetido($array){
-    $sw=0;
-    for($i=0; $i<sizeof($array);$i++)
-    {
-        for($j=0; $j<sizeof($array);$j++){
-            if($j!=$i)
-            {
-                if($array[$i]["fecha_inicio"]==$array[$j]["fecha_inicio"] || $array[$i]["fecha_fin"]==$array[$j]["fecha_fin"]){
-
-                    $sw=$sw+1;
-
-                }
-            }
-
-        }
-
-
+                return 1;
     }
-    return $sw;
 
-
-}
-//funcion para actividades que el request de las fechas no son array devuelve si exiten fechas de inicio en el mismo plan de rabajo
-//y en una actividad o tabla especifica
 public function validarQuenoExistanFechasRepetidadEnLaBase($consulta,$fecha_ini,$fecha_finn){
 
 

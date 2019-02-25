@@ -775,8 +775,6 @@ class ValidarActividadesController extends Controller
             'calificacion_pv' => 'required',
             'tiempo_actividad'=>'required',
             'tiempo_total'=>'required',
-            'vendedores_sin_cumplir'=>'required',
-            'diagnostico'=>'required',
             'aplica_proceso_ideal_venta'=>'required',
             
         ]);
@@ -798,8 +796,6 @@ class ValidarActividadesController extends Controller
                 $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
                 $actividad->motivo_ausencia = request('motivo_ausencia');
-                $actividad->vendedores_sin_cumplir = request('vendedores_sin_cumplir');
-                $actividad->diagnostico = request('diagnostico');
                 $actividad->aplica_proceso_ideal_venta = request('aplica_proceso_ideal_venta');
                 $actividad->update();
 

@@ -57,27 +57,11 @@ class UpdateActividadesController extends Controller
 
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                $fechas_base_datos=DB::table('apertura')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'apertura');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-
-
-        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
 
         if($respuesta>0){
-
-            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-        }else{
-
 
             $actividad = Apertura::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
@@ -88,6 +72,9 @@ class UpdateActividadesController extends Controller
                 return response()->json('Actividad actualizada con exito',200);
             }
             return response()->json(['Actividad no encontrada'],400);
+        }else{
+            return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Apertura'],400);
+
         }
 
                 // DB::commit();
@@ -129,23 +116,10 @@ class UpdateActividadesController extends Controller
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
     
     
-                $fechas_base_datos=DB::table('documentacion_legal')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
-    
-                $fecha_ini=request('fecha_inicio');
-                $fecha_finn=request('fecha_fin');
-    
-    
-    
-                $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+                $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'documentacion_legal');
+
     
                 if($respuesta>0){
-    
-                    return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-                }else{
     
                     $actividad = DocumentacionLegal::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                         if($actividad!= null){
@@ -158,6 +132,9 @@ class UpdateActividadesController extends Controller
                         }
                         return response()->json(['Actividad no encontrada'],400);
     
+                }else{
+            return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Documentación legal'],400);
+
                 }
     
     
@@ -192,24 +169,10 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('arqueo_caja')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
-
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'arqueo_caja');
 
 
             if($respuesta>0){
-
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = ArqueoCaja::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -220,6 +183,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Arqueo de caja'],400);
+
             }
 
                 }else{
@@ -254,27 +220,10 @@ class UpdateActividadesController extends Controller
 
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                $fechas_base_datos=DB::table('condiciones_locativas')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
-
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-
-
-        //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-        //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-        $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+                $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'condiciones_locativas');
 
 
         if($respuesta>0){
-
-            return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-        }else{
-
 
         $actividad = CondicionesLocativas::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
         if($actividad!= null){
@@ -286,6 +235,9 @@ class UpdateActividadesController extends Controller
             return response()->json('Actividad actualizada con exito',200);
         }
         return response()->json(['Actividad no encontrada'],400);
+        }else{
+            return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Condiciones locativas'],400);
+
         }
 
                 }
@@ -319,23 +271,10 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('domicilios')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'domicilios');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-             //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
-
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = Domicilio::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -346,6 +285,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Domicilios'],400);
+
             }
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -376,23 +318,11 @@ class UpdateActividadesController extends Controller
 
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                $fechas_base_datos=DB::table('envio_correspondencia')
-            ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-            ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'envio_correspondencia');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
 
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = EnvioCorrespondencia::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -403,6 +333,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Envio correspondencia'],400);
+
             }
 
                 }else{
@@ -436,23 +369,11 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('evolucion_clientes')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id', '!=', request('id_actividad'))
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->get();
+                $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'evolucion_clientes');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
 
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = EvolucionClientes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -463,6 +384,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Evolucion clientes'],400);
+
             }
 
                 }else{
@@ -496,24 +420,12 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('examen_gimed')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'examen_gimed');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
 
             if($respuesta>0){
 
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = ExamenGimed::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -524,6 +436,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Examen gimed'],400);
+
             }
 
                 }else{
@@ -557,23 +472,11 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('exhibiciones')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'exhibiciones');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
 
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = Exhibiciones::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -584,6 +487,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Exhibiciones'],400);
+
             }
 
                 }else{
@@ -614,23 +520,11 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('facturacion')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'facturacion');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
 
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = Facturacion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -641,6 +535,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Facturación'],400);
+
             }
 
                 }else{
@@ -670,23 +567,10 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('gimed')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'gimed');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
-
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = Gimed::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -697,6 +581,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Gimed'],400);
+
             }
 
                 }else{
@@ -727,23 +614,11 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('kardex')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'kardex');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
 
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = Kardex::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -755,6 +630,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Kardex'],400);
+
             }
 
                 }else{
@@ -784,23 +662,11 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('inventario_mercancia')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'inventario_mercancia');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
 
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = InventarioMercancia::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -811,6 +677,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Inventario de mercancia'],400);
+
             }
 
                 }else{
@@ -841,23 +710,10 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('julienne')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
-
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'julienne');
+                    
 
             if($respuesta>0){
-
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = Julienne::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -868,6 +724,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);       
+            }else{
+                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Julienne'],400);
+
             }
 
                 }else{
@@ -897,23 +756,10 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('libro_vencimientos')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'libro_vencimientos');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
-
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = LibroVencimientos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -924,6 +770,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400); 
+            }else{
+                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Libro de vencimientos'],400);
+
             }
                    
 
@@ -954,23 +803,11 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('productos_bonificados')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'productos_bonificados');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
 
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = ProductosBonificados::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -981,6 +818,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Productos bonificados'],400);
+
             }
 
                 }else{
@@ -1010,23 +850,11 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('programa_mercadeo')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'programa_mercadeo');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
 
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = ProgramaMercadeo::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -1037,6 +865,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Programa de mercadeo'],400);
+
             }
 
                 }else{
@@ -1066,23 +897,11 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('relacion_servicios_publicos')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
-
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'relacion_servicios_publicos');
+                   
 
             if($respuesta>0){
 
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = RelacionServiciosPublicos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -1093,6 +912,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Relacion de servicios publicos'],400);
+
             }
 
                 }else{
@@ -1122,23 +944,10 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('relacion_vendedores')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'relacion_vendedores');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
-
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = RelacionVendedores::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -1149,6 +958,8 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Relacion de vendedores'],400);
             }
 
                 }else{
@@ -1177,23 +988,10 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('remisiones')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
-
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-             //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'relacion_vendedores');
+                   
 
             if($respuesta>0){
-
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = Remisiones::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -1204,6 +1002,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Remisiones'],400);
+
             }
 
                 }else{
@@ -1233,23 +1034,10 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('servicio_bodega')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'servicio_bodega');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
-
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = ServicioBodega::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -1260,6 +1048,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Servicio de bodega'],400);
+
             }
 
                 }else{
@@ -1289,23 +1080,11 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('uso_institucional')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'uso_institucional');
 
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
 
             if($respuesta>0){
 
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = UsoInstitucional::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -1316,6 +1095,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Uso institucional'],400);
+
             }
 
                 }else{
@@ -1347,24 +1129,11 @@ class UpdateActividadesController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $fechas_base_datos=DB::table('libros_faltantes')
-                ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-                ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
-
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'libros_faltantes');
+                   
 
 
             if($respuesta>0){
-
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-
-            }else{
                 $actividad = LibrosFaltantes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -1375,6 +1144,9 @@ class UpdateActividadesController extends Controller
                     return response()->json('Actividad actualizada con exito',200);
                 }
                 return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Libro de faltantes'],400);
+
             }
 
                 }else{
@@ -1414,25 +1186,7 @@ class UpdateActividadesController extends Controller
     
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
     
-    
-                    $fechas_base_datos=DB::table('actividades_ptc')
-            ->select('fecha_inicio','id_plan_trabajo','fecha_fin')
-            ->where('id_plan_trabajo',request('id_plan_trabajo'))
-                ->where('id', '!=', request('id_actividad'))
-                ->get();
-    
-            $fecha_ini=request('fecha_inicio');
-            $fecha_finn=request('fecha_fin');
-            //funcion que valida las fechas a insertar en la base de dato hay que colocar esta funcion en las actividades qe
-            //no son tan frecuentes y hay que hacer la funcion para os planes de trabajos que son frecuentes
-            $respuesta=$this->validarQuenoExistanFechasRepetidadEnLaBase($fechas_base_datos,$fecha_ini,$fecha_finn);
-    
-    
-            if($respuesta>0){
-    
-                return response()->json (["Ya existen estas fechas registradas en esta actividad con este plan de trabajo en la base de datos."],400);
-    
-            }else{
+
                 $actividad = ActividadPtc::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
                 if($actividad!= null){
                     $actividad->fecha_inicio = request('fecha_inicio');
@@ -1448,7 +1202,7 @@ class UpdateActividadesController extends Controller
                     return response()->json(['Actividad no encontrada'],400);
                 }
             
-            }
+            
     
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);

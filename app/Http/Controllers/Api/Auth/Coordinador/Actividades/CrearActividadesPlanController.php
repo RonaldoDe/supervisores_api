@@ -363,7 +363,7 @@ class CrearActividadesPlanController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'domicilio');
+                $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'domicilios');
 
 
             if($respuesta>0){
@@ -1191,7 +1191,7 @@ class CrearActividadesPlanController extends Controller
 
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'libro_faltantes');                
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'libros_faltantes');                
                    
 
 

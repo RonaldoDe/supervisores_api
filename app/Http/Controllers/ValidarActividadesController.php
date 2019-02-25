@@ -776,6 +776,7 @@ class ValidarActividadesController extends Controller
             'tiempo_actividad'=>'required',
             'tiempo_total'=>'required',
             'aplica_proceso_ideal_venta'=>'required',
+            'relacion_vendedores'=>'required',
             
         ]);
         if($validator->fails())
@@ -797,6 +798,7 @@ class ValidarActividadesController extends Controller
                 $actividad->tiempo_total = request('tiempo_total');
                 $actividad->motivo_ausencia = request('motivo_ausencia');
                 $actividad->aplica_proceso_ideal_venta = request('aplica_proceso_ideal_venta');
+                $actividad->relacion_vendedores = request('relacion_vendedores');
                 $actividad->update();
 
                 //registro de notificacion

@@ -78,7 +78,7 @@ class CrearActividadesPlanController extends Controller
                 ]);
                 return response()->json(["success"=>" Actividad  Apertura creada", 'id' => $apertura->id],201);
         }else{
-            return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Apertura'],400);
+            return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Apertura'],400);
 
         }
 
@@ -151,7 +151,7 @@ class CrearActividadesPlanController extends Controller
                     }
     
                 }else{
-                    return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Documentación legal'],400);
+                    return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Documentación legal'],400);
                 }
     
     
@@ -202,7 +202,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Arqueo de caja'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Arqueo de caja'],400);
 
             }
 
@@ -256,7 +256,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Kardex'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Kardex'],400);
                 
             }
 
@@ -328,7 +328,7 @@ class CrearActividadesPlanController extends Controller
                 }
         }
         else{
-            return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Condiciones locativas'],400);
+            return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Condiciones locativas'],400);
 
         }
                 // DB::commit();
@@ -378,7 +378,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Domicilio'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Domicilio'],400);
 
             }
 
@@ -429,7 +429,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Envio de correspondencia'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Envio de correspondencia'],400);
 
             }
 
@@ -480,7 +480,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Evolucion de clientes'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Evolucion de clientes'],400);
 
             }
                     return response()->json(["success"=>" Actividad creada", 'id' => $evolucion_pedido->id],201);
@@ -534,7 +534,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Examen gimed'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Examen gimed'],400);
 
             }
 
@@ -588,7 +588,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Exhibiciones'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Exhibiciones'],400);
             }
 
                     return response()->json(["success"=>" Actividad creada", 'id' => $exhibiciones->id],201);
@@ -637,7 +637,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Facturación'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Facturación'],400);
 
             }
                     return response()->json(["success"=>" Actividad creada", 'id' => $facturacion->id],201);
@@ -684,7 +684,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Gimed'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Gimed'],400);
 
             }
                     return response()->json(["success"=>" Actividad creada", 'id' => $gimed->id],201);
@@ -732,7 +732,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Inventario de mercancia'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Inventario de mercancia'],400);
 
             }
                     return response()->json(["success"=>" Actividad creada", 'id' => $inventario_mercancia->id],201);
@@ -780,7 +780,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Julienne'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Julienne'],400);
 
             }
                     return response()->json(["success"=>" Actividad creada", 'id' => $julienne->id],201);
@@ -827,7 +827,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Libro de vencimiento'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Libro de vencimiento'],400);
 
             }
                     return response()->json(["success"=>" Actividad creada", 'id' => $libro_vencimiento->id],201);
@@ -875,7 +875,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Productos bonificados'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Productos bonificados'],400);
 
             }
                     return response()->json(["success"=>" Actividad creada", 'id' => $productos_bonificados->id],201);
@@ -923,7 +923,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Programa de mercadeo'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Programa de mercadeo'],400);
 
             }
                     return response()->json(["success"=>" Actividad creada", 'id' => $programa_mercadeo->id],201);
@@ -970,7 +970,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Relación de servicios publicos'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Relación de servicios publicos'],400);
 
             }
                     return response()->json(["success"=>" Actividad creada", 'id' => $relacion_servicios_publicos->id],201);
@@ -1016,7 +1016,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Relacion de vendedores'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Relacion de vendedores'],400);
 
             }
                     return response()->json(["success"=>" Actividad creada", 'id' => $relacion_vendedores->id],201);
@@ -1063,7 +1063,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Remisiones'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Remisiones'],400);
 
             }
 
@@ -1112,7 +1112,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Servicio de bodega'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Servicio de bodega'],400);
 
             }
                     return response()->json(["success"=>" Actividad creada", 'id' => $servicio_bodega->id],201);
@@ -1159,7 +1159,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Uso institucional'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Uso institucional'],400);
 
             }
                     return response()->json(["success"=>" Actividad creada", 'id' => $uso_institucional->id],201);
@@ -1208,7 +1208,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Libro de faltantes'],400);
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Libro de faltantes'],400);
 
             }
 

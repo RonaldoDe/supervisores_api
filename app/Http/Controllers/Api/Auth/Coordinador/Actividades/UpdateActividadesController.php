@@ -73,7 +73,7 @@ class UpdateActividadesController extends Controller
             }
             return response()->json(['Actividad no encontrada'],400);
         }else{
-            return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Apertura'],400);
+            return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Apertura'],400);
 
         }
 
@@ -133,7 +133,7 @@ class UpdateActividadesController extends Controller
                         return response()->json(['Actividad no encontrada'],400);
     
                 }else{
-            return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Documentación legal'],400);
+            return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Documentación legal'],400);
 
                 }
     
@@ -184,7 +184,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Arqueo de caja'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Arqueo de caja'],400);
 
             }
 
@@ -236,7 +236,7 @@ class UpdateActividadesController extends Controller
         }
         return response()->json(['Actividad no encontrada'],400);
         }else{
-            return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Condiciones locativas'],400);
+            return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Condiciones locativas'],400);
 
         }
 
@@ -286,7 +286,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Domicilios'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Domicilios'],400);
 
             }
                 }else{
@@ -334,7 +334,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Envio correspondencia'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Envio correspondencia'],400);
 
             }
 
@@ -385,7 +385,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Evolucion clientes'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Evolucion clientes'],400);
 
             }
 
@@ -437,7 +437,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Examen gimed'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Examen gimed'],400);
 
             }
 
@@ -488,7 +488,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Exhibiciones'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Exhibiciones'],400);
 
             }
 
@@ -536,7 +536,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Facturación'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Facturación'],400);
 
             }
 
@@ -582,7 +582,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Gimed'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Gimed'],400);
 
             }
 
@@ -631,7 +631,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetra en el rango de fechas de otra actividad igual en Kardex'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Kardex'],400);
 
             }
 
@@ -678,7 +678,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Inventario de mercancia'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Inventario de mercancia'],400);
 
             }
 
@@ -725,7 +725,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);       
             }else{
-                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Julienne'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Julienne'],400);
 
             }
 
@@ -771,7 +771,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400); 
             }else{
-                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Libro de vencimientos'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Libro de vencimientos'],400);
 
             }
                    
@@ -819,7 +819,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Productos bonificados'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Productos bonificados'],400);
 
             }
 
@@ -866,7 +866,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Programa de mercadeo'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Programa de mercadeo'],400);
 
             }
 
@@ -913,7 +913,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Relacion de servicios publicos'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Relacion de servicios publicos'],400);
 
             }
 
@@ -959,7 +959,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Relacion de vendedores'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Relacion de vendedores'],400);
             }
 
                 }else{
@@ -1003,7 +1003,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Remisiones'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Remisiones'],400);
 
             }
 
@@ -1049,7 +1049,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Servicio de bodega'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Servicio de bodega'],400);
 
             }
 
@@ -1096,7 +1096,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Uso institucional'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Uso institucional'],400);
 
             }
 
@@ -1145,7 +1145,7 @@ class UpdateActividadesController extends Controller
                 }
                 return response()->json(['Actividad no encontrada'],400);
             }else{
-                return response()->json(['Las fechas se encunetran en el rango de fechas de otra actividad igual en Libro de faltantes'],400);
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Libro de faltantes'],400);
 
             }
 

@@ -130,6 +130,7 @@ class BuscadoresController extends Controller
             ->orderBy('cargo', 'ASC')
             ->where('nombre', 'LIKE', '%'.request('nombre').'%')
             ->where('id_sucursal',request('id_sucursal'))
+            ->where('id_estado',1)
             ->paginate(10);
 
             return response()->json($empleados,200);

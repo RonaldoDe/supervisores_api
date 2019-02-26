@@ -23,6 +23,7 @@ class CoordinadoresMiddleware
          //Obtener el correo de el usuario que se encuentra logueado en est caso el de la tabla cordinador
          $coordinador=DB::table('coordinadores as c')
          ->where('c.correo','=', $user->email)
+         ->where('c.id_estado','=', 1)
          ->get();
 
          //Acceder al tipo de usuario que pertenece

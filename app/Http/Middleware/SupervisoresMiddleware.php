@@ -21,7 +21,7 @@ class SupervisoresMiddleware
         //Obtener los datos del usuario
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
         //Comprobar los datos del user con la tabla usuarios
-        $user_supervisor=DB::table('usuario as u')->where('u.correo','=',$user->email)->first();
+        $user_supervisor=DB::table('usuario as u')->where('u.correo','=',$user->email)->where('u.id_estado','=',1)->first();
         //Verificar si el usuario es tipo supervisor y existe en la tabla usuarios roles
 
         //validacion en caso tal sea un cordiandor que que quirea entrara a la ruta y devuelva

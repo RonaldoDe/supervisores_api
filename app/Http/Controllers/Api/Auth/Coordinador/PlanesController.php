@@ -30,7 +30,7 @@ class PlanesController extends Controller
             if($coordinador != null){
                 //obtener las actividades segun su plan de trabajo 
                 $actividades=DB::table('plan_trabajo_asignacion as p')
-                ->select('su.nombre as nombreSucursal', 'p.nombre as nombrePlan', 'ac.nombre_tabla', 'p.id_plan_trabajo', 'ac.nombre_actividad')
+                ->select('su.nombre as nombreSucursal', 'p.nombre as nombrePlan', 'ac.nombre_tabla','p.estado', 'p.id_plan_trabajo', 'ac.nombre_actividad')
                 ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
                 ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
                 ->where('p.id_plan_trabajo',request('id_plan_trabajo'))
@@ -60,7 +60,7 @@ class PlanesController extends Controller
                     
                 }
                     // validar si el array tiene actividades
-                    return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre, 'Sucursal' => $plan->id_sucursal],200);
+                    return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre, 'Sucursal' => $plan->id_sucursal, 'estado_plan' => $plan->id_estado],200);
                 
             }else{
                 return response()->json('No tienes permiso para acceder a esta ruta',400);

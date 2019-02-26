@@ -74,6 +74,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -130,6 +131,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -188,6 +190,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -236,6 +239,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -289,6 +293,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -336,6 +341,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -383,6 +389,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -436,6 +443,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -488,6 +496,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -544,6 +553,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -600,6 +610,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -650,6 +661,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -706,6 +718,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -754,6 +767,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -804,6 +818,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -861,6 +876,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -909,6 +925,7 @@ class ValidarActividadesController extends Controller
                 //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -956,6 +973,7 @@ class ValidarActividadesController extends Controller
                  //registro de notificacion
                 if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -1003,6 +1021,7 @@ class ValidarActividadesController extends Controller
                  //registro de notificacion
                  if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -1051,6 +1070,7 @@ class ValidarActividadesController extends Controller
                  //registro de notificacion
                  if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -1098,6 +1118,7 @@ class ValidarActividadesController extends Controller
                  //registro de notificacion
                  if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -1143,6 +1164,7 @@ class ValidarActividadesController extends Controller
                  //registro de notificacion
                  if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -1188,6 +1210,7 @@ class ValidarActividadesController extends Controller
                  //registro de notificacion
                  if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
@@ -1257,6 +1280,7 @@ class ValidarActividadesController extends Controller
                  //registro de notificacion
                  if($actividad){
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);

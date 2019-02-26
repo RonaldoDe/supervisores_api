@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Modelos\Notificaciones;
 use Illuminate\Support\Facades\Auth;
+use App\Modelos\PlanTrabajoAsignacion;
 
 class Controller extends BaseController
 {
@@ -261,8 +262,43 @@ $sw=0;
         }
     }
 
-    public function validarPlanCompleto()
+    public function validarPlanCompleto($id_plan)
     {
-        
+
+        $completas = 0;
+        $activas = 0;
+        $no_realizadas = 0;
+        $total = 0;
+
+        $actividades = DB::table('actividades')
+        ->where('id_plan_trabajo', $id_plan)
+        ->get();
+
+        foreach ($actividades as $actividad) {
+            $todas_actividades = DB::table($actividad->nombre_tabla)
+            ->get();
+            $total += count($todas_actividades);
+            foreach ($todas_actividades as $estados) {
+                if($estados->id_estado = 1){
+                    $activas++;
+                }else if($estados->id_estado = 2){
+                    $completas++;
+                }else if($estados->id_estado = 3){
+                    $no_realizadas++;
+                }
+            }
+        }
+
+        if($completas == count($total)){
+            $plan_completo = PlanTrabajoAsignacion::find($id_plan);
+            if($plan_completo != null){
+                $plan_completo->estado = 2;
+            }
+        }else if($completas + $no_realizadas == count($total)){
+            $plan_completo = PlanTrabajoAsignacion::find($id_plan);
+            if($plan_completo != null){
+                $plan_completo->estado = 3;
+            }
+        }
     }
 }

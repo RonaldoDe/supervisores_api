@@ -126,7 +126,7 @@ class BuscadoresController extends Controller
         else
         {
             $empleados = DB::table('empleados_sucursal')
-            ->select('nombre', 'apellido', 'cargo')
+            ->select('dk_empleado','nombre', 'apellido', 'cargo')
             ->orderBy('cargo', 'ASC')
             ->where('nombre', 'LIKE', '%'.request('nombre').'%')
             ->where('id_sucursal',request('id_sucursal'))

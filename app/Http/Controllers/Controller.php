@@ -260,4 +260,9 @@ $sw=0;
             return $notificacion;
         }
     }
+
+    public function validarPlanCompleto()
+    {
+        
+    }
 }

@@ -23,6 +23,7 @@ class GerenteReporteMiddleware
         //Obtener el correo de el usuario que se encuentra logueado en est caso el de la tabla usuario
         $gerente=DB::table('usuario as us')
         ->where('us.correo','=', $user->email)
+        ->where('us.id_estado','=', 1)
         ->get();
 
         //Acceder al tipo de usuario que pertenece

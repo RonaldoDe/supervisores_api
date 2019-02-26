@@ -289,12 +289,12 @@ $sw=0;
             }
         }
 
-        if($completas == count($total)){
+        if($completas == $total){
             $plan_completo = PlanTrabajoAsignacion::find($id_plan);
             if($plan_completo != null){
                 $plan_completo->estado = 2;
             }
-        }else if($completas + $no_realizadas == count($total)){
+        }else if($completas + $no_realizadas == $total){
             $plan_completo = PlanTrabajoAsignacion::find($id_plan);
             if($plan_completo != null){
                 $plan_completo->estado = 3;

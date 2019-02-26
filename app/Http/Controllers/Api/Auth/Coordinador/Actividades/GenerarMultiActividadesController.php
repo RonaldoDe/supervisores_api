@@ -96,7 +96,7 @@ class GenerarMultiActividadesController extends MultiActividadController
                                         $validarDuplicadoFechas = DB::table($actividad->nombre_tabla)
                                         ->select('id', 'fecha_inicio', 'fecha_fin', 'id_plan_trabajo')
                                         ->where('id_plan_trabajo', $planSucursal->id_plan_trabajo)
-                                        ->where('id_estado', 2)
+                                        ->where('id_estado', 1)
                                         ->get();
                                         if(count($validarDuplicadoFechas) > 0){
                                             foreach ($validarDuplicadoFechas as $fechasDuplicadas) {

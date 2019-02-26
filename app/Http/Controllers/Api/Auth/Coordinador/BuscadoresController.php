@@ -111,4 +111,28 @@ class BuscadoresController extends Controller
             return response()->json(["sucursales"=>$sucursales],200);
         }
     }
+
+    public function empleados_sucursal(Request $request)
+    {
+        $validator=\Validator::make($request->all(),[
+            'id_sucursal' => 'required',
+        ]);
+
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+            $empleados = DB::table('empleados_sucursal')
+            ->orderBy('cargo', 'ASC')
+            ->where('nombre', 'LIKE', '%'.request('nombre').'%')
+            ->where('id_sucursal',request('id_sucursal'))
+            ->paginate(10);
+
+            return response()->json($empleados,200);
+        }
+    }
+
 }

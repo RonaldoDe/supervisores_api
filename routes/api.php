@@ -21,6 +21,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('nombrePlan', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@ActualizarNombrePlanTrabajo');
 
     Route::get('inputsPlantilla', 'Api\Auth\Coordinador\Reporte\RutasFreeController@inputs');
+    Route::post('empleadosSucursal', 'Api\Auth\Coordinador\BuscadoresController@empleados_sucursal');
 
     Route::post('logErrors', 'Api\Auth\Log\LogErrorsController@logErrors');
 

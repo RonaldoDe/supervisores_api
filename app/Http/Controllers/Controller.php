@@ -276,6 +276,7 @@ $sw=0;
 
         foreach ($actividades as $actividad) {
             $todas_actividades = DB::table($actividad->nombre_tabla)
+            ->where('id_plan_trabajo', $id_plan)
             ->get();
             $total += count($todas_actividades);
             foreach ($todas_actividades as $estados) {

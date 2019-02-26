@@ -280,25 +280,26 @@ $sw=0;
             ->get();
             $total += count($todas_actividades);
             foreach ($todas_actividades as $estados) {
-                if($estados->id_estado = 1){
+                if($estados->id_estado == 1){
                     $activas++;
-                }else if($estados->id_estado = 2){
+                }else if($estados->id_estado == 2){
                     $completas++;
-                }else if($estados->id_estado = 3){
+                }else if($estados->id_estado == 3){
                     $no_realizadas++;
                 }
             }
         }
-
         if($completas == $total){
             $plan_completo = PlanTrabajoAsignacion::find($id_plan);
             if($plan_completo != null){
                 $plan_completo->estado = 2;
+                $plan_completo->update();
             }
         }else if($completas + $no_realizadas == $total){
             $plan_completo = PlanTrabajoAsignacion::find($id_plan);
             if($plan_completo != null){
                 $plan_completo->estado = 3;
+                $plan_completo->update();
             }
         }
     }

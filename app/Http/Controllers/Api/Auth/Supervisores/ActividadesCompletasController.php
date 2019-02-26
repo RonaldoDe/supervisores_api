@@ -38,6 +38,7 @@ class ActividadesCompletasController extends Controller
        ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
        ->where('su.id_zona',$usuario_zona->id_zona)
        ->where('p.estado',1)
+       ->orWhere('p.estado',2)
        ->orderby('ac.id_plan_trabajo','desc')
        ->get();
 

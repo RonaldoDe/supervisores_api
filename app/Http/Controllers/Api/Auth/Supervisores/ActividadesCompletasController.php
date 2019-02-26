@@ -55,6 +55,7 @@ class ActividadesCompletasController extends Controller
                     $fecha->nombre_tabla = $ac->nombre_tabla;
                     $fecha->nombre_sucursal = $ac->nombre;
                     $fecha->cod_sucursal = $ac->cod_sucursal;
+                    $fecha->id_sucursal = $ac->id_suscursal;
                     $fecha->direccion = $ac->direccion;
                     $actividades_habilitadas = array_add($actividades_habilitadas, $ac->nombre_actividad.'-'.$fecha->id_plan_trabajo, $fecha, $fecha);
 

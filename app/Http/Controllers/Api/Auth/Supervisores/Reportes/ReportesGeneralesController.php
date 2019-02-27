@@ -391,9 +391,7 @@ class ReportesGeneralesController extends Controller
        ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
        ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
        ->where('su.id_zona',$usuario_zona->id_zona)
-       ->where('p.estado',1)
-       ->orWhere('p.estado',2)
-       ->orWhere('p.estado',3)
+       ->where('p.estado','!=',3)
        ->orderBy('p.id_sucursal', 'desc')
        ->get();
 

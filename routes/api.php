@@ -103,6 +103,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('updateUsoInstitucional', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_uso_institucional');
     Route::post('updateLibroFaltante', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_libros_faltantes');
     Route::post('updateLibroVencimientos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_libro_vencimientos');
+    Route::post('updateCompromisos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_compromisos');
     Route::post('updatePtc', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_ptc');
 
     //eliminar 
@@ -152,6 +153,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('CrearActividadRevicionCompletaInventario', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_revicion_completa_inventario');
     Route::post('CrearActividadServicioBodega', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_servicio_bodega');
     Route::post('CrearActividadUsoInstitucional', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_uso_institucional');
+    Route::post('CrearActividadCompromisos', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_compromisos');
     Route::post('CrearActividadLibroFaltante', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_libros_faltantes');
 });
 

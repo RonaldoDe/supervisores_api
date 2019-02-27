@@ -1017,7 +1017,7 @@ class MultiActividadController extends Controller
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
         //instancia del modelo documentacion legal para crear un registro de esta tabla
-                $kardex =Kardex::create([
+                $compromisos =compromisos::create([
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>request('fecha_inicio'),
                     'fecha_fin' =>request('fecha_fin').' '.'23:59:00',

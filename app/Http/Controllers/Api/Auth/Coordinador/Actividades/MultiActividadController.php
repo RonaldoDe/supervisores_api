@@ -33,6 +33,7 @@ use App\Modelos\Actividades\RelacionServiciosPublicos;
 use App\Modelos\Actividades\RelacionVendedores;
 use App\Modelos\Actividades\ServicioBodega;
 use App\Modelos\Actividades\UsoInstitucional;
+use App\Modelos\Actividades\Compromiso;
 class MultiActividadController extends Controller
 {
     public function apertura(Request $request)
@@ -1017,7 +1018,7 @@ class MultiActividadController extends Controller
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
         //instancia del modelo documentacion legal para crear un registro de esta tabla
-                $compromisos =compromisos::create([
+                $compromisos =Compromiso::create([
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>request('fecha_inicio'),
                     'fecha_fin' =>request('fecha_fin').' '.'23:59:00',

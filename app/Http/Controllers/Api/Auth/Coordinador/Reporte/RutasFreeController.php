@@ -17,7 +17,7 @@ class RutasFreeController extends Controller
 
     public function senalizacion()
     {
-        $senalizacion = DB::table('senaliacion_lista')->get();
+        $senalizacion = DB::table('senalizacion_lista')->get();
 
         return response()->json($senalizacion,200);
     }

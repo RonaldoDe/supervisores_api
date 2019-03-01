@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContratoAnexosLegalizacion extends Model
 {
-    protected $table ='contrato_anexos_legalizacion';
+    protected $table ='contratos_anexos_legalizacion';
     protected $primaryKey='id';
 
     public $timestamps=false;

@@ -21,6 +21,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('nombrePlan', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@ActualizarNombrePlanTrabajo');
 
     Route::get('inputsPlantilla', 'Api\Auth\Coordinador\Reporte\RutasFreeController@inputs');
+    Route::get('senalizacion', 'Api\Auth\Coordinador\Reporte\RutasFreeController@senaliacion_lista');
     Route::post('empleadosSucursal', 'Api\Auth\Coordinador\BuscadoresController@empleados_sucursal');
 
     Route::post('logErrors', 'Api\Auth\Log\LogErrorsController@logErrors');
@@ -104,6 +105,8 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('updateLibroFaltante', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_libros_faltantes');
     Route::post('updateLibroVencimientos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_libro_vencimientos');
     Route::post('updateCompromisos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_compromisos');
+    Route::post('updateContratosAnexos', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_contratos_anexos_legalizacion');
+    Route::post('updateSolicitudSeguro', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_solicitud_seguro');
     Route::post('updatePtc', 'Api\Auth\Coordinador\Actividades\UpdateActividadesController@update_ptc');
 
     //eliminar 
@@ -154,6 +157,8 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('CrearActividadServicioBodega', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_servicio_bodega');
     Route::post('CrearActividadUsoInstitucional', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_uso_institucional');
     Route::post('CrearActividadCompromisos', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_compromisos');
+    Route::post('CrearActividadContratosAnexos', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_contratos_anexos_legalizacion');
+    Route::post('CrearActividadSolicitudSeguro', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_solicitud_seguro');
     Route::post('CrearActividadLibroFaltante', 'Api\Auth\Coordinador\Actividades\CrearActividadesPlanController@crear_libros_faltantes');
 });
 

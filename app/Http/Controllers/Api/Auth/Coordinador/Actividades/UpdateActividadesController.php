@@ -31,6 +31,9 @@ use App\Modelos\Actividades\RelacionVendedores;
 use App\Modelos\Actividades\ServicioBodega;
 use App\Modelos\Actividades\UsoInstitucional;
 use App\Modelos\Actividades\Compromiso;
+use App\Modelos\Actividades\Senalizacion;
+use App\Modelos\Actividades\ContratoAnexosLegalizacion;
+use App\Modelos\Actividades\SolicitudSeguro;
 
 class UpdateActividadesController extends Controller
 {
@@ -1194,6 +1197,150 @@ class UpdateActividadesController extends Controller
                 return response()->json(['Actividad no encontrada'],400);
             }else{
                 return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Compromisos'],400);
+
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+    public function update_senalizacion(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required',
+            'id_plan_trabajo'=>'required',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date',
+            'id_actividad' => 'required',
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'senalizacion', request('id_actividad'));
+                   
+
+
+            if($respuesta>0){
+                $actividad = Senalizacion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+                if($actividad!= null){
+                    $actividad->fecha_inicio = request('fecha_inicio');
+                    $actividad->fecha_fin = request('fecha_fin').' '.'23:59:00';
+                    $actividad->id_estado = 1;
+                    $actividad->id_prioridad = request('id_prioridad');
+                    $actividad->update();
+                    return response()->json('Actividad actualizada con exito',200);
+                }
+                return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en senaliacion'],400);
+
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+    public function update_contratos_anexos_legalizacion(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required',
+            'id_plan_trabajo'=>'required',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date',
+            'id_actividad' => 'required',
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'contratos_anexos_legalizacion', request('id_actividad'));
+                   
+
+
+            if($respuesta>0){
+                $actividad = ContratoAnexosLegalizacion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+                if($actividad!= null){
+                    $actividad->fecha_inicio = request('fecha_inicio');
+                    $actividad->fecha_fin = request('fecha_fin').' '.'23:59:00';
+                    $actividad->id_estado = 1;
+                    $actividad->id_prioridad = request('id_prioridad');
+                    $actividad->update();
+                    return response()->json('Actividad actualizada con exito',200);
+                }
+                return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Contrato y anexos para la legaliación'],400);
+
+            }
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+    public function update_solicitud_seguro(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required',
+            'id_plan_trabajo'=>'required',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date',
+            'id_actividad' => 'required',
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'solicitud_seguro', request('id_actividad'));
+                   
+
+
+            if($respuesta>0){
+                $actividad = SolicitudSeguro::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+                if($actividad!= null){
+                    $actividad->fecha_inicio = request('fecha_inicio');
+                    $actividad->fecha_fin = request('fecha_fin').' '.'23:59:00';
+                    $actividad->id_estado = 1;
+                    $actividad->id_prioridad = request('id_prioridad');
+                    $actividad->update();
+                    return response()->json('Actividad actualizada con exito',200);
+                }
+                return response()->json(['Actividad no encontrada'],400);
+            }else{
+                return response()->json(['Las fechas se encuentran en el rango de fechas de otra actividad igual en Solicitud de seguro de punto de venta'],400);
 
             }
 

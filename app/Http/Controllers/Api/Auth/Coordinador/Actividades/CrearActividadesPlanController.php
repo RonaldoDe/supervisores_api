@@ -34,6 +34,9 @@ use App\Modelos\Actividades\CondicionesLocativas;
 use App\Modelos\Actividades\DocumentacionLegal;
 use App\Modelos\Actividades\ActividadPtc;
 use App\Modelos\Actividades\Compromiso;
+use App\Modelos\Actividades\Senalizacion;
+use App\Modelos\Actividades\ContratoAnexosLegalizacion;
+use App\Modelos\Actividades\SolicitudSeguro;
 
 class CrearActividadesPlanController extends Controller
 {
@@ -1221,7 +1224,6 @@ class CrearActividadesPlanController extends Controller
                 }
             }
     }
-
     public function crear_compromisos(Request $request){
 
         $validator=\Validator::make($request->all(),[
@@ -1265,6 +1267,156 @@ class CrearActividadesPlanController extends Controller
             }
 
                     return response()->json(["success"=>"Actividad creada", 'id' => $compromisos->id],201);
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+    public function crear_senalizacion(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required',
+            'id_plan_trabajo'=>'required',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'senalizacion');                
+                   
+
+
+            if($respuesta>0){
+
+                    $senalizacion =Senalizacion::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }else{
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Seneñalizacion'],400);
+
+            }
+
+                    return response()->json(["success"=>"Actividad creada", 'id' => $senalizacion->id],201);
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+    public function crear_contratos_anexos_legalizacion(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required',
+            'id_plan_trabajo'=>'required',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'contratos_anexos_legalizacion');                
+                   
+
+
+            if($respuesta>0){
+
+                    $contrato =ContratoAnexosLegalizacion::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }else{
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Contrato y anexos para la legaliación'],400);
+
+            }
+
+                    return response()->json(["success"=>"Actividad creada", 'id' => $contrato->id],201);
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+    public function crear_solicitud_seguro(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_prioridad' => 'required',
+            'id_plan_trabajo'=>'required',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date'
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        else
+        {
+
+
+            $fecha= date('Y-m-d');
+
+                if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+                    $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'solicitud_seguro');                
+                   
+
+
+            if($respuesta>0){
+
+                    $seguro =SolicitudSeguro::create([
+
+                        'id_plan_trabajo' =>request('id_plan_trabajo'),
+                        'fecha_inicio' =>request('fecha_inicio'),
+                        'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                        'observacion'=>'',
+                        'id_prioridad' =>request('id_prioridad'),
+                        'id_estado' =>1,
+
+                    ]);
+            }else{
+                return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Solicitud de seguro de punto de venta'],400);
+
+            }
+
+                    return response()->json(["success"=>"Actividad creada", 'id' => $seguro->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);

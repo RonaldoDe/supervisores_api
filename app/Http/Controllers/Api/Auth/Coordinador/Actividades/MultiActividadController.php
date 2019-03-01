@@ -34,6 +34,9 @@ use App\Modelos\Actividades\RelacionVendedores;
 use App\Modelos\Actividades\ServicioBodega;
 use App\Modelos\Actividades\UsoInstitucional;
 use App\Modelos\Actividades\Compromiso;
+use App\Modelos\Actividades\Senalizacion;
+use App\Modelos\Actividades\ContratoAnexosLegalizacion;
+use App\Modelos\Actividades\SolicitudSeguro;
 class MultiActividadController extends Controller
 {
     public function apertura(Request $request)
@@ -1019,6 +1022,129 @@ class MultiActividadController extends Controller
 
         //instancia del modelo documentacion legal para crear un registro de esta tabla
                 $compromisos =Compromiso::create([
+                    'id_plan_trabajo' =>request('id_plan_trabajo'),
+                    'fecha_inicio' =>request('fecha_inicio'),
+                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                    'observacion'=>'',
+                    'id_prioridad' =>1,
+                    'id_estado' =>1,
+
+                ]);
+                
+        
+                // DB::commit();
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+
+    public function senalizacion(Request $request){
+        
+        $validator=\Validator::make($request->all(),[
+            'id_plan_trabajo'=>'required',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date',
+            ]);
+            if($validator->fails())
+            {
+                return response()->json( $errors=$validator->errors()->all(),400 );
+            }
+            
+            else
+            {
+
+
+            $fecha= date('Y-m-d');
+
+            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                $senalizacion =Senalizacion::create([
+                    'id_plan_trabajo' =>request('id_plan_trabajo'),
+                    'fecha_inicio' =>request('fecha_inicio'),
+                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                    'observacion'=>'',
+                    'id_prioridad' =>1,
+                    'id_estado' =>1,
+
+                ]);
+                
+        
+                // DB::commit();
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+    
+    public function contratos_anexos_legalizacion(Request $request){
+        
+        $validator=\Validator::make($request->all(),[
+            'id_plan_trabajo'=>'required',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date',
+            ]);
+            if($validator->fails())
+            {
+                return response()->json( $errors=$validator->errors()->all(),400 );
+            }
+            
+            else
+            {
+
+
+            $fecha= date('Y-m-d');
+
+            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                $contratos =ContratoAnexosLegalizacion::create([
+                    'id_plan_trabajo' =>request('id_plan_trabajo'),
+                    'fecha_inicio' =>request('fecha_inicio'),
+                    'fecha_fin' =>request('fecha_fin').' '.'23:59:00',
+                    'observacion'=>'',
+                    'id_prioridad' =>1,
+                    'id_estado' =>1,
+
+                ]);
+                
+        
+                // DB::commit();
+
+                }else{
+                    return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
+
+                }
+            }
+    }
+
+    public function solicitud_seguro(Request $request){
+        
+        $validator=\Validator::make($request->all(),[
+            'id_plan_trabajo'=>'required',
+            'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
+            'fecha_fin'=>'date_format:"Y-m-d"|required|date',
+            ]);
+            if($validator->fails())
+            {
+                return response()->json( $errors=$validator->errors()->all(),400 );
+            }
+            
+            else
+            {
+
+
+            $fecha= date('Y-m-d');
+
+            if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+
+        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                $solicitud =SolicitudSeguro::create([
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>request('fecha_inicio'),
                     'fecha_fin' =>request('fecha_fin').' '.'23:59:00',

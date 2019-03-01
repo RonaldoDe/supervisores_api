@@ -33,6 +33,9 @@ use App\Modelos\Actividades\RelacionVendedores;
 use App\Modelos\Actividades\ServicioBodega;
 use App\Modelos\Actividades\ProductosBonificados;
 use App\Modelos\Actividades\Compromiso;
+use App\Modelos\Actividades\Senalizacion;
+use App\Modelos\Actividades\ContratoAnexosLegalizacion;
+use App\Modelos\Actividades\SolicitudSeguro;
 
 class ValidarActividadesController extends Controller
 {
@@ -1254,6 +1257,147 @@ class ValidarActividadesController extends Controller
                 $actividad->tiempo_total = request('tiempo_total');
                 $actividad->motivo_ausencia = request('motivo_ausencia');
                 $actividad->compromiso = request('compromiso');
+                $actividad->update();
+                 //registro de notificacion
+                 if($actividad){
+                    if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
+                        return response()->json(['message' => 'Actividad realizada con exito']);
+                    }else{
+                        return response()->json(['message' => 'Error al generar la notificacion']);
+                    }
+                }
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function senalizacion($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+            'id_actividad' => 'required',
+            'nombre_tabla' => 'required',
+            'id_plan_trabajo' => 'required',
+            'calificacion_pv' => 'required',
+            'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
+            'senalizacion'=>'required',
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( ['message' => $validator->errors()->all()],400 );
+         }
+
+         else
+         {
+
+             //actualizacion de la actividad por el supervisor
+             $actividad = Senalizacion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->id_estado = 2;
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->senalizacion = request('senalizacion');
+                $actividad->update();
+                 //registro de notificacion
+                 if($actividad){
+                    if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
+                        return response()->json(['message' => 'Actividad realizada con exito']);
+                    }else{
+                        return response()->json(['message' => 'Error al generar la notificacion']);
+                    }
+                }
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function contratos_anexos_legalizacion($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+            'id_actividad' => 'required',
+            'nombre_tabla' => 'required',
+            'id_plan_trabajo' => 'required',
+            'calificacion_pv' => 'required',
+            'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
+            'contrato'=>'required',
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( ['message' => $validator->errors()->all()],400 );
+         }
+
+         else
+         {
+
+             //actualizacion de la actividad por el supervisor
+             $actividad = ContratoAnexosLegalizacion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->id_estado = 2;
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->contrato = request('contrato');
+                $actividad->update();
+                 //registro de notificacion
+                 if($actividad){
+                    if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        $this->validarPlanCompleto(request('id_plan_trabajo'));
+                        return response()->json(['message' => 'Actividad realizada con exito']);
+                    }else{
+                        return response()->json(['message' => 'Error al generar la notificacion']);
+                    }
+                }
+             }
+             return response()->json(['message' => 'Error Actividad no encontrada']);
+         }
+     }
+
+     public function solicitud_seguro($request)
+     {
+         //validacion de los datos de la actividad
+         $validator=\Validator::make($request->all(),[
+            'id_actividad' => 'required',
+            'nombre_tabla' => 'required',
+            'id_plan_trabajo' => 'required',
+            'calificacion_pv' => 'required',
+            'tiempo_actividad'=>'required',
+            'tiempo_total'=>'required',
+            'seguro'=>'required',
+         ]);
+         if($validator->fails())
+         {
+           return response()->json( ['message' => $validator->errors()->all()],400 );
+         }
+
+         else
+         {
+
+             //actualizacion de la actividad por el supervisor
+             $actividad = SolicitudSeguro::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             if($actividad!= null){
+                 $actividad->fecha_mod = date('Y-m-d H:i:s');
+                 $actividad->observacion = request('observaciones');
+                 $actividad->id_estado = 2;
+                 $actividad->calificacion = 5;
+                 $actividad->calificacion_pv = request('calificacion_pv');
+                 $actividad->tiempo_actividad = request('tiempo_actividad');
+                $actividad->tiempo_total = request('tiempo_total');
+                $actividad->motivo_ausencia = request('motivo_ausencia');
+                $actividad->seguro = request('seguro');
                 $actividad->update();
                  //registro de notificacion
                  if($actividad){

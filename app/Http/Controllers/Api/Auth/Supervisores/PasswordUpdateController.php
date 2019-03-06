@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 class PasswordUpdateController extends Controller
 {
+
+    //actualizacion de contraseña
     public function passwordUpdate(Request $request)
     {
         //validacion de los datos del cambio de contraseña
@@ -22,13 +24,17 @@ class PasswordUpdateController extends Controller
 
         else
         {
+            //buscar usuario por su email
             $user = User::where('email', request('email'))->first();
             if($user != null){
+                //codigo random de 1 digitos para validar el correo
                 $codigo = random_int(0, 9999);
+                //enviar correo 
                 $mail = Mail::send('emails.update_password', ['codigo' => $codigo], function($message) use($request){
                     $message->to(request('email'))
                             ->subject('Por favor confirma el cambio de contraseña');
                 });
+                //validar que el usuario tenga el codigo    
                 $validate_code = DB::table('users')->where('code_confirmation', $codigo)->first();
                 while($validate_code){
                 $codigo = random_int(0, 9999);
@@ -45,7 +51,7 @@ class PasswordUpdateController extends Controller
     }
 
  
-
+//verificar los datos y actualizar cotraseña
     public function verify(Request $request)
     {
         //validacion de los datos de la actividad
@@ -60,7 +66,8 @@ class PasswordUpdateController extends Controller
         }
 
         else
-        {
+        {   
+            //validar que el codigo sea el mismo y actualizar
             $user = User::where('email_verified_at', true)
             ->where('code_confirmation', request('codigo'))
             ->where('email', request('email'))

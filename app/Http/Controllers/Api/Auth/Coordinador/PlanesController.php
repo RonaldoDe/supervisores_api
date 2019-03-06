@@ -10,6 +10,8 @@ use App\Modelos\PlanTrabajoAsignacion;
 
 class PlanesController extends Controller
 {
+
+    //actividades de un plan de trabajo
     public function listarActividades(Request $request)
     {
         $validator=\Validator::make($request->all(),[
@@ -42,7 +44,7 @@ class PlanesController extends Controller
                 ->where('p.id_plan_trabajo', request('id_plan_trabajo'))
                 ->first();
     
-                //array que almacenará las actividanes correspondientes a los 7 dias despues del dia actual 
+                //array que almacenará las actividades
                 $lista_actividades_arr = array();
                 //bucle que itera las actividades y las obtiene segun el plan de trabajo
                 foreach($actividades as $ac){
@@ -51,7 +53,7 @@ class PlanesController extends Controller
                     ->where('ac.id_estado', '!=',2)
                     ->get();
     
-                    //  generar el array con el listado de actividades pendientes en la semana
+                    
                     foreach($fe as $fecha){
                         $fecha->nombre_actividad = $ac->nombre_actividad;
                         array_push($lista_actividades_arr, [$ac->nombreSucursal =>$fecha]);
@@ -59,7 +61,7 @@ class PlanesController extends Controller
                     
                     
                 }
-                    // validar si el array tiene actividades
+                    
                     return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombre, 'Sucursal' => $plan->id_sucursal, 'estado_plan' => $plan->estado],200);
                 
             }else{

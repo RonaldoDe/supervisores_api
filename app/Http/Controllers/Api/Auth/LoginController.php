@@ -17,9 +17,11 @@ class LoginController extends Controller
 
     public function __construct()
     {
+        //obtener el clinete del auth en este caso el #1 ira aouth_client en la base de datos
         $this->client = Client::find(1);
     }
 
+    //login de usuario
     public function login(Request $request)
     {
 
@@ -35,15 +37,17 @@ class LoginController extends Controller
           return response()->json( $errors=$validator->errors()->all(), 401);
         }
         else
-        {
+        {   
+            //validar que el usuario exista
             $user=DB::table('users as u')->where('u.email',request('username'))
             ->first();
             if($user != null){
-
+                //hashear la contraseña y validar
                 if (Hash::check(request('password'), $user->password)) {
                     DB::table('oauth_access_tokens')->where('user_id', $user->id)->delete();
 
                     $validar_token = DB::table('oauth_access_tokens')->where('user_id', $user->id)->first();
+                    //agregar parametros al request
                     $params = [
                         'grant_type' => 'password',
                         'client_id' => $this->client->id,
@@ -52,7 +56,7 @@ class LoginController extends Controller
                         'password' => request('password'),
                         'scope' => '*'
                     ];
-
+                    //agregar parametros al request
                     $request->request->add($params);
                     $proxy = Request::create('oauth/token', 'POST');
 
@@ -89,11 +93,11 @@ class LoginController extends Controller
         return Route::dispatch($proxy);
     }
 
-
+    //cerrar sesion
     public function logout(Request $request)
     {
       $accessToken = Auth::user()->token();
-
+        //obtener usuario logueado y borrar token
       DB::table('oauth_access_tokens')->where('user_id', Auth::id())->delete();
       return response()->json(['message' => 'La sesion a sido cerrada con exito'], 200);
 

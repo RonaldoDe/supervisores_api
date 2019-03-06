@@ -13,7 +13,7 @@ use App\Modelos\Reportes\SoporteTecnico;
 
 class ReporteController extends Controller
 {
-
+    //traer todos los usuarios y zonas de un coordinador
     public function mostrarReportePorCoordinador(){
 
         $user=DB::table('users as u')->where('u.id',Auth::id())->first();
@@ -45,7 +45,7 @@ class ReporteController extends Controller
 
         return response()->json($sucursales_arr, 201);
     }
-
+    // mostrar las actividades que tiene asiganad auna sucursal
     public function mostrarActividadesPorSucursal(Request $request)
     {
 
@@ -77,7 +77,7 @@ class ReporteController extends Controller
             }
         }
     }
-
+    //soporte tecnico, reporte de daños o sugerencias
     public function soporteTecnico(Request $request)
     {
 

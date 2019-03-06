@@ -37,7 +37,7 @@ class DescripcionActividadController extends Controller
 
         }
     }
-
+    //obtener la rutas para crear o actualizar una actividad
     public function rutas(Request $request)
     {
             $rutas = DB::table('nombre_actividades')->get();

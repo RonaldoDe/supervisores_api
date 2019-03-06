@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LogController extends Controller
 {
+    //mostrar notificaciones al coordinador
     public function logNotificaciones()
     {
         
@@ -48,6 +49,7 @@ class LogController extends Controller
         return response()->json(['message' => $log],200);
     }
 
+    //marcar notificacion como leida
     public function notificacionLeida(Request $request)
     {
          //validacion de los datos de la actividad
@@ -61,7 +63,7 @@ class LogController extends Controller
 
         else
         {
-
+            // actualizar estado de la notificacion
             $leer = Notificaciones::find(request('id_notificacion'));
             if($leer!= null){
                 $leer->leido = 1;
@@ -73,7 +75,7 @@ class LogController extends Controller
             }
         }
     }
-
+    //marcar notificacion como no leida
     public function notificacionNoLeida(Request $request)
     {
         $validator=\Validator::make($request->all(),[
@@ -83,6 +85,7 @@ class LogController extends Controller
         {
           return response()->json( ['message' => $validator->errors()->all()],400 );
         }else{
+            // actualizar estado de la notificacion
             $leer = Notificaciones::find(request('id_notificacion'));
             if($leer!= null){
                 $leer->leido = 0;

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class GerenteReporteHomeController extends Controller
 {
+    //vista del gerente de mercadeo que seria alguien que puede hacer reporte sin estar en una sucursal
     public function homeGerenteReporte(Request $request)
     {
         $user = DB::table('users')->where('id', Auth::id())->first();

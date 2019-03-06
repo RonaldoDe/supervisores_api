@@ -13,6 +13,7 @@ use App\Modelos\Reportes\MensajeReporte;
 
 class ReportesGeneralesController extends Controller
 {
+    //crear reporte a una sucursal por un supervisor
     public function reporteSucursal(Request $request)
     {
         $validator=\Validator::make($request->all(),[
@@ -65,9 +66,9 @@ class ReportesGeneralesController extends Controller
             if($coordinador){
 
                 $foto = 'imagen_reporte' . time();
-                 
+                 //obtener una ruta para la imagen
                 $url_img = str_replace(" ", "_",'reportes/'.request('nombre_sucursal').'/'.request('nombre_reporte').'/'.$foto);
-
+                //validat que la imagen venga con contenido
                  if (request('foto') != "") { // storing image in storage/app/public Folder
                     if(strpos(request('foto'), 'supervisores_api/storage/app/public/img/') == false ){
                         Storage::disk('public')->put('img/'.$url_img, base64_decode(request('foto')));
@@ -166,7 +167,7 @@ class ReportesGeneralesController extends Controller
             
         }
     }
-
+    //mostrar reprte por sucursal
     public function detalleReporteSucursal(Request $request)
     {
         $validator=\Validator::make($request->all(),[
@@ -239,7 +240,7 @@ class ReportesGeneralesController extends Controller
             
         
     }
-
+    //crear un mensaje para un reporte, una "chat entre el coordinador y el supervisor/gerente"
     public function crearMensageReporte(Request $request)
     {
         $validator=\Validator::make($request->all(),[
@@ -322,8 +323,7 @@ class ReportesGeneralesController extends Controller
         
     }
 
-    
-
+    //generar reporte al coordinador
     public function generarReporeteCoordinador(Request $request)
     {
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
@@ -343,7 +343,7 @@ class ReportesGeneralesController extends Controller
             return response()->json('Coordinador no existe', 400);
         }
     }
-
+//generar un reporte al supervisor
     public function generarReporeteSupervisor(Request $request)
     {
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
@@ -366,6 +366,7 @@ class ReportesGeneralesController extends Controller
             return response()->json('Supervisor no existe', 400);
         }
     }
+    //genera cuantas actividades estan realizadas, faltan por realizar y no realizadas
 
     public function porcentajeActividades(Request $request)
     {
@@ -394,7 +395,7 @@ class ReportesGeneralesController extends Controller
        ->where('p.estado','!=',3)
        ->orderBy('p.id_sucursal', 'desc')
        ->get();
-
+        //arrays que almacenan el numero de actividades completas y demas
         $porcentaje_sucursal_array = array();
         $porcentajes_generales_array = array();
         $porcentajes_generales_array['actividades_activas'] = 0;
@@ -455,7 +456,7 @@ class ReportesGeneralesController extends Controller
             return response()->json(['porcentaje_general' => $porcentajes_generales_array, 'porcentaje_sucursal' => $porcentaje_sucursal_array], 200);
             
     }
-
+    //funcion que hace que el coordinador pueda establecer una actividad como corregida
     public function corregirReporte(Request $request)
     {
         $validator=\Validator::make($request->all(),[

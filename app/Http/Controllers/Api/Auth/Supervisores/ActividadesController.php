@@ -8,6 +8,7 @@ use App\Http\Controllers\ValidarActividadesController;
 
 class ActividadesController extends ValidarActividadesController
 {
+    //funcion que opbtiene el nombre de las tablas de las actividades y actiualiza su informacion
     public function index(Request $request)
     {   
         //validacion de los datos de la actividad

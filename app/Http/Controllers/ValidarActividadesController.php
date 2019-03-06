@@ -39,6 +39,12 @@ use App\Modelos\Actividades\SolicitudSeguro;
 
 class ValidarActividadesController extends Controller
 {
+
+    /* 
+        (1)Cada funcion recoge los datos de las actividades y los guarda en la misma
+        (2)validar que la actividad exista mediante su id
+        Aplicar esto en todas las actividades
+    */
     //requerimiento de datos para llenar la actividad
     public function apertura($request)
     {
@@ -51,7 +57,6 @@ class ValidarActividadesController extends Controller
             'tiempo_actividad'=>'required',
             'tiempo_total'=>'required',
             'horario'=>'required',
-
         ]);
         if($validator->fails())
         {
@@ -61,6 +66,7 @@ class ValidarActividadesController extends Controller
         else
         {
             //actualizacion de la actividad por el supervisor
+            /*(2)*/
             $actividad = Apertura::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
@@ -77,7 +83,9 @@ class ValidarActividadesController extends Controller
 
                 //registro de notificacion
                 if($actividad){
+                    //generar notificcacion al coordinador de que se realizó una actividad
                     if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                        //buscar el plan y validar si no hay mas actividades y establecer el plan como completo
                         $this->validarPlanCompleto(request('id_plan_trabajo'));
                         return response()->json(['message' => 'Actividad realizada con exito']);
                     }else{

@@ -38,10 +38,19 @@ use App\Modelos\Actividades\SolicitudSeguro;
 class UpdateActividadesController extends Controller
 {
   
+/* 
+        (1)Cada funcion recoge el id del plan de trabajo, la fecha inicio y fecha fin de la actividad, luego valida que los request llegen
+        (2)valida que la fecha inicio sea mayor que la fecha actual y que la fecha fin
+        (3)funcion que valida si existe la misma activcidad en el rango de fechas dado de la misma sucursal
+        (4)instancia del modelo de una actividad para crearla respectivamente
+
+        estos pasos se aplican a todas las actividades tomando de referencia update_apertura
+    */
+    
     //##############################################################
     public function update_apertura(Request $request)
     {
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             // 'id_prioridad' => 'required|numeric',
             'id_actividad'=>'required',
@@ -58,15 +67,15 @@ class UpdateActividadesController extends Controller
         else
         {
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                /*(3)*/
                 $respuesta=$this->validarFechasSucursalUpdate(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'apertura', request('id_actividad'));
 
 
 
         if($respuesta>0){
-
+            /*(4)*/
             $actividad = Apertura::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
                 $actividad->fecha_inicio = request('fecha_inicio');

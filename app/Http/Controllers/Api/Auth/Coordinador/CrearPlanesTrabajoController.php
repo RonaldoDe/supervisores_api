@@ -43,7 +43,7 @@ class CrearPlanesTrabajoController extends Controller
 
             if($cordinador!==null){
 
-
+                //crear plan de trabajo
             $plan_trabajo =PlanTrabajoAsignacion::create([
 
                 'id_sucursal' =>request('id_sucursal'),
@@ -68,6 +68,7 @@ class CrearPlanesTrabajoController extends Controller
         }
 
     }
+    //actualizar o asiganar el nombre a un plan de trabajo
     public function ActualizarNombrePlanTrabajo (Request $request)
     {
         $validator=\Validator::make($request->all(),[
@@ -84,7 +85,7 @@ class CrearPlanesTrabajoController extends Controller
 
         else
         {
-            
+            //validar si el plan existe
             $plan = PlanTrabajoAsignacion::find(request('id_plan_trabajo'));
             if($plan != null){
                 $plan->nombre=request('nombre_plan');

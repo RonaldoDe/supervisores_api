@@ -18,6 +18,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    //validar que cada actividad no se repita en una misma sucursal en un rango de fechas al crearla
     public function validarFechasSucursal($id_plan, $fecha_inicio, $fecha_fin, $actividad)
     {
         $sucursalPlan = DB::table('plan_trabajo_asignacion')
@@ -65,6 +66,7 @@ class Controller extends BaseController
                 }
                 return 1;
     }
+    //validar que cada actividad no se repita en una misma sucursal en un rango de fechas al actualizarlas
 
     public function validarFechasSucursalUpdate($id_plan, $fecha_inicio, $fecha_fin, $actividad, $id_actividad)
     {
@@ -181,6 +183,7 @@ $sw=0;
 
     }
 
+    //funcion que crea las ntificaciones del supervisor para el coordinador
     public function logCrearNotificaciones($id_plan_trabajo, $nombre_tabla)
     {
         
@@ -239,7 +242,7 @@ $sw=0;
             return $notificacion;
         }
     }
-
+    //crear notificacion del mensaje
     public function logCrearNotificacionesMensaje($id_reporte, $id_coordinador, $usuario,$nombre_reporte, $nombre_creador, $tipo, $tipo_usuario)
     {
         
@@ -262,6 +265,7 @@ $sw=0;
         }
     }
 
+    //validar si el plan esta completo para establecerlo en completo
     public function validarPlanCompleto($id_plan)
     {
 

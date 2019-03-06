@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class LogErrorsController extends Controller
 {
+
+    //simple funcion que almacena los errores generados en el app movil y web
     public function logErrors(Request $request)
     {
         $validator=\Validator::make($request->all(),[

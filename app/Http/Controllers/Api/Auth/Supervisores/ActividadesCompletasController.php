@@ -13,6 +13,7 @@ use App\Modelos\Usuario;
 use App\Modelos\Usuario_roles;
 class ActividadesCompletasController extends Controller
 {
+    //obtener las actividades completas de un supervisor
     public function index()
     {
          //Se recupera los datos del usuario que se ha autenticado

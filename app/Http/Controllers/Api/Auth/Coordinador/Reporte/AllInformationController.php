@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AllInformationController extends Controller
 {
+    //toda la informacion de un coordinador
     public function alInformation(Request $request)
     {
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
@@ -23,6 +24,7 @@ class AllInformationController extends Controller
                         ->where('r.id_cordinador','=',$coordinador->id_cordinador)
                         ->first();
 
+        //obtener zonas del coordinador
         $zonas=DB::table('zona as zo')
         ->select('zo.descripcion_zona', 'uz.id_region', 'zo.id_zona', 'uz.id_usuario')
         ->join('usuario_zona as uz','zo.id_zona','=','uz.id_zona')

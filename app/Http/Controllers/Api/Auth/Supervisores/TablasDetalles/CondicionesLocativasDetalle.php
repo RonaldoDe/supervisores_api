@@ -10,6 +10,7 @@ use App\Modelos\Actividades\Detalles\CondicionesDetalle;
 
 class CondicionesLocativasDetalle extends Controller
 {
+    //obtener el listado de condiciones locativas
     public function condicionesLocativas(Request $request)
      {
          $validator=\Validator::make($request->all(),[
@@ -34,8 +35,9 @@ class CondicionesLocativasDetalle extends Controller
              ->first();
 
              $actividad = CondicionesDetalle::where('id_actividad', request('id_actividad'))->where('id_condicion', request('id_condicion'))->first();
-
+            //validar que la actividad exista 
              if($actividad!= null){
+                //  validar la imagen y guardarla
                 $img_evidencia = 'foto_condicion' . time();
                 $url_img = str_replace(" ", "_",'condiciones_locativas/'.request('nombre_sucursal').'/'.request('nombre_condicion').'/'.$img_evidencia);
 
@@ -54,7 +56,7 @@ class CondicionesLocativasDetalle extends Controller
              return response()->json(['message' => 'Error Actividad no encontrada']);
          }
      }
-
+     //traer el listado de condiciones locativas
      public function listarCondicionesLocativas(Request $request)
      {
          //validacion de los datos de la actividad
@@ -77,7 +79,7 @@ class CondicionesLocativasDetalle extends Controller
             return response()->json($condiciones_locativas, 200);
          }
     }
-
+    //acceder a una condicion locativa mediante su id
     public function accederCondicion(Request $request)
      {
          //validacion de los datos de la actividad

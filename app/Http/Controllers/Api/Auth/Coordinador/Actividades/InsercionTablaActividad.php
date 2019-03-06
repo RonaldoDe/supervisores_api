@@ -16,10 +16,9 @@ class InsercionTablaActividad extends Controller
     //al supervisor sus actividades que debe hacer
 
 public function insertarTablasAactividad(Request $request){
-
+    // validar requests
     $validator=\Validator::make($request->all(),[
         'id_plan_trabajo'=>'required|numeric',
-        
         'array_actividades.*.id_prioridad'=>'required|numeric',
         'array_actividades.*.nombre_tabla'=>'required',
         'array_actividades.*.nombre_actividad'=>'required'
@@ -33,14 +32,14 @@ public function insertarTablasAactividad(Request $request){
 
     else
     {
-
+        // array de actividaes
         $actividades=request('array_actividades');
         $actividades_converter=json_encode($actividades,true);
 
         $actividades_converter_d=json_decode($actividades_converter,true);
 
 
-
+        //obtener la actividades que no estan repetidas
         for($i=0; $i<sizeof($actividades_converter_d);$i++){
 
             $verificador = DB::table('actividades')
@@ -49,6 +48,7 @@ public function insertarTablasAactividad(Request $request){
             ->first();
 
             if($verificador == null){
+                // crear la actividad en la tabla de actividades
                 $actividad =ActividadesTabla::create([
 
                     'id_plan_trabajo' =>request('id_plan_trabajo'),

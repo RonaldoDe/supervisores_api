@@ -14,6 +14,7 @@ use App\Modelos\Usuario_roles;
 
 class ListarActividadesController extends Controller
 {
+    //listar actividades que tiene pendiente en supervisor
     public function index()
     {
         //Se recupera los datos del usuario que se ha autenticado

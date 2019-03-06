@@ -11,16 +11,20 @@ class PanelControlController extends Controller
 {
     public function listaSupervisores()
     {
+
+        //otener usuario
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
 
+        //otener usuario coordinador
        $coordinador=DB::table('coordinadores')
        ->where('correo','=',$user->email)
        ->first();
 
+
        $region=DB::table('region')
        ->where('id_cordinador','=',$coordinador->id_cordinador)
        ->first();
-
+        // obtener supervisores del coordinador
        $supervisores=DB::table('usuario_zona as uz')
         ->join('region as r','uz.id_region','=','r.id_region')
         ->join('usuarios_roles as ur','uz.id_usuario','=','ur.id_usuario_roles')

@@ -15,6 +15,7 @@ class GenerarMultiActividadesController extends MultiActividadController
 {
     public function generarMultiActividades(Request $request)
     {
+        // validar los datos de las actividades y arrays
         $validator=\Validator::make($request->all(),[
             'lista_actividades.*.nombre'=>'required',
             'lista_actividades.*.nombre_tabla'=>'required',
@@ -31,12 +32,13 @@ class GenerarMultiActividadesController extends MultiActividadController
         else
         {
             $fecha= date('Y-m-d');
-
+            //valida que la fecha inicio sea mayor que la fecha actual y que la fecha fin
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
+            //lista de sucursales
             $requestSucursales=request("lista_sucursales");
-            
+            //convertir para poder iterar en el foreach
             $lista=json_encode($requestSucursales,true);
-            // //decodificacion del reques recibido para iterar el aary
+            //decodificacion del reques recibido para iterar el aary
             $listaSucursales=json_decode($lista);
             
             if(request('id_plan_trabajo') == null){
@@ -55,6 +57,7 @@ class GenerarMultiActividadesController extends MultiActividadController
 
                     
                     DB::beginTransaction();
+                    //iterar la sucursales y crear plan si no existe
                     foreach ($listaSucursales as $sucursal) {
                         if(request('nombre_plan') != null){
                             $plan_trabajo =PlanTrabajoAsignacion::create([
@@ -79,18 +82,18 @@ class GenerarMultiActividadesController extends MultiActividadController
                             ]);
                         }
                         if($plan_trabajo){
-
+                            //iterar actvidades
                             $array_actividades=request('lista_actividades');
                             $lista_actividades=json_encode($array_actividades,true);
                             $actividades=json_decode($lista_actividades);
 
                         foreach ($actividades as $actividad) {
-
+                                // obtener plan de trabajo segun sucursal
                                 $planesSucursal = DB::table('plan_trabajo_asignacion')
                                 ->where('id_sucursal', $sucursal->id_sucursal)
                                 ->orderBy('id_sucursal', 'desc')
                                 ->get();
-                                 
+                                //obtener actividades excluyendo los ptc
                                 foreach($planesSucursal as $planSucursal){
                                     if($actividad->nombre_tabla != 'actividades_ptc'){
                                         $validarDuplicadoFechas = DB::table($actividad->nombre_tabla)
@@ -98,6 +101,7 @@ class GenerarMultiActividadesController extends MultiActividadController
                                         ->where('id_plan_trabajo', $planSucursal->id_plan_trabajo)
                                         ->where('id_estado', 1)
                                         ->get();
+                                        //validar que las fechas dadas no se encuentren en ningun rango de fechas
                                         if(count($validarDuplicadoFechas) > 0){
                                             foreach ($validarDuplicadoFechas as $fechasDuplicadas) {
                                                 if(request('fecha_inicio').' 00:00:00' >= $fechasDuplicadas->fecha_inicio && request('fecha_inicio').' 00:00:00' <= $fechasDuplicadas->fecha_fin){
@@ -122,12 +126,12 @@ class GenerarMultiActividadesController extends MultiActividadController
                                     }
                                 }
 
-                            
+                                //obtener actividad
                                 $validarActividades = DB::table('actividades')
                                 ->where('id_plan_trabajo', $plan_trabajo->id_plan_trabajo)
                                 ->where('nombre_tabla', $actividad->nombre_tabla)
                                 ->first();
-
+                                //crear actividad en la tabla de actividades
                                 if($validarActividades == null){
                                     $actividadAux =ActividadesTabla::create([
 
@@ -139,7 +143,7 @@ class GenerarMultiActividadesController extends MultiActividadController
                                         ]);
                                     
                                 }
-                                
+                                //crear actividad
                                 if($actividadAux){
                                     $tabla = $actividad->nombre_tabla;
                                     if(method_exists($this, $tabla)){
@@ -179,6 +183,7 @@ class GenerarMultiActividadesController extends MultiActividadController
                 }
 
             }else{
+                //si existe un plan de trabajo solo asignar
                 $plan_trabajo = DB::table('plan_trabajo_asignacion')
                 ->where('id_plan_trabajo', request('id_plan_trabajo'))
                 ->first();

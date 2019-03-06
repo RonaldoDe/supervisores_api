@@ -31,16 +31,19 @@ class DeleteActividadController extends Controller
             ->where('id', request('id_actividad'))
             ->where('id_plan_trabajo', request('id_plan_trabajo'))
             ->first();
+            // actividades existentes
             if($actividad){
                 if($actividad->id_estado != 2){
                     $delete = DB::table(request('actividad'))
                     ->where('id', request('id_actividad'))
                     ->where('id_plan_trabajo', request('id_plan_trabajo'))
                     ->delete();
+                    // activiades habiles para eliminar
                     if($delete){
                         $delete_actividad = DB::table(request('actividad'))
                         ->where('id_plan_trabajo', request('id_plan_trabajo'))
                         ->get();
+                        // eliminar actividad
                         if(count($delete_actividad) == 0){
                             $delete_actividad = DB::table('actividades')
                             ->where('id_plan_trabajo', request('id_plan_trabajo'))

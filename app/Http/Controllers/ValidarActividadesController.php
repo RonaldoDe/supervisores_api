@@ -1407,7 +1407,7 @@ class ValidarActividadesController extends Controller
             if (request('seguro') != "") { // storing image in storage/app/public Folder
                 if(strpos(request('seguro'), 'supervisores_api/storage/app/public/img/') == false ){
                     Storage::disk('public')->put('img/'.$url_img, base64_decode(request('seguro')));
-                    $actividad->contrato = request('seguro');
+                    $actividad->seguro = request('seguro');
                 }else{
                     return response()->json(['message' => 'Error al carar la imagen'], 400);
                 }

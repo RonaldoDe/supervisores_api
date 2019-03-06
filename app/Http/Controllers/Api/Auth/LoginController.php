@@ -32,8 +32,6 @@ class LoginController extends Controller
         if($validator->fails())
         {
          
-          //return response()->json(['errors'=>$validator->errors()->all()]);
-          // return response()->json( $datos='nO ' );
           return response()->json( $errors=$validator->errors()->all(), 401);
         }
         else
@@ -41,14 +39,6 @@ class LoginController extends Controller
             $user=DB::table('users as u')->where('u.email',request('username'))
             ->first();
             if($user != null){
-
-                // //validar si el usuario esta verificado y a cambiado su contraseña
-                // if($user->estado == 0){
-                //     return response()->json([
-                //         'message' => 'Por favor actualizar su contraseña',
-                //         'url' => 'changePass'
-                //     ], 200);
-                // }
 
                 if (Hash::check(request('password'), $user->password)) {
                     DB::table('oauth_access_tokens')->where('user_id', $user->id)->delete();

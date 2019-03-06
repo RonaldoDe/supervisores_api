@@ -39,9 +39,18 @@ use App\Modelos\Actividades\ContratoAnexosLegalizacion;
 use App\Modelos\Actividades\SolicitudSeguro;
 class MultiActividadController extends Controller
 {
+
+    //funciones para crear las actividades multiple
+
+    /* 
+        (1)Cada funcion recoge el id del plan de trabajo, la fecha inicio y fecha fin de la actividad, luego valida que los request llegen
+        (2)valida que la fecha inicio sea mayor que la fecha actual y que la fecha fin
+        (4)instancia del modelo de una actividad para crearla respectivamente
+    */
+
     public function apertura(Request $request)
     {
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             // 'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -57,11 +66,11 @@ class MultiActividadController extends Controller
         else
         {
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
               
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                /*(4)*/
                 $apertura =Apertura::create([
 
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -86,7 +95,7 @@ class MultiActividadController extends Controller
     public function documentacion_legal(Request $request){
 
         //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
-    
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required',
@@ -100,13 +109,12 @@ class MultiActividadController extends Controller
     
         else
         {
-  
-            //instancia del modelo documentacion legal para crear un registro de esta tabla
+
     
             $fecha= date('Y-m-d');
-    
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-    
+                    /*(4)*/
                     $documentacion_legal =DocumentacionLegal::create([
     
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -145,7 +153,7 @@ class MultiActividadController extends Controller
     }
 
     public function arqueo_caja(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -159,10 +167,10 @@ class MultiActividadController extends Controller
         else
         {
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-  
+                    /*(4)*/
                     $arqueo_caja =ArqueoCaja::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -185,7 +193,7 @@ class MultiActividadController extends Controller
     }
 
     public function domicilios(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -201,9 +209,11 @@ class MultiActividadController extends Controller
         {
             $fecha= date('Y-m-d');
 
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
                   
+                    /*(4)*/
                     $domicilios =Domicilio::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -224,7 +234,7 @@ class MultiActividadController extends Controller
     }
 
     public function envio_correspondencia(Request $request){
-
+            /*(1)*/
             $validator=\Validator::make($request->all(),[
                 'id_plan_trabajo'=>'required|numeric',
                 'fecha_inicio'=>'date_format:"Y-m-d"|required',
@@ -240,9 +250,9 @@ class MultiActividadController extends Controller
             {
 
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(4)*/
                     $envio_correspondencia =EnvioCorrespondencia::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -264,7 +274,7 @@ class MultiActividadController extends Controller
     }
 
     public function evolucion_clientes(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -280,10 +290,10 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+            /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                  
+                    /*(4)*/
                     $evolucion_pedido =EvolucionClientes::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -307,13 +317,11 @@ class MultiActividadController extends Controller
     }
 
     public function examen_gimed(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
-
-
 
         ]);
         if($validator->fails())
@@ -325,9 +333,9 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(4)*/
                     $examen_gimed =ExamenGimed::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -351,7 +359,7 @@ class MultiActividadController extends Controller
     }
 
     public function exhibiciones(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -367,10 +375,10 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                 
+                    /*(4)*/
                     $exhibiciones =Exhibiciones::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -392,7 +400,7 @@ class MultiActividadController extends Controller
     }
 
     public function facturacion(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -408,10 +416,10 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                
+                    /*(4)*/
                     $facturacion =Facturacion::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -431,7 +439,7 @@ class MultiActividadController extends Controller
     }
 
     public function gimed(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -447,10 +455,10 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-           
+                    /*(4)*/
                     $gimed =Gimed::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -471,7 +479,7 @@ class MultiActividadController extends Controller
     }
 
     public function inventario_mercancia(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -487,10 +495,10 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                  
+                    /*(4)*/
                     $inventario_mercancia =InventarioMercancia::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -510,7 +518,7 @@ class MultiActividadController extends Controller
     }
 
     public function julienne(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -525,10 +533,10 @@ class MultiActividadController extends Controller
         else
         {
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                  
+                    /*(4)*/
                     $julienne =Julienne::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -548,7 +556,7 @@ class MultiActividadController extends Controller
     }
 
     public function libro_vencimientos(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -564,10 +572,10 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                  
+                    /*(4)*/
                     $libro_vencimiento =LibroVencimientos::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -588,7 +596,7 @@ class MultiActividadController extends Controller
     }
 
     public function productos_bonificados(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -604,10 +612,10 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                   
+                   /*(4)*/
                     $productos_bonificados =ProductosBonificados::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -628,7 +636,7 @@ class MultiActividadController extends Controller
     }
 
     public function programa_mercadeo(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -644,10 +652,10 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                   
+                   /*(4)*/
                     $programa_mercadeo =ProgramaMercadeo::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -667,7 +675,7 @@ class MultiActividadController extends Controller
     }
 
     public function relacion_servicios_publicos(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -683,9 +691,9 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-               
+                    /*(4)*/
                     $relacion_servicios_publicos =RelacionServiciosPublicos::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -705,7 +713,7 @@ class MultiActividadController extends Controller
     }
 
     public function relacion_vendedores(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -721,10 +729,10 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                  
+                    /*(4)*/
                     $relacion_vendedores =RelacionVendedores::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -745,7 +753,7 @@ class MultiActividadController extends Controller
     }
 
     public function remisiones(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -760,11 +768,11 @@ class MultiActividadController extends Controller
         else
         {
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
  
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                /*(4)*/
                 $remisiones =Remisiones::create([
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>request('fecha_inicio'),
@@ -786,7 +794,7 @@ class MultiActividadController extends Controller
     }
 
     public function servicio_bodega(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -802,10 +810,10 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                   
+                   /*(4)*/
                     $servicio_bodega =ServicioBodega::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -826,7 +834,7 @@ class MultiActividadController extends Controller
     }
 
     public function uso_institucional(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -842,10 +850,10 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-                   
+                   /*(4)*/
                     $uso_institucional =UsoInstitucional::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -867,15 +875,11 @@ class MultiActividadController extends Controller
 
     public function condiciones_locativas(Request $request){
 
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required',
             'fecha_fin'=>'date_format:"Y-m-d"|required'
-
-
-
-
         ]);
         if($validator->fails())
         {
@@ -886,11 +890,11 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
 
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                /*(4)*/
                 $condiciones_locativas =CondicionesLocativas::create([
 
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -901,10 +905,11 @@ class MultiActividadController extends Controller
                     'id_estado' =>1,
 
                 ]);
+                //iterar y obtener las condiciones locaivas
                 if($condiciones_locativas){
                     $condiciones = DB::table('lista_condiciones_locativas')
                     ->get();
-
+                    //crear la lista de condiciones locativas con su respectiva actividad
                     foreach ($condiciones as $condicion) {
                         $condicion =CondicionesDetalle::create([
                             'id_actividad' =>$condiciones_locativas->id,
@@ -926,7 +931,7 @@ class MultiActividadController extends Controller
     }
 
     public function kardex(Request $request){
-        
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -942,11 +947,11 @@ class MultiActividadController extends Controller
 
 
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
                
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                /*(4)*/
                 $kardex =Kardex::create([
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>request('fecha_inicio'),
@@ -965,7 +970,7 @@ class MultiActividadController extends Controller
     }
 
     public function libros_faltantes(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -980,9 +985,9 @@ class MultiActividadController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                /*(4)*/
                 $libroFaltante =LibrosFaltantes::create([
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>request('fecha_inicio'),
@@ -1001,7 +1006,7 @@ class MultiActividadController extends Controller
     }
 
     public function compromisos(Request $request){
-        
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -1017,10 +1022,10 @@ class MultiActividadController extends Controller
 
 
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                /*(4)*/
                 $compromisos =Compromiso::create([
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>request('fecha_inicio'),
@@ -1042,7 +1047,7 @@ class MultiActividadController extends Controller
     }
 
     public function senalizacion(Request $request){
-        
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -1058,10 +1063,10 @@ class MultiActividadController extends Controller
 
 
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                /*(4)*/
                 $senalizacion =Senalizacion::create([
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>request('fecha_inicio'),
@@ -1083,7 +1088,7 @@ class MultiActividadController extends Controller
     }
     
     public function contratos_anexos_legalizacion(Request $request){
-        
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -1099,10 +1104,10 @@ class MultiActividadController extends Controller
 
 
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                /*(4)*/
                 $contratos =ContratoAnexosLegalizacion::create([
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>request('fecha_inicio'),
@@ -1124,7 +1129,7 @@ class MultiActividadController extends Controller
     }
 
     public function solicitud_seguro(Request $request){
-        
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required',
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
@@ -1140,10 +1145,10 @@ class MultiActividadController extends Controller
 
 
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                /*(4)*/
                 $solicitud =SolicitudSeguro::create([
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
                     'fecha_inicio' =>request('fecha_inicio'),
@@ -1167,7 +1172,7 @@ class MultiActividadController extends Controller
     public function actividades_ptc(Request $request){
 
         //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'titulo' => 'required',
             'id_plan_trabajo'=>'required|numeric',
@@ -1184,15 +1189,11 @@ class MultiActividadController extends Controller
         else
         {
 
-
-
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
-
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
-
+                /*(4)*/
                 $ptc =ActividadPtc::create([
 
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -1207,15 +1208,10 @@ class MultiActividadController extends Controller
 
                 ]);
         
-
-                // DB::commit();
-
-
             }else{
                 return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
 
             }
-
 
 
         }

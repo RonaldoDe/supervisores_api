@@ -1338,9 +1338,22 @@ class ValidarActividadesController extends Controller
 
          else
          {
+            $actividad = ContratoAnexosLegalizacion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+            $foto = 'imagen_contrato_anexos_legalizacion' . time();
+                 
+            $url_img = str_replace(" ", "_",'actividades/contratos_anexos_legalizacion/'.$foto);
+
+            if (request('contrato') != "") { // storing image in storage/app/public Folder
+                if(strpos(request('contrato'), 'supervisores_api/storage/app/public/img/') == false ){
+                    Storage::disk('public')->put('img/'.$url_img, base64_decode(request('contrato')));
+                    $actividad->contrato = request('contrato');
+                }else{
+                    return response()->json(['message' => 'Error al carar la imagen'], 400);
+                }
+
+            }
 
              //actualizacion de la actividad por el supervisor
-             $actividad = ContratoAnexosLegalizacion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
@@ -1350,7 +1363,6 @@ class ValidarActividadesController extends Controller
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
                 $actividad->motivo_ausencia = request('motivo_ausencia');
-                $actividad->contrato = request('contrato');
                 $actividad->update();
                  //registro de notificacion
                  if($actividad){
@@ -1388,6 +1400,19 @@ class ValidarActividadesController extends Controller
 
              //actualizacion de la actividad por el supervisor
              $actividad = SolicitudSeguro::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
+             $foto = 'imagen_solicitud_seguro' . time();
+                 
+            $url_img = str_replace(" ", "_",'actividades/solicitud_seguro/'.$foto);
+
+            if (request('seguro') != "") { // storing image in storage/app/public Folder
+                if(strpos(request('seguro'), 'supervisores_api/storage/app/public/img/') == false ){
+                    Storage::disk('public')->put('img/'.$url_img, base64_decode(request('seguro')));
+                    $actividad->contrato = request('seguro');
+                }else{
+                    return response()->json(['message' => 'Error al carar la imagen'], 400);
+                }
+
+            }
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
@@ -1397,7 +1422,6 @@ class ValidarActividadesController extends Controller
                  $actividad->tiempo_actividad = request('tiempo_actividad');
                 $actividad->tiempo_total = request('tiempo_total');
                 $actividad->motivo_ausencia = request('motivo_ausencia');
-                $actividad->seguro = request('seguro');
                 $actividad->update();
                  //registro de notificacion
                  if($actividad){

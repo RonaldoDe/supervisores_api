@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class DeleteActividadController extends Controller
 {
+
+    //eliminar actividades
     public function deleteActividad(Request $request)
     {
         $validator=\Validator::make($request->all(),[
@@ -23,6 +25,8 @@ class DeleteActividadController extends Controller
         }
         else
         {
+
+            //eliminar actividad si no esta completa o modificada
             $actividad = DB::table(request('actividad'))
             ->where('id', request('id_actividad'))
             ->where('id_plan_trabajo', request('id_plan_trabajo'))

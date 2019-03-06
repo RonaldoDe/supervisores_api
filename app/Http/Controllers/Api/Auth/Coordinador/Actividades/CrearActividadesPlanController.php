@@ -40,9 +40,20 @@ use App\Modelos\Actividades\SolicitudSeguro;
 
 class CrearActividadesPlanController extends Controller
 {
+
+    //funciones para crear las actividades
+
+    /* 
+        (1)Cada funcion recoge el id del plan de trabajo, la fecha inicio y fecha fin de la actividad, luego valida que los request llegen
+        (2)valida que la fecha inicio sea mayor que la fecha actual y que la fecha fin
+        (3)funcion que valida si existe la misma activcidad en el rango de fechas dado de la misma sucursal
+        (4)instancia del modelo de una actividad para crearla respectivamente
+    */
+
+
     public function crear_apertura(Request $request)
     {
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             // 'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -58,18 +69,16 @@ class CrearActividadesPlanController extends Controller
         else
         {
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
 
-
-        //funcion que valida si existe la misma activcidad en el rngo de fechas dado de la misma sucursal
+        /*(3)*/       
         $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'apertura');
-
 
         if($respuesta == 1){
 
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                /*(4)*/
                 $apertura =Apertura::create([
 
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -97,8 +106,7 @@ class CrearActividadesPlanController extends Controller
     }
     public function crear_documentacion_legal(Request $request){
 
-        //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
-    
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_plan_trabajo'=>'required|numeric',
             'fecha_inicio'=>'date_format:"Y-m-d"|required',
@@ -115,19 +123,18 @@ class CrearActividadesPlanController extends Controller
     
     
     
-            //instancia del modelo documentacion legal para crear un registro de esta tabla
-    
+            
             $fecha= date('Y-m-d');
-    
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
     
-    
+                /*(3)*/
                 $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'documentacion_legal');
     
                 if($respuesta>0){
     
                 
-    
+                    /*(4)*/
                     $documentacion_legal =DocumentacionLegal::create([
     
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -141,7 +148,7 @@ class CrearActividadesPlanController extends Controller
                     if($documentacion_legal){
                         $documentos = DB::table('lista_documentacion_legal')
                         ->get();
-    
+                        //obtener la lista de documentacion legal y crear cada documento con su respectiva actividad
                         foreach ($documentos as $documento) {
                             $documentacion =Documentacion::create([
                                 'id_actividad' =>$documentacion_legal->id,
@@ -171,7 +178,7 @@ class CrearActividadesPlanController extends Controller
     
     }
     public function crear_arqueo_caja(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -186,15 +193,14 @@ class CrearActividadesPlanController extends Controller
         else
         {
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
 
+                /*(3)*/
                 $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'arqueo_caja');
                  
-
-
             if($respuesta>0){
-
+                    /*(4)*/
                     $arqueo_caja =ArqueoCaja::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -224,7 +230,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_kardex(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -240,14 +246,15 @@ class CrearActividadesPlanController extends Controller
         else
         {
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                /*(3)*/
                 $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'kardex');
                     
 
 
             if($respuesta>0){
+                    /*(4)*/
                     $kardex =Kardex::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -279,7 +286,7 @@ class CrearActividadesPlanController extends Controller
     }
     public function crear_condiciones_locativas(Request $request){
 
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -296,16 +303,16 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                /*(3)*/
                 $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'condiciones_locativas');
 
 
 
         if($respuesta>0){
 
-        //instancia del modelo documentacion legal para crear un registro de esta tabla
+                /*(4)*/
                 $condiciones_locativas =CondicionesLocativas::create([
 
                     'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -319,7 +326,7 @@ class CrearActividadesPlanController extends Controller
                 if($condiciones_locativas){
                     $condiciones = DB::table('lista_condiciones_locativas')
                     ->get();
-
+                        //obtener la lista de documentacion legal y crear cada documento con su respectiva actividad
                     foreach ($condiciones as $condicion) {
                         $condicion =CondicionesDetalle::create([
                             'id_actividad' =>$condiciones_locativas->id,
@@ -348,7 +355,7 @@ class CrearActividadesPlanController extends Controller
 
     }
     public function crear_domicilios(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -364,13 +371,14 @@ class CrearActividadesPlanController extends Controller
         else
         {
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                /*(3)*/
                 $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'domicilios');
 
 
             if($respuesta>0){
+                    /*(4)*/
                     $domicilios =Domicilio::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -397,7 +405,7 @@ class CrearActividadesPlanController extends Controller
     }
     public function crear_envio_correspondencia(Request $request)
          {
-
+            /*(1)*/
             $validator=\Validator::make($request->all(),[
                 'id_prioridad' => 'required|numeric',
                 'id_plan_trabajo'=>'required|numeric',
@@ -414,14 +422,14 @@ class CrearActividadesPlanController extends Controller
             {
 
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                /*(3)*/
                 $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'envio_correspondencia');
                 
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $envio_correspondencia =EnvioCorrespondencia::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -449,7 +457,7 @@ class CrearActividadesPlanController extends Controller
 
     }
     public function crear_evolucion_clientes(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -466,13 +474,14 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'evolucion_clientes');
 
 
             if($respuesta>0){
+                    /*(4)*/
                     $evolucion_pedido =EvolucionClientes::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -499,7 +508,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_examen_gimed(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -518,15 +527,15 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'examen_gimed');
 
 
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $examen_gimed =ExamenGimed::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -556,7 +565,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_exhibiciones(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -573,14 +582,14 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'exhibiciones');
 
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $exhibiciones =Exhibiciones::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -605,7 +614,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_facturacion(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -622,14 +631,14 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'facturacion');
 
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $facturacion =Facturacion::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -653,7 +662,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_gimed(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -670,13 +679,14 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'gimed');
 
 
             if($respuesta>0){
+                    /*(4)*/
                     $gimed =Gimed::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -700,7 +710,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_inventario_mercancia(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -717,14 +727,14 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'inventario_mercancia');
                     
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $inventario_mercancia =InventarioMercancia::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -748,7 +758,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_julienne(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -765,14 +775,14 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'julienne');
                     
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $julienne =Julienne::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -796,7 +806,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_libro_vencimientos(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -813,13 +823,14 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'libro_vencimientos');
 
 
             if($respuesta>0){
+                    /*(4)*/
                     $libro_vencimiento =LibroVencimientos::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -843,7 +854,7 @@ class CrearActividadesPlanController extends Controller
             }
     }   
     public function crear_productos_bonificados(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -860,14 +871,14 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'productos_bonificados');
 
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $productos_bonificados =ProductosBonificados::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -891,7 +902,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_programa_mercadeo(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -908,14 +919,14 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'programa_mercadeo');
                    
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $programa_mercadeo =ProgramaMercadeo::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -939,7 +950,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_relacion_servicios_publicos(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -956,13 +967,14 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'relacion_servicios_publicos');
                     
 
             if($respuesta>0){
+                    /*(4)*/
                     $relacion_servicios_publicos =RelacionServiciosPublicos::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -986,7 +998,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_relacion_vendedores(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -1003,12 +1015,13 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(4)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'relacion_vendedores');                
 
             if($respuesta>0){
+                    /*(4)*/
                     $relacion_vendedores =RelacionVendedores::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -1032,7 +1045,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_remisiones(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -1048,14 +1061,14 @@ class CrearActividadesPlanController extends Controller
         else
         {
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'remisiones');                
                     
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $remisiones =Remisiones::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -1080,7 +1093,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_servicio_bodega(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -1097,14 +1110,14 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'servicio_bodega');                
                    
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $servicio_bodega =ServicioBodega::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -1128,7 +1141,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_uso_institucional(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'id_plan_trabajo'=>'required|numeric',
@@ -1145,13 +1158,14 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'uso_institucional');                
 
 
             if($respuesta>0){
+                    /*(4)*/
                     $uso_institucional =UsoInstitucional::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -1175,7 +1189,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_libros_faltantes(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
@@ -1190,17 +1204,15 @@ class CrearActividadesPlanController extends Controller
         else
         {
 
-
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'libros_faltantes');                
-                   
-
+                
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $libro_faltantes =LibrosFaltantes::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -1225,7 +1237,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_compromisos(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
@@ -1242,15 +1254,15 @@ class CrearActividadesPlanController extends Controller
 
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'compromisos');                
                    
 
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $compromisos =Compromiso::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -1275,7 +1287,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_senalizacion(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
@@ -1292,15 +1304,15 @@ class CrearActividadesPlanController extends Controller
 
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'senalizacion');                
                    
 
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $senalizacion =Senalizacion::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -1325,7 +1337,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_contratos_anexos_legalizacion(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
@@ -1342,15 +1354,15 @@ class CrearActividadesPlanController extends Controller
 
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'contratos_anexos_legalizacion');                
                    
 
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $contrato =ContratoAnexosLegalizacion::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -1375,7 +1387,7 @@ class CrearActividadesPlanController extends Controller
             }
     }
     public function crear_solicitud_seguro(Request $request){
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required',
             'id_plan_trabajo'=>'required',
@@ -1392,15 +1404,15 @@ class CrearActividadesPlanController extends Controller
 
 
             $fecha= date('Y-m-d');
-
+                /*(2)*/
                 if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-
+                    /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'solicitud_seguro');                
                    
 
 
             if($respuesta>0){
-
+                    /*(4)*/
                     $seguro =SolicitudSeguro::create([
 
                         'id_plan_trabajo' =>request('id_plan_trabajo'),
@@ -1427,7 +1439,7 @@ class CrearActividadesPlanController extends Controller
     public function crear_ptc(Request $request){
 
         //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
-
+        /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',
             'titulo' => 'required',
@@ -1447,9 +1459,9 @@ class CrearActividadesPlanController extends Controller
         {
 
             $fecha= date('Y-m-d');
-
+            /*(2)*/
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-                
+                /*(4)*/
                 $ptc =ActividadPtc::create([
 
                     'id_plan_trabajo' =>request('id_plan_trabajo'),

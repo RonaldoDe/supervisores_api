@@ -83,7 +83,6 @@ class HomeCoordinadorController extends Controller
             $validator=\Validator::make($request->all(),[
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email',
-
                 'password' => 'required|min:6',
                 'apellido'=>'required',
                 'cedula'=>'required|unique:usuario,cedula',

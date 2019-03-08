@@ -34,7 +34,6 @@ class AllInformationController extends Controller
         ->get();
 
        $sucursales_array = array();
-       $planes_array = array();
        $actividades_array = array();
         foreach($zonas as $zona){
             $sucursales=DB::table('sucursales as su')

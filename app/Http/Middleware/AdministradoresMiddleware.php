@@ -33,14 +33,13 @@ class AdministradoresMiddleware
             ->where('ur.id_usuario','=',$validacion_user->id_usuario)
             ->where('ur.id_rol','=',2)
             ->get();
-
             if(count($user_administrador)>0 ){
                 return $next($request);
             }
-           else{
-               return response()->json('No tienes permiso',401); //dd('No tienes permiso');
+            else{
+                return response()->json('No tienes permiso',401); //dd('No tienes permiso');
             }
-         }else{
+        }else{
             return response()->json('No tienes permiso',401); //dd('No tienes permiso');
          }
 

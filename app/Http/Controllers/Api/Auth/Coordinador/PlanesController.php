@@ -40,6 +40,7 @@ class PlanesController extends Controller
                 ->orderby('ac.id_plan_trabajo','desc')
                 ->get();
 
+                //obtener plan mediante su id
                 $plan = DB::table('plan_trabajo_asignacion as p')
                 ->where('p.id_plan_trabajo', request('id_plan_trabajo'))
                 ->first();
@@ -53,7 +54,7 @@ class PlanesController extends Controller
                     ->where('ac.id_estado', '!=',2)
                     ->get();
     
-                    
+                    //llenar array con las actividades
                     foreach($fe as $fecha){
                         $fecha->nombre_actividad = $ac->nombre_actividad;
                         array_push($lista_actividades_arr, [$ac->nombreSucursal =>$fecha]);
@@ -70,7 +71,7 @@ class PlanesController extends Controller
             
         }
     }
-
+    //obtener actividads por plan
     public function allActividades(Request $request)
     {
         $validator=\Validator::make($request->all(),[
@@ -84,6 +85,7 @@ class PlanesController extends Controller
 
         else
         {
+            //obtener el usuario y el usuario coordinador respectivamente
             $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
             $coordinador=DB::table('coordinadores')->where('cedula',$user->cedula)->first();
 
@@ -97,7 +99,7 @@ class PlanesController extends Controller
                 ->where('p.idcoordinador',$coordinador->id_cordinador)
                 ->orderby('ac.id_plan_trabajo','desc')
                 ->get();
-
+                //obtener la sucursal asignada a una plan
                 $plan = DB::table('plan_trabajo_asignacion as p')
                 ->select('su.nombre as nombreSucursal', 'p.nombre as nombrePlan', 'p.id_plan_trabajo', 'p.id_sucursal')
                 ->join('sucursales as su','p.id_sucursal','su.id_suscursal')                
@@ -183,7 +185,7 @@ class PlanesController extends Controller
             
         }
     }
-
+    // asignar estado a un plan de trabajo(asiganado/no asignado/completo)
     public function asignarEstadoPlan(Request $request)
     {
         $validator=\Validator::make($request->all(),[

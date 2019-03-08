@@ -386,6 +386,9 @@ class ReportesGeneralesController extends Controller
        $usuario_zona = DB::table('usuario_zona as uz')
        ->where('uz.id_usuario',$usuario_rol->id_usuario_roles)
        ->first();
+       if(!$usuario_zona){
+            return response()->json('Usuario gerente', 401);
+       }
 
         //obtener las actividades segun su plan de trabajo
        $actividades=DB::table('plan_trabajo_asignacion as p')
@@ -491,6 +494,11 @@ class ReportesGeneralesController extends Controller
             }
  
         }
+    }
+    
+    public function hideReport(Request $request)
+    {
+        
     }
 
 }

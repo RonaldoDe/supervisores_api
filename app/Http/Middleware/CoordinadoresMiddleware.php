@@ -19,14 +19,14 @@ class CoordinadoresMiddleware
     {
          //funcion que recibe un parametro que es un id para validar el tipo de usuario que haras las peticiones
          $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
-
+         $admin = 0;
          //Obtener el correo de el usuario que se encuentra logueado en est caso el de la tabla cordinador
          $coordinador=DB::table('coordinadores as c')
          ->where('c.correo','=', $user->email)
          ->where('c.id_estado','=', 1)
          ->get();
 
-         if(!$coordinador){
+         if(count($coordinador) < 1){
             $usuario = DB::table('usuario as u')->where('u.id_usuario','=',$user->id)->first();
             if($usuario){
                $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();

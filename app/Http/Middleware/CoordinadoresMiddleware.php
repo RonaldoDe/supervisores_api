@@ -27,9 +27,11 @@ class CoordinadoresMiddleware
          ->get();
 
          if(count($coordinador) < 1){
-            $usuario = DB::table('usuario as u')->where('u.correo','=',$user->email)->where('id_estado','=', 1)->first();
+            $usuario = DB::table('usuario as u')->where('u.correo','=',$user->email)->where('u.id_estado','=', 1)->first();
             if($usuario){
                $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
+            }else{
+               return response()->json('Usuario admin no encontrado',401); //dd('No tienes permiso');
             }
          }
          

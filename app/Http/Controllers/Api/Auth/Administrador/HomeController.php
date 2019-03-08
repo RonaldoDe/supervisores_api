@@ -16,18 +16,31 @@ class HomeController extends Controller
 
        //obtener los datos del usuario supervisor
        $user_supervisor=DB::table('usuario as u')
-       ->select('u.id_usuario', 'u.nombre', 'u.apellido', 'u.cedula', 'u.correo', 'u.telefono', 'u.codigo', 'u.foto')
+       ->select('u.id_usuario as id_cordinador', 'u.nombre', 'u.apellido', 'foto', 'correo')
        ->where('u.correo','=',$user->email)->first();
+       $user_supervisor->id_region = 'Todas las regiones';
+       $user_supervisor->region = 'Adminsitrador';
 
         //obtener el id del rol del usuario
        $usuario_rol = DB::table('usuarios_roles as ur')
-       ->where('ur.id_usuario',$user_supervisor->id_usuario)
+       ->where('ur.id_usuario',$user_supervisor->id_cordinador)
        ->first();
 
        $zonas=DB::table('zona as z')
-        ->get();
+                ->join('region as r','r.id_region','=','z.id_region')
+                ->join('usuario_zona as uz','z.id_zona','=','uz.id_zona')
+                ->join('usuarios_roles as u','u.id_usuario_roles','=','uz.id_usuario')
+                ->join('roles as ro','ro.id_roles','=','u.id_rol')
+                ->join('usuario as us','us.id_usuario','=','u.id_usuario')
+                ->join('coordinadores as c','c.id_cordinador','=','r.id_cordinador')
+                //->join('sucursales as s','s.id_zona','=','z.id_zona')
+                ->where('u.id_rol','=',1)
+                ->select('z.descripcion_zona','z.id_zona','us.nombre as supervisor','uz.id_usuario as id_usuario_supervisor',
+                DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
+                ->get();
 
-        return response()->json(['zonas' => $zonas],200);
+
+        return response()->json(['region' => $user_supervisor, 'zonas' => $zonas, 'foto' => $user_supervisor->foto, 'email' => $user_supervisor->correo],200);
       
     }
 

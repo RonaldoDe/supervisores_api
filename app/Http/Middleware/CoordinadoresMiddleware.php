@@ -19,7 +19,6 @@ class CoordinadoresMiddleware
     {
          //funcion que recibe un parametro que es un id para validar el tipo de usuario que haras las peticiones
          $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
-         $admin = 0;
          //Obtener el correo de el usuario que se encuentra logueado en est caso el de la tabla cordinador
          $coordinador=DB::table('coordinadores as c')
          ->where('c.correo','=', $user->email)
@@ -30,6 +29,12 @@ class CoordinadoresMiddleware
             $usuario = DB::table('usuario as u')->where('u.id_usuario','=',$user->id)->first();
             if($usuario){
                $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
+               if($admin)
+               {
+                  return $next($request);
+               }else{
+                  return response()->json('No tienes permiso',401); //dd('No tienes permiso');
+               }
             }
        }
 
@@ -41,7 +46,7 @@ class CoordinadoresMiddleware
                            ->first();
 
          //validar el tipo de usuario y madar a una ruta definida
-         if(count($coordinador)>0 || $admin)
+         if(count($coordinador)>0)
          {
             return $next($request);
          }else{

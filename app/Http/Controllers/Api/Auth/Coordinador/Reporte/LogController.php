@@ -23,6 +23,12 @@ class LogController extends Controller
         if($supervisor){
             $usuario_rol=DB::table('usuarios_roles')
             ->where('id_usuario','=',$supervisor->id_usuario)->first();
+            if(!$usuario_rol){
+                $admin=DB::table('usuarios_roles')
+                ->where('id_usuario','=',$supervisor->id_usuario)
+                ->where('id_rol', 2)
+                ->first();
+            }
         }
 
        if($coordinador){
@@ -40,7 +46,13 @@ class LogController extends Controller
             ->orderBy('fecha', 'DESC')
             ->take(100)
             ->get();
-       }else{
+       }else if($usuario_rol){
+            $log = DB::table('notificaciones')
+            ->where('tipo_usuario', 2)
+            ->orderBy('fecha', 'DESC')
+            ->take(100)
+            ->get();
+        }else{
             return response()->json(['message' => 'Usuario no encontrado'],400);
        }
 

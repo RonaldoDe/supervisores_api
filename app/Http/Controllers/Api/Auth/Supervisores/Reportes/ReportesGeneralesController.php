@@ -498,7 +498,28 @@ class ReportesGeneralesController extends Controller
     
     public function hideReport(Request $request)
     {
-        
+        $validator=\Validator::make($request->all(),[
+            'id_reporte' => 'required',
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( ['message' => $validator->errors()->all()],400);
+        }
+
+        else
+        {
+            $reporte = ReporteSupervisor::find(request('id_reporte'));
+            if($reporte){
+                $reporte->estado_listar = 2;
+                $reporte->update();
+
+                if($reporte){
+                    return response()->json('Reporte eliminado',200);
+                }
+            }else{
+                return response()->json('Reporte no encontrado',400);
+            }
+        }
     }
 
 }

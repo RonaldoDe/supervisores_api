@@ -35,6 +35,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('logNotificacionesUsuario', 'Api\Auth\Coordinador\Reporte\LogController@logNotificaciones');
     
     Route::post('reporteSupervisor', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@reporteSucursal');
+    Route::post('ocultarReporte', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@hideReport');
     Route::post('detalleRepSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
     Route::post('enviarMensajeReporte', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@crearMensageReporte');
     Route::get('obtenerReporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@generarReporeteSupervisor');

@@ -38,7 +38,7 @@ class HomeCoordinadorController extends Controller
        if(!$coordinador){
             $usuario = DB::table('usuario as u')->where('u.id_usuario','=',$user->id)->first();
             if($usuario){
-                $admin = DB::table('usuario_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
+                $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
                 if($admin){
                     return response()->json('Usuario Administrador', 309);
                 }else{

@@ -29,16 +29,10 @@ class CoordinadoresMiddleware
          if(!$coordinador){
             $usuario = DB::table('usuario as u')->where('u.id_usuario','=',$user->id)->first();
             if($usuario){
-               $admin = DB::table('usuario_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
+               $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
             }
        }
 
-         //Acceder al tipo de usuario que pertenece
-        $usuarios_roles=Db::table('usuarios_roles as u')
-                           ->join('usuario as us','us.id_usuario','=','u.id_usuario')
-                           ->join('roles as r','r.id_roles','=','u.id_rol')
-                           ->where('us.correo','=',$user->email)
-                           ->first();
 
          //validar el tipo de usuario y madar a una ruta definida
          if(count($coordinador)>0 || $admin)

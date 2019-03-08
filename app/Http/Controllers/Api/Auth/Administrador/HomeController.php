@@ -159,9 +159,10 @@ class HomeController extends Controller
         }
     }
 
-    public function getPlanes(Request $request)
+    public function mostrarPlanSucursal(Request $request)
     {
         $validator=\Validator::make($request->all(),[
+            'id_zona' => 'required',
             'id_sucursal' => 'required',
 
         ]);
@@ -173,15 +174,28 @@ class HomeController extends Controller
 
         else
         {
-                //obtener plan mediante su id
-                $planes = DB::table('plan_trabajo_asignacion as p')
-                ->where('p.id_sucursal', request('id_sucursal'))
-                ->get();
-    
-           
-                return response()->json(['Planes' => $planes],200);
-                
+            $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+
+            //validar si la sucursal pertenece al coordinador
+            $perteneciente = DB::table('region as re')
+            ->join('zona as zo' , 're.id_region', 'zo.id_region')
+            ->join('sucursales as su' , 'zo.id_zona', 'su.id_zona')
+            ->where('zo.id_zona', request('id_zona'))
+            ->where('su.id_suscursal', request('id_sucursal'))
+            ->first();
             
+            if($perteneciente != null){
+                $planes = DB::table('plan_trabajo_asignacion')
+                ->where('id_sucursal', request('id_sucursal'))
+                ->get();
+                if(count($planes) > 0){
+                    return response()->json($planes, 200);
+                }else{
+                    return response()->json('No tiene planes asignados', 402);
+                }
+            }else{
+                    return response()->json('Sucursal no encontrada', 402);
+            }
         }
     }
 

@@ -329,6 +329,20 @@ class ReportesGeneralesController extends Controller
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
         $coordinador=DB::table('coordinadores')->where('correo','=',$user->email)->first();
 
+        if(!$coordinador){
+            $usuario = DB::table('usuario as u')->where('u.correo','=',$user->email)->where('id_estado','=', 1)->first();
+            if($usuario){
+                $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
+                if($admin){
+                    return response()->json('Usuario Administrador', 309);
+                }else{
+                    return response()->json('Usuario No es administrador', 400);
+                }
+            }else{
+                return response()->json('Usuario no econtrado', 400);
+            }
+       }
+
         if($coordinador){
             $reporte = DB::table('reportes_supervisor as rs')
             ->select('usu.nombre', 'usu.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')

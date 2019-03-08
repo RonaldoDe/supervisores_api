@@ -35,6 +35,20 @@ class HomeCoordinadorController extends Controller
        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
        $coordinador=DB::table('coordinadores')->where('correo','=',$user->email)->first();
 
+       if(!$coordinador){
+            $usuario = DB::table('usuario as u')->where('u.id_usuario','=',$user->id)->first();
+            if($usuario){
+                $admin = DB::table('usuario_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
+                if($admin){
+                    return response()->json('Usuario Administrador', 309);
+                }else{
+                    return response()->json('Usuario No es administrador', 400);
+                }
+            }else{
+                return response()->json('Usuario no econtrado', 400);
+            }
+       }
+
 
        // Se recupera los datos del coordinador para mostrar su region y datos personales
        $region=DB::table('region as r')

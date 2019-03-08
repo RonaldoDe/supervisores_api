@@ -32,6 +32,7 @@ class CoordinadoresMiddleware
                $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
                if($admin)
                {
+                  echo "entró";
                   return $next($request);
                }else{
                   return response()->json('No tienes permiso',401); //dd('No tienes permiso');

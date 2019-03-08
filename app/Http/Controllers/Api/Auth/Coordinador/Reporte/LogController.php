@@ -46,7 +46,7 @@ class LogController extends Controller
             ->orderBy('fecha', 'DESC')
             ->take(100)
             ->get();
-       }else if($usuario_rol){
+       }else if($usuario_rol->id_rol = 2){
             $log = DB::table('notificaciones')
             ->where('tipo_usuario', 2)
             ->orderBy('fecha', 'DESC')

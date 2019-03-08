@@ -44,60 +44,6 @@ class HomeController extends Controller
       
     }
 
-    public function getSucursal(Request $request)
-    {
-        $validator=\Validator::make($request->all(),[
-            'id_zona' => 'required',
-
-
-        ]);
-
-        if($validator->fails())
-        {
-          return response()->json( $errors=$validator->errors()->all(),400);
-        }
-
-        else
-        {
-
-            $sucursales=DB::table('sucursales')
-            ->where('id_zona', request('id_zona'))
-            ->get();
-
-                return response()->json(['sucursales' => $sucursales],200);
-        }
-      
-    }
-
-    public function datosSucursal(Request $request)
-    {
-        $validator=\Validator::make($request->all(),[
-            'id_sucursal' => 'required',
-
-
-        ]);
-
-        if($validator->fails())
-        {
-          return response()->json( $errors=$validator->errors()->all(),400);
-        }
-
-        else
-        {
-
-            $sucursales = DB::table('usuario_zona as z')
-            ->select('su.cod_sucursal', 'su.nombre', 'su.direccion', 'z.id_usuario', 'usu.nombre as nombre_usuario', 'usu.apellido', 'su.id_zona')
-            ->join('region as r', 'r.id_region', 'z.id_region')
-            ->join('sucursales as su', 'z.id_zona', 'su.id_zona')
-            ->join('usuarios_roles as ur', 'z.id_usuario', 'ur.id_usuario_roles')
-            ->join('usuario as usu', 'ur.id_usuario', 'usu.id_usuario')
-            ->where('su.id_suscursal', request('id_sucursal'))
-            ->first();
-
-            return response()->json(['sucursales' => $sucursales],200);
-        }
-      
-    }
 
     public function allActividades(Request $request)
     {
@@ -280,5 +226,39 @@ class HomeController extends Controller
                     }
         
             }
+
+    public function datosSucursal(Request $request)
+    {
+
+        $validator=\Validator::make($request->all(),[
+            'id_sucursal' => 'required',
+
+
+        ]);
+
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400);
+        }
+
+        else
+        {
+                $zona = DB::table('usuario_zona as z')
+                ->select('su.cod_sucursal', 'su.nombre', 'su.direccion', 'z.id_usuario', 'usu.nombre as nombre_usuario', 'usu.apellido', 'su.id_zona')
+                ->join('region as r', 'r.id_region', 'z.id_region')
+                ->join('sucursales as su', 'z.id_zona', 'su.id_zona')
+                ->join('usuarios_roles as ur', 'z.id_usuario', 'ur.id_usuario_roles')
+                ->join('usuario as usu', 'ur.id_usuario', 'usu.id_usuario')
+                ->where('su.id_suscursal', request('id_sucursal'))
+                ->first();
+                if($zona != null){
+                    
+                    return response()->json($zona,201);
+                }else{
+                    return response()->json('sucursal no encontrada.',400);
+                }
+
+        }
+    }
     
 }

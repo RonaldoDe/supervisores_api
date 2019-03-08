@@ -191,22 +191,7 @@ class HomeController extends Controller
                //con su supervisor que tiene asiganado el filtro lo hace por el id de la zona que tienen dichos puntos de venta
                $sw=0;
                $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
-                $coordinador=DB::table('coordinadores')->where('correo','=',$user->email)->where('id_estado','=', 1)->first();
-
-               if(!$coordinador){
-                $usuario = DB::table('usuario as u')->where('u.correo','=',$user->email)->where('id_estado','=', 1)->first();
-                if($usuario){
-                    $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
-                    if($admin){
-                        return response()->json('Usuario Administrador', 309);
-                    }else{
-                        return response()->json('Usuario No es administrador', 400);
-                    }
-                }else{
-                    return response()->json('Usuario no econtrado', 400);
-                }
-           }
-      
+                
         
                $zona=DB::table('zona as z')
                 ->select('z.id_zona')

@@ -176,6 +176,20 @@ class HomeCoordinadorController extends Controller
        ->where('correo','=',$user->email)
        ->select('id_cordinador')
        ->first();
+       if(!$cordinador){
+        $usuario = DB::table('usuario as u')->where('u.correo','=',$user->email)->where('id_estado','=', 1)->first();
+        if($usuario){
+            $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
+            if($admin){
+                return response()->json('Usuario Administrador', 309);
+            }else{
+                return response()->json('Usuario No es administrador', 400);
+            }
+        }else{
+            return response()->json('Usuario no econtrado', 400);
+        }
+   }
+
 
        $zona=DB::table('zona as z')
         ->join('region as r','z.id_region','=','r.id_region')

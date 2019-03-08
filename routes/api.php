@@ -174,7 +174,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('crearRegion', 'Api\Auth\Administrador\CrearUsuariosController@crearRegion');
 
     Route::get('homeAdmin', 'Api\Auth\Administrador\HomeController@home');
-    Route::post('getSucursalsAdmin', 'Api\Auth\Administrador\HomeController@getSucursal');
+    Route::get('getSucursalsAdmin/{id}', 'Api\Auth\Administrador\HomeController@mostrarPuntosVentasIdZona');
     Route::post('datosSucursalAdmin', 'Api\Auth\Administrador\HomeController@datosSucursal');
     Route::post('viewActivitiesAdmin', 'Api\Auth\Administrador\HomeController@allActividades');
     Route::post('showActivitiesAdmin', 'Api\Auth\Administrador\HomeController@listarActividades');

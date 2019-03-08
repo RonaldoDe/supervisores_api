@@ -88,6 +88,19 @@ class PlanesController extends Controller
             //obtener el usuario y el usuario coordinador respectivamente
             $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
             $coordinador=DB::table('coordinadores')->where('cedula',$user->cedula)->first();
+            if(!$coordinador){
+                $usuario = DB::table('usuario as u')->where('u.correo','=',$user->email)->where('id_estado','=', 1)->first();
+                if($usuario){
+                    $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
+                    if($admin){
+                        return response()->json('Usuario Administrador', 309);
+                    }else{
+                        return response()->json('Usuario No es administrador', 400);
+                    }
+                }else{
+                    return response()->json('Usuario no econtrado', 400);
+                }
+           }
 
             if($coordinador != null){
                 //obtener las actividades segun su plan de trabajo 

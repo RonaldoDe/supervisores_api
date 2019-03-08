@@ -45,67 +45,6 @@ class HomeController extends Controller
     }
 
 
-    public function allActividades(Request $request)
-    {
-        $validator=\Validator::make($request->all(),[
-            'id_plan_trabajo' => 'required',
-        ]);
-
-        if($validator->fails())
-        {
-          return response()->json( $errors=$validator->errors()->all(),400 );
-        }
-
-        else
-        {
-
-                //obtener las actividades segun su plan de trabajo 
-                $actividades=DB::table('plan_trabajo_asignacion as p')
-                ->select('su.nombre as nombreSucursal', 'p.nombre as nombrePlan', 'ac.nombre_tabla', 'p.id_plan_trabajo', 'ac.nombre_actividad')
-                ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
-                ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
-                ->where('p.id_plan_trabajo',request('id_plan_trabajo'))
-                ->orderby('ac.id_plan_trabajo','desc')
-                ->get();
-                //obtener la sucursal asignada a una plan
-                $plan = DB::table('plan_trabajo_asignacion as p')
-                ->select('su.nombre as nombreSucursal', 'p.nombre as nombrePlan', 'p.id_plan_trabajo', 'p.id_sucursal')
-                ->join('sucursales as su','p.id_sucursal','su.id_suscursal')                
-                ->where('p.id_plan_trabajo', request('id_plan_trabajo'))
-                ->first();
-    
-                if($plan){
-                    if(count($actividades) > 0){
-                        //array que almacenará las actividanes correspondientes a los 7 dias despues del dia actual 
-                        $lista_actividades_arr = array();
-                        //bucle que itera las actividades y las obtiene segun el plan de trabajo
-                        foreach($actividades as $ac){
-                            $fe = DB::table($ac->nombre_tabla. ' as ac')
-                            ->where('ac.id_plan_trabajo',$ac->id_plan_trabajo)
-                            ->get();
-            
-                            //  generar el array con el listado de actividades pendientes en la semana
-                            foreach($fe as $fecha){
-                                $fecha->nombre_actividad = $ac->nombre_actividad;
-                                array_push($lista_actividades_arr, $fecha);
-                            }
-                            
-                            
-                        }
-                        return response()->json(['Actividades' => $lista_actividades_arr, 'Nombre' => $plan->nombrePlan, 'id_sucursal' => $plan->id_sucursal, 'sucursal' => $ac->nombreSucursal],200);
-                    }else{
-                        return response()->json(['Actividades' => [], 'Nombre' => $plan->nombrePlan, 'id_sucursal' => $plan->id_sucursal, 'sucursal' => $plan->nombreSucursal],200);
-                        
-                    }
-                }else{
-                    return response()->json(['Plan no econtrado'],400);
-
-                }
-                
-            
-        }
-    }
-
     public function listarActividades(Request $request)
     {
         $validator=\Validator::make($request->all(),[

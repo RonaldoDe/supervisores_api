@@ -64,6 +64,27 @@ class LogErrorsController extends Controller
                     }else{
                         return response()->json('Error de logica', 400);                        
                     }
+                }else if(!$coordinador){
+                    $usuario = DB::table('usuario as u')->where('u.id_usuario','=',$user->id)->first();
+                    if($usuario){
+                        $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
+                        if($admin){
+                            $log = LogError::create([
+                                'header' => request('header'),
+                                'body' => request('body'),
+                                'id_usuario' =>  $admin->id_usuario_roles,
+                                'tipo_usuario' =>  3,
+                            ]);
+        
+                            if($log){
+                                return response()->json('Pronto resolveremos el error', 200);                        
+                            }else{
+                                return response()->json('Error de logica', 400);                        
+                            }
+                        }else{
+                            return response()->json('Usuario No es administrador', 400);
+                        }
+                    }
                 }else{
                     return response()->json('Usuario coordinador no encontrado', 400);                        
 

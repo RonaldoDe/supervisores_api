@@ -30,12 +30,18 @@ class CoordinadoresMiddleware
             $usuario = DB::table('usuario as u')->where('u.id_usuario','=',$user->id)->first();
             if($usuario){
                $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
+               if($admin)
+               {
+                  return $next($request);
+               }else{
+                  return response()->json('No tienes permiso',401); //dd('No tienes permiso');
+               }
             }
        }
 
 
          //validar el tipo de usuario y madar a una ruta definida
-         if(count($coordinador)>0 || $admin)
+         if(count($coordinador)>0)
          {
             return $next($request);
          }else{

@@ -38,6 +38,8 @@ class LogController extends Controller
             ->where('tipo_usuario', 2)
             ->take(100)
             ->get();
+            return response()->json(['message' => $log, 'usuario' => 2],200);
+
        }else if($usuario_rol){
             $log = DB::table('notificaciones')
             ->where('id_usuario', $usuario_rol->id_usuario_roles)
@@ -46,6 +48,8 @@ class LogController extends Controller
             ->orderBy('fecha', 'DESC')
             ->take(100)
             ->get();
+            return response()->json(['message' => $log, 'usuario' => 1],200);
+
        }else if($admin){
            
             $log = DB::table('notificaciones')
@@ -53,13 +57,14 @@ class LogController extends Controller
             ->orderBy('fecha', 'DESC')
             ->take(100)
             ->get();
+            return response()->json(['message' => $log, 'usuario' => 3],200);
+
         }else{
             return response()->json(['message' => 'Usuario no encontrado'],400);
        }
 
         
 
-        return response()->json(['message' => $log],200);
     }
 
     //marcar notificacion como leida

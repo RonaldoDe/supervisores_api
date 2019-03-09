@@ -22,7 +22,7 @@ class LogController extends Controller
         ->where('correo','=',$user->email)->first();
         if($supervisor){
             $usuario_rol=DB::table('usuarios_roles')
-            ->where('id_usuario','=',$supervisor->id_usuario)->first();
+            ->where('id_usuario','=',$supervisor->id_usuario)->where('id_rol', 1)->first();
             if(!$usuario_rol){
                 $admin=DB::table('usuarios_roles')
                 ->where('id_usuario','=',$supervisor->id_usuario)
@@ -47,6 +47,7 @@ class LogController extends Controller
             ->take(100)
             ->get();
        }else if($admin){
+           
             $log = DB::table('notificaciones')
             ->where('tipo_usuario', 2)
             ->orderBy('fecha', 'DESC')

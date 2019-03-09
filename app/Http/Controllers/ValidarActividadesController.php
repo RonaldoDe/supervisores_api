@@ -110,7 +110,6 @@ class ValidarActividadesController extends Controller
             'tiempo_total'=>'required',
             'sobrante' => 'required',
             'faltante' => 'required',
-            'diferencia' => 'required',
             'gastos' => 'required',
             'base' => 'required',
         ]);

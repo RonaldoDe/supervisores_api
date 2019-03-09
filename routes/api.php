@@ -181,6 +181,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::get('mostrarReporteAdmin', 'Api\Auth\Administrador\Reporte\ReporteController@generarReporeteAdmin');
     Route::post('actividadesPlanAdmin', 'Api\Auth\Administrador\ActividadesController@mostrarActividadesPorPlan');
     Route::post('showActivitiesAdmin', 'Api\Auth\Administrador\HomeController@listarActividades');
+    Route::get('allInformationAdmin', 'Api\Auth\Coordinador\Reporte\AllInformationController@alInformationAdmin');
 
 
 });

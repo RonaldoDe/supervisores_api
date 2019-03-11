@@ -214,13 +214,13 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'arqueo_caja');
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Arqueo de caja'],400);
-
+                
             }
-
-                    // DB::commit();
-
+            
+            // DB::commit();
+            
+                    $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'arqueo_caja');
                     return response()->json(["success"=>" Actividad creada", 'id' => $arqueo_caja->id],201);
 
                 }else{
@@ -270,13 +270,13 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
-                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'kardex');
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Kardex'],400);
                 
             }
-
-                    // DB::commit();
-
+            
+            // DB::commit();
+            
+            $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'kardex');
                     return response()->json(["success"=>" Actividad creada", 'id' => $kardex->id],201);
 
                 }else{

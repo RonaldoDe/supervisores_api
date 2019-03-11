@@ -85,7 +85,6 @@ class HomeSupervisorController extends Controller
        ->join('usuarios_roles as ur', 'u.id_usuario', 'ur.id_usuario')
        ->where('u.correo','=',$user->email)->first();
 
-
        if($user_supervisor){
             return response()->json($user_supervisor, 200);
        }else{

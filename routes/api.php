@@ -232,7 +232,6 @@ Route::middleware(['auth:api','supervisores'])->group(function(){
 //rutas protegidas par ael gerente de repore encargado de realiar reporte de alguna anomalia en cualquien sucursal
 Route::middleware(['auth:api','gerenteReporte'])->group(function(){
     Route::get('homeGerente', 'Api\Auth\GerenteReporte\GerenteReporteHomeController@homeGerenteReporte');
-
 });
 
 

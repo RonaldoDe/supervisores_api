@@ -89,6 +89,7 @@ class CrearActividadesPlanController extends Controller
                     'id_estado' =>1,
 
                 ]);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'apertura');
                 return response()->json(["success"=>" Actividad  Apertura creada", 'id' => $apertura->id],201);
         }else{
             return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Apertura'],400);
@@ -155,6 +156,7 @@ class CrearActividadesPlanController extends Controller
                                 'id_documento' =>$documento->id,
                             ]);
                         }
+                        $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'documentacion_legal');
                         return response()->json(["success"=>" Actividad creada", 'id' => $documentacion_legal->id],201);
                     }else{
                         return response()->json(["success"=>"Actividad no encontrada o error al crearla."],400);
@@ -212,6 +214,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'arqueo_caja');
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Arqueo de caja'],400);
 
             }
@@ -267,6 +270,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'kardex');
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Kardex'],400);
                 
             }
@@ -334,7 +338,8 @@ class CrearActividadesPlanController extends Controller
                         ]);
                     }
                 }else{
-                    return response()->json(["success"=>"Actividad no encontrada o error al crearla."],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'condiciones_locativas');
+                return response()->json(["success"=>"Actividad no encontrada o error al crearla."],201);
 
                 }
         }
@@ -394,7 +399,8 @@ class CrearActividadesPlanController extends Controller
 
             }
 
-                    return response()->json(["success"=>" Actividad creada", 'id' => $domicilios->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'domicilios');
+                return response()->json(["success"=>" Actividad creada", 'id' => $domicilios->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -445,7 +451,8 @@ class CrearActividadesPlanController extends Controller
 
             }
 
-                    return response()->json(["success"=>" Actividad creada", 'id' => $envio_correspondencia->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'envio_correspondencia');
+                return response()->json(["success"=>" Actividad creada", 'id' => $envio_correspondencia->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -496,7 +503,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Evolucion de clientes'],400);
 
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $evolucion_pedido->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'evolucion_clientes');
+                return response()->json(["success"=>" Actividad creada", 'id' => $evolucion_pedido->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -515,8 +523,6 @@ class CrearActividadesPlanController extends Controller
             'fecha_inicio'=>'date_format:"Y-m-d"|required|date',
             'fecha_fin'=>'date_format:"Y-m-d"|required|date'
 
-
-
         ]);
         if($validator->fails())
         {
@@ -532,8 +538,6 @@ class CrearActividadesPlanController extends Controller
                     /*(3)*/
                     $respuesta=$this->validarFechasSucursal(request('id_plan_trabajo'),request('fecha_inicio'),request('fecha_fin'), 'examen_gimed');
 
-
-
             if($respuesta>0){
                     /*(4)*/
                     $examen_gimed =ExamenGimed::create([
@@ -547,6 +551,7 @@ class CrearActividadesPlanController extends Controller
 
                     ]);
             }else{
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'examen_gimed');
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Examen gimed'],400);
 
             }
@@ -604,7 +609,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Exhibiciones'],400);
             }
 
-                    return response()->json(["success"=>" Actividad creada", 'id' => $exhibiciones->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'exhibiciones');
+                return response()->json(["success"=>" Actividad creada", 'id' => $exhibiciones->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -653,7 +659,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Facturación'],400);
 
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $facturacion->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'facturacion');
+                return response()->json(["success"=>" Actividad creada", 'id' => $facturacion->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -701,7 +708,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Gimed'],400);
 
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $gimed->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'gimed');
+                return response()->json(["success"=>" Actividad creada", 'id' => $gimed->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -749,7 +757,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Inventario de mercancia'],400);
 
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $inventario_mercancia->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'inventario_mercancia');
+                return response()->json(["success"=>" Actividad creada", 'id' => $inventario_mercancia->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -797,7 +806,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Julienne'],400);
 
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $julienne->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'julienne');
+                return response()->json(["success"=>" Actividad creada", 'id' => $julienne->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -845,7 +855,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Libro de vencimiento'],400);
 
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $libro_vencimiento->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'libro_vencimientos');
+                return response()->json(["success"=>" Actividad creada", 'id' => $libro_vencimiento->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -893,7 +904,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Productos bonificados'],400);
 
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $productos_bonificados->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'productos_bonificados');
+                return response()->json(["success"=>" Actividad creada", 'id' => $productos_bonificados->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -941,7 +953,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Programa de mercadeo'],400);
 
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $programa_mercadeo->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'programa_mercadeo');
+                return response()->json(["success"=>" Actividad creada", 'id' => $programa_mercadeo->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -989,7 +1002,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Relación de servicios publicos'],400);
 
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $relacion_servicios_publicos->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'relacion_servicios_publicos');
+                return response()->json(["success"=>" Actividad creada", 'id' => $relacion_servicios_publicos->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -1036,7 +1050,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Relacion de vendedores'],400);
 
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $relacion_vendedores->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'relacion_vendedores');
+                return response()->json(["success"=>" Actividad creada", 'id' => $relacion_vendedores->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -1084,7 +1099,8 @@ class CrearActividadesPlanController extends Controller
 
             }
 
-                    return response()->json(["success"=>" Actividad creada", 'id' => $remisiones->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'remisiones');
+                return response()->json(["success"=>" Actividad creada", 'id' => $remisiones->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -1132,7 +1148,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Servicio de bodega'],400);
 
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $servicio_bodega->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'servicio_bodega');
+                return response()->json(["success"=>" Actividad creada", 'id' => $servicio_bodega->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -1180,7 +1197,8 @@ class CrearActividadesPlanController extends Controller
                 return response()->json(['Las fechas se encuentra en el rango de fechas de otra actividad igual en Uso institucional'],400);
 
             }
-                    return response()->json(["success"=>" Actividad creada", 'id' => $uso_institucional->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'uso_institucional');
+                return response()->json(["success"=>" Actividad creada", 'id' => $uso_institucional->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -1228,7 +1246,8 @@ class CrearActividadesPlanController extends Controller
 
             }
 
-                    return response()->json(["success"=>"Actividad creada", 'id' => $libro_faltantes->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'libros_faltantes');
+                return response()->json(["success"=>"Actividad creada", 'id' => $libro_faltantes->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -1278,7 +1297,8 @@ class CrearActividadesPlanController extends Controller
 
             }
 
-                    return response()->json(["success"=>"Actividad creada", 'id' => $compromisos->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'compromisos');
+                return response()->json(["success"=>"Actividad creada", 'id' => $compromisos->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -1328,7 +1348,8 @@ class CrearActividadesPlanController extends Controller
 
             }
 
-                    return response()->json(["success"=>"Actividad creada", 'id' => $senalizacion->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'senalizacion');
+                return response()->json(["success"=>"Actividad creada", 'id' => $senalizacion->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -1378,7 +1399,8 @@ class CrearActividadesPlanController extends Controller
 
             }
 
-                    return response()->json(["success"=>"Actividad creada", 'id' => $contrato->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'contratos_anexos_legalizacion');
+                return response()->json(["success"=>"Actividad creada", 'id' => $contrato->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -1428,7 +1450,8 @@ class CrearActividadesPlanController extends Controller
 
             }
 
-                    return response()->json(["success"=>"Actividad creada", 'id' => $seguro->id],201);
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'solicitud_seguro');
+                return response()->json(["success"=>"Actividad creada", 'id' => $seguro->id],201);
 
                 }else{
                     return response()->json(["La fecha inicial debe ser mayor o igual a la fecha actual y menor o igual a la fecha final"],400);
@@ -1478,6 +1501,7 @@ class CrearActividadesPlanController extends Controller
         
                 // DB::commit();
 
+                $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'actividades_ptc');
                 return response()->json(["success"=>" Actividad Ptc creada", 'id' => $ptc->id],201);
 
             }else{

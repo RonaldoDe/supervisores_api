@@ -242,6 +242,57 @@ $sw=0;
             return $notificacion;
         }
     }
+
+    public function logCrearNotificacionesAdmin($id_plan_trabajo, $nombre_tabla)
+    {
+        
+        $nombre_plan = DB::table('plan_trabajo_asignacion')
+        ->select('nombre', 'id_sucursal')
+        ->where('id_plan_trabajo', $id_plan_trabajo)
+        ->first();
+        
+        $nombre_sucursal = DB::table('sucursales')
+        ->select('id_suscursal', 'cod_sucursal', 'nombre')
+        ->where('id_suscursal', $nombre_plan->id_sucursal)
+        ->first();
+        
+        $nombre_actividad = DB::table('actividades')
+        ->select('nombre_actividad')
+        ->where('nombre_tabla',$nombre_tabla)
+        ->where('id_plan_trabajo',$id_plan_trabajo)
+        ->first();
+        
+        //Se recupera los datos del usuario que se ha autenticado
+        $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+
+        $coordinador=DB::table('plan_trabajo_asignacion')
+        ->where('id_plan_trabajo','=',$id_plan_trabajo)->first();
+    
+
+        if($user != null){
+            //obtener los datos del usuario supervisor
+            $nombre_coordinador=DB::table('coordinadores')
+            ->select('nombre', 'apellido', 'cedula')
+            ->where('id_cordinador','=',$coordinador->idcoordinador)->first();
+
+            $notificacion =Notificaciones::create([
+                'id_plan_trabajo' =>$id_plan_trabajo,
+                'id_coordinador' =>$coordinador->idcoordinador,
+                'id_usuario' => 1,
+                'id_sucursal' => $nombre_sucursal->id_suscursal,
+                'nombre_plan' =>$nombre_plan->nombre,
+                'nombre_actividad' =>$nombre_actividad->nombre_actividad,
+                'nombre_supervisor' => $nombre_coordinador->nombre.' '.$nombre_coordinador->apellido,
+                'nombre_sucursal' => $nombre_sucursal->nombre,
+                'tipo' => 1,
+                'tipo_usuario' => 3,
+                'fecha' => date('Y-m-d H:i:s'),
+
+            ]);
+
+            return $notificacion;
+        }
+    }
     //crear notificacion del mensaje
     public function logCrearNotificacionesMensaje($id_reporte, $id_coordinador, $usuario,$nombre_reporte, $nombre_creador, $tipo, $tipo_usuario)
     {

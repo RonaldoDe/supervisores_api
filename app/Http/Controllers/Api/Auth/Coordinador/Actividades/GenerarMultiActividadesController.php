@@ -209,27 +209,29 @@ class GenerarMultiActividadesController extends MultiActividadController
                                         'nombre_actividad'=>$actividad->nombre
 
                                         ]);
-                                    
-                                }
-                                if($actividadAux){
-                                    $tabla = $actividad->nombre_tabla;
-                                    if(method_exists($this, $tabla)){
-                                        if($actividad->nombre_tabla == 'actividades_ptc'){
-                                            $params = [
-                                                'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo,
-                                                'titulo' => $actividad->titulo
-                                            ];
+                                        if($actividadAux){
+                                            $tabla = $actividad->nombre_tabla;
+                                            if(method_exists($this, $tabla)){
+                                                if($actividad->nombre_tabla == 'actividades_ptc'){
+                                                    $params = [
+                                                        'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo,
+                                                        'titulo' => $actividad->titulo
+                                                    ];
+                                                }else{
+                                                    $params = [
+                                                        'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo
+                                                    ];
+                                                }
+                                                $request->request->add($params);
+                                                $validar=$this->$tabla($request);
+                                            }else{
+                                                return response()->json(['message' => 'El metodo no existe', 'metodo' => $actividad->nombre_tabla],400);
+                                            }    
                                         }else{
-                                            $params = [
-                                                'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo
-                                            ];
+                                            return response()->json(['message' => 'Error al crear actividad en la tabla', 'actividad' => $actividad->nombre_tabla],400);
                                         }
-                                        $request->request->add($params);
-                                        $validar=$this->$tabla($request);
-                                    }else{
-                                        return response()->json(['message' => 'El metodo no existe', 'metodo' => $actividad->nombre_tabla],400);
-                                    }    
                                 }
+                                
                 }
             }else{
                 return response()->json(['message' => 'El plan de trabajo no existe'],400);

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Modelos\PlanTrabajoAsignacion;
 use Carbon\Carbon;
 use App\Modelos\Reportes\SoporteTecnico;
+use Mail;
 
 class ReporteController extends Controller
 {

@@ -95,8 +95,8 @@ class ReporteController extends Controller
         {
             $user=DB::table('users as u')->where('u.id',Auth::id())->first();
             if($user){
-
-                $mail = Mail::send('emails.soporte_tecnico', ['message' => request('mensaje')], function($message) use($request){
+                $mensaje = request('mensaje');
+                $mail = Mail::send('emails.soporte_tecnico', ['mensaje' => $mensaje], function($message) use($request){
                     $message->to('soportetecnico@binar10.co')
                             ->subject(request('asunto'));
                 });

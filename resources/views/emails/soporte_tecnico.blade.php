@@ -8,6 +8,6 @@
 </head>
 <body>
    <h2>Soporte tecnico</h2>
-   <p><h2>{{$message}}</h2></p>
+   <p><h2>{{$mensaje}}</h2></p>
 </body>
 </html>

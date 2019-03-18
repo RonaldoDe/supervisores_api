@@ -94,13 +94,13 @@ class ReporteController extends Controller
         {
             $user=DB::table('users as u')->where('u.id',Auth::id())->first();
             if($user){
-                $soporte = SoporteTecnico::create([
-                    'asunto' => request('asunto'),
-                    'mensaje' => request('mensaje'),
-                    'correo' => $user->email,
-                ]);
 
-                if($soporte){
+                $mail = Mail::send('emails.soporte_tecnico', ['message' => request('mensaje')], function($message) use($request){
+                    $message->to('soportetecnico@binar10.co')
+                            ->subject(request('asunto'));
+                });
+
+                if($mail){
                     return response()->json('Ya hemos recibido su petición, Gracias!', 200);
                 }else{
                     return response()->json('Error al crear peticion', 400);

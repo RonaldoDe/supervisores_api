@@ -215,7 +215,6 @@ $sw=0;
         $region = DB::table('usuario_zona')
         ->where('id_usuario','=',$usuario_rol->id_usuario_roles)->first();
 
-        $zona = DB::table('zona')->where('id_zona', $region->id_zona);
 
         $coordinador = DB::table('region')
         ->where('id_region','=',$region->id_region)->first();
@@ -235,7 +234,6 @@ $sw=0;
                 'nombre_actividad' =>$nombre_actividad->nombre_actividad,
                 'nombre_supervisor' => $nombre_supervisor->nombre.' '.$nombre_supervisor->apellido,
                 'nombre_sucursal' => $nombre_sucursal->nombre,
-                'nombre_zona' => $zona->descripcion_zona,
                 'tipo' => 1,
                 'tipo_usuario' => 2,
                 'fecha' => date('Y-m-d H:i:s'),

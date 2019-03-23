@@ -53,12 +53,11 @@ class HomeSupervisorController extends Controller
        foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
             ->where('ac.id_estado',1)
-            ->OrWhere('ac.id_estado',3)
             ->get();
 
             //obtener las actividades asiganadas a la fecha actual de un supervisor
             foreach($fe as $fecha){
-                if((date('Y-m-d').' 00:00:00' >= $fecha->fecha_inicio && date('Y-m-d').' 00:00:00' <= $fecha->fecha_fin && $fecha->id_plan_trabajo == $ac->id_plan_trabajo) || $fecha->id_estado == 3){
+                if((date('Y-m-d').' 00:00:00' >= $fecha->fecha_inicio && date('Y-m-d').' 00:00:00' <= $fecha->fecha_fin && $fecha->id_plan_trabajo == $ac->id_plan_trabajo)){
                     $fecha->nombre_tabla = $ac->nombre_tabla;
                     $fecha->nombre_sucursal = $ac->nombre;
                     $fecha->cod_sucursal = $ac->cod_sucursal;

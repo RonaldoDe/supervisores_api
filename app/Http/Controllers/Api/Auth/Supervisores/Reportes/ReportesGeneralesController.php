@@ -385,7 +385,7 @@ class ReportesGeneralesController extends Controller
             ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
             ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
             ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
-            ->where('rs.id_supervisor', $usuario_rol->id_usuario)
+            ->where('rs.id_supervisor', $usuario_rol->id_usuario_roles)
             ->where('rs.estado_listar', 1)
             ->get();
 

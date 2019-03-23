@@ -383,7 +383,7 @@ class ReportesGeneralesController extends Controller
         if($usuario_rol){
             $reporte = DB::table('reportes_supervisor as rs')
             ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
-            ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
+            ->join('usuarios_roles as us', 'rs.id_supervisor', 'us.id_usuario_roles')
             ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
             ->where('rs.id_supervisor', $usuario_rol->id_usuario_roles)
             ->where('rs.estado_listar', 1)

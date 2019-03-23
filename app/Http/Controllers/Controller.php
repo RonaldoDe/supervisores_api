@@ -289,7 +289,7 @@ $sw=0;
                     $activas++;
                 }else if($estados->id_estado == 2){
                     $completas++;
-                }else if($estados->id_estado == 3){
+                }else if($estados->id_estado == 4){
                     $no_realizadas++;
                 }
             }

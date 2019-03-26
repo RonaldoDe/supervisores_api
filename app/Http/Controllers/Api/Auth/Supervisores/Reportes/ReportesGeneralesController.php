@@ -191,8 +191,6 @@ class ReportesGeneralesController extends Controller
                     $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
                     if($admin){
                         return response()->json('Usuario Administrador', 309);
-                    }else{
-                        return response()->json('Usuario No es administrador', 400);
                     }
                 }else{
                     return response()->json('Usuario no econtrado', 400);

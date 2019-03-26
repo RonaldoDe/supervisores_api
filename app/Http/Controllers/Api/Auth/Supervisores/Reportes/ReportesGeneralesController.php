@@ -475,6 +475,11 @@ class ReportesGeneralesController extends Controller
                         $porcentajes_generales_array['actividades_noRealizadas'] += 1;
                         $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_noRealizadas'] ++;
                         break;
+
+                        case 4:
+                        $porcentajes_generales_array['actividades_noRealizadas'] += 1;
+                        $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_noRealizadas'] ++;
+                        break;
                         
                         default:
                             return response()->json('Estad no definido o no validado', 400);

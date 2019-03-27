@@ -19,7 +19,7 @@ class HomeController extends Controller
        ->select('u.id_usuario as id_cordinador', 'u.nombre', 'u.apellido', 'foto', 'correo')
        ->where('u.correo','=',$user->email)->first();
        $user_supervisor->id_region = 'Todas las regiones';
-       $user_supervisor->region = 'Adminsitrador';
+       $user_supervisor->region = 'Administrador';
 
         //obtener el id del rol del usuario
        $usuario_rol = DB::table('usuarios_roles as ur')

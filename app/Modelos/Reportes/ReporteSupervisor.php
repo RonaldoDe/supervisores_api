@@ -11,5 +11,5 @@ class ReporteSupervisor extends Model
 
     public $timestamps=false;
 
-    protected $fillable=['id_supervisor','id_coordinador','id_sucursal','nombre_reporte','observaciones','foto','estado_corregido', 'estado_listar'];
+    protected $fillable=['id_supervisor','id_coordinador','id_sucursal','nombre_reporte','observaciones','foto','estado_corregido', 'estado_listar', 'id_categoria'];
 }

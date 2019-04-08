@@ -14,7 +14,7 @@ class ReporteController extends Controller
         $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
 
             $reporte = DB::table('reportes_supervisor as rs')
-            ->select('usu.nombre', 'usu.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
+            ->select('usu.nombre', 'usu.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte', 'id_categoria')
             ->join('usuarios_roles as us', 'rs.id_supervisor', 'us.id_usuario')
             ->join('usuario as usu', 'us.id_usuario', 'usu.id_usuario')
             ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
@@ -38,7 +38,7 @@ class ReporteController extends Controller
         {
 
                 $reporte = DB::table('reportes_supervisor as rs')
-                ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte')
+                ->select('us.nombre', 'us.apellido', 'su.nombre as nombre_sucursal', 'su.cod_sucursal', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte', 'id_categoria')
                 ->join('usuario as us', 'rs.id_supervisor', 'us.id_usuario')
                 ->join('sucursales as su', 'rs.id_sucursal', 'su.id_suscursal')
                 ->where('rs.id', request('id_reporte'))

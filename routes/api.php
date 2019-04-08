@@ -25,6 +25,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('empleadosSucursal', 'Api\Auth\Coordinador\BuscadoresController@empleados_sucursal');
 
     Route::post('logErrors', 'Api\Auth\Log\LogErrorsController@logErrors');
+    Route::get('coordinadoresList', 'Api\Auth\Coordinador\Reporte\RutasFreeController@coordinadores');
+    Route::get('tipoReporteList', 'Api\Auth\Coordinador\Reporte\RutasFreeController@reporteCategoria');
 
 
     

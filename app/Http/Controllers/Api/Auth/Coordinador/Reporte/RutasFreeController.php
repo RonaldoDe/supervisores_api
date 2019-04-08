@@ -25,5 +25,25 @@ class RutasFreeController extends Controller
         return response()->json($senalizacion,200);
     }
 
+    //lista de coordinadores
+    public function coordinadores()
+    {
+        $coordinadores = DB::table('coordinadores')
+        //->where('id_cordinador', '!=', 6)
+        ->get();
+
+        return response()->json($coordinadores,200);
+    }
+
+    //lista de categoria de reportes
+    public function reporteCategoria()
+    {
+        $tipo_reporte = DB::table('tipo_reporte')->get();
+
+        return response()->json($tipo_reporte,200);
+    }
+
+    
+
     
 }

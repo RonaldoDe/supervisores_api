@@ -186,6 +186,7 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::get('allInformationAdmin', 'Api\Auth\Coordinador\Reporte\AllInformationController@alInformationAdmin');
     Route::post('detalleReporteSucursalAdmin', 'Api\Auth\Administrador\Reporte\ReporteController@detalleReporteSucursalAdmin');
 
+    Route::post('actividadCoordinador', 'Api\Auth\Administrador\Reporte\ReporteController@actividadCoordinador');
 
 });
 

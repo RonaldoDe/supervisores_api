@@ -62,10 +62,10 @@ class LoginController extends Controller
 
                     return Route::dispatch($proxy);
             }else{
-                return response()->json(['message' => 'Usuario o contraseña incorrectas'], 401);
+                return response()->json(['Usuario o contraseña incorrectas'], 401);
             }
         }else{
-            return response()->json(['message' => 'Usuario no encontrado'], 401);
+            return response()->json(['Usuario no encontrado'], 401);
         }
        
 

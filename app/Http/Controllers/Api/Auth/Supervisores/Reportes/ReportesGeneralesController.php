@@ -18,7 +18,6 @@ class ReportesGeneralesController extends Controller
     {
         $validator=\Validator::make($request->all(),[
             'nombre_reporte' => 'required',
-            'nombre_sucursal' => 'required',
             'observaciones' => 'required',
             'categoria' => 'required',
         ]);

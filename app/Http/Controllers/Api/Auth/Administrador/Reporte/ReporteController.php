@@ -113,7 +113,7 @@ class ReporteController extends Controller
                     'id_sucursal' => '',
                     'nombre_reporte' => request('nombre_reporte'),
                     'observaciones' => request('observaciones'),
-                    'estado_corregido' => 0,
+                    'estado_corregido' => 1,
                     'id_categoria' => request('categoria'),
                     'estado_listar' => 1,
                 ]);
@@ -123,16 +123,16 @@ class ReporteController extends Controller
             
             if($reporte){
                 if(!request('id_sucursal') != ''){
-                    if($this->logCrearNotificacionesMensaje($reporte->id,  request('id_coordinador'), '', request('nombre_reporte'), $coordinador->nombre." ".$coordinador->apellido, 3, 3)){
+                    if($this->logCrearNotificacionesMensaje($reporte->id,  request('id_coordinador'), '', request('nombre_reporte'), $coordinador->nombre." ".$coordinador->apellido, 2, 3)){
                         return response()->json(['message' => 'Reporte realizado con exito'], 200);
                     }else{
-                        return response()->json(['message' => 'Error al generar la notificacion']);
+                        return response()->json(['message' => 'Error al generar la notificacion'],400);
                     } 
                 }else{
-                    if($this->logCrearNotificacionesMensaje($reporte->id,  request('id_coordinador'), request('id_sucursal'), request('nombre_reporte'), $coordinador->nombre." ".$coordinador->apellido, 3, 3)){
+                    if($this->logCrearNotificacionesMensaje($reporte->id,  request('id_coordinador'), request('id_sucursal'), request('nombre_reporte'), $coordinador->nombre." ".$coordinador->apellido, 2, 3)){
                         return response()->json(['message' => 'Reporte realizado con exito'], 200);
                     }else{
-                        return response()->json(['message' => 'Error al generar la notificacion']);
+                        return response()->json(['message' => 'Error al generar la notificacion'],400);
                     } 
                 }
             }

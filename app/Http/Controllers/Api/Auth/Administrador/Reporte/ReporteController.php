@@ -123,13 +123,13 @@ class ReporteController extends Controller
             
             if($reporte){
                 if(!request('id_sucursal') != ''){
-                    if($this->logCrearNotificacionesMensaje($reporte->id,  request('id_coordinador'), '', request('nombre_reporte'), $coordinador->nombre." ".$coordinador->apellido, 2, 3)){
+                    if($this->logCrearNotificacionesMensaje($reporte->id,  request('id_coordinador'), '', request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3, 2)){
                         return response()->json(['message' => 'Reporte realizado con exito'], 200);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion'],400);
                     } 
                 }else{
-                    if($this->logCrearNotificacionesMensaje($reporte->id,  request('id_coordinador'), request('id_sucursal'), request('nombre_reporte'), $coordinador->nombre." ".$coordinador->apellido, 2, 3)){
+                    if($this->logCrearNotificacionesMensaje($reporte->id,  request('id_coordinador'), request('id_sucursal'), request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3, 2)){
                         return response()->json(['message' => 'Reporte realizado con exito'], 200);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion'],400);

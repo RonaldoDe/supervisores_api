@@ -38,6 +38,7 @@ class HomeController extends Controller
                 ->select('z.descripcion_zona','z.id_zona','us.nombre as supervisor','uz.id_usuario as id_usuario_supervisor',
                 DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
                 ->get();
+                
 
 
         return response()->json(['region' => $user_supervisor, 'zonas' => $zonas, 'foto' => $user_supervisor->foto, 'email' => $user_supervisor->correo],200);
@@ -160,6 +161,7 @@ class HomeController extends Controller
         
         
                     if($sw>0){
+                        $array_num_plan_trabajo = array();
         
                         $sucursal=DB::table('sucursales as s')
                         ->join('zona as zo','s.id_zona','=','zo.id_zona')
@@ -171,9 +173,18 @@ class HomeController extends Controller
                         ->select('zo.descripcion_zona','s.id_suscursal','s.cod_sucursal','s.nombre as sucursal','ur.id_usuario_roles as id_supervisor',
                         DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
                         ->get();
+
+                         //$sucur abrebiacion de sucursal almacena una sucursal por separado
+                foreach ($sucursal as $sucur) {
+                    $plan = DB::table('plan_trabajo_asignacion')
+                    ->where('id_sucursal', $sucur->id_suscursal)
+                    ->get();
+
+                    $array_num_plan_trabajo = array_add($array_num_plan_trabajo, $sucur->id_suscursal, count($plan));
+                }
         
                     $zona=DB::table('zona')->where('zona.id_zona','=',$id)->first();
-                    return response()->json(["sucursal"=>$sucursal,"zona"=>$zona]);
+                    return response()->json(["sucursal"=>$sucursal,"zona"=>$zona,"numero_plan" => $array_num_plan_trabajo],200);
                     }else{
                         return response()->json(["error"=>'esta zona no existe para este coordinador'],400);
                     }

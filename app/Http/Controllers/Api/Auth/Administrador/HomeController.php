@@ -35,13 +35,13 @@ class HomeController extends Controller
                 ->join('coordinadores as c','c.id_cordinador','=','r.id_cordinador')
                 //->join('sucursales as s','s.id_zona','=','z.id_zona')
                 ->where('u.id_rol','=',1)
-                ->select('z.descripcion_zona','z.id_zona','us.nombre as supervisor','uz.id_usuario as id_usuario_supervisor',
+                ->select('c.nombre', 'c.apellido', 'z.descripcion_zona','z.id_zona','us.nombre as supervisor','uz.id_usuario as id_usuario_supervisor',
                 DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
                 ->get();
                 
 
 
-        return response()->json(['region' => $user_supervisor, 'zonas' => $zonas, 'foto' => $user_supervisor->foto, 'email' => $user_supervisor->correo],200);
+        return response()->json(['region' => $user_supervisor, 'zonas' => $zonas, 'foto' => $user_supervisor->foto, 'email' => $user_supervisor->correo, 'nombre' => $user_supervisor->nombre],200);
       
     }
 
@@ -148,8 +148,15 @@ class HomeController extends Controller
                 
         
                $zona=DB::table('zona as z')
-                ->select('z.id_zona')
+                ->select('z.id_zona', 'z.id_region')
                 ->get();
+
+                $coordinador=DB::table('zona as z')
+                ->join('region as r','z.id_region','=','r.id_region')
+                ->join('coordinadores as c','r.id_cordinador','=','c.id_cordinador')
+                ->select('z.id_zona', 'z.id_region', 'c.nombre', 'c.apellido')
+                ->where('z.id_zona', $id)
+                ->first();
         
         
                    foreach($zona as $valor){
@@ -184,7 +191,7 @@ class HomeController extends Controller
                 }
         
                     $zona=DB::table('zona')->where('zona.id_zona','=',$id)->first();
-                    return response()->json(["sucursal"=>$sucursal,"zona"=>$zona,"numero_plan" => $array_num_plan_trabajo],200);
+                    return response()->json(["sucursal"=>$sucursal,"zona"=>$zona,"numero_plan" => $array_num_plan_trabajo, 'nombre' => $coordinador->nombre, 'apellido' => $coordinador->apellido],200);
                     }else{
                         return response()->json(["error"=>'esta zona no existe para este coordinador'],400);
                     }

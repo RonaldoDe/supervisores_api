@@ -96,7 +96,13 @@ class LoginController extends Controller
     //cerrar sesion
     public function logout(Request $request)
     {
-      $accessToken = Auth::user()->token();
+        $access_token = Auth::user()->token();
+
+        DB::table('oauth_refresh_tokens')
+        ->where('access_token_id', $access_token->id)
+        ->update(['revoked' => true]);
+
+        $access_token->revoke();
         //obtener usuario logueado y borrar token
       DB::table('oauth_access_tokens')->where('user_id', Auth::id())->delete();
       return response()->json(['message' => 'La sesion a sido cerrada con exito'], 200);

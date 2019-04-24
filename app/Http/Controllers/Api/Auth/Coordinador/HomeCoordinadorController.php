@@ -68,13 +68,13 @@ class HomeCoordinadorController extends Controller
                 //->join('sucursales as s','s.id_zona','=','z.id_zona')
                 ->where('r.id_cordinador','=',$region->id_cordinador)
                 ->where('u.id_rol','=',1)
-                ->select('z.descripcion_zona','z.id_zona','us.nombre as supervisor','uz.id_usuario as id_usuario_supervisor',
+                ->select('c.nombre', 'c.apellido','z.descripcion_zona','z.id_zona','us.nombre as supervisor','uz.id_usuario as id_usuario_supervisor',
                 DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
                 ->get();
 
 
        //se retorna por ajax la region y zonas como objetos de las consultas realizadas
-     return response()->json(["region"=>$region,"Zonas"=>$zonas, 'foto' => $coordinador->foto, 'email' => $coordinador->correo],200);
+     return response()->json(["region"=>$region,"Zonas"=>$zonas, 'foto' => $coordinador->foto, 'email' => $coordinador->correo, 'nombre' => $coordinador->nombre],200);
 
         // }
         // else
@@ -174,7 +174,7 @@ class HomeCoordinadorController extends Controller
 
        $cordinador=DB::table('coordinadores')
        ->where('correo','=',$user->email)
-       ->select('id_cordinador')
+       ->select('id_cordinador', 'nombre', 'apellido')
        ->first();
        if(!$cordinador){
         $usuario = DB::table('usuario as u')->where('u.correo','=',$user->email)->where('id_estado','=', 1)->first();
@@ -229,7 +229,7 @@ class HomeCoordinadorController extends Controller
                 }
 
             $zona=DB::table('zona')->where('zona.id_zona','=',$id)->first();
-            return response()->json(["sucursal"=>$sucursal,"zona"=>$zona,"numero_plan" => $array_num_plan_trabajo],200);
+            return response()->json(["sucursal"=>$sucursal,"zona"=>$zona,"numero_plan" => $array_num_plan_trabajo, 'nombre' => $cordinador->nombre, 'apellido' => $cordinador->apellido],200);
             }else{
                 return response()->json(["error"=>'esta zona no existe para este coordinador'],400);
             }

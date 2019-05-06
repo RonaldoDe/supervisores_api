@@ -22,7 +22,6 @@ public function insertarTablasAactividad(Request $request){
         'array_actividades.*.id_prioridad'=>'required|numeric',
         'array_actividades.*.nombre_tabla'=>'required',
         'array_actividades.*.nombre_actividad'=>'required'
-
        ]);
 
        if($validator->fails())

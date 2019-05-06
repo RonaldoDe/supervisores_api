@@ -40,27 +40,46 @@ class ReportesGeneralesController extends Controller
            if($supervisor){
                 $gerente = DB::table('usuarios_roles')
                 ->where('id_usuario',$supervisor->id_usuario)->first();
+
+                if(request('id_sucursal') != ''){
+                    $zona = DB::table('sucursales')
+                    ->where('id_suscursal','=',request('id_sucursal'))->first();
+                    
+                    $region = DB::table('zona')
+                    ->where('id_zona','=',$zona->id_zona)->first();
+    
+                    $coordinador = DB::table('region')
+                    ->where('id_region','=',$region->id_region)->first();
+                }else{
+                    $coordinador = DB::table('coordinadores')
+                    ->where('id_cordinador','=',request('id_coordinador'))->first();
+                }
            }else{
-                $gerente = 0;
+               $gerente = 0;
+                $region = DB::table('usuario_zona')
+                ->where('id_usuario','=',$usuario_rol->id_usuario_roles)->first();
+            
+                if($region){
+                    $coordinador = DB::table('region')
+                    ->where('id_region','=',$region->id_region)->first();
+                }else{
+                    if(request('id_sucursal') != ''){
+                        $zona = DB::table('sucursales')
+                        ->where('id_suscursal','=',request('id_sucursal'))->first();
+                        
+                        $region = DB::table('zona')
+                        ->where('id_zona','=',$zona->id_zona)->first();
+        
+                        $coordinador = DB::table('region')
+                        ->where('id_region','=',$region->id_region)->first();
+                    }else{
+                        $coordinador = DB::table('coordinadores')
+                        ->where('id_cordinador','=',request('coordinador'))->first();
+                    }
+                    
+                }
            }
-
-            $region = DB::table('usuario_zona')
-            ->where('id_usuario','=',$usuario_rol->id_usuario_roles)->first();
-
-            if($region){
-                $coordinador = DB::table('region')
-                ->where('id_region','=',$region->id_region)->first();
-            }else{
-                
-                $zona = DB::table('sucursales')
-                ->where('id_suscursal','=',request('id_sucursal'))->first();
-                
-                $region = DB::table('zona')
-                ->where('id_zona','=',$zona->id_zona)->first();
-
-                $coordinador = DB::table('region')
-                ->where('id_region','=',$region->id_region)->first();
-            }
+            
 
             if($coordinador){
 
@@ -156,10 +175,9 @@ class ReportesGeneralesController extends Controller
                
             }else if($gerente && $gerente->id_rol == 4){
                 $foto = 'imagen_reporte' . time();
-                 
                 $url_img = str_replace(" ", "_",'reportes/'.request('nombre_sucursal').'/'.request('nombre_reporte').'/'.$foto);
-
-                 if (request('foto') != "") { // storing image in storage/app/public Folder
+                
+                if (request('foto') != "") { // storing image in storage/app/public Folder
                     if(strpos(request('foto'), 'supervisores_api/storage/app/public/img/') == false ){
                         Storage::disk('public')->put('img/'.$url_img, base64_decode(request('foto')));
                         $categoria = DB::table('tipo_reporte')->where('id', request('categoria'))->first();
@@ -174,11 +192,11 @@ class ReportesGeneralesController extends Controller
                                 'estado_corregido' => 0,
                                 'id_categoria' => request('categoria'),
                                 'estado_listar' => 1,
-                            ]);
-                        }else if($categoria && $categoria->ancla == 2){
-                            $reporte = ReporteSupervisor::create([
+                                ]);
+                            }else if($categoria && $categoria->ancla == 2){
+                                $reporte = ReporteSupervisor::create([
                                 'id_supervisor' => $gerente->id_usuario_roles,
-                                'id_coordinador' => request('coordinador'),
+                                'id_coordinador' => request('id_coordinador'),
                                 'id_sucursal' => '',
                                 'nombre_reporte' => request('nombre_reporte'),
                                 'foto' => $url_img,
@@ -210,6 +228,8 @@ class ReportesGeneralesController extends Controller
                     return response()->json(['message' => 'Error al carar la imagen'], 400);
 
                 }else{
+                    $categoria = DB::table('tipo_reporte')->where('id', request('categoria'))->first();
+                    return response()->json(['message' => $coordinador->id_cordinador], 400);
                     if($categoria && $categoria->ancla == 1){
                     $reporte = ReporteSupervisor::create([
                         'id_supervisor' => $usuario_rol->id_usuario_roles,

@@ -179,7 +179,7 @@ class GenerarMultiActividadesController extends MultiActividadController
 
                 }else{
 
-                    return response()->json(["success"=>"no existe el corrdinador"],400);
+                    return response()->json(["success"=>"no existe el coordinador"],400);
                 }
 
             }else{

@@ -1440,7 +1440,7 @@ class CrearActividadesPlanController extends Controller
     }
     public function crear_ptc(Request $request){
 
-        //imporante el id del plana detrabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
+        //imporante el id del plana de trabajo debe estar creado a la hora de crear las actividades a dicho plan de trabajo
         /*(1)*/
         $validator=\Validator::make($request->all(),[
             'id_prioridad' => 'required|numeric',

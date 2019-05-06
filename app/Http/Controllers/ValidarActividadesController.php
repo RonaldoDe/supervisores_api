@@ -404,7 +404,6 @@ class ValidarActividadesController extends Controller
             'calificacion_pv' => 'required',
             'tiempo_actividad'=>'required',
             'tiempo_total'=>'required',
-            'productos'=>'required',
         ]);
         if($validator->fails())
         {
@@ -430,6 +429,7 @@ class ValidarActividadesController extends Controller
                 $actividad->tiempo_total = request('tiempo_total');
                 $actividad->motivo_ausencia = request('motivo_ausencia');
                 $actividad->productos = request('productos');
+                $actividad->laboratorios = request('laboratorios');
                 $actividad->update();
 
                 //registro de notificacion

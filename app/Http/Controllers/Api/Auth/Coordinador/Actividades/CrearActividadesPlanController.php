@@ -218,7 +218,6 @@ class CrearActividadesPlanController extends Controller
             
             // DB::commit();
             
-                    $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'arqueo_caja');
                     return response()->json(["success"=>" Actividad creada", 'id' => $arqueo_caja->id],201);
 
                 }else{
@@ -274,7 +273,6 @@ class CrearActividadesPlanController extends Controller
             
             // DB::commit();
             
-            $notificacion = $this->logCrearNotificacionesAdmin(request('id_plan_trabajo'), 'kardex');
                     return response()->json(["success"=>" Actividad creada", 'id' => $kardex->id],201);
 
                 }else{

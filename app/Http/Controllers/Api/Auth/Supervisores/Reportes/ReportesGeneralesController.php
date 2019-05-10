@@ -182,6 +182,9 @@ class ReportesGeneralesController extends Controller
                         Storage::disk('public')->put('img/'.$url_img, base64_decode(request('foto')));
                         $categoria = DB::table('tipo_reporte')->where('id', request('categoria'))->first();
                         if($categoria && $categoria->ancla == 1){
+                            if(request('id_sucursal') == 0 || request('id_sucursal') == ""){
+                                return response()->json(['message' => 'Por favor elejir una sucursal'],400);
+                            }
                             $reporte = ReporteSupervisor::create([
                                 'id_supervisor' => $gerente->id_usuario_roles,
                                 'id_coordinador' => $coordinador->id_cordinador,
@@ -231,6 +234,9 @@ class ReportesGeneralesController extends Controller
                     $categoria = DB::table('tipo_reporte')->where('id', request('categoria'))->first();
                     return response()->json(['message' => $coordinador->id_cordinador], 400);
                     if($categoria && $categoria->ancla == 1){
+                        if(request('id_sucursal') == 0 || request('id_sucursal') == ""){
+                            return response()->json(['message' => 'Por favor elejir una sucursal'],400);
+                        }
                     $reporte = ReporteSupervisor::create([
                         'id_supervisor' => $usuario_rol->id_usuario_roles,
                         'id_coordinador' => $coordinador->id_cordinador,

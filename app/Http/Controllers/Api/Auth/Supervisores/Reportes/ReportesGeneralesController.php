@@ -131,7 +131,7 @@ class ReportesGeneralesController extends Controller
                     $categoria = DB::table('tipo_reporte')->where('id', request('categoria'))->first();
                     if($categoria && $categoria->ancla == 1){
                         if(request('id_sucursal') == 0 || request('id_sucursal') == ""){
-                            return response()->json(['message' => 'Por favor elejir una sucursal'],400);
+                            return response()->json(['message' => 'Por favor elegir una sucursal'],400);
                         }
                         $reporte = ReporteSupervisor::create([
                             'id_supervisor' => $usuario_rol->id_usuario_roles,
@@ -186,7 +186,7 @@ class ReportesGeneralesController extends Controller
                         $categoria = DB::table('tipo_reporte')->where('id', request('categoria'))->first();
                         if($categoria && $categoria->ancla == 1){
                             if(request('id_sucursal') == 0 || request('id_sucursal') == ""){
-                                return response()->json(['message' => 'Por favor elejir una sucursal'],400);
+                                return response()->json(['message' => 'Por favor elegir una sucursal'],400);
                             }
                             $reporte = ReporteSupervisor::create([
                                 'id_supervisor' => $gerente->id_usuario_roles,
@@ -238,7 +238,7 @@ class ReportesGeneralesController extends Controller
                     return response()->json(['message' => $coordinador->id_cordinador], 400);
                     if($categoria && $categoria->ancla == 1){
                         if(request('id_sucursal') == 0 || request('id_sucursal') == ""){
-                            return response()->json(['message' => 'Por favor elejir una sucursal'],400);
+                            return response()->json(['message' => 'Por favor elegir una sucursal'],400);
                         }
                     $reporte = ReporteSupervisor::create([
                         'id_supervisor' => $usuario_rol->id_usuario_roles,

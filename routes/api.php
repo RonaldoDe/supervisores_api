@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::post('login', 'Api\Auth\LoginController@login');
+Route::get('infoApp', 'Api\Auth\Coordinador\Reporte\RutasFreeController@AppInfo');
 //Route::post('refresh', 'Api\Auth\LoginController@refresh');
 //ruta protegidad por el middleware y Auth donde iran todos los controladores en geneal para los usuarios
 Route::middleware('auth:api')->group(function () {
@@ -26,7 +27,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('logErrors', 'Api\Auth\Log\LogErrorsController@logErrors');
     Route::get('coordinadoresList', 'Api\Auth\Coordinador\Reporte\RutasFreeController@coordinadores');
-    Route::get('infoApp', 'Api\Auth\Coordinador\Reporte\RutasFreeController@AppInfo');
     Route::get('tipoReporteList', 'Api\Auth\Coordinador\Reporte\RutasFreeController@reporteCategoria');
 
 

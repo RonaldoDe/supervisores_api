@@ -99,9 +99,9 @@ class AllInformationController extends Controller
        $actividades_array = array();
         foreach($zonas as $zona){
             $sucursales=DB::table('sucursales as su')
-            ->select('su.id_suscursal', 'su.cod_sucursal', 'su.nombre', 'su.id_zona', 'ur.id', 'u.nombre as nombre_supervisor', 'u.apellido as apellido_supervisor')
+            ->select('su.id_suscursal', 'su.cod_sucursal', 'su.nombre', 'su.id_zona', 'ur.id_usuario_roles', 'u.nombre as nombre_supervisor', 'u.apellido as apellido_supervisor')
             ->join('usuario_zona as uz', 'su.id_zona', 'uz.id')
-            ->join('usuarios_roles as ur', 'uz.id_usuario', 'ur.id')
+            ->join('usuarios_roles as ur', 'uz.id_usuario', 'ur.id_usuario_roles')
             ->join('usuario as u', 'ur.id_usuario', 'u.id')
             ->where('su.id_zona',$zona->id_zona)
             ->get();

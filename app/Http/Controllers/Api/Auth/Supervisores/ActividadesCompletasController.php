@@ -38,7 +38,7 @@ class ActividadesCompletasController extends Controller
        ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
        ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
        ->where('su.id_zona',$usuario_zona->id_zona)
-       ->where('p.estado',1)
+       ->whereIn('p.estado',[1, 2 ,3])
        ->orderby('ac.id_plan_trabajo','desc')
        ->get();
 
@@ -48,11 +48,11 @@ class ActividadesCompletasController extends Controller
        //bucle que itera las actividades y las obtiene segun la fecha y el estado completo
        foreach($actividades as $ac){
             $fe = DB::table($ac->nombre_tabla. ' as ac')
-            ->where('ac.id_estado',2)
+            ->whereIn('ac.id_estado',[2, 4])
             ->get();
 
             foreach($fe as $fecha){
-                if(date('Y-m-d').' 00:00:00' >= $fecha->fecha_inicio && date('Y-m-d').' 00:00:00' <= $fecha->fecha_fin && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
+                if(date("Y-m-d", strtotime("+2 day")).' 00:00:00' >= $fecha->fecha_inicio && date('Y-m-d').' 00:00:00' <= $fecha->fecha_fin && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
                     $fecha->nombre_tabla = $ac->nombre_tabla;
                     $fecha->nombre_sucursal = $ac->nombre;
                     $fecha->cod_sucursal = $ac->cod_sucursal;

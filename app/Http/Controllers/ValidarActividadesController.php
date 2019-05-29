@@ -71,7 +71,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -130,7 +130,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -193,7 +193,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -252,7 +252,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -309,7 +309,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -365,7 +365,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -417,7 +417,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -474,7 +474,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -533,7 +533,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -593,7 +593,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -655,7 +655,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -714,7 +714,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -773,7 +773,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -831,7 +831,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -886,7 +886,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -945,7 +945,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -1004,7 +1004,7 @@ class ValidarActividadesController extends Controller
             if($actividad!= null){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3){
+                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -1059,7 +1059,7 @@ class ValidarActividadesController extends Controller
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
-                 if($actividad->id_estado == 3){
+                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -1111,7 +1111,7 @@ class ValidarActividadesController extends Controller
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
-                 if($actividad->id_estado == 3){
+                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -1164,7 +1164,7 @@ class ValidarActividadesController extends Controller
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
-                 if($actividad->id_estado == 3){
+                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -1217,7 +1217,7 @@ class ValidarActividadesController extends Controller
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
-                 if($actividad->id_estado == 3){
+                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -1269,7 +1269,7 @@ class ValidarActividadesController extends Controller
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
-                 if($actividad->id_estado == 3){
+                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -1321,7 +1321,7 @@ class ValidarActividadesController extends Controller
                  
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
-                 if($actividad->id_estado == 3){
+                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -1372,7 +1372,7 @@ class ValidarActividadesController extends Controller
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
-                 if($actividad->id_estado == 3){
+                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -1424,7 +1424,7 @@ class ValidarActividadesController extends Controller
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
-                 if($actividad->id_estado == 3){
+                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -1489,7 +1489,7 @@ class ValidarActividadesController extends Controller
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
-                 if($actividad->id_estado == 3){
+                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -1553,7 +1553,7 @@ class ValidarActividadesController extends Controller
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
-                 if($actividad->id_estado == 3){
+                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{
@@ -1603,7 +1603,7 @@ class ValidarActividadesController extends Controller
              if($actividad!= null){
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
-                 if($actividad->id_estado == 3){
+                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
                     $actividad->id_estado = 4;
                     $actividad->calificacion = 3;
                 }else{

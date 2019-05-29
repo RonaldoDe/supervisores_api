@@ -50,9 +50,9 @@ class ActividadesCompletasController extends Controller
             $fe = DB::table($ac->nombre_tabla. ' as ac')
             ->whereIn('ac.id_estado',[2, 4])
             ->get();
-
+            date("Y-m-d H:i:s", strtotime("+2 day"));
             foreach($fe as $fecha){
-                if(date("Y-m-d", strtotime("+2 day")).' 00:00:00' >= $fecha->fecha_inicio && date('Y-m-d').' 00:00:00' <= $fecha->fecha_fin && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
+                if(date('Y-m-d').' 00:00:00' >= $fecha->fecha_inicio && date("Y-m-d 00:00:00", strtotime("-2 day")) <= $fecha->fecha_fin && $fecha->id_plan_trabajo == $ac->id_plan_trabajo){
                     $fecha->nombre_tabla = $ac->nombre_tabla;
                     $fecha->nombre_sucursal = $ac->nombre;
                     $fecha->cod_sucursal = $ac->cod_sucursal;

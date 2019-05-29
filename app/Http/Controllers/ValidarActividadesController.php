@@ -69,34 +69,38 @@ class ValidarActividadesController extends Controller
             /*(2)*/
             $actividad = Apertura::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                $actividad->fecha_mod =  date('Y-m-d H:i:s');
-                $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
-                    $actividad->id_estado = 4;
-                    $actividad->calificacion = 3;
-                }else{
-                    $actividad->id_estado = 2;
-                    $actividad->calificacion = 5;
-                }
-                $actividad->calificacion_pv = request('calificacion_pv');
-                $actividad->tiempo_actividad = request('tiempo_actividad');
-                $actividad->tiempo_total = request('tiempo_total');
-                $actividad->motivo_ausencia = request('motivo_ausencia');
-                $actividad->calificacion_pv = request('calificacion_pv');
-                $actividad->horario = request('horario');
-                $actividad->update();
-
-                //registro de notificacion
-                if($actividad){
-                    //generar notificcacion al coordinador de que se realizó una actividad
-                    if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
-                        //buscar el plan y validar si no hay mas actividades y establecer el plan como completo
-                        $this->validarPlanCompleto(request('id_plan_trabajo'));
-                        return response()->json(['message' => 'Actividad realizada con exito']);
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+                    $actividad->fecha_mod =  date('Y-m-d H:i:s');
+                    $actividad->observacion = request('observaciones');
+                    if($actividad->id_estado == 3 || $actividad->id_estado == 4){
+                        $actividad->id_estado = 4;
+                        $actividad->calificacion = 3;
                     }else{
-                        return response()->json(['message' => 'Error al generar la notificacion']);
+                        $actividad->id_estado = 2;
+                        $actividad->calificacion = 5;
                     }
+                    $actividad->calificacion_pv = request('calificacion_pv');
+                    $actividad->tiempo_actividad = request('tiempo_actividad');
+                    $actividad->tiempo_total = request('tiempo_total');
+                    $actividad->motivo_ausencia = request('motivo_ausencia');
+                    $actividad->calificacion_pv = request('calificacion_pv');
+                    $actividad->horario = request('horario');
+                    $actividad->update();
 
+                    //registro de notificacion
+                    if($actividad){
+                        //generar notificcacion al coordinador de que se realizó una actividad
+                        if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                            //buscar el plan y validar si no hay mas actividades y establecer el plan como completo
+                            $this->validarPlanCompleto(request('id_plan_trabajo'));
+                            return response()->json(['message' => 'Actividad realizada con exito']);
+                        }else{
+                            return response()->json(['message' => 'Error al generar la notificacion']);
+                        }
+
+                    }
+                }else{
+                    return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
                 }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -128,36 +132,40 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = ArqueoCaja::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                $actividad->fecha_mod =  date('Y-m-d H:i:s');
-                $actividad->observacion = request('observaciones');
-                if($actividad->id_estado == 3 || $actividad->id_estado == 4){
-                    $actividad->id_estado = 4;
-                    $actividad->calificacion = 3;
-                }else{
-                    $actividad->id_estado = 2;
-                    $actividad->calificacion = 5;
-                }
-                $actividad->calificacion_pv = request('calificacion_pv');
-                $actividad->tiempo_actividad = request('tiempo_actividad');
-                $actividad->tiempo_total = request('tiempo_total');
-                $actividad->motivo_ausencia = request('motivo_ausencia');
-                $actividad->calificacion_pv = request('calificacion_pv');
-                $actividad->sobrante = request('sobrante');
-                $actividad->faltante = request('faltante');
-                $actividad->diferencia = request('diferencia');
-                $actividad->gastos = request('gastos');
-                $actividad->base = request('base');
-                $actividad->update();
-
-                //registro de notificacion
-                if($actividad){
-                    if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
-                        $this->validarPlanCompleto(request('id_plan_trabajo'));
-                        return response()->json(['message' => 'Actividad realizada con exito']);
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+                    $actividad->fecha_mod =  date('Y-m-d H:i:s');
+                    $actividad->observacion = request('observaciones');
+                    if($actividad->id_estado == 3 || $actividad->id_estado == 4){
+                        $actividad->id_estado = 4;
+                        $actividad->calificacion = 3;
                     }else{
-                        return response()->json(['message' => 'Error al generar la notificacion']);
+                        $actividad->id_estado = 2;
+                        $actividad->calificacion = 5;
                     }
+                    $actividad->calificacion_pv = request('calificacion_pv');
+                    $actividad->tiempo_actividad = request('tiempo_actividad');
+                    $actividad->tiempo_total = request('tiempo_total');
+                    $actividad->motivo_ausencia = request('motivo_ausencia');
+                    $actividad->calificacion_pv = request('calificacion_pv');
+                    $actividad->sobrante = request('sobrante');
+                    $actividad->faltante = request('faltante');
+                    $actividad->diferencia = request('diferencia');
+                    $actividad->gastos = request('gastos');
+                    $actividad->base = request('base');
+                    $actividad->update();
 
+                    //registro de notificacion
+                    if($actividad){
+                        if($this->logCrearNotificaciones(request('id_plan_trabajo'), request('nombre_tabla'))){
+                            $this->validarPlanCompleto(request('id_plan_trabajo'));
+                            return response()->json(['message' => 'Actividad realizada con exito']);
+                        }else{
+                            return response()->json(['message' => 'Error al generar la notificacion']);
+                        }
+
+                    }
+                }else{
+                    return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
                 }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
@@ -191,6 +199,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = Domicilio::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -223,6 +232,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -250,6 +262,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = EnvioCorrespondencia::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -277,6 +290,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -307,6 +323,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = EvolucionClientes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -336,6 +353,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -363,6 +383,8 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = ExamenGimed::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -389,6 +411,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -415,6 +440,8 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = Exhibiciones::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -442,6 +469,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -472,6 +502,8 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = Facturacion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -501,6 +533,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -531,6 +566,8 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = Gimed::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -559,6 +596,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -591,6 +631,8 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = InventarioMercancia::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -621,6 +663,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -653,6 +698,8 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = Julienne::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -683,6 +730,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -712,6 +762,8 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = ProductosBonificados::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -739,6 +791,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -771,6 +826,8 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = ProgramaMercadeo::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -801,6 +858,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -829,6 +889,8 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = RelacionServiciosPublicos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -855,6 +917,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -884,6 +949,8 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = RelacionVendedores::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -911,6 +978,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -943,6 +1013,8 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = ServicioBodega::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -974,6 +1046,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -1002,6 +1077,8 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = UsoInstitucional::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -1028,6 +1105,9 @@ class ValidarActividadesController extends Controller
                     }
 
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
             }
             return response()->json(['message' => 'Error Actividad no encontrada']);
         }
@@ -1057,6 +1137,8 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = CondicionesLocativas::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -1080,6 +1162,9 @@ class ValidarActividadesController extends Controller
                         return response()->json(['message' => 'Error al generar la notificacion']);
                     }
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
          }
@@ -1109,6 +1194,8 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = Kardex::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -1133,6 +1220,9 @@ class ValidarActividadesController extends Controller
                         return response()->json(['message' => 'Error al generar la notificacion']);
                     }
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
          }
@@ -1162,6 +1252,8 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = Remisiones::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -1187,6 +1279,9 @@ class ValidarActividadesController extends Controller
                         return response()->json(['message' => 'Error al generar la notificacion']);
                     }
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
          }
@@ -1215,6 +1310,8 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = LibrosFaltantes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -1240,6 +1337,9 @@ class ValidarActividadesController extends Controller
                         return response()->json(['message' => 'Error al generar la notificacion']);
                     }
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
          }
@@ -1267,6 +1367,8 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = LibroVencimientos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -1291,6 +1393,9 @@ class ValidarActividadesController extends Controller
                         return response()->json(['message' => 'Error al generar la notificacion']);
                     }
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
          }
@@ -1317,6 +1422,7 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = DocumentacionLegal::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
 
                  
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
@@ -1342,6 +1448,9 @@ class ValidarActividadesController extends Controller
                         return response()->json(['message' => 'Error al generar la notificacion']);
                     }
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
          }
@@ -1370,6 +1479,8 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = Compromiso::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -1394,6 +1505,9 @@ class ValidarActividadesController extends Controller
                         return response()->json(['message' => 'Error al generar la notificacion']);
                     }
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
          }
@@ -1422,6 +1536,8 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = Senalizacion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -1446,6 +1562,9 @@ class ValidarActividadesController extends Controller
                         return response()->json(['message' => 'Error al generar la notificacion']);
                     }
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
          }
@@ -1487,6 +1606,8 @@ class ValidarActividadesController extends Controller
 
              //actualizacion de la actividad por el supervisor
              if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -1510,6 +1631,9 @@ class ValidarActividadesController extends Controller
                         return response()->json(['message' => 'Error al generar la notificacion']);
                     }
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
          }
@@ -1551,6 +1675,8 @@ class ValidarActividadesController extends Controller
 
             }
              if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -1574,6 +1700,9 @@ class ValidarActividadesController extends Controller
                         return response()->json(['message' => 'Error al generar la notificacion']);
                     }
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
          }
@@ -1601,6 +1730,8 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = ActividadPtc::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
+                if(date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin){
+
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
                  if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -1649,6 +1780,9 @@ class ValidarActividadesController extends Controller
                         return response()->json(['message' => 'Error al generar la notificacion']);
                     }
                 }
+            }else{
+                return response()->json(['message' => 'El plazo para terminar esta activdad ya finalizó.'], 400);
+            }
              }
              return response()->json(['message' => 'Error Actividad no encontrada']);
          }

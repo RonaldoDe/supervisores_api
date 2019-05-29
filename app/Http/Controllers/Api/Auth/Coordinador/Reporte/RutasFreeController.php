@@ -43,6 +43,14 @@ class RutasFreeController extends Controller
         return response()->json($tipo_reporte,200);
     }
 
+    //Mostrar informacion de las app
+    public function AppInfo()
+    {
+        $informacion_app = DB::table('informacion_app')->first();
+
+        return response()->json($informacion_app,200);
+    }
+
     
 
     

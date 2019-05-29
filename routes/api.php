@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('logErrors', 'Api\Auth\Log\LogErrorsController@logErrors');
     Route::get('coordinadoresList', 'Api\Auth\Coordinador\Reporte\RutasFreeController@coordinadores');
+    Route::get('infoApp', 'Api\Auth\Coordinador\Reporte\RutasFreeController@AppInfo');
     Route::get('tipoReporteList', 'Api\Auth\Coordinador\Reporte\RutasFreeController@reporteCategoria');
 
 
@@ -41,6 +42,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('detalleRepSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@detalleReporteSucursal');
     Route::post('enviarMensajeReporte', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@crearMensageReporte');
     Route::get('obtenerReporteSucursal', 'Api\Auth\Supervisores\Reportes\ReportesGeneralesController@generarReporeteSupervisor');
+
+
 });
 
 //colcoar las validaciones del array por fechas base de datos esta en plantrabajoactividad3

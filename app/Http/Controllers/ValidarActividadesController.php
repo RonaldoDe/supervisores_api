@@ -69,7 +69,7 @@ class ValidarActividadesController extends Controller
             /*(2)*/
             $actividad = Apertura::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
                     $actividad->fecha_mod =  date('Y-m-d H:i:s');
                     $actividad->observacion = request('observaciones');
                     if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -132,7 +132,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = ArqueoCaja::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
                     $actividad->fecha_mod =  date('Y-m-d H:i:s');
                     $actividad->observacion = request('observaciones');
                     if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -199,7 +199,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = Domicilio::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -256,13 +256,12 @@ class ValidarActividadesController extends Controller
         {
           return response()->json( ['message' => $validator->errors()->all()],400 );
         }
-
         else
         {
             //actualizacion de la actividad por el supervisor
             $actividad = EnvioCorrespondencia::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -323,7 +322,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = EvolucionClientes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
                 if($actividad->id_estado == 3 || $actividad->id_estado == 4){
@@ -383,7 +382,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = ExamenGimed::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
@@ -440,7 +439,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = Exhibiciones::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
@@ -502,7 +501,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = Facturacion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
@@ -566,7 +565,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = Gimed::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
@@ -631,7 +630,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = InventarioMercancia::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
@@ -698,7 +697,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = Julienne::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
@@ -762,7 +761,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = ProductosBonificados::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
@@ -826,7 +825,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = ProgramaMercadeo::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
@@ -889,7 +888,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = RelacionServiciosPublicos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
@@ -949,7 +948,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = RelacionVendedores::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
@@ -1013,7 +1012,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = ServicioBodega::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
@@ -1077,7 +1076,7 @@ class ValidarActividadesController extends Controller
             //actualizacion de la actividad por el supervisor
             $actividad = UsoInstitucional::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
             if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                 $actividad->fecha_mod =  date('Y-m-d H:i:s');
                 $actividad->observacion = request('observaciones');
@@ -1137,7 +1136,7 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = CondicionesLocativas::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
@@ -1194,7 +1193,7 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = Kardex::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
@@ -1252,7 +1251,7 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = Remisiones::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
@@ -1310,7 +1309,7 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = LibrosFaltantes::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
@@ -1367,7 +1366,7 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = LibroVencimientos::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
@@ -1422,7 +1421,7 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = DocumentacionLegal::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                  
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
@@ -1479,7 +1478,7 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = Compromiso::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
@@ -1536,7 +1535,7 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = Senalizacion::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
@@ -1606,7 +1605,7 @@ class ValidarActividadesController extends Controller
 
              //actualizacion de la actividad por el supervisor
              if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
@@ -1675,7 +1674,7 @@ class ValidarActividadesController extends Controller
 
             }
              if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');
@@ -1730,7 +1729,7 @@ class ValidarActividadesController extends Controller
              //actualizacion de la actividad por el supervisor
              $actividad = ActividadPtc::where('id_plan_trabajo', request('id_plan_trabajo'))->find(request('id_actividad'));
              if($actividad!= null){
-                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado <= 3){
+                if((date('Y-m-d').' 00:00:00' >= $actividad->fecha_inicio && date("Y-m-d 00:00:00") <= $actividad->fecha_fin) || $actividad->id_estado == 3){
 
                  $actividad->fecha_mod = date('Y-m-d H:i:s');
                  $actividad->observacion = request('observaciones');

@@ -96,15 +96,15 @@ class ReporteController extends Controller
             $user=DB::table('users as u')->where('u.id',Auth::id())->first();
             if($user){
                 $mensaje = request('mensaje');
-                $mail = Mail::send('emails.soporte_tecnico', ['mensaje' => $mensaje], function($message) use($request){
-                    $message->to('soportetecnico@binar10.co')
-                            ->subject(request('asunto'));
-                });
-
-                if($mail){
+                $send_email = SenderEmail::sendEmail('soportetecnico@binar10.co', 'Soporte tecnico SuperAT', request('mensaje'), TemplateEmail::soporteTecnico($mensaje));
+                if($send_email == 1){
+                // $mail = Mail::send('emails.soporte_tecnico', ['mensaje' => $mensaje], function($message) use($request){
+                //     $message->to('soportetecnico@binar10.co')
+                //             ->subject(request('asunto'));
+                // });
                     return response()->json('Ya hemos recibido su petición, Gracias!', 200);
                 }else{
-                    return response()->json('Error al crear peticion', 400);
+                    return response()->json($send_email, 400);
                 }
             }else{
                 return response()->json('Usuario no encontrado', 400);

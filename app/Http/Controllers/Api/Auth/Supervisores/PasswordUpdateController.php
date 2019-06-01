@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Mail;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Http\Controllers\Helper\SenderEmail;
+use App\Http\Controllers\Helper\TemplateEmail;
+
 class PasswordUpdateController extends Controller
 {
 
@@ -30,20 +33,25 @@ class PasswordUpdateController extends Controller
                 //codigo random de 1 digitos para validar el correo
                 $codigo = random_int(0, 9999);
                 //enviar correo 
-                $mail = Mail::send('emails.update_password', ['codigo' => $codigo], function($message) use($request){
-                    $message->to(request('email'))
-                            ->subject('Por favor confirma el cambio de contraseña');
-                });
-                //validar que el usuario tenga el codigo    
-                $validate_code = DB::table('users')->where('code_confirmation', $codigo)->first();
-                while($validate_code){
-                $codigo = random_int(0, 9999);
+                // $mail = Mail::send('emails.update_password', ['codigo' => $codigo], function($message) use($request){
+                //     $message->to(request('email'))
+                //             ->subject('Por favor confirma el cambio de contraseña');
+                // });
+                $send_email = SenderEmail::sendEmail(request('email'), 'Por favor confirma el cambio de contraseña', $user->nombre, TemplateEmail::resetPassword($codigo));
+                if($send_email == 1){
+                    //validar que el usuario tenga el codigo    
                     $validate_code = DB::table('users')->where('code_confirmation', $codigo)->first();
+                    while($validate_code){
+                    $codigo = random_int(0, 9999);
+                        $validate_code = DB::table('users')->where('code_confirmation', $codigo)->first();
+                    }
+                    $user->code_confirmation = $codigo;
+                    $user->email_verified_at = true;
+                    $user->update();
+                    return response()->json('Correo de cambio de contraseña enviado.', 200);
+                }else{
+                    return response()->json($send_email, 400);
                 }
-                $user->code_confirmation = $codigo;
-                $user->email_verified_at = true;
-                $user->update();
-                return response()->json('Correo de cambio de contraseña enviado.', 200);
             }else{
                 return response()->json('Usuario no encontrado.', 400);
             }

@@ -11,6 +11,8 @@ use App\Modelos\PlanTrabajoAsignacion;
 use Carbon\Carbon;
 use App\Modelos\Reportes\SoporteTecnico;
 use Mail;
+use App\Http\Controllers\Helper\SenderEmail;
+use App\Http\Controllers\Helper\TemplateEmail;
 
 class ReporteController extends Controller
 {

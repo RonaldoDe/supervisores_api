@@ -8,11 +8,11 @@ use App\Http\Controllers\Controller;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-include(app_path() . '\..\vendor\phpmailer\phpmailer\src\Exception.php');
+include(app_path() . '/../vendor/phpmailer/phpmailer/src/Exception.php');
 
-include(app_path() . '\..\vendor\phpmailer\phpmailer\src\PHPMailer.php');
+include(app_path() . '/../vendor/phpmailer/phpmailer/src/PHPMailer.php');
 
-include(app_path() . '\..\vendor\phpmailer\phpmailer\src\SMTP.php');
+include(app_path() . '/../vendor/phpmailer/phpmailer/src/SMTP.php');
 
 class SenderEmail extends Controller
 {

@@ -31,79 +31,83 @@ class GenerarMultiActividadesController extends MultiActividadController
 
         else
         {
+            
             $fecha= date('Y-m-d');
             //valida que la fecha inicio sea mayor que la fecha actual y que la fecha fin
             if(request('fecha_inicio')>=$fecha && request('fecha_inicio')<=request('fecha_fin')){
-            //lista de sucursales
-            $requestSucursales=request("lista_sucursales");
-            //convertir para poder iterar en el foreach
-            $lista=json_encode($requestSucursales,true);
-            //decodificacion del reques recibido para iterar el aary
-            $listaSucursales=json_decode($lista);
-            
-            if(request('id_plan_trabajo') == null){
-
-                $date = Carbon::now("America/Bogota");
-                $day=$date->toDateTimeString();
-
-                //obtener el id del cordinador logueado
-                $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
-                $cordinador=DB::table('coordinadores')
-                ->select('id_cordinador')
-                ->where('correo','=',$user->email)
-                ->first();
-
-                if($cordinador!==null){
-
+                //lista de sucursales
+                $requestSucursales=request("lista_sucursales");
+                //convertir para poder iterar en el foreach
+                $lista=json_encode($requestSucursales,true);
+                //decodificacion del reques recibido para iterar el aary
+                $listaSucursales=json_decode($lista);
+                
+                if(request('id_plan_trabajo') == null){
                     
-                    DB::beginTransaction();
-                    //iterar la sucursales y crear plan si no existe
-                    foreach ($listaSucursales as $sucursal) {
-                        if(request('nombre_plan') != null){
-                            $plan_trabajo =PlanTrabajoAsignacion::create([
-    
-                                'id_sucursal' =>$sucursal->id_sucursal,
-                                'fecha_creacion' =>$day,
-                                'id_supervisor' =>$sucursal->id_supervisor,
-                                'nombre' =>request('nombre_plan'),
-                                'estado'=>1,
-                                'idcoordinador' =>$cordinador->id_cordinador,
-        
-                            ]);
-                        }else{
-                            $plan_trabajo =PlanTrabajoAsignacion::create([
+                    $date = Carbon::now("America/Bogota");
+                    $day=$date->toDateTimeString();
+                    
+                    //obtener el id del cordinador logueado
+                    $user=DB::table('users as u')->where('u.id','=',Auth::id())->first();
+                    $cordinador=DB::table('coordinadores')
+                    ->select('id_cordinador')
+                    ->where('correo','=',$user->email)
+                    ->first();
+                    
+                    if($cordinador!==null){
+                        
+                        
+                        DB::beginTransaction();
+                        //iterar la sucursales y crear plan si no existe
+                        foreach ($listaSucursales as $sucursal) {
+                            if(request('nombre_plan') != null){
+                                $plan_trabajo =PlanTrabajoAsignacion::create([
+                                    
+                                    'id_sucursal' =>$sucursal->id_sucursal,
+                                    'fecha_creacion' =>$day,
+                                    'id_supervisor' =>$sucursal->id_supervisor,
+                                    'nombre' =>request('nombre_plan'),
+                                    'estado'=>1,
+                                    'idcoordinador' =>$cordinador->id_cordinador,
+                                    
+                                    ]);
+                                }else{
+                                    $plan_trabajo =PlanTrabajoAsignacion::create([
+                                        
+                                        'id_sucursal' =>$sucursal->id_sucursal,
+                                        'fecha_creacion' =>$day,
+                                        'id_supervisor' =>$sucursal->id_supervisor,
+                                        'estado'=>1,
+                                        'idcoordinador' =>$cordinador->id_cordinador,
+                                        
+                                        ]);
+                                    }
+                                    if($plan_trabajo){
+                                        //iterar actvidades
+                                        $array_actividades=request('lista_actividades');
+                                        $lista_actividades=json_encode($array_actividades,true);
+                                        $actividades=json_decode($lista_actividades);
+                                        
+                                        foreach ($actividades as $actividad) {
+                                            // obtener plan de trabajo segun sucursal
+                                            $planesSucursal = DB::table('plan_trabajo_asignacion')
+                                            ->where('id_sucursal', $sucursal->id_sucursal)
+                                            ->orderBy('id_sucursal', 'desc')
+                                            ->get();
 
-                                'id_sucursal' =>$sucursal->id_sucursal,
-                                'fecha_creacion' =>$day,
-                                'id_supervisor' =>$sucursal->id_supervisor,
-                                'estado'=>1,
-                                'idcoordinador' =>$cordinador->id_cordinador,
-        
-                            ]);
-                        }
-                        if($plan_trabajo){
-                            //iterar actvidades
-                            $array_actividades=request('lista_actividades');
-                            $lista_actividades=json_encode($array_actividades,true);
-                            $actividades=json_decode($lista_actividades);
-
-                        foreach ($actividades as $actividad) {
-                                // obtener plan de trabajo segun sucursal
-                                $planesSucursal = DB::table('plan_trabajo_asignacion')
-                                ->where('id_sucursal', $sucursal->id_sucursal)
-                                ->orderBy('id_sucursal', 'desc')
-                                ->get();
-                                //obtener actividades excluyendo los ptc
-                                foreach($planesSucursal as $planSucursal){
-                                    if($actividad->nombre_tabla != 'actividades_ptc'){
-                                        $validarDuplicadoFechas = DB::table($actividad->nombre_tabla)
-                                        ->select('id', 'fecha_inicio', 'fecha_fin', 'id_plan_trabajo')
-                                        ->where('id_plan_trabajo', $planSucursal->id_plan_trabajo)
-                                        ->where('id_estado', 1)
-                                        ->get();
-                                        //validar que las fechas dadas no se encuentren en ningun rango de fechas
-                                        if(count($validarDuplicadoFechas) > 0){
-                                            foreach ($validarDuplicadoFechas as $fechasDuplicadas) {
+                                            
+                                            //obtener actividades excluyendo los ptc
+                                            foreach($planesSucursal as $planSucursal){
+                                                if($actividad->nombre_tabla != 'actividades_ptc'){
+                                                    $validarDuplicadoFechas = DB::table($actividad->nombre_tabla)
+                                                    ->select('id', 'fecha_inicio', 'fecha_fin', 'id_plan_trabajo', 'id_estado')
+                                                    ->where('id_plan_trabajo', $planSucursal->id_plan_trabajo)
+                                                    ->where('id_estado', 1)
+                                                    ->get();
+                                                    //validar que las fechas dadas no se encuentren en ningun rango de fechas
+                                                    
+                                                    if(count($validarDuplicadoFechas) > 0){
+                                                foreach ($validarDuplicadoFechas as $fechasDuplicadas) {
                                                 if(request('fecha_inicio').' 00:00:00' >= $fechasDuplicadas->fecha_inicio && request('fecha_inicio').' 00:00:00' <= $fechasDuplicadas->fecha_fin){
                                                     return response()->json(['La fecha inicio se encuentra en el rango de fechas de otra actividad '. $actividad->nombre],400);
                                                     
@@ -131,34 +135,36 @@ class GenerarMultiActividadesController extends MultiActividadController
                                 ->where('id_plan_trabajo', $plan_trabajo->id_plan_trabajo)
                                 ->where('nombre_tabla', $actividad->nombre_tabla)
                                 ->first();
+
+                                
                                 //crear actividad en la tabla de actividades
                                 if($validarActividades == null){
                                     $actividadAux =ActividadesTabla::create([
-
+                                        
                                         'id_plan_trabajo' =>$plan_trabajo->id_plan_trabajo,
                                         'id_prioridad' =>1,
                                         'nombre_tabla' =>$actividad->nombre_tabla,
                                         'nombre_actividad'=>$actividad->nombre
-                    
+                                        
                                         ]);
-                                    
-                                }
-                                //crear actividad
-                                if($actividadAux){
-                                    $tabla = $actividad->nombre_tabla;
-                                    if(method_exists($this, $tabla)){
-
-                                        if($actividad->nombre_tabla == 'actividades_ptc'){
-                                            $params = [
-                                                'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo,
-                                                'titulo' => $actividad->titulo,
-                                                'data' => $actividad->data,
-                                                'descripcion' => $actividad->descripcion
-                                            ];
-                                        }else{
-                                            $params = [
-                                                'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo
-                                            ];
+                                        
+                                    }
+                                    //crear actividad
+                                    if($actividadAux){
+                                        $tabla = $actividad->nombre_tabla;
+                                        if(method_exists($this, $tabla)){
+                                            
+                                            if($actividad->nombre_tabla == 'actividades_ptc'){
+                                                $params = [
+                                                    'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo,
+                                                    'titulo' => $actividad->titulo,
+                                                    'data' => $actividad->data,
+                                                    'descripcion' => $actividad->descripcion
+                                                ];
+                                            }else{
+                                                $params = [
+                                                    'id_plan_trabajo' => $plan_trabajo->id_plan_trabajo
+                                                ];
                                         }
 
                                         $request->request->add($params);

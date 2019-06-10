@@ -56,6 +56,7 @@ class AllInformationController extends Controller
             ->join('usuarios_roles as ur', 'uz.id_usuario', 'ur.id_usuario_roles')
             ->join('usuario as u', 'ur.id_usuario', 'u.id_usuario')
             ->where('su.id_zona',$zona->id_zona)
+            ->where('ur.id_rol',1)
             ->get();
             $sucursales_array = array_add($sucursales_array, $zona->descripcion_zona, $sucursales);
         }
@@ -105,6 +106,7 @@ class AllInformationController extends Controller
             ->join('usuario as u', 'ur.id_usuario', 'u.id_usuario')
             ->where('su.id_zona',$zona->id_zona)
             ->get();
+            
             $sucursales_array = array_add($sucursales_array, $zona->descripcion_zona, $sucursales);
         }
         $planes=DB::table('plan_trabajo_asignacion as pt')

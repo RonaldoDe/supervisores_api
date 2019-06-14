@@ -63,7 +63,7 @@ class LogController extends Controller
             ->where('leido', 0)
             ->get();
 
-            count($log_count);
+            $no_leido = count($log_count);
 
             return response()->json(['message' => $log, 'usuario' => 1, 'no_leidas' => $no_leido],200);
 
@@ -79,7 +79,7 @@ class LogController extends Controller
             ->where('leido', 0)
             ->get();
 
-            count($log_count);
+            $no_leido = count($log_count);
 
             return response()->json(['message' => $log, 'usuario' => 3, 'no_leidas' => $no_leido],200);
 

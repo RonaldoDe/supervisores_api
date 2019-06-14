@@ -36,8 +36,7 @@ class LogController extends Controller
             ->where('id_coordinador', $coordinador->id_cordinador)
             ->orderBy('fecha', 'DESC')
             ->where('tipo_usuario', 2)
-            ->take(100)
-            ->get();
+            ->paginate(20);
             return response()->json(['message' => $log, 'usuario' => 2],200);
 
        }else if($usuario_rol){
@@ -46,8 +45,7 @@ class LogController extends Controller
             ->where('tipo_usuario', 1)
             ->where('tipo', 2)
             ->orderBy('fecha', 'DESC')
-            ->take(100)
-            ->get();
+            ->paginate(20);
             return response()->json(['message' => $log, 'usuario' => 1],200);
 
        }else if($admin){
@@ -55,8 +53,7 @@ class LogController extends Controller
             $log = DB::table('notificaciones')
             ->where('tipo_usuario', 2)
             ->orderBy('fecha', 'DESC')
-            ->take(100)
-            ->get();
+            ->paginate(20);
             return response()->json(['message' => $log, 'usuario' => 3],200);
 
         }else{

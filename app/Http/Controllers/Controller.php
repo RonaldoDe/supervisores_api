@@ -67,7 +67,7 @@ class Controller extends BaseController
                 return 1;
     }
     //validar que cada actividad no se repita en una misma sucursal en un rango de fechas al actualizarlas
-
+    
     public function validarFechasSucursalUpdate($id_plan, $fecha_inicio, $fecha_fin, $actividad, $id_actividad)
     {
         $sucursalPlan = DB::table('plan_trabajo_asignacion')

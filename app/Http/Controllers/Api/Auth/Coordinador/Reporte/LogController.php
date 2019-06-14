@@ -36,9 +36,17 @@ class LogController extends Controller
             ->where('id_coordinador', $coordinador->id_cordinador)
             ->orderBy('fecha', 'DESC')
             ->where('tipo_usuario', 2)
-            ->take(100)
-            ->get();
-            return response()->json(['message' => $log, 'usuario' => 2],200);
+            ->paginate(20);
+
+            $log_count = DB::table('notificaciones')
+            ->where('id_coordinador', $coordinador->id_cordinador)
+            ->where('tipo_usuario', 2)
+            ->where('leido', 0)
+            ->paginate(20);
+
+            $no_leido = count($log_count);
+
+            return response()->json(['message' => $log, 'usuario' => 2, 'no_leidas' => $no_leido],200);
 
        }else if($usuario_rol){
             $log = DB::table('notificaciones')
@@ -46,18 +54,34 @@ class LogController extends Controller
             ->where('tipo_usuario', 1)
             ->where('tipo', 2)
             ->orderBy('fecha', 'DESC')
-            ->take(100)
+            ->paginate(20);
+
+            $log_count = DB::table('notificaciones')
+            ->where('id_usuario', $usuario_rol->id_usuario_roles)
+            ->where('tipo_usuario', 1)
+            ->where('tipo', 2)
+            ->where('leido', 0)
             ->get();
-            return response()->json(['message' => $log, 'usuario' => 1],200);
+
+            count($log_count);
+
+            return response()->json(['message' => $log, 'usuario' => 1, 'no_leidas' => $no_leido],200);
 
        }else if($admin){
            
             $log = DB::table('notificaciones')
             ->where('tipo_usuario', 2)
             ->orderBy('fecha', 'DESC')
-            ->take(100)
+            ->paginate(20);
+
+            $log_count = DB::table('notificaciones')
+            ->where('tipo_usuario', 2)
+            ->where('leido', 0)
             ->get();
-            return response()->json(['message' => $log, 'usuario' => 3],200);
+
+            count($log_count);
+
+            return response()->json(['message' => $log, 'usuario' => 3, 'no_leidas' => $no_leido],200);
 
         }else{
             return response()->json(['message' => 'Usuario no encontrado'],400);

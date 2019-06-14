@@ -54,7 +54,8 @@ class LogController extends Controller
             ->where('tipo_usuario', 1)
             ->where('tipo', 2)
             ->orderBy('fecha', 'DESC')
-            ->paginate(20);
+            ->take(100)
+            ->get();
 
             $log_count = DB::table('notificaciones')
             ->where('id_usuario', $usuario_rol->id_usuario_roles)

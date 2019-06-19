@@ -38,13 +38,14 @@ class LogController extends Controller
             ->where('tipo_usuario', 2)
             ->paginate(20);
 
-            $log_count = DB::table('notificaciones')
+            //Numero total de notificaciones no leidas
+            $log_count_no_leido = DB::table('notificaciones')
             ->where('id_coordinador', $coordinador->id_cordinador)
             ->where('tipo_usuario', 2)
             ->where('leido', 0)
-            ->paginate(20);
+            ->get();
 
-            $no_leido = count($log_count);
+            $no_leido = count($log_count_no_leido);
 
             return response()->json(['message' => $log, 'usuario' => 2, 'no_leidas' => $no_leido],200);
 

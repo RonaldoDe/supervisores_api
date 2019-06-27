@@ -104,6 +104,8 @@ class HomeController extends Controller
         $validator=\Validator::make($request->all(),[
             'id_zona' => 'required',
             'id_sucursal' => 'required',
+            'fecha_inicio' => 'date_format:Y-m-d|before_or_equal:fecha_fin', 
+            'fecha_fin' => 'date_format:Y-m-d|after_or_equal:fecha_inicio',
 
         ]);
 
@@ -125,9 +127,17 @@ class HomeController extends Controller
             ->first();
             
             if($perteneciente != null){
-                $planes = DB::table('plan_trabajo_asignacion')
-                ->where('id_sucursal', request('id_sucursal'))
-                ->get();
+                if(request('fecha_inicio') != '' || request('fecha_fin') != ''){
+                    $planes = DB::table('plan_trabajo_asignacion')
+                    ->where('id_sucursal', request('id_sucursal'))
+                    ->whereBetween('fecha_creacion', [request('fecha_inicio').' 00:00:00', request('fecha_fin').' 00:00:00'])
+                    ->get();
+                }else{
+                    $planes = DB::table('plan_trabajo_asignacion')
+                    ->where('id_sucursal', request('id_sucursal'))
+                    ->get();
+                }
+                
                 if(count($planes) > 0){
                     return response()->json($planes, 200);
                 }else{

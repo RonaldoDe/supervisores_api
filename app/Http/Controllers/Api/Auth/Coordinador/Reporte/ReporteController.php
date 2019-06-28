@@ -96,7 +96,7 @@ class ReporteController extends Controller
         else
         {
             $user=DB::table('users as u')->where('u.id',Auth::id())->first();
-            $usuario=DB::table('usuario as u')->where('u.correo',$user->correo)->first();
+            $usuario=DB::table('usuario as u')->where('u.correo',$user->email)->first();
             if($user){
                 $mensaje = request('mensaje');
                 $send_email = SenderEmail::sendEmail('soportetecnico@binar10.co', request('asunto'), request('mensaje'), TemplateEmail::soporteTecnico($mensaje, $usuario->nombre, $usuario->apellido, $usuario->correo, request('asunto')));

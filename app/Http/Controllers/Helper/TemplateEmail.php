@@ -24,7 +24,7 @@ class TemplateEmail extends Controller
         </html>';
     }
 
-    public static function soporteTecnico($message)
+    public static function soporteTecnico($message, $nombre, $apellido, $correo, $asunto)
     {
         return '<!DOCTYPE html>
         <html lang="es">
@@ -37,6 +37,10 @@ class TemplateEmail extends Controller
         <body>
            <h2>Soporte tecnico</h2>
            <p><h2>'.$message.'</h2></p>
+           <p><h3>Nombre: '.$nombre.'</h3></p>
+           <p><h3>Apellido: '.$apellido.'</h3></p>
+           <p><h3>Correo: '.$correo.'</h3></p>
+           <p><h3>Titulo: '.$asunto.'</h3></p>
         </body>
         </html>';
     }

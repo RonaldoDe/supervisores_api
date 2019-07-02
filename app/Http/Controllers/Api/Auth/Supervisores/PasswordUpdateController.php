@@ -31,7 +31,7 @@ class PasswordUpdateController extends Controller
             $user = User::where('email', request('email'))->first();
             if($user != null){
                 //codigo random de 1 digitos para validar el correo
-                $codigo = random_int(0, 9999);
+                $codigo = random_int(999, 9999);
                 //enviar correo 
                 // $mail = Mail::send('emails.update_password', ['codigo' => $codigo], function($message) use($request){
                 //     $message->to(request('email'))

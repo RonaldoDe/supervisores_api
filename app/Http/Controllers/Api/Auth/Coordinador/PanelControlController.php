@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth\Coordinador\Panel;
+namespace App\Http\Controllers\Api\Auth\Coordinador;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class PanelControlController extends Controller
 {

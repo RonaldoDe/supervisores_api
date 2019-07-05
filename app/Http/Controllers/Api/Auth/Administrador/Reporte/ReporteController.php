@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Modelos\Reportes\ReporteSupervisor;
+use App\User;
 
 class ReporteController extends Controller
 {
@@ -138,5 +139,59 @@ class ReporteController extends Controller
             }
         }
                     
+    }
+
+    public function listBranch(Request $request)
+    {
+        $user = User::find(Auth::id());
+        if($user->id == 68){
+            if(request('branch') != ''){
+                $name = request('branch');
+                $branchs = DB::table('sucursales')
+                ->where('nombre', 'LIKE', '%'.$name.'%')
+                ->get();
+                return response()->json($branchs, 200);
+            }else{
+                $branchs = DB::table('sucursales')->get();
+                return response()->json($branchs, 200);
+            }
+            
+        }else{
+            return response()->json('Acceso denegado', 401);
+        }
+    }
+
+    public function addLocation(Request $request)
+    {
+        $validator=\Validator::make($request->all(),[
+            'id' => 'required',
+            'latitud' => 'required',
+            'longitud' => 'required',
+        ]);
+        if($validator->fails())
+        {
+          return response()->json( ['message' => $validator->errors()->all()],400);
+        }
+
+        else
+        {
+            $user = User::find(Auth::id());
+            if($user->id == 68){
+                if(request('id') != ''){
+                    $branchs = DB::table('sucursales')
+                    ->where('id_suscursal', request('id'))
+                    ->update(['latitud' => request('latitud'), 'longitud' => request('longitud')]);
+                    if($branchs){
+
+                        return response()->json('Localizacion actualizada', 200);
+                        
+                    }else{
+                        return response()->json('Error al actualizar', 400);
+                    }
+                }
+            }else{
+                return response()->json('Acceso denegado', 401);
+            }
+        }
     }
 }

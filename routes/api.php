@@ -121,6 +121,10 @@ Route::middleware(['auth:api','coordinadores'])->group(function(){
     Route::post('deleteActividad', 'Api\Auth\Coordinador\Actividades\DeleteActividadController@deleteActividad');
     //plan
     Route::post('deletePlanTrabajo', 'Api\Auth\Coordinador\PlanesController@deletePlan');
+
+    //Agregar localizacion a las sucursales
+    Route::get('branchs', 'Api\Auth\Administrador\Reporte\ReporteController@listBranch');
+    Route::post('branchsLocation', 'Api\Auth\Administrador\Reporte\ReporteController@addLocation');
     
     Route::post('mostrarPlanes', 'Api\Auth\Coordinador\CrearPlanesTrabajoController@mostrarPlanSucursal');
     Route::post('actividades', 'Api\Auth\Coordinador\PlanesController@listarActividades');

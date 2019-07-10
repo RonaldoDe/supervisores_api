@@ -35,7 +35,7 @@ class HomeController extends Controller
                 ->join('coordinadores as c','c.id_cordinador','=','r.id_cordinador')
                 //->join('sucursales as s','s.id_zona','=','z.id_zona')
                 ->where('u.id_rol','=',1)
-                ->select('c.nombre', 'c.apellido', 'z.descripcion_zona','z.id_zona','us.nombre as supervisor','uz.id_usuario as id_usuario_supervisor',
+                ->select('r.id_region', 'r.nombre as nombre_region', 'c.nombre', 'c.apellido', 'z.descripcion_zona','z.id_zona','us.nombre as supervisor','uz.id_usuario as id_usuario_supervisor',
                 DB::raw("concat(us.nombre,' ',us.apellido) as supervisor"))
                 ->get();
                 

@@ -277,6 +277,7 @@ class HomeCoordinadorController extends Controller
                 ->join('usuario as usu', 'ur.id_usuario', 'usu.id_usuario')
                 ->where('r.id_cordinador', $coordinador->id_cordinador)
                 ->where('su.id_suscursal', request('id_sucursal'))
+                ->where('ur.id_rol', 1)
                 ->first();
                 if($zona != null){
                     

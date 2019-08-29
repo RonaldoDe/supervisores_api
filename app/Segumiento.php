@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Segumiento extends Model
 {
     protected $table ='segumiento';
-    protected $primaryKey='id_cordinador';
+    protected $primaryKey='id';
 
     public $timestamps=false;
 

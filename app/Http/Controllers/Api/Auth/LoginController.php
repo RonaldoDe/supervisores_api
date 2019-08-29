@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Passport\Client;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Segumiento;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -59,6 +60,10 @@ class LoginController extends Controller
                     //agregar parametros al request
                     $request->request->add($params);
                     $proxy = Request::create('oauth/token', 'POST');
+
+                    $segumiento = Segumiento::create([
+                        'user_id' => $user->id
+                    ]);
 
                     return Route::dispatch($proxy);
             }else{

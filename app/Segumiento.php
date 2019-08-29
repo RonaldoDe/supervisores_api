@@ -11,5 +11,5 @@ class Segumiento extends Model
 
     public $timestamps=false;
 
-    protected $fillable=['user_id','logued_at'];
+    protected $fillable=['user_id','loged_at'];
 }

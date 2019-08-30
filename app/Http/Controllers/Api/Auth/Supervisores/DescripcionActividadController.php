@@ -20,7 +20,7 @@ class DescripcionActividadController extends Controller
          
           //return response()->json(['errors'=>$validator->errors()->all()]);
           // return response()->json( $datos='nO ' );
-          return response()->json( $errors=$validator->errors()->all(), 401);
+          return response()->json( $errors=$validator->errors()->all(), 400);
         }
         else
         {

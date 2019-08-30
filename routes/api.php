@@ -15,6 +15,12 @@ use Illuminate\Http\Request;
 
 Route::post('login', 'Api\Auth\LoginController@login');
 Route::get('infoApp', 'Api\Auth\Coordinador\Reporte\RutasFreeController@AppInfo');
+
+Route::get('get_users', 'Api\Auth\Coordinador\Reporte\AllInformationController@get_users');
+Route::post('get_usage', 'Api\Auth\Coordinador\Reporte\AllInformationController@get_usage');
+Route::get('get_usage/{id}', 'Api\Auth\Coordinador\Reporte\AllInformationController@get_user_usage');
+
+
 //Route::post('refresh', 'Api\Auth\LoginController@refresh');
 //ruta protegidad por el middleware y Auth donde iran todos los controladores en geneal para los usuarios
 Route::middleware('auth:api')->group(function () {

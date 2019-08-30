@@ -541,7 +541,7 @@ class ReportesGeneralesController extends Controller
        ->where('uz.id_usuario',$usuario_rol->id_usuario_roles)
        ->first();
        if(!$usuario_zona){
-            return response()->json('Usuario gerente', 401);
+            return response()->json('Usuario gerente', 400);
        }
 
         //obtener las actividades segun su plan de trabajo

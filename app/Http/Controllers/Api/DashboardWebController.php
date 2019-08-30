@@ -37,7 +37,7 @@ class DashboardWebController extends Controller
           //%1 en la igualacion del rol es el id del usuario tipo supervisor que no puede acceder a la vista web  x
           else if($usuarios_roles->id_rol==1)
           {
-              return response()->json(["error"=>"Error"],401);
+              return response()->json(["error"=>"Error"],400);
           }
           else
           {

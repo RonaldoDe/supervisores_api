@@ -31,7 +31,7 @@ class CoordinadoresMiddleware
             if($usuario){
                $admin = DB::table('usuarios_roles')->where('id_usuario','=',$usuario->id_usuario)->where('id_rol', 2)->first();
             }else{
-               return response()->json('Usuario admin no encontrado',400); //dd('No tienes permiso');
+               return response()->json('Usuario admin no encontrado',401); //dd('No tienes permiso');
             }
          }
          
@@ -47,7 +47,7 @@ class CoordinadoresMiddleware
          {
             return $next($request);
          }else{
-            return response()->json('No tienes permiso',400); //dd('No tienes permiso');
+            return response()->json('No tienes permiso',401); //dd('No tienes permiso');
          }
 
 

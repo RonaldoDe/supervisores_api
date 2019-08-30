@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Laravel\Passport\Client;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
-use App\Modelos\Seguimiento;
 use App\Segumiento;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +35,7 @@ class LoginController extends Controller
         if($validator->fails())
         {
          
-          return response()->json( $errors=$validator->errors()->all(), 400);
+          return response()->json( $errors=$validator->errors()->all(), 401);
         }
         else
         {   
@@ -62,16 +61,14 @@ class LoginController extends Controller
                     $request->request->add($params);
                     $proxy = Request::create('oauth/token', 'POST');
 
-                    $seguimiento = Seguimiento::create([
-                        'user_id' => $user->id
-                    ]);
+                 
 
                     return Route::dispatch($proxy);
             }else{
-                return response()->json(['Usuario o contraseña incorrectas'], 400);
+                return response()->json(['Usuario o contraseña incorrectas'], 401);
             }
         }else{
-            return response()->json(['Usuario no encontrado'], 400);
+            return response()->json(['Usuario no encontrado'], 401);
         }
        
 

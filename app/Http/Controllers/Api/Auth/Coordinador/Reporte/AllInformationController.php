@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Api\Auth\Coordinador\Reporte;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modelos\Seguimiento;
+use App\Modelos\Usuario;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+
 
 class AllInformationController extends Controller
 {
@@ -130,5 +133,86 @@ class AllInformationController extends Controller
         }
 
         return response()->json(['zonas' => $zonas, 'sucursales' => $sucursales_array, 'planes' => $planes, 'actividades' => $actividades_array]);
+    }
+
+    public function get_users(Request $request)
+    {   
+        # Here we get the amount of users active
+        $users_active = Usuario::where('id_estado', 1)
+        ->count();
+
+        # Here we get the amount of users banned
+        $users_banned = Usuario::where('id_estado', 2)
+        ->count();
+
+         # Here we get the amount of users
+         $users_list = Usuario::select('id_usuario', 'nombre', 'apellido', 'cedula', 'correo', 'id_estado')
+         ->get();
+
+        return response()->json(["response" =>['users_active'=>$users_active, 'users_banned'=>$users_banned, 'user_list' => $users_list]], 200);
+    }
+
+    public function get_usage(Request $request)
+    { 
+        $validator=\Validator::make($request->all(),[
+    		'days' => 'bail|numeric:required'
+        ]);
+
+        if($validator->fails())
+        {
+          return response()->json( $errors=$validator->errors()->all(),400 );
+        }
+
+        # Here we convert days to hours
+        $days_to_hours = request('days') * 24;
+        
+        # We subtract an amount of hours to a time
+        $subtract_day = strtotime ( '-'.$days_to_hours.' hour' , strtotime (date('Y-m-d H:i:s')));
+        # From date
+        $estimate_date = date('Y-m-d H:i:s', $subtract_day);
+
+        # Here we perform the query that retrieves logged users in the last 24 hours
+        $seguimiento = Seguimiento::whereBetween('logged_at', [$estimate_date, date('Y-m-d H:i:s')])->get();
+
+        # We convert the queryset to a laravel collection
+        $collection = collect($seguimiento);
+        # We filtered out repeated values with unique
+        $unique_list = $collection->unique('user_id');
+
+        $array_users = array();
+        foreach ($unique_list as $item) {
+           array_push($array_users, $item->user_id);
+        }
+        
+        $list = User::select('id', 'email')->whereIn('id', $array_users)->get();
+
+        $array_users_names = array();
+        foreach ($list as $users_email) {
+           array_push($array_users_names, $users_email->email);
+        }
+
+        $list_user = Usuario::select('id_usuario', 'nombre', 'apellido', 'cedula')
+        ->whereIn('correo', $array_users_names)->get();
+        
+        # Here we get the amount of logged users
+        $unique = $unique_list->count();
+        //extraer los correos, y los colocas en un arreglo
+        return response()->json(["response" => ['user_count' => $unique, 'list_user' => $list_user]], 200);
+    }
+
+    public function get_user_usage(Request $request, $id)
+    { 
+        $user = User::select('id', 'email')->where('id', $id)->first();
+
+        # Here we get log in history of a user
+        $seguimiento = Seguimiento::select('logged_at')
+        ->where('user_id', $id)
+        ->get();
+
+        $user_data = Usuario::select('id_usuario', 'nombre', 'apellido', 'cedula')
+        ->where('correo', $user->email)->get();
+    
+        //extraer los correos, y los colocas en un arreglo
+        return response()->json(["response" => ['user_data' => $user_data, 'history' => $seguimiento]], 200);
     }
 }

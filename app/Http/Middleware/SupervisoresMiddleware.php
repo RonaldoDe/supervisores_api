@@ -36,10 +36,10 @@ class SupervisoresMiddleware
                 return $next($request);
             }
            else{
-               return response()->json('No tienes permiso',401); //dd('No tienes permiso');
+               return response()->json('No tienes permiso',400); //dd('No tienes permiso');
             }
          }else{
-            return response()->json('No tienes permiso',401); //dd('No tienes permiso');
+            return response()->json('No tienes permiso',400); //dd('No tienes permiso');
          }
 
     }

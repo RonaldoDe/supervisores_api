@@ -143,13 +143,29 @@ class AllInformationController extends Controller
 
         # Here we get the amount of users banned
         $users_banned = Usuario::where('id_estado', 2)
-        ->count();
+        ->count(); 
 
-         # Here we get the amount of users
-         $users_list = Usuario::select('id_usuario', 'nombre', 'apellido', 'cedula', 'correo', 'id_estado')
-         ->get();
+        //  $users_list = Usuario::select('id_usuario', 'nombre', 'apellido', 'cedula', 'correo', 'id_estado')
+        //  ->paginate(15);
 
-        return response()->json(["response" =>['users_active'=>$users_active, 'users_banned'=>$users_banned, 'user_list' => $users_list]], 200);
+        $list = User::select('id', 'email')->get();
+
+        $list_user_array = array();
+        foreach ($list as $item) {
+        $list_user = Usuario::select('id_usuario', 'nombre', 'apellido', 'cedula')
+        ->where('correo', $item->email)->first();
+        array_push($list_user_array, $list_user);
+        }
+        
+        $user_ids_array = array();
+        foreach ($list as $item) {
+            $user_id = User::select('id')
+            ->where('id', $item->id)->first();
+            array_push($user_ids_array, $user_id);
+        }
+
+        return response()->json(["response" =>['users_active'=>$users_active, 'users_banned'=>$users_banned, 'list_user' => 
+        $list_user_array, 'user_ids' => $user_ids_array]], 200);
     }
 
     public function get_usage(Request $request)
@@ -176,7 +192,7 @@ class AllInformationController extends Controller
 
         # We convert the queryset to a laravel collection
         $collection = collect($seguimiento);
-        # We filtered out repeated values with unique
+        # We filtered out repeated user_id with unique
         $unique_list = $collection->unique('user_id');
 
         $array_users = array();
@@ -184,20 +200,35 @@ class AllInformationController extends Controller
            array_push($array_users, $item->user_id);
         }
         
+        # Lista de user_id y sus correos
         $list = User::select('id', 'email')->whereIn('id', $array_users)->get();
+       
 
-        $array_users_names = array();
-        foreach ($list as $users_email) {
-           array_push($array_users_names, $users_email->email);
-        }
-
+        // $array_users_emails = array();
+        // foreach ($list as $users_email) {
+        //    array_push($array_users_emails, $users_email->email);
+        // }
+        
+        
+        $list_user_array = array();
+        foreach ($list as $item) {
         $list_user = Usuario::select('id_usuario', 'nombre', 'apellido', 'cedula')
-        ->whereIn('correo', $array_users_names)->get();
+        ->where('correo', $item->email)->first();
+        array_push($list_user_array, $list_user);
+        }
+        
+        $user_ids_array = array();
+        foreach ($list as $item) {
+            $user_id = User::select('id')
+            ->where('id', $item->id)->first();
+            array_push($user_ids_array, $user_id);
+        }
         
         # Here we get the amount of logged users
         $unique = $unique_list->count();
+    
         //extraer los correos, y los colocas en un arreglo
-        return response()->json(["response" => ['user_count' => $unique, 'list_user' => $list_user]], 200);
+        return response()->json(["response" => ['user_count' => $unique, 'list_user' => $list_user_array, 'user_ids' => $user_ids_array]], 200);
     }
 
     public function get_user_usage(Request $request, $id)
@@ -207,10 +238,13 @@ class AllInformationController extends Controller
         # Here we get log in history of a user
         $seguimiento = Seguimiento::select('logged_at')
         ->where('user_id', $id)
-        ->get();
+        ->orderBy('logged_at', 'desc')
+        ->paginate(15);
 
         $user_data = Usuario::select('id_usuario', 'nombre', 'apellido', 'cedula')
         ->where('correo', $user->email)->get();
+
+        //$user_data = $user_data->user_id;
     
         //extraer los correos, y los colocas en un arreglo
         return response()->json(["response" => ['user_data' => $user_data, 'history' => $seguimiento]], 200);

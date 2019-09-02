@@ -160,15 +160,9 @@ class AllInformationController extends Controller
             }
         }
         
-        $user_ids_array = array();
-        foreach ($list as $item) {
-            $user_id = User::select('id')
-            ->where('id', $item->id)->first();
-            array_push($user_ids_array, $user_id);
-        }
 
         return response()->json(["response" =>['users_active'=>$users_active, 'users_banned'=>$users_banned, 'list_user' => 
-        $list_user_array, 'user_ids' => $user_ids_array]], 200);
+        $list_user_array]], 200);
     }
 
     public function get_usage(Request $request)
@@ -223,18 +217,12 @@ class AllInformationController extends Controller
             }
         }
         
-        $user_ids_array = array();
-        foreach ($list as $item) {
-            $user_id = User::select('id')
-            ->where('id', $item->id)->first();
-            array_push($user_ids_array, $user_id);
-        }
         
         # Here we get the amount of logged users
-        $unique = $unique_list->count();
+        $unique = sizeof($list_user_array);
     
         //extraer los correos, y los colocas en un arreglo
-        return response()->json(["response" => ['user_count' => $unique, 'list_user' => $list_user_array, 'user_ids' => $user_ids_array]], 200);
+        return response()->json(["response" => ['user_count' => $unique, 'list_user' => $list_user_array]], 200);
     }
 
     public function get_user_usage(Request $request, $id)

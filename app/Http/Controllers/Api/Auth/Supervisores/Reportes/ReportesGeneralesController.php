@@ -549,7 +549,8 @@ class ReportesGeneralesController extends Controller
        ->join('actividades as ac','p.id_plan_trabajo','ac.id_plan_trabajo')
        ->join('sucursales as su','p.id_sucursal','su.id_suscursal')
        ->where('su.id_zona',$usuario_zona->id_zona)
-       ->whereIn('p.estado','!=',[3, 0])
+       ->where('p.estado','!=',3)
+       ->where('p.estado','!=',0)
        ->orderBy('p.id_sucursal', 'desc')
        ->get();
         //arrays que almacenan el numero de actividades completas y demas

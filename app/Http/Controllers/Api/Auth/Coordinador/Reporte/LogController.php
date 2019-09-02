@@ -36,14 +36,14 @@ class LogController extends Controller
             ->where('id_coordinador', $coordinador->id_cordinador)
             ->orderBy('fecha', 'DESC')
             ->where('tipo_usuario', 2)
-            ->where('leido', 1)
+            ->where('leido', 0)
             ->paginate(20);
 
             //Numero total de notificaciones no leidas
             $log_count_no_leido = DB::table('notificaciones')
             ->where('id_coordinador', $coordinador->id_cordinador)
             ->where('tipo_usuario', 2)
-            ->where('leido', 0)
+            ->where('leido', 1)
             ->get();
 
             $no_leido = count($log_count_no_leido);
@@ -55,7 +55,7 @@ class LogController extends Controller
             ->where('id_usuario', $usuario_rol->id_usuario_roles)
             ->where('tipo_usuario', 1)
             ->where('tipo', 2)
-            ->where('leido', 1)
+            ->where('leido', 0)
             ->orderBy('fecha', 'DESC')
             ->take(100)
             ->get();
@@ -64,7 +64,7 @@ class LogController extends Controller
             ->where('id_usuario', $usuario_rol->id_usuario_roles)
             ->where('tipo_usuario', 1)
             ->where('tipo', 2)
-            ->where('leido', 0)
+            ->where('leido', 1)
             ->get();
 
             $no_leido = count($log_count);
@@ -75,13 +75,13 @@ class LogController extends Controller
            
             $log = DB::table('notificaciones')
             ->where('tipo_usuario', 2)
-            ->where('leido', 1)
+            ->where('leido', 0)
             ->orderBy('fecha', 'DESC')
             ->paginate(20);
 
             $log_count = DB::table('notificaciones')
             ->where('tipo_usuario', 2)
-            ->where('leido', 0)
+            ->where('leido', 1)
             ->get();
 
             $no_leido = count($log_count);

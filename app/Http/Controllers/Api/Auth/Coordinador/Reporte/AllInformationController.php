@@ -154,7 +154,10 @@ class AllInformationController extends Controller
         foreach ($list as $item) {
         $list_user = Usuario::select('id_usuario', 'nombre', 'apellido', 'cedula')
         ->where('correo', $item->email)->first();
-        array_push($list_user_array, $list_user);
+            if($list_user){
+                $list_user->id = $item->id;
+                array_push($list_user_array, $list_user);
+            }
         }
         
         $user_ids_array = array();
@@ -214,7 +217,10 @@ class AllInformationController extends Controller
         foreach ($list as $item) {
         $list_user = Usuario::select('id_usuario', 'nombre', 'apellido', 'cedula')
         ->where('correo', $item->email)->first();
-        array_push($list_user_array, $list_user);
+            if($list_user){
+                $list_user->id = $item->id;
+                array_push($list_user_array, $list_user);
+            }
         }
         
         $user_ids_array = array();

@@ -490,6 +490,7 @@ class ReportesGeneralesController extends Controller
             ->join('usuarios_roles as us', 'rs.id_supervisor', 'us.id_usuario_roles')
             ->join('usuario as usu', 'us.id_usuario', 'usu.id_usuario')
             ->where('rs.id_coordinador', $coordinador->id_cordinador)
+            ->where('rs.estado_corregido', '!=', 3)
             ->get();
 
             return response()->json($reporte, 200);

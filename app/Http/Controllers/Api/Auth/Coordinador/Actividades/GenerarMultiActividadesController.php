@@ -109,21 +109,21 @@ class GenerarMultiActividadesController extends MultiActividadController
                                                     if(count($validarDuplicadoFechas) > 0){
                                                 foreach ($validarDuplicadoFechas as $fechasDuplicadas) {
                                                 if(request('fecha_inicio').' 00:00:00' >= $fechasDuplicadas->fecha_inicio && request('fecha_inicio').' 00:00:00' <= $fechasDuplicadas->fecha_fin){
-                                                    return response()->json(['La fecha inicio se encuentra en el rango de fechas de otra actividad '. $actividad->nombre],400);
+                                                    return response()->json(['message' => 'La fecha inicio se encuentra en el rango de fechas de otra actividad '. $actividad->nombre],400);
                                                     
                                                 }
 
                                                 if(request('fecha_fin').' 23:59:00' >= $fechasDuplicadas->fecha_inicio && request('fecha_fin').' 23:59:00' <= $fechasDuplicadas->fecha_fin){
-                                                    return response()->json(['La fecha fin se encuentra en el rango de fechas de otra actividad '. $actividad->nombre],400);
+                                                    return response()->json(['message' => 'La fecha fin se encuentra en el rango de fechas de otra actividad '. $actividad->nombre],400);
                                                 }
 
                                                 if($fechasDuplicadas->fecha_inicio >= request('fecha_inicio').' 00:00:00' && $fechasDuplicadas->fecha_inicio <= request('fecha_fin').' 23:59:00'){
-                                                    return response()->json(['Ya existe una actividad que se encuentra en el rango de fechas '. $actividad->nombre],400);
+                                                    return response()->json(['message' => 'Ya existe una actividad que se encuentra en el rango de fechas '. $actividad->nombre],400);
                                                     
                                                 }
 
                                                 if($fechasDuplicadas->fecha_fin >= request('fecha_inicio').' 23:59:00' && $fechasDuplicadas->fecha_fin <= request('fecha_fin').' 23:59:00'){
-                                                    return response()->json(['Ya existe una actividad que se encuentra en el rango de fechas '. $actividad->nombre],400);                                                    
+                                                    return response()->json(['message' => 'Ya existe una actividad que se encuentra en el rango de fechas '. $actividad->nombre],400);                                                    
                                                 }
                                             }
                                         }

@@ -33,10 +33,10 @@ class ReportesGeneralesController extends Controller
 
             $supervisor=DB::table('usuario')
             ->where('correo','=',$user->email)->first();
-            
+
             $usuario_rol=DB::table('usuarios_roles')
             ->where('id_usuario','=',$supervisor->id_usuario)->first();
-            
+
            if($supervisor){
                 $gerente = DB::table('usuarios_roles')
                 ->where('id_usuario',$supervisor->id_usuario)->first();
@@ -44,10 +44,10 @@ class ReportesGeneralesController extends Controller
                 if(request('id_sucursal') != ''){
                     $zona = DB::table('sucursales')
                     ->where('id_suscursal','=',request('id_sucursal'))->first();
-                    
+
                     $region = DB::table('zona')
                     ->where('id_zona','=',$zona->id_zona)->first();
-    
+
                     $coordinador = DB::table('region')
                     ->where('id_region','=',$region->id_region)->first();
                 }else{
@@ -58,7 +58,7 @@ class ReportesGeneralesController extends Controller
                $gerente = 0;
                 $region = DB::table('usuario_zona')
                 ->where('id_usuario','=',$usuario_rol->id_usuario_roles)->first();
-            
+
                 if($region){
                     $coordinador = DB::table('region')
                     ->where('id_region','=',$region->id_region)->first();
@@ -66,20 +66,20 @@ class ReportesGeneralesController extends Controller
                     if(request('id_sucursal') != ''){
                         $zona = DB::table('sucursales')
                         ->where('id_suscursal','=',request('id_sucursal'))->first();
-                        
+
                         $region = DB::table('zona')
                         ->where('id_zona','=',$zona->id_zona)->first();
-        
+
                         $coordinador = DB::table('region')
                         ->where('id_region','=',$region->id_region)->first();
                     }else{
                         $coordinador = DB::table('coordinadores')
                         ->where('id_cordinador','=',request('coordinador'))->first();
                     }
-                    
+
                 }
            }
-            
+
 
             if($coordinador){
 
@@ -121,9 +121,9 @@ class ReportesGeneralesController extends Controller
                                 return response()->json(['message' => 'Reporte realizado con exito'], 200);
                             }else{
                                 return response()->json(['message' => 'Error al generar la notificacion']);
-                            } 
+                            }
                         }
-                        
+
                     }
                     return response()->json(['message' => 'Error al carar la imagen'], 400);
 
@@ -164,7 +164,7 @@ class ReportesGeneralesController extends Controller
                                 return response()->json(['message' => 'Reporte realizado con exito'], 200);
                             }else{
                                 return response()->json(['message' => 'Error al generar la notificacion']);
-                            } 
+                            }
                         }else{
                             if($this->logCrearNotificacionesMensaje($reporte->id,  request('id_coordinador'), $usuario_rol->id_usuario_roles, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3, 1)){
                                 return response()->json(['message' => 'Reporte realizado con exito'], 200);
@@ -175,11 +175,11 @@ class ReportesGeneralesController extends Controller
                     }
                 }
 
-               
+
             }else if($gerente && $gerente->id_rol == 4){
                 $foto = 'imagen_reporte' . time();
                 $url_img = str_replace(" ", "_",'reportes/'.request('nombre_sucursal').'/'.request('nombre_reporte').'/'.$foto);
-                
+
                 if (request('foto') != "") { // storing image in storage/app/public Folder
                     if(strpos(request('foto'), 'supervisores_api/storage/app/public/img/') == false ){
                         Storage::disk('public')->put('img/'.$url_img, base64_decode(request('foto')));
@@ -214,20 +214,20 @@ class ReportesGeneralesController extends Controller
                         }else{
                             return response()->json(['message' => 'categoria no encontrada'],400);
                         }
-                        
+
                         if($reporte){
                            if($coordinador){
                             if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, $usuario_rol->id_usuario_roles, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3, 2)){
                                 return response()->json(['message' => 'Reporte realizado con exito'], 200);
                             }else{
                                 return response()->json(['message' => 'Error al generar la notificacion']);
-                            } 
+                            }
                            }else{
                             if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, $usuario_rol->id_usuario_roles, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3, 2)){
                                 return response()->json(['message' => 'Reporte realizado con exito'], 200);
                             }else{
                                 return response()->json(['message' => 'Error al generar la notificacion']);
-                            } 
+                            }
                            }
                         }
                     }
@@ -262,27 +262,27 @@ class ReportesGeneralesController extends Controller
                         'estado_listar' => 1,
                     ]);
                 }
-                    
+
                     if($reporte){
                         if($coordinador){
                             if($this->logCrearNotificacionesMensaje($reporte->id,  $coordinador->id_cordinador, $usuario_rol->id_usuario_roles, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3, 2)){
                                 return response()->json(['message' => 'Reporte realizado con exito'], 200);
                             }else{
                                 return response()->json(['message' => 'Error al generar la notificacion']);
-                            } 
+                            }
                         }else{
                             if($this->logCrearNotificacionesMensaje($reporte->id,  request('id_coordinador'), $usuario_rol->id_usuario_roles, request('nombre_reporte'), $supervisor->nombre." ".$supervisor->apellido, 3, 2)){
                                 return response()->json(['message' => 'Reporte realizado con exito'], 200);
                             }else{
                                 return response()->json(['message' => 'Error al generar la notificacion']);
-                            } 
+                            }
                         }
                     }
                 }
             }else{
                 return response()->json(['message' => 'No tienes permiso para acceder a esta ruta'], 400);
             }
-            
+
         }
     }
     //mostrar reprte por sucursal
@@ -333,12 +333,12 @@ class ReportesGeneralesController extends Controller
                 ->where('rs.id', request('id_reporte'))
                 ->where('rs.id_coordinador', $coordinador->id_cordinador)
                 ->first();
-                
+
                 $mensajes = DB::table('mensaje_reporte as mr')
                 ->where('mr.id_reporte', request('id_reporte'))
                 ->get();
 
-                
+
                 if($reporte){
                     if($reporte->id_sucursal != ''){
                         $sucursal = DB::table('reportes_supervisor as rs')
@@ -354,7 +354,7 @@ class ReportesGeneralesController extends Controller
                 }else{
                     return response()->json(['message' => 'Reporte no encontado o no pertenece a sus sucursales'], 400);
                 }
-                
+
             }else if($usuario_rol){
                 $reporte = DB::table('reportes_supervisor as rs')
                 ->select('usu.nombre', 'usu.apellido', 'rs.nombre_reporte', 'rs.observaciones', 'rs.foto', 'rs.estado_corregido', 'rs.id as id_reporte', 'rs.id_categoria')
@@ -363,7 +363,7 @@ class ReportesGeneralesController extends Controller
                 ->where('rs.id', request('id_reporte'))
                 ->where('rs.id_supervisor', $usuario_rol->id_usuario_roles)
                 ->first();
-                
+
                 $mensajes = DB::table('mensaje_reporte as mr')
                 ->where('mr.id_reporte', request('id_reporte'))
                 ->get();
@@ -372,14 +372,14 @@ class ReportesGeneralesController extends Controller
                 }else{
                     return response()->json(['message' => 'Reporte no encontado o no pertenece a sus sucursales'], 400);
                 }
-            
+
             }else{
                 return response()->json(['message' => 'Usuario no encontrado'], 400);
             }
- 
+
         }
-            
-        
+
+
     }
     //crear un mensaje para un reporte, una "chat entre el coordinador y el supervisor/gerente"
     public function crearMensageReporte(Request $request)
@@ -419,7 +419,7 @@ class ReportesGeneralesController extends Controller
                     ->where('id_supervisor', $usuario_rol->id_usuario_roles)
                     ->where('id', request('id_reporte'))
                     ->first();
-                } 
+                }
             }
 
             if($coordinador){
@@ -429,15 +429,15 @@ class ReportesGeneralesController extends Controller
                     'tipo_usuario' => 1,
                     'mensaje' => request('mensaje'),
                 ]);
-                
+
                 if($reporteMensaje){
                     if($this->logCrearNotificacionesMensaje(request('id_reporte'), $coordinador->id_cordinador, $permisoCoordinador->id_supervisor, $permisoCoordinador->nombre_reporte, $coordinador->nombre. " " . $coordinador->apellido, 2, 1)){
-                        return response()->json(['message' => 'Mensaje enviado'], 200);                    
+                        return response()->json(['message' => 'Mensaje enviado'], 200);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
                     }
                 }else{
-                    return response()->json(['message' => 'Error al crear el mensaje'], 400);                    
+                    return response()->json(['message' => 'Error al crear el mensaje'], 400);
                 }
             }else if($permiso){
                 $reporteMensaje = MensajeReporte::create([
@@ -448,20 +448,20 @@ class ReportesGeneralesController extends Controller
                 ]);
                 if($reporteMensaje){
                     if($this->logCrearNotificacionesMensaje(request('id_reporte'), $permiso->id_coordinador, $usuario_rol->id_usuario_roles,$permiso->nombre_reporte, $supervisor->nombre." ".$supervisor->apellido,2, 2)){
-                        return response()->json(['message' => 'Mensaje enviado'], 200);                    
+                        return response()->json(['message' => 'Mensaje enviado'], 200);
                     }else{
                         return response()->json(['message' => 'Error al generar la notificacion']);
-                    }                
+                    }
                 }else{
-                    return response()->json(['message' => 'Error al enviar el mensaje'], 400);                    
+                    return response()->json(['message' => 'Error al enviar el mensaje'], 400);
                 }
             }else{
                 return response()->json(['message' => 'Tipo de usuario no valido o el reporte no es tuyo'], 400);
             }
- 
+
         }
-            
-        
+
+
     }
 
     //generar reporte al coordinador
@@ -514,6 +514,7 @@ class ReportesGeneralesController extends Controller
             ->join('usuario as us', 'ur.id_usuario', 'us.id_usuario')
             ->where('rs.id_supervisor', $usuario_rol->id_usuario_roles)
             ->where('rs.estado_listar', 1)
+            ->orderBy('rs.created_at', 'DESC')
             ->get();
 
             return response()->json($reporte, 200);
@@ -568,7 +569,7 @@ class ReportesGeneralesController extends Controller
 
             foreach($fe as $fecha){
                 if($ac->id_plan_trabajo == $fecha->id_plan_trabajo){
-                    
+
                     if(!isset($porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_activas'])){
                         $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_activas'] = 0;
                     }
@@ -584,7 +585,7 @@ class ReportesGeneralesController extends Controller
                     if(!isset($porcentaje_sucursal_array[$ac->cod_sucursal]['nombre_sucursal'])){
                         $porcentaje_sucursal_array[$ac->cod_sucursal]['nombre_sucursal'] = $ac->nombre;
                     }
-                    
+
                     $porcentajes_generales_array['todas_las_actividades'] += 1;
                     $porcentaje_sucursal_array[$ac->cod_sucursal]['todas_las_actividades']++;
                     switch ($fecha->id_estado) {
@@ -592,12 +593,12 @@ class ReportesGeneralesController extends Controller
                         $porcentajes_generales_array['actividades_activas'] += 1;
                         $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_activas'] ++;
                         break;
-                        
+
                         case 2:
                         $porcentajes_generales_array['actividades_completas'] += 1;
                         $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_completas'] ++;
                         break;
-                        
+
                         case 3:
                         $porcentajes_generales_array['actividades_noRealizadas'] += 1;
                         $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_noRealizadas'] ++;
@@ -607,18 +608,18 @@ class ReportesGeneralesController extends Controller
                         $porcentajes_generales_array['actividades_noRealizadas'] += 1;
                         $porcentaje_sucursal_array[$ac->cod_sucursal]['actividades_noRealizadas'] ++;
                         break;
-                        
+
                         default:
                             return response()->json('Estad no definido o no validado', 400);
                         break;
                     }
                 }
-                
+
             }
-            
+
         }
             return response()->json(['porcentaje_general' => $porcentajes_generales_array, 'porcentaje_sucursal' => $porcentaje_sucursal_array], 200);
-            
+
     }
     //funcion que hace que el coordinador pueda establecer una actividad como corregida
     public function corregirReporte(Request $request)
@@ -643,20 +644,20 @@ class ReportesGeneralesController extends Controller
                 ->where('rs.id', request('id_reporte'))
                 ->where('rs.id_coordinador', $coordinador->id_cordinador)
                 ->update(['estado_corregido' => 2]);
-                
+
                 if($reporte){
                     return response()->json(['message' => $reporte], 200);
                 }else{
                     return response()->json(['message' => 'Reporte no encontado o no pertenece a sus sucursales'], 400);
                 }
-                
+
             }else{
                 return response()->json(['message' => 'Usuario no encontrado'], 400);
             }
- 
+
         }
     }
-    
+
     public function hideReport(Request $request)
     {
         $validator=\Validator::make($request->all(),[
